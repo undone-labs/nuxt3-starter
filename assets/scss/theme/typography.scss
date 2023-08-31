@@ -1,0 +1,247 @@
+// ////////////////////////////////////////////////////////////////// Typography
+// -----------------------------------------------------------------------------
+/*
+ * Variables specifying the font family declaration ($fontPrimary) and the
+ * location of the source font files ($fontAssetPath)
+ */
+
+$fontDIN: 'DIN', sans-serif, monospace;
+$fontPrimary: '';
+$fontAssetPath: 'assets/fonts';
+
+// ==================================================================== Families
+/*
+ * Include @font-face declarations and font file imports using
+ * $fontAssetPath here below:
+ */
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Regular.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-RegularItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Medium.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-MediumItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DIN Alternate';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-MediumAlternate.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-MediumAlternate.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Bold.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-BoldItalic.otf') format('opentype');
+}
+
+// ///////////////////////////////////////////////////////// Basic Styles Mixins
+// -----------------------------------------------------------------------------
+
+/*
+ * Mixins corresponding to most commonly used html text elements:
+ */
+
+ @mixin h1 {
+   font-size: toRem(36);
+   line-height: leading(50, 36);
+   font-weight: 700;
+   letter-spacing: 0em;
+ }
+
+ @mixin h2 {
+   font-size: toRem(30);
+   line-height: leading(42, 30);
+   font-weight: 700;
+   letter-spacing: 0em;
+ }
+
+ @mixin h3 {
+   font-size: toRem(24);
+   line-height: leading(34, 24);
+   font-weight: 500;
+   letter-spacing: 0em;
+   margin-bottom: 1.25rem;
+ }
+
+ @mixin h4 {
+   font-size: toRem(18);
+   line-height: leading(25, 18);
+   font-weight: 500;
+ }
+
+ @mixin h5 {
+   font-size: toRem(16);
+   line-height: leading(24, 16);
+   font-weight: 500;
+ }
+
+ @mixin h6 {
+   font-size: toRem(16);
+   line-height: leading(24, 16);
+   font-weight: 500;
+ }
+
+ @mixin p1 {
+   font-size: toRem(16);
+   line-height: leading(27, 16);
+   font-weight: 400;
+ }
+
+ @mixin p2 {
+   font-size: toRem(14);
+   line-height: leading(21, 14);
+   font-weight: 400;
+   letter-spacing: 0.2px;
+   // margin-bottom: 1.2rem;
+ }
+
+ @mixin inlineCode {
+   // font-family: $fontMenlo;
+   color: var(--code-text-color);
+   background-color: var(--code-background-color);
+   padding: 0.12rem 0.45rem;
+   border-radius: toRem(4);
+ }
+
+ @mixin p1Link {
+   @include p1;
+   font-weight: 500;
+   color: var(--link-color);
+   &:hover {
+     color: var(--link-hover-color);
+     transition: color .25s ease;
+   }
+ }
+
+/*
+ * Mixin for text in <code> elements, see utitlies.scss to edit these vars
+ */
+
+@mixin inlineCode {
+  color: var(--code-text-color);
+  background-color: var(--code-background-color);
+  // add your styles here
+}
+
+/*
+ * Mixin for inline link elements, see utitlies.scss to edit these vars
+ */
+@mixin p1Link {
+  color: var(--link-color);
+  &:hover {
+    color: var(--link-hover-color);
+  }
+  // add your styles here
+}
+
+// ////////////////////////////////////////////////////////////////////// Sizing
+// -----------------------------------------------------------------------------
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  display: block;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: none;
+}
+
+h1, .h1 {
+  @include h1;
+}
+
+h2, .h2 {
+  @include h2;
+}
+
+h3, .h3 {
+  @include h3;
+}
+
+h4, .h4 {
+  @include h4;
+}
+
+h5, .h5 {
+  @include h5;
+}
+
+h6, .h6 {
+  @include h6;
+}
+
+p,
+.p1,
+div,
+a,
+button {
+  @include p1;
+}
+
+:not(pre) > code {
+  @include inlineCode;
+}
+
+// /////////////////////////////////////////////////////////// Navigation Mixins
+// -----------------------------------------------------------------------------
+/*
+ * Styles applied to navigation items/links
+ */
+@mixin navigation {
+  font-size: toRem(16);
+  line-height: leading(25, 16);
+  font-weight: 700;
+}
