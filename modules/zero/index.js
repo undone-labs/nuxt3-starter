@@ -9,6 +9,7 @@ import {
   createResolver,
   addPlugin,
   addImports,
+  addImportsDir,
   addComponent,
   extendPages,
   addLayout
@@ -30,6 +31,13 @@ const meta = {
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
+// ///////////////////////////////////////////// addEntriesToPublicRuntimeConfig
+const addEntriesToPublicRuntimeConfig = (nuxt) => {
+  const algolia = nuxt.options.algolia
+  nuxt.options.runtimeConfig.public.algolia.indexName = algolia.indexName
+  nuxt.options.runtimeConfig.public.algolia.disable = algolia.disable || false
+}
+
 // ///////////////////////////////////////////////////////////// registerPlugins
 const registerPlugins = (path, log = false) => {
   path = resolve(path, 'plugins')
@@ -118,11 +126,11 @@ const registerContentDirectories = (nuxt, path, tag) => {
   })
 }
 
-// ///////////////////////////////////////////// addEntriesToPublicRuntimeConfig
-const addEntriesToPublicRuntimeConfig = (nuxt) => {
-  const algolia = nuxt.options.algolia
-  nuxt.options.runtimeConfig.public.algolia.indexName = algolia.indexName
-  nuxt.options.runtimeConfig.public.algolia.disable = algolia.disable || false
+// ///////////////////////////////////////////////////////// registerComposables
+const registerComposables = (path) => {
+  path = resolve(path, 'composables')
+  if (!Fs.existsSync(path)) { return }
+  addImportsDir(path)
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup
@@ -149,6 +157,7 @@ const setup = async (_, nuxt) => {
       registerLayouts(path)
       registerPages(nuxtConfig, path)
       registerContentDirectories(nuxt, path, submodule)
+      registerComposables(path)
     }
   }
   registerPlugins(basePath, true)
@@ -157,6 +166,7 @@ const setup = async (_, nuxt) => {
   registerLayouts(basePath, true)
   registerPages(nuxtConfig, basePath, true)
   registerContentDirectories(nuxt, basePath)
+  registerComposables(basePath)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
