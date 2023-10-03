@@ -46,7 +46,6 @@ const registerComponents = (path, log = false) => {
   if (!Fs.existsSync(path)) { return }
   Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(component => {
     const name = component.split('.vue')[0]
-    // const name = `Zero${useUnSlugify(`${prefix}-${slug}`)}`
     addComponent({
       name,
       filePath: resolve(path, component)
@@ -92,7 +91,7 @@ const registerPages = (nuxtConfig, path, log = false) => {
     const route = page.split('.vue')[0].replaceAll(':', '/')
     const entry = {
       file: resolve(path, page),
-      name: route === '/' ? 'ZeroKitchenSinkIndex' : `ZeroKitchenSink${useUnSlugify(route.replaceAll('/', '-'), 'proper-case')}`,
+      name: route === '/' ? 'ZeroKitchenSinkIndex' : `ZeroKitchenSink${useUnSlugify(route.replaceAll('/', '-'), 'pascal-case')}`,
       path: route === '/' ? '/zero-kitchen-sink' : `/zero-kitchen-sink${route}`
     }
     extendPages(pages => {
@@ -119,16 +118,31 @@ const registerContentDirectories = (nuxt, path, tag) => {
   })
 }
 
+// ///////////////////////////////////////////// addEntriesToPublicRuntimeConfig
+const addEntriesToPublicRuntimeConfig = (nuxt) => {
+  const algolia = nuxt.options.algolia
+  nuxt.options.runtimeConfig.public.algolia.indexName = algolia.indexName
+  nuxt.options.runtimeConfig.public.algolia.disable = algolia.disable || false
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
+  addEntriesToPublicRuntimeConfig(nuxt)
   const nuxtConfig = nuxt.options
   const basePath = resolve()
   const subModulePath = resolve('modules')
-  Fs.readdirSync(subModulePath).forEach(submodule => {
+  const submodules = Fs.readdirSync(subModulePath)
+  const len = submodules.length
+  for (let i = 0; i < len; i++) {
+    const submodule = submodules[i]
     const path = resolve(subModulePath, submodule)
     if (Fs.statSync(path).isDirectory()) {
       console.log(`🧰 [zero:submodule] ${submodule}`)
+      const moduleScriptPath = resolve(path, 'index.js')
+      if (Fs.existsSync(moduleScriptPath)) {
+        await import(moduleScriptPath)
+      }
       registerPlugins(path)
       registerStores(path)
       registerComponents(path)
@@ -136,7 +150,7 @@ const setup = async (_, nuxt) => {
       registerPages(nuxtConfig, path)
       registerContentDirectories(nuxt, path, submodule)
     }
-  })
+  }
   registerPlugins(basePath, true)
   registerStores(basePath, true)
   registerComponents(basePath, true)

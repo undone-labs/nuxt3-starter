@@ -1,6 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
+import Path from 'path'
 
 // /////////////////////////////////////////////////////////// Variables & Setup
 // -----------------------------------------------------------------------------
@@ -106,11 +107,13 @@ export default defineNuxtConfig({
   // ////////////////////////////////////////////////// [Module] @nuxtjs/algolia
   // ---------------------------------------------------------------------------
   algolia: {
-    disable: true,
-    apiKey: 'temp', // process.env.ALGOLIA_API_KEY
-    applicationId: 'temp', // process.env.ALGOLIA_APPLICATION_ID,
-    indexName: 'temp', // `${process.env.ALGOLIA_INDEX_ID}__${env}`
-    contentDirectoryName: 'content' // default: 'content'
+    disable: false,
+    apiKey: process.env.ALGOLIA_API_KEY,
+    applicationId: process.env.ALGOLIA_APPLICATION_ID,
+    indexName: `${process.env.ALGOLIA_INDEX_ID}__${env}`,
+    sources: [
+      { path: Path.resolve(__dirname, 'content'), contentDirectoryName: 'content' }
+    ]
   },
   // /////////////////////////////////////////////////// [Module] @/modules/zero
   // ---------------------------------------------------------------------------

@@ -63,7 +63,8 @@ const sections = [
     title: 'Components',
     links: [
       { path: '/markdown-parser', text: 'Markdown Parser' },
-      { path: '/dropdown', text: 'Dropdown' }
+      { path: '/dropdown', text: 'Dropdown' },
+      { path: '/algolia', text: 'Algolia Search' }
     ]
   }
 ]

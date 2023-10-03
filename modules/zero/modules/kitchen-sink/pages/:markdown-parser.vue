@@ -6,7 +6,7 @@
     </h1>
 
     <ZeroMarkdownParser
-      :markdown="markdown[0].raw"
+      :markdown="content[0].raw"
       class="markdown" />
 
   </main>
@@ -19,8 +19,12 @@ definePageMeta({
 })
 
 // ======================================================================== Data
-const { data: markdown } = await useAsyncData('content', () => {
-  return queryContent().find()
+const { data: content } = await useAsyncData('content', () => {
+  return queryContent({
+    where: {
+      _path: { $contains: '/zero/kitchen-sink/markdown-sample' }
+    }
+  }).find()
 })
 </script>
 

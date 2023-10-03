@@ -7,7 +7,7 @@ import AlgoliaSearch from 'algoliasearch'
 import MarkdownParser from 'kramed'
 import { parseFrontMatter } from 'remark-mdc'
 import { parse as NodeHtmlParser } from 'node-html-parser'
-import { useUnSlugify } from './composables/use-unslugify'
+import { useUnSlugify } from '../../composables/use-unslugify'
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ const parseMarkdownStringToJson = (fileName, fileLevelPath, fileLevel, string) =
   const nodes = parsedHtml.childNodes
   const len = nodes.length
   const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-  let heading = useUnSlugify(fileName)
+  let heading = useUnSlugify(fileName, 'pascal-case', ' ')
   let compiled = {}
   if (!headings.includes(nodes[0].rawTagName)) {
     compiled = {
@@ -86,35 +86,38 @@ const walk = (dir, split, next) => {
 }
 
 // ///////////////////////////////////////// compileDirContentForAlgoliaIndexing
-const compileDirContentForAlgoliaIndexing = (contentDirectoryName) => {
+const compileDirContentForAlgoliaIndexing = (nuxtConfig) => {
   const records = []
-  walk(Path.resolve(__dirname, `../../../../docs/${contentDirectoryName}`), contentDirectoryName, file => {
-    const filePath = file.path
-    if (file.ext === '.md' && file.name !== 'src') {
-      const sections = parseMarkdownStringToJson(
-        file.name,
-        file.levelPath,
-        file.level,
-        Fs.readFileSync(filePath, 'utf-8')
-      )
-      const topLevelSlug = file.topLevelSlug
-      const parentSlug = file.parentSlug
-      const fileLevelPath = file.levelPath
-      sections.forEach(section => {
-        records.push({
-          objectID: file.level < 2 ?
-            `/${fileLevelPath}/${section.fileName}#${section.headingId}` :
-            `/${fileLevelPath}#${section.headingId}`,
-          sidebarHeading: useUnSlugify(topLevelSlug, 'capitalize-all'),
-          entryName: useUnSlugify(
-            file.level < 2 ? section.fileName : parentSlug,
-            'capitalize-all'
-          ),
-          entrySection: section.heading,
-          content: section.content
+  nuxtConfig.algolia.sources.forEach(source => {
+    walk(source.path, source.contentDirectoryName, file => {
+      const filePath = file.path
+      if (file.ext === '.md' && file.name !== 'src') {
+        const sections = parseMarkdownStringToJson(
+          file.name,
+          file.levelPath,
+          file.level,
+          Fs.readFileSync(filePath, 'utf-8')
+        )
+        const topLevelSlug = file.topLevelSlug
+        const parentSlug = file.parentSlug
+        const fileLevelPath = file.levelPath
+        sections.forEach(section => {
+          records.push({
+            objectID: (file.level < 2 ?
+                          `/${fileLevelPath}/${section.fileName}#${section.headingId}` :
+                          `/${fileLevelPath}#${section.headingId}`).replace('//', '/'),
+            sidebarHeading: useUnSlugify(topLevelSlug, 'pascal-case', ' '),
+            entryName: useUnSlugify(
+              file.level < 2 ? section.fileName : parentSlug,
+              'pascal-case',
+              ' '
+            ),
+            entrySection: section.heading,
+            content: section.content
+          })
         })
-      })
-    }
+      }
+    })
   })
   return records
 }
@@ -146,7 +149,7 @@ const sync = async () => {
     try {
       await createAlgoliaIndex(
         nuxtConfig,
-        compileDirContentForAlgoliaIndexing(nuxtConfig.algolia.contentDirectoryName || 'content')
+        compileDirContentForAlgoliaIndexing(nuxtConfig)
       )
     } catch (e) {
       console.log('================================ syncContentDirOnFileChange')
