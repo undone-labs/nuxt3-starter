@@ -4,7 +4,7 @@
 // -----------------------------------------------------------------------------
 import { basename, resolve } from 'path'
 import type { Import, Unimport } from 'unimport'
-import { addTemplate, defineNuxtModule } from '@nuxt/kit'
+import { addTemplate, defineNuxtModule } from 'nuxt/kit'
 
 // ////////////////////////////////////////////////////////////////////// Module
 // -----------------------------------------------------------------------------

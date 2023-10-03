@@ -5,7 +5,7 @@
   transition: 250ms ease-out;
   path {
     transition: inherit;
-    stroke: var(--primary-text-color);
+    stroke: var(--theme-color);
   }
   &.up,
   &.down {

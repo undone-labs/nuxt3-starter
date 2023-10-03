@@ -1,8 +1,24 @@
+@keyframes shrink-bounce {
+  0% { transform: scale(1); }
+  33% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+
 .markdown, .markdown-user-input {
   // ================================================================ Typography
   h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1.25rem;
+    &:not(:first-child) {
+      margin-top: 3.5rem;
+    }
     + ul, + ol {
       margin-top: 2rem;
+    }
+    code {
+      margin: 0 toRem(6);
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
 
@@ -43,71 +59,14 @@
   }
 
   a {
-    @include p1Link;
-  }
-
-  h1.heading-anchor > a,
-  h2.heading-anchor > a,
-  h3.heading-anchor > a,
-  h4.heading-anchor > a,
-  h5.heading-anchor > a,
-  h6.heading-anchor > a {
-    display: block;
-    @include h2;
-    margin-bottom: toRem(20);
-    color: var(--primary-text-color);
-  }
-
-  h1.heading-anchor > a {
-    @include h1;
-  }
-
-  h2.heading-anchor > a {
-    @include h2;
-  }
-
-  h3.heading-anchor > a {
-    @include h3;
-  }
-
-  h4.heading-anchor > a {
-    @include h4;
-  }
-
-  h5.heading-anchor > a {
-    @include h5;
-  }
-
-  h6.heading-anchor > a {
-    @include h6;
+    @include inlineLink;
   }
 
   // =================================================================== General
   hr {
     margin-bottom: 2rem;
-    border: solid 1px var(--secondary-background-color);
-  }
-
-  pre,
-  code {
-    background-color: var(--code-background-color);
-    color: var(--code-text-color);
-    padding: toRem(30) toRem(29) toRem(22) toRem(29);
-    margin-bottom: 1.25rem;
-    border-radius: 0.625rem;
-    font-size: 0.75rem;
-  }
-
-  pre code {
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-  }
-
-  code {
-    @include inlineCode;
-    &::-moz-selection { background: var(--code-background-color); color: var(--code-text-color); }
-    &::selection { background: var(--code-background-color); color: var(--code-text-color); }
+    border: solid 1px var(--background-color__secondary);
+    transition: border-color 500ms;
   }
 
   // ===================================================================== Lists
@@ -124,7 +83,7 @@
       padding-left: toRem(22);
       margin: 0;
       &:before {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         left: 0.5rem;
@@ -134,7 +93,8 @@
         margin: 0;
         transform: translateY(-25%);
         border-radius: 50%;
-        background-color: var(--primary-text-color);
+        background-color: var(--theme-color);
+        transition: background-color 500ms;
       }
     }
   }
@@ -146,60 +106,38 @@
   li > ul > li {
     &:before {
       background-color: transparent;
-      border: solid 1px var(--primary-text-color);
+      border: solid 1px var(--theme-color);
+      transition: border-color 500ms;
     }
   }
 
   // ==================================================== Callouts / BlockQuotes
   blockquote {
-    margin: 2rem toRem(42);
-  }
-  blockquote > blockquote {
     margin: 0;
-  }
-  blockquote > blockquote > blockquote {
-    margin: 0 toRem(-42);
-    padding: toRem(21) toRem(23);
-    border-radius: toRem(10);
-    background-color: var(--secondary-background-color);
-    p {
-      @include h4;
-      margin-bottom: toRem(9);
+    padding-left: toRem(36);
+    border-left: toRem(5) solid var(--background-color__secondary);
+    transition: border-color 500ms;
+    &:not(:first-child) {
+      margin-top: 2rem;
     }
-    ul {
-      margin-bottom: toRem(3);
-    }
-    li {
-      position: relative;
-      padding-left: toRem(22);
-      margin: 0;
-      @include p2;
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 0.5rem;
-        top: 0.625rem;
-        width: 4px;
-        height: 4px;
-        margin: 0;
-        border-radius: 50%;
-        background-color: var(--primary-text-color);
-      }
+    &:not(:last-child) {
+      margin-bottom: 2rem;
     }
   }
 
   // ==================================================================== Tables
   table {
+    width: 100%;
     border-top: solid 2px var(--divider);
     border-bottom: solid 2px var(--divider);
     margin-bottom: 1.25rem;
+    transition: 500ms;
   }
 
   th,
   td {
     text-align: left;
-    padding: toRem(4) toRem(122) toRem(4) toRem(14);
+    padding: toRem(8) toRem(10);
   }
 
   th {
@@ -212,20 +150,68 @@
   }
 
   thead > tr {
-    background-color: var(--primary-background-color);
+    background-color: var(--background-color);
+    transition: background-color 500ms;
   }
 
   tbody > tr {
+    transition: background-color 500ms;
     &:nth-child(odd) {
-      background-color: var(--secondary-background-color);
+      background-color: var(--background-color__secondary);
     }
     &:nth-child(even) {
-      background-color: var(--primary-background-color);
+      background-color: var(--background-color);
     }
     &:last-child {
       td {
         padding-bottom: 0.5rem;
       }
+    }
+  }
+
+  // ============================================================= Heading Links
+  .heading-anchor {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    &:hover {
+      .copy-button {
+        transition: 150ms ease-in;
+        opacity: 1;
+      }
+    }
+    .copy-button {
+      position: absolute;
+      top: toRem(5);
+      right: 100%;
+      font-size: 100%;
+      line-height: 1;
+      padding-right: toRem(8);
+      color: var(--link-color);
+      opacity: 0;
+      transition: 150ms ease-out;
+      &:hover {
+        transition: 150ms ease-in;
+        color: var(--link-color);
+      }
+      &[data-tooltip] {
+        &:hover {
+          &:before,
+          &:after {
+            transform: translate(calc(-50% - #{toRem(4)}), 0);
+          }
+        }
+        &:before,
+        &:after {
+          transform: translate(calc(-50% - #{toRem(4)}), 0.5rem);
+        }
+      }
+    }
+    h1, h2, h3, h4, h5, h6 {
+      position: relative;
+      padding-left: 2.25rem;
+      margin-left: -2.25rem;
     }
   }
 }

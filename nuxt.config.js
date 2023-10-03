@@ -1,3 +1,7 @@
+// ///////////////////////////////////////////////////////////////////// Imports
+// -----------------------------------------------------------------------------
+import { defineNuxtConfig } from 'nuxt/config'
+
 // /////////////////////////////////////////////////////////// Variables & Setup
 // -----------------------------------------------------------------------------
 const env = process.env.SERVER_ENV
@@ -10,11 +14,6 @@ const baseUrls = {
 
 const frontendPort = 10050
 
-const seo = {
-  siteName: 'Nuxt 3 Starter',
-  description: 'Get a Nuxt 3 site up and running fast 🚀'
-}
-
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export default defineNuxtConfig({
@@ -23,10 +22,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env],
-      serverFlag: env,
-      seo: {
-        siteName: seo.siteName
-      }
+      serverFlag: env
     }
   },
   // ////////////////////////////////////////////////////////// Server & Bundler
@@ -41,11 +37,6 @@ export default defineNuxtConfig({
       }
     },
     assetsInclude: ['**/*.md']
-  },
-  // //////////////////////////////////////////////// Custom Sass Theme Override
-  // ---------------------------------------------------------------------------
-  overrideTheming: {
-    themeName: ''
   },
   // //////////////////////////////////////////////////////////////// Dev Server
   // ---------------------------------------------------------------------------
@@ -64,14 +55,14 @@ export default defineNuxtConfig({
   app: {
     // -------------------------------------------------------------------- head
     head: {
-      title: seo.siteName,
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: seo.description }
+        { name: 'msapplication-config', content: '/favicon/light/browserconfig.xml' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon/favicon-96x96.png' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon/light/favicon-96x96.png' },
+        { rel: 'manifest', href: '/favicon/light/manifest.json' }
       ]
     }
   },
@@ -89,10 +80,11 @@ export default defineNuxtConfig({
   // ---------------------------------------------------------------------------
   modules: [
     '@pinia/nuxt',
-    '@/modules/eslint-nuxt3-globals',
+    '@/modules/eslint-nuxt3-globals', // required
     '@nuxtjs/eslint-module',
-    '@nuxt/content',
-    '@/modules/zero-components/index.js',
+    '@nuxtjs/algolia',
+    '@/modules/zero', // required
+    '@nuxt/content', // required
     'nuxt-simple-robots', // https://github.com/harlan-zw/nuxt-simple-robots
     'nuxt-simple-sitemap' // https://github.com/harlan-zw/nuxt-simple-sitemap
   ],
@@ -110,5 +102,17 @@ export default defineNuxtConfig({
   },
   // ////////////////////////////////////////////////////////// [Module] sitemap
   // ---------------------------------------------------------------------------
-  sitemap: {}
+  sitemap: {},
+  // ////////////////////////////////////////////////// [Module] @nuxtjs/algolia
+  // ---------------------------------------------------------------------------
+  algolia: {
+    disable: true,
+    apiKey: 'temp', // process.env.ALGOLIA_API_KEY
+    applicationId: 'temp', // process.env.ALGOLIA_APPLICATION_ID,
+    indexName: 'temp', // `${process.env.ALGOLIA_INDEX_ID}__${env}`
+    contentDirectoryName: 'content' // default: 'content'
+  },
+  // /////////////////////////////////////////////////// [Module] @/modules/zero
+  // ---------------------------------------------------------------------------
+  zero: {}
 })
