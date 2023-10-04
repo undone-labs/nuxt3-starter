@@ -137,6 +137,7 @@ const registerComposables = (path) => {
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
   addEntriesToPublicRuntimeConfig(nuxt)
+  const commandAllowlist = ['dev'] // only load kitchen-sink for these commands (re: not `build` or `generate`)
   const nuxtConfig = nuxt.options
   const basePath = resolve()
   const subModulePath = resolve('modules')
@@ -144,6 +145,7 @@ const setup = async (_, nuxt) => {
   const len = submodules.length
   for (let i = 0; i < len; i++) {
     const submodule = submodules[i]
+    if (submodule === 'kitchen-sink' && !commandAllowlist.includes(process.env.npm_lifecycle_event)) { continue }
     const path = resolve(subModulePath, submodule)
     if (Fs.statSync(path).isDirectory()) {
       console.log(`🧰 [zero:submodule] ${submodule}`)
