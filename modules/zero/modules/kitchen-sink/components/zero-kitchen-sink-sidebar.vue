@@ -64,7 +64,8 @@ const sections = [
     links: [
       { path: '/markdown-parser', text: 'Markdown Parser' },
       { path: '/dropdown', text: 'Dropdown' },
-      { path: '/algolia', text: 'Algolia Search' }
+      { path: '/algolia', text: 'Algolia Search' },
+      { path: '/api-preview', text: 'API Preview' }
     ]
   }
 ]
@@ -110,6 +111,7 @@ const sections = [
 }
 
 .title {
+  display: none;
   font-weight: 600;
 }
 
@@ -120,4 +122,3 @@ const sections = [
   }
 }
 </style>
-
