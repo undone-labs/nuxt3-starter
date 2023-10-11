@@ -36,7 +36,7 @@
         :key="section.title"
         class="section">
 
-        <div class="title h4">
+        <div class="title h5">
           {{ section.title }}
         </div>
 
@@ -72,7 +72,10 @@ const sections = [
     title: 'Authentication',
     links: [
       { path: '/authentication', text: 'Authentication' },
-      { path: '/authentication-protected', text: '🛡️ Protected' }
+      { path: '/authentication/protected', text: '🛡️ Protected' },
+      { path: '/authentication/redirect-unauthenticated', text: 'Redirect unauthenticated' },
+      { path: '/authentication/redirect-after-login', text: '🛡️ Redirect after login' },
+      { path: '/authentication/redirect-after-logout', text: 'Redirect after logout' }
     ]
   }
 ]
@@ -126,6 +129,7 @@ const sections = [
 
 .page-link {
   color: blue;
+  font-size: toRem(14);
   &:hover {
     text-decoration: underline;
   }

@@ -4,8 +4,12 @@ import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-au
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export default defineNuxtRouteMiddleware(async to => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const nuxtApp = useNuxtApp()
+  const { public: { auth: authConfig } } = useRuntimeConfig()
+  const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
+  // const redirectAfterLogin = authConfig.redirectAfterLogin === '' ? null : authConfig.redirectAfterLogin
+  // const redirectAfterLogout = authConfig.redirectAfterLogout === '' ? null : authConfig.redirectAfterLogout
   try {
     const headers = useRequestHeaders(['cookie'])
     const meta = to.meta
@@ -20,14 +24,21 @@ export default defineNuxtRouteMiddleware(async to => {
       if (!account) {
         store.getAccount(authenticated.userId)
       }
-    } else {
-      // clearNuxtState()
     }
     if (guarded && !authenticated) {
-      // return navigateTo('/zero-kitchen-sink/authentication')
+      if (!redirectUnauthenticated) { return abortNavigation('Looks like the page you\'re looking for doesn\'t exist') }
+      return navigateTo(redirectUnauthenticated)
     }
   } catch (e) {
-    console.log(e)
-    // return navigateTo('/zero-kitchen-sink/authentication')
+    if (!redirectUnauthenticated) {
+      return showError({
+        statusCode: 404,
+        message: e.message,
+        data: {
+          from: from.path
+        }
+      })
+    }
+    return navigateTo(redirectUnauthenticated)
   }
 })

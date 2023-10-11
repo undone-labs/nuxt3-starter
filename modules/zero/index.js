@@ -39,6 +39,7 @@ const addEntriesToPublicRuntimeConfig = (nuxt) => {
   const algolia = nuxt.options.algolia
   nuxt.options.runtimeConfig.public.algolia.indexName = algolia.indexName
   nuxt.options.runtimeConfig.public.algolia.disable = algolia.disable || false
+  nuxt.options.runtimeConfig.public.auth = nuxt.options.auth
 }
 
 // ///////////////////////////////////////////////////////////// registerPlugins
@@ -117,7 +118,10 @@ const registerPages = (path) => {
   if (!Fs.existsSync(path)) { return }
   walk(path, file => {
     if (file.ext === '.vue') {
-      const route = file.path.split('pages').pop().replace('.vue', '')
+      let route = file.path.split('pages').pop().replace('.vue', '')
+      if (route.includes('/index')) {
+        route = route.replace('/index', '')
+      }
       const entry = {
         file: file.path,
         name: `Zero${useUnSlugify(route.replaceAll('-', '/'), 'pascal-case', '/')}`,
