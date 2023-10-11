@@ -23,7 +23,8 @@
 <script setup>
 // ======================================================================= Setup
 definePageMeta({
-  layout: 'zero-auth-layout'
+  layout: 'zero-auth-layout',
+  authenticate: false
 })
 
 // ======================================================================== Data
