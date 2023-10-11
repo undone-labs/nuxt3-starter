@@ -8,8 +8,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const nuxtApp = useNuxtApp()
   const { public: { auth: authConfig } } = useRuntimeConfig()
   const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
-  // const redirectAfterLogin = authConfig.redirectAfterLogin === '' ? null : authConfig.redirectAfterLogin
-  // const redirectAfterLogout = authConfig.redirectAfterLogout === '' ? null : authConfig.redirectAfterLogout
   try {
     const headers = useRequestHeaders(['cookie'])
     const meta = to.meta
@@ -26,8 +24,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       }
     }
     if (guarded && !authenticated) {
-      if (!redirectUnauthenticated) { return abortNavigation('Looks like the page you\'re looking for doesn\'t exist') }
-      return navigateTo(redirectUnauthenticated)
+      throw new Error('Looks like the page you\'re looking for doesn\'t exist')
     }
   } catch (e) {
     if (!redirectUnauthenticated) {
