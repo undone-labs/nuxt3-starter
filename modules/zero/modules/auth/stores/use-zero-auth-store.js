@@ -40,8 +40,10 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
         query: { userId }
       })
       account.value = response
+      return response
     } catch (e) {
       account.value = null
+      return null
     }
   }
 

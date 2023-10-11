@@ -131,7 +131,20 @@ export default defineNuxtConfig({
   // ////////////////////////////////////// [Module] @/modules/zero/modules/auth
   // ---------------------------------------------------------------------------
   auth: {
-    // redirectUnauthenticated: '/zero-kitchen-sink/authentication/redirect-unauthenticated',
+    redirectUnauthenticated: '/zero-kitchen-sink/authentication/redirect-unauthenticated',
+    /**
+     * string or object
+     *
+     * if object, replace part of path with key's value from user (account) db
+     * object, for example example:
+     *
+     * {
+     *   path: '/zero-kitchen-sink/:account/redirect-after-login',
+     *   match: {
+     *     ':account': 'githubUsername'
+     *   }
+     * }
+     */
     redirectAfterLogin: '/zero-kitchen-sink/authentication/redirect-after-login',
     redirectAfterLogout: '/zero-kitchen-sink/authentication/redirect-after-logout'
   }

@@ -2,7 +2,7 @@
   <main class="page">
 
     <h1 class="page-heading">
-      Protected
+      Redirect after login
     </h1>
 
     <p>

@@ -17,14 +17,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const account = store.account
     const { data } = await useFetch('/api/authenticate', { headers, query: { guarded } })
     const authenticated = data.value
-    if (authenticated) {
+    if (guarded && !authenticated) {
+      throw new Error('Looks like the page you\'re looking for doesn\'t exist')
+    } else if (authenticated) {
       store.setSession(authenticated)
       if (!account) {
         store.getAccount(authenticated.userId)
       }
-    }
-    if (guarded && !authenticated) {
-      throw new Error('Looks like the page you\'re looking for doesn\'t exist')
     }
   } catch (e) {
     if (!redirectUnauthenticated) {

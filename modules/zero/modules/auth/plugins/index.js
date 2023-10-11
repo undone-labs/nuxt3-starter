@@ -8,6 +8,8 @@ import { useZeroButtonStore } from '@/modules/zero/modules/button/stores/use-zer
 // -----------------------------------------------------------------------------
 // /////////////////////////////////////////////////////////////// listenToLogin
 const listenToLogin = (config) => {
+  const authConfig = config.public.auth
+  let redirect = authConfig.redirectAfterLogin === '' ? {} : authConfig.redirectAfterLogin || {}
   return new Promise((next) => {
     if (process.client) {
       window.addEventListener('message', async (e) => {
@@ -19,12 +21,18 @@ const listenToLogin = (config) => {
           const session = data.session
           authStore.setSession(session)
           buttonStore.setButton({ id: 'zero-authentication-login', loading: false })
-          await authStore.getAccount(session.userId)
+          const account = await authStore.getAccount(session.userId)
+          if (typeof redirect === 'object' && redirect.hasOwnProperty('path') && redirect.hasOwnProperty('match')) {
+            const match = redirect.match
+            redirect = redirect.path
+            Object.keys(match).forEach(key => {
+              redirect = redirect.replace(key, account[match[key]])
+            })
+          }
+          if (redirect) {
+            navigateTo(redirect)
+          }
           // app.$toaster.add(data.toast)
-          // const redirectTo = $config.redirectAfterLogin
-          // if (redirectTo) {
-          //   app.router.push(redirectTo.path)
-          // }
         }
       }, false)
     }
