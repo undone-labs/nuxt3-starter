@@ -1,11 +1,10 @@
-// https://github.com/nuxt/nuxt/issues/14269#issuecomment-1397352832
-// https://github.com/nuxt/nuxt/issues/14269#issuecomment-1700608437
-
-// import { callWithNuxt } from '#app'
+// ///////////////////////////////////////////////////////////////////// Imports
+// -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-auth-store'
 
+// ////////////////////////////////////////////////////////////////////// Export
+// -----------------------------------------------------------------------------
 export default defineNuxtRouteMiddleware(async to => {
-  if (process.server) { return }
   const nuxtApp = useNuxtApp()
   try {
     const headers = useRequestHeaders(['cookie'])

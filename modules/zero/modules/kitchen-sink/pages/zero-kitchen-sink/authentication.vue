@@ -11,13 +11,6 @@
       Login with GitHub
     </ZeroKitchenSinkButton>
 
-    <!-- <ZeroKitchenSinkButton
-      v-if="!account && !session"
-      v-bind="button"
-      @clicked="authStore.getAccount('651ef807598ade137fae42f2')">
-      Login with GitHub
-    </ZeroKitchenSinkButton> -->
-
     <h4>Session</h4>
     <ZeroMarkdownParser :markdown="sessionCode" />
 

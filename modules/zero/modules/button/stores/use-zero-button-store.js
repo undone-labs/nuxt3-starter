@@ -3,28 +3,36 @@
 import { defineStore } from 'pinia'
 import { ref } from '#imports'
 
-// /////////////////////////////////////////////////////////////////////// State
-// -----------------------------------------------------------------------------
-const buttons = ref({})
-
-// ///////////////////////////////////////////////////////////////////// Actions
-// -----------------------------------------------------------------------------
-// /////////////////////////////////////////////////////////////////// setButton
-const setButton = (payload) => {
-  buttons.value[payload.id] = payload
-}
-
-// //////////////////////////////////////////////////////////////// removeButton
-const removeButton = (id) => {
-  delete buttons.value[id]
-}
-
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useZeroButtonStore = defineStore('zero-button', () => ({
-  // ----- state
-  buttons,
-  // ----- actions
-  setButton,
-  removeButton
-}))
+export const useZeroButtonStore = defineStore('zero-button', () => {
+  // ===================================================================== state
+  const buttons = ref({})
+
+  // =================================================================== actions
+
+  /**
+   * @method setButton
+   */
+
+  const setButton = (payload) => {
+    buttons.value[payload.id] = payload
+  }
+
+  /**
+   * @method removeButton
+   */
+
+  const removeButton = (id) => {
+    delete buttons.value[id]
+  }
+
+  // ==================================================================== return
+  return {
+    // ----- state
+    buttons,
+    // ----- actions
+    setButton,
+    removeButton
+  }
+})
