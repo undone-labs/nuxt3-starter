@@ -13,7 +13,15 @@ const baseUrls = {
   production: ''
 }
 
-const frontendPort = 10050
+const frontendPort = (function () {
+  if (env === 'development') { return 17010 }
+  return env === 'stable' ? 17020 : 17030
+}())
+
+const backendPort = (function () {
+  if (env === 'development') { return 17040 }
+  return env === 'stable' ? 17050 : 17060
+}())
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -23,7 +31,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env],
-      serverFlag: env
+      backendUrl: env === 'development' ? `${baseUrls[env]}:${backendPort}` : `${baseUrls[env]}/api`,
+      serverFlag: env,
+      githubOAuthLink: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&scope=user:email,public_repo`
     }
   },
   // ////////////////////////////////////////////////////////// Server & Bundler
@@ -70,7 +80,7 @@ export default defineNuxtConfig({
   // ////////////////////////////////////////////////////////////// Auto-imports
   // ---------------------------------------------------------------------------
   imports: {
-    dirs: ['stores']
+    dirs: ['./stores']
   },
   // ///////////////////////////////////////////////////////////// Global Styles
   // ---------------------------------------------------------------------------
@@ -107,7 +117,7 @@ export default defineNuxtConfig({
   // ////////////////////////////////////////////////// [Module] @nuxtjs/algolia
   // ---------------------------------------------------------------------------
   algolia: {
-    disable: false,
+    disable: true,
     apiKey: process.env.ALGOLIA_API_KEY,
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     indexName: `${process.env.ALGOLIA_INDEX_ID}__${env}`,

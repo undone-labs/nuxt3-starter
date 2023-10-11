@@ -36,8 +36,8 @@ const textCopied = 'Copied!'
 const textNotCopiedUrl = 'Click to copy link'
 const textNotCopiedCode = 'Copy'
 const generalStore = useGeneralStore()
+const parsed = ref(null)
 let copyButtons = []
-let parsed = null
 
 // ============================================================== [Setup] Kramed
 hljs.registerLanguage('javascript', javascript)
@@ -101,7 +101,15 @@ renderer.code = function (code, language) {
   `
 }
 
-parsed = Kramed(props.markdown, { renderer })
+parsed.value = Kramed(props.markdown, { renderer })
+
+// ======================================================================= Watch
+watch(
+  () => props.markdown,
+  incoming => {
+    parsed.value = Kramed(incoming, { renderer })
+  }
+)
 
 // ======================================================================= Hooks
 onMounted(async () => {

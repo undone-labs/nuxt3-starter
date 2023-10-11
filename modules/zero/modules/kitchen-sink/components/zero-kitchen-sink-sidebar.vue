@@ -67,6 +67,13 @@ const sections = [
       { path: '/algolia', text: 'Algolia Search' },
       { path: '/api-preview', text: 'API Preview' }
     ]
+  },
+  {
+    title: 'Authentication',
+    links: [
+      { path: '/authentication', text: 'Authentication' },
+      { path: '/authentication-protected', text: '🛡️ Protected' }
+    ]
   }
 ]
 </script>
@@ -108,10 +115,12 @@ const sections = [
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  &:not(:first-child) {
+    margin-top: 2rem;
+  }
 }
 
 .title {
-  display: none;
   font-weight: 600;
 }
 

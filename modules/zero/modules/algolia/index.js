@@ -25,7 +25,7 @@ const parseMarkdownStringToJson = (fileName, fileLevelPath, fileLevel, string) =
   const nodes = parsedHtml.childNodes
   const len = nodes.length
   const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-  let heading = useUnSlugify(fileName, 'pascal-case', ' ')
+  let heading = useUnSlugify(fileName, 'pascal-case', '-', ' ')
   let compiled = {}
   if (!headings.includes(nodes[0].rawTagName)) {
     compiled = {
@@ -106,10 +106,11 @@ const compileDirContentForAlgoliaIndexing = (nuxtConfig) => {
             objectID: (file.level < 2 ?
                           `/${fileLevelPath}/${section.fileName}#${section.headingId}` :
                           `/${fileLevelPath}#${section.headingId}`).replace('//', '/'),
-            sidebarHeading: useUnSlugify(topLevelSlug, 'pascal-case', ' '),
+            sidebarHeading: useUnSlugify(topLevelSlug, 'pascal-case', '-', ' '),
             entryName: useUnSlugify(
               file.level < 2 ? section.fileName : parentSlug,
               'pascal-case',
+              '-',
               ' '
             ),
             entrySection: section.heading,

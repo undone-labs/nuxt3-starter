@@ -3,6 +3,7 @@ console.log('📦 [load:module] zero')
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import Fs from 'fs'
+import Path from 'path'
 
 import {
   defineNuxtModule,
@@ -12,7 +13,9 @@ import {
   addImportsDir,
   addComponent,
   extendPages,
-  addLayout
+  addLayout,
+  addServerHandler,
+  addRouteMiddleware
 } from 'nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
@@ -91,21 +94,39 @@ const registerLayouts = (path, log = false) => {
   })
 }
 
+// //////////////////////////////////////////////////////////////////////// walk
+const walk = (dir, next) => {
+  Fs.readdirSync(dir, { withFileTypes: true }).forEach(dirEnt => {
+    const name = dirEnt.name
+    const path = resolve(dirEnt.path, dirEnt.name)
+    const ext = Path.extname(name).toLowerCase()
+    const isDirectory = Fs.statSync(path).isDirectory()
+    isDirectory ?
+      walk(path, next) :
+      next({
+        path,
+        name,
+        ext
+      })
+  })
+}
+
 // /////////////////////////////////////////////////////////////// registerPages
-const registerPages = (nuxtConfig, path, log = false) => {
+const registerPages = (path) => {
   path = resolve(path, 'pages')
   if (!Fs.existsSync(path)) { return }
-  Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(page => {
-    const route = page.split('.vue')[0].replaceAll(':', '/')
-    const entry = {
-      file: resolve(path, page),
-      name: route === '/' ? 'ZeroKitchenSinkIndex' : `ZeroKitchenSink${useUnSlugify(route.replaceAll('/', '-'), 'pascal-case')}`,
-      path: route === '/' ? '/zero-kitchen-sink' : `/zero-kitchen-sink${route}`
+  walk(path, file => {
+    if (file.ext === '.vue') {
+      const route = file.path.split('pages').pop().replace('.vue', '')
+      const entry = {
+        file: file.path,
+        name: `Zero${useUnSlugify(route.replaceAll('-', '/'), 'pascal-case', '/')}`,
+        path: route
+      }
+      extendPages(pages => {
+        pages.push(entry)
+      })
     }
-    extendPages(pages => {
-      pages.push(entry)
-    })
-    if (log) { console.log(`📄 [zero:page] ${route}`) }
   })
 }
 
@@ -133,12 +154,38 @@ const registerComposables = (path) => {
   addImportsDir(path)
 }
 
+// ////////////////////////////////////////////////////////////// registerServer
+const registerServer = (path) => {
+  path = resolve(path, 'server')
+  if (!Fs.existsSync(path)) { return }
+  Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(routeFileName => {
+    const route = routeFileName.split('.js')[0].replaceAll(':', '/')
+    addServerHandler({
+      route,
+      handler: resolve(path, routeFileName)
+    })
+  })
+}
+
+// ////////////////////////////////////////////////////////// registerMiddleware
+const registerMiddleware = (path) => {
+  path = resolve(path, 'middleware')
+  if (!Fs.existsSync(path)) { return }
+  Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(middlewareFileName => {
+    const slug = middlewareFileName.split('.js')[0]
+    addRouteMiddleware({
+      name: slug,
+      path: resolve(path, middlewareFileName),
+      global: true
+    })
+  })
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
   addEntriesToPublicRuntimeConfig(nuxt)
   const commandAllowlist = ['dev'] // only load kitchen-sink for these commands (re: not `build` or `generate`)
-  const nuxtConfig = nuxt.options
   const basePath = resolve()
   const subModulePath = resolve('modules')
   const submodules = Fs.readdirSync(subModulePath)
@@ -153,22 +200,25 @@ const setup = async (_, nuxt) => {
       if (Fs.existsSync(moduleScriptPath)) {
         await import(moduleScriptPath)
       }
+      registerComposables(path)
       registerPlugins(path)
-      registerStores(path)
       registerComponents(path)
       registerLayouts(path)
-      registerPages(nuxtConfig, path)
+      registerPages(path)
       registerContentDirectories(nuxt, path, submodule)
-      registerComposables(path)
+      registerServer(path)
+      registerMiddleware(path)
+      registerStores(path)
     }
   }
+  registerComposables(basePath)
   registerPlugins(basePath, true)
-  registerStores(basePath, true)
   registerComponents(basePath, true)
   registerLayouts(basePath, true)
-  registerPages(nuxtConfig, basePath, true)
+  registerPages(basePath, true)
   registerContentDirectories(nuxt, basePath)
-  registerComposables(basePath)
+  registerMiddleware(basePath)
+  registerStores(basePath, true)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export

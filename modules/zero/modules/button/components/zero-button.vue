@@ -14,6 +14,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import { storeToRefs } from 'pinia'
+
 // ======================================================================= Props
 const props = defineProps({
   tag: { // 'button', 'a' or 'nuxt-link'
@@ -48,13 +51,18 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['clicked'])
-
 // ======================================================================= Setup
-const { $button } = useNuxtApp()
+const emit = defineEmits(['clicked'])
+const buttonStore = useZeroButtonStore()
 const id = props.loader || useUuid().v4()
-const button = await $button(id).register()
-const loading = button && button.loading
+buttonStore.setButton({ id, loading: false })
+
+// ======================================================================== Data
+const { buttons } = storeToRefs(buttonStore)
+
+// ======================================================================= Watch
+const button = computed(() => buttons.value[id])
+const loading = computed(() => button.value.loading)
 
 // ==================================================================== Computed
 const component = computed(() => {
@@ -68,7 +76,7 @@ const clickHandler = (e) => {
   e.stopPropagation()
   if (!props.disabled) {
     if (typeof props.loader === 'string') {
-      $button(id).set({ loading: true })
+      buttonStore.setButton({ id, loading: true })
     }
     emit('clicked', e)
   }

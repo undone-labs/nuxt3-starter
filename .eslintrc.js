@@ -21,7 +21,7 @@ module.exports = {
     'vue/multiline-html-element-content-newline': 'off',
     'vue/singleline-html-element-content-newline': ['error', {
       ignoreWhenNoAttributes: true,
-      ignores: ['th', 'td', 'span', 'label']
+      ignores: ['th', 'td', 'span', 'label', 'pre', 'code']
     }],
     'no-trailing-spaces': ['error', {
       skipBlankLines: true
