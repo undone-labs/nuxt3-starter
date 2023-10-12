@@ -162,12 +162,13 @@ const registerComposables = (path) => {
 const registerServer = (path) => {
   path = resolve(path, 'server')
   if (!Fs.existsSync(path)) { return }
-  Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(routeFileName => {
-    const route = routeFileName.split('.js')[0].replaceAll(':', '/')
-    addServerHandler({
-      route,
-      handler: resolve(path, routeFileName)
-    })
+  walk(path, file => {
+    if (file.ext === '.js') {
+      addServerHandler({
+        route: file.path.split('server').pop().replace('.js', ''),
+        handler: file.path
+      })
+    }
   })
 }
 
