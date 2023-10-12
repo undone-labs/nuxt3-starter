@@ -131,7 +131,7 @@ export default defineNuxtConfig({
   // ////////////////////////////////////// [Module] @/modules/zero/modules/auth
   // ---------------------------------------------------------------------------
   auth: {
-    redirectUnauthenticated: '/zero-kitchen-sink/authentication/redirect-unauthenticated',
+    redirectUnauthenticated: '/zero-kitchen-sink/authentication/redirect-unauthenticated'
     /**
      * string or object
      *
@@ -145,7 +145,7 @@ export default defineNuxtConfig({
      *   }
      * }
      */
-    redirectAfterLogin: '/zero-kitchen-sink/authentication/redirect-after-login',
-    redirectAfterLogout: '/zero-kitchen-sink/authentication/redirect-after-logout'
+    // redirectAfterLogin: '/zero-kitchen-sink/authentication/redirect-after-login',
+    // redirectAfterLogout: '/zero-kitchen-sink/authentication/redirect-after-logout'
   }
 })

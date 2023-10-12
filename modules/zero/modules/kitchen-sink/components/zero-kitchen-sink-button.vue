@@ -6,7 +6,7 @@
     <div class="inner-content">
 
       <div :class="['loader', { show: loading }]">
-        ⚠️ Loading
+        ⚠️ loading
       </div>
 
       <div :class="['button-content', { hide: loading }]">
@@ -63,7 +63,7 @@ const props = defineProps({
 .button {
   white-space: nowrap;
   cursor: pointer;
-  &:not([disabled="true"]) {
+  &:not([disabled]) {
     &:hover {
       .button-content {
         transition: 150ms ease-in;
@@ -74,7 +74,7 @@ const props = defineProps({
       @include focusBoxShadow;
     }
   }
-  &[disabled="true"] {
+  &[disabled] {
     box-shadow: none;
     opacity: 0.5;
     cursor: no-drop;
@@ -95,6 +95,7 @@ const props = defineProps({
   position: absolute;
   top: 0;
   left: 0;
+  font-size: toRem(14);
   opacity: 0;
   &.show {
     opacity: 1;
@@ -115,7 +116,7 @@ const props = defineProps({
   border: 2px solid var(--divider);
   border-radius: toRem(4);
   transition: 150ms ease-out;
-  &:hover {
+  &:not([disabled]):hover {
     transition: 150ms ease-in;
     background-color: var(--divider);
   }

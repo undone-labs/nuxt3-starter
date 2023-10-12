@@ -28,10 +28,9 @@ div.layout {
 
 :deep(main.page) {
   padding: 20rem 0 20rem 2rem;
-}
-
-:deep(h1.page-heading) {
-  margin-bottom: 3rem;
+  h1 {
+    margin-bottom: 3rem;
+  }
 }
 
 :deep(h1), :deep(.h1),

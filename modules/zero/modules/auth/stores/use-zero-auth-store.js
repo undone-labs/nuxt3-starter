@@ -1,7 +1,6 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineStore } from 'pinia'
-import { ref } from '#imports'
 import { useFetchAuth } from '@/modules/zero/modules/auth/composables/use-fetch-auth'
 
 // ////////////////////////////////////////////////////////////////////// Export
@@ -10,6 +9,9 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   // ===================================================================== state
   const session = ref(null)
   const account = ref(null)
+
+  // ================================================================== computed
+  const isLoggedIn = computed(() => session.value !== null)
 
   // =================================================================== actions
   /**
@@ -24,14 +26,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
    * @method setSession
    */
 
-  const removeSession = () => {
-    session.value = {}
-  }
-
-  /**
-   * @method setSession
-   */
-
   const getAccount = async (userId) => {
     try {
       const response = await useFetchAuth({
@@ -39,20 +33,20 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
         method: 'get',
         query: { userId }
       })
-      account.value = response
+      setAccount(response)
       return response
     } catch (e) {
-      account.value = null
+      setAccount(null)
       return null
     }
   }
 
   /**
-   * @method setSession
+   * @method setAccount
    */
 
-  const removeAccount = () => {
-    account.value = {}
+  const setAccount = (payload) => {
+    account.value = payload
   }
 
   // ==================================================================== return
@@ -60,10 +54,11 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     // ----- state
     session,
     account,
+    // ----- computed
+    isLoggedIn,
     // ----- actions
     setSession,
-    removeSession,
     getAccount,
-    removeAccount
+    setAccount
   }
 })

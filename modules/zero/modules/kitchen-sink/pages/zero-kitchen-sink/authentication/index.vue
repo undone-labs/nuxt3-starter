@@ -6,9 +6,17 @@
     </h1>
 
     <ZeroKitchenSinkButton
-      v-bind="button"
+      v-bind="loginButton"
+      :disabled="isLoggedIn"
       @clicked="useLoginWith('github')">
       Login with GitHub
+    </ZeroKitchenSinkButton>
+
+    <ZeroKitchenSinkButton
+      v-bind="logoutButton"
+      :disabled="!isLoggedIn"
+      @clicked="useLogout()">
+      Logout
     </ZeroKitchenSinkButton>
 
     <h4>Session</h4>
@@ -31,11 +39,17 @@ definePageMeta({
 
 // ======================================================================== Data
 const authStore = useZeroAuthStore()
-const { session, account } = storeToRefs(authStore)
+const { session, account, isLoggedIn } = storeToRefs(authStore)
 
-const button = {
+const loginButton = {
   tag: 'button',
   loader: 'zero-authentication-login',
+  theme: 'basic'
+}
+
+const logoutButton = {
+  tag: 'button',
+  loader: 'zero-authentication-logout',
   theme: 'basic'
 }
 
@@ -50,5 +64,9 @@ h4 {
   &:first-of-type {
     margin-top: 3rem;
   }
+}
+
+.button {
+  margin-right: 1rem;
 }
 </style>
