@@ -27,19 +27,27 @@ definePageMeta({
   authenticate: false
 })
 
+useHead({ title: 'Authenticating' })
+
 // ======================================================================== Data
 const route = useRoute()
 const config = useRuntimeConfig()
 
 // ======================================================================= Hooks
 onMounted(async () => {
-  if (!window.opener && window.opener !== window && window.name !== 'login-popup') {
+  if (!window.opener && window.opener !== window && window.name !== 'login-github-popup') {
     await navigateTo('/')
   }
-  const session = await $fetch('/api/login', {
-    query: route.query
+  animateTitle()
+  const session = await useFetchAuth('/login', {
+    method: 'post',
+    query: Object.assign(route.query, { strategy: 'github' }),
+    body: {}
   })
-  window.opener.postMessage({ session }, config.public.siteUrl)
+  window.opener.postMessage({
+    session,
+    loader: 'auth-github'
+  }, config.public.siteUrl)
   window.close()
 })
 
@@ -55,6 +63,20 @@ const resolveComponent = () => {
     return compToResolve
   }
   return false
+}
+
+/**
+ * @method animateTitle
+ */
+
+const animateTitle = () => {
+  let dots = ['.']
+  setInterval(() => {
+    dots.length === 3 ? dots = ['.'] : dots.push('.')
+    useHead({
+      title: `Authenticating${dots.join('')}`
+    })
+  }, 250)
 }
 </script>
 

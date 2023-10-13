@@ -14,15 +14,19 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const guarded = meta.guarded
     if (meta.hasOwnProperty('authenticate') && !meta.authenticate) { return }
     const store = useZeroAuthStore(nuxtApp.$pinia)
-    const account = store.account
-    const { data } = await useFetch('/api/authenticate', { headers, query: { guarded } })
-    const authenticated = data.value
+    const user = store.user
+    const authenticated = await useFetchAuth('/authenticate', {
+      method: 'post',
+      headers,
+      query: { guarded }
+    })
+    // const authenticated = data.value
     if (guarded && !authenticated) {
       throw new Error('Looks like the page you\'re looking for doesn\'t exist')
     } else if (authenticated) {
       store.setSession(authenticated)
-      if (!account) {
-        store.getAccount(authenticated.userId)
+      if (!user) {
+        store.getUser(authenticated.userId)
       }
     }
   } catch (e) {

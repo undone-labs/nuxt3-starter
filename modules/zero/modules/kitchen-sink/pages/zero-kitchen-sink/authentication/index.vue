@@ -6,11 +6,20 @@
     </h1>
 
     <ZeroKitchenSinkButton
-      v-bind="loginButton"
+      v-bind="loginWithGithubButton"
       :disabled="isLoggedIn"
       @clicked="useLoginWith('github')">
       Login with GitHub
     </ZeroKitchenSinkButton>
+
+    <client-only>
+      <ZeroKitchenSinkButton
+        v-bind="loginWithMetamaskButton"
+        :disabled="isLoggedIn"
+        @clicked="useLoginWith('metamask')">
+        {{ metamaskInstalled ? 'Login with MetaMask' : 'Click here to install MetaMask' }}
+      </ZeroKitchenSinkButton>
+    </client-only>
 
     <ZeroKitchenSinkButton
       v-bind="logoutButton"
@@ -22,8 +31,8 @@
     <h4>Session</h4>
     <ZeroMarkdownParser :markdown="sessionCode" />
 
-    <h4>Account</h4>
-    <ZeroMarkdownParser :markdown="accountCode" />
+    <h4>User</h4>
+    <ZeroMarkdownParser :markdown="userCode" />
 
   </main>
 </template>
@@ -39,23 +48,38 @@ definePageMeta({
 
 // ======================================================================== Data
 const authStore = useZeroAuthStore()
-const { session, account, isLoggedIn } = storeToRefs(authStore)
+const {
+  session,
+  user,
+  isLoggedIn,
+  metamaskInstalled
+} = storeToRefs(authStore)
 
-const loginButton = {
+const loginWithGithubButton = {
   tag: 'button',
-  loader: 'zero-authentication-login',
+  loader: 'auth-github',
+  theme: 'basic'
+}
+
+const loginWithMetamaskButton = {
+  tag: 'button',
+  loader: metamaskInstalled.value ? 'auth-metamask' : undefined,
   theme: 'basic'
 }
 
 const logoutButton = {
   tag: 'button',
-  loader: 'zero-authentication-logout',
+  loader: 'auth-logout',
   theme: 'basic'
 }
 
 // ==================================================================== Computed
 const sessionCode = computed(() => '```json\n' + (session.value ? JSON.stringify(session.value, null, 2) : 'No session found') + '\n```')
-const accountCode = computed(() => '```json\n' + (account.value ? JSON.stringify(account.value, null, 2) : 'No account found') + '\n```')
+const userCode = computed(() => '```json\n' + (user.value ? JSON.stringify(user.value, null, 2) : 'No user found') + '\n```')
+
+// onMounted(() => {
+//   console.log(window.ethereum)
+// })
 </script>
 
 <style lang="scss" scoped>
@@ -68,5 +92,6 @@ h4 {
 
 .button {
   margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 </style>

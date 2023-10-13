@@ -4,14 +4,16 @@
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useFetchAuth = async (body = {}) => {
+export const useFetchAuth = async (url, body = {}) => {
+  body.url = url
   try {
-    const { data } = await useFetch('/api/fetch-auth', {
+    const response = await $fetch.raw('/api/fetch-auth', {
       method: 'post',
+      ...(body.headers && { headers: body.headers }),
       body
     })
-    return data.value
+    return response._data
   } catch (e) {
-    console.log(e)
+    return undefined
   }
 }

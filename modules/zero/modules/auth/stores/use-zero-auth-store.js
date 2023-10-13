@@ -8,10 +8,12 @@ import { useFetchAuth } from '@/modules/zero/modules/auth/composables/use-fetch-
 export const useZeroAuthStore = defineStore('zero-auth', () => {
   // ===================================================================== state
   const session = ref(null)
-  const account = ref(null)
+  const user = ref(null)
 
   // ================================================================== computed
   const isLoggedIn = computed(() => session.value !== null)
+  const ethereum = computed(() => process.client ? window.ethereum : undefined)
+  const metamaskInstalled = computed(() => ethereum.value && ethereum.value.isMetaMask)
 
   // =================================================================== actions
   /**
@@ -23,42 +25,43 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
-   * @method setSession
+   * @method getUser
    */
 
-  const getAccount = async (userId) => {
+  const getUser = async (userId) => {
     try {
-      const response = await useFetchAuth({
-        url: '/get-user',
+      const response = await useFetchAuth('/get-user', {
         method: 'get',
         query: { userId }
       })
-      setAccount(response)
+      setUser(response)
       return response
     } catch (e) {
-      setAccount(null)
+      setUser(null)
       return null
     }
   }
 
   /**
-   * @method setAccount
+   * @method setUser
    */
 
-  const setAccount = (payload) => {
-    account.value = payload
+  const setUser = (payload) => {
+    user.value = payload
   }
 
   // ==================================================================== return
   return {
     // ----- state
     session,
-    account,
+    user,
     // ----- computed
     isLoggedIn,
+    ethereum,
+    metamaskInstalled,
     // ----- actions
     setSession,
-    getAccount,
-    setAccount
+    getUser,
+    setUser
   }
 })

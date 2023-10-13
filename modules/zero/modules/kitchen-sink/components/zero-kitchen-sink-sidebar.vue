@@ -72,10 +72,10 @@ const sections = [
     title: 'Authentication',
     links: [
       { path: '/authentication', text: 'Authentication' },
-      { path: '/authentication/protected', text: '🛡️ Protected' },
-      { path: '/authentication/redirect-unauthenticated', text: 'Redirect unauthenticated' },
-      { path: '/authentication/redirect-after-login', text: '🛡️ Redirect after login' },
-      { path: '/authentication/redirect-after-logout', text: 'Redirect after logout' }
+      { path: '/authentication/protected', text: 'Protected 🛡️ ' },
+      { path: '/authentication/redirect-unauthenticated', text: 'redirectUnauthenticated' },
+      { path: '/authentication/redirect-after-login', text: 'redirectAfterLogin 🛡️' },
+      { path: '/authentication/redirect-after-logout', text: 'redirectAfterLogout' }
     ]
   }
 ]

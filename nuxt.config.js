@@ -135,13 +135,13 @@ export default defineNuxtConfig({
     /**
      * string or object
      *
-     * if object, replace part of path with key's value from user (account) db
+     * if object, replace part of path with key's value from user (user) db
      * object, for example example:
      *
      * {
-     *   path: '/zero-kitchen-sink/:account/redirect-after-login',
+     *   path: '/zero-kitchen-sink/:user/redirect-after-login',
      *   match: {
-     *     ':account': 'githubUsername'
+     *     ':user': 'username'
      *   }
      * }
      */
