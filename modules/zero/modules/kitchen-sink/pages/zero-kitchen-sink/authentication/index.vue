@@ -7,7 +7,7 @@
 
     <ZeroKitchenSinkButton
       v-bind="loginWithGithubButton"
-      :disabled="isLoggedIn"
+      :disabled="loggedIn"
       @clicked="useLoginWith('github')">
       Login with GitHub
     </ZeroKitchenSinkButton>
@@ -15,7 +15,7 @@
     <client-only>
       <ZeroKitchenSinkButton
         v-bind="loginWithMetamaskButton"
-        :disabled="isLoggedIn"
+        :disabled="loggedIn"
         @clicked="useLoginWith('metamask')">
         {{ metamaskInstalled ? 'Login with MetaMask' : 'Click here to install MetaMask' }}
       </ZeroKitchenSinkButton>
@@ -23,10 +23,26 @@
 
     <ZeroKitchenSinkButton
       v-bind="logoutButton"
-      :disabled="!isLoggedIn"
+      :disabled="!loggedIn"
       @clicked="useLogout()">
       Logout
     </ZeroKitchenSinkButton>
+
+    <template v-if="loggedIn">
+      <h3>Providers</h3>
+      <ZeroKitchenSinkButton
+        v-bind="registerOauthProviderGithubButton"
+        @clicked="useLoginWith('github')">
+        Connect Github
+      </ZeroKitchenSinkButton>
+      <client-only>
+        <ZeroKitchenSinkButton
+          v-bind="registerOauthProviderMetamaskButton"
+          @clicked="useLoginWith('metamask')">
+          {{ metamaskInstalled ? 'Connect MetaMask' : 'Click here to install MetaMask' }}
+        </ZeroKitchenSinkButton>
+      </client-only>
+    </template>
 
     <h4>Session</h4>
     <ZeroMarkdownParser :markdown="sessionCode" />
@@ -51,7 +67,7 @@ const authStore = useZeroAuthStore()
 const {
   session,
   user,
-  isLoggedIn,
+  loggedIn,
   metamaskInstalled
 } = storeToRefs(authStore)
 
@@ -70,6 +86,18 @@ const loginWithMetamaskButton = {
 const logoutButton = {
   tag: 'button',
   loader: 'auth-logout',
+  theme: 'basic'
+}
+
+const registerOauthProviderGithubButton = {
+  tag: 'button',
+  loader: 'auth-register-github',
+  theme: 'basic'
+}
+
+const registerOauthProviderMetamaskButton = {
+  tag: 'button',
+  loader: metamaskInstalled.value ? 'auth-register-metamask' : undefined,
   theme: 'basic'
 }
 

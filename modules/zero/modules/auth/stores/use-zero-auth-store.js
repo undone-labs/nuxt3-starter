@@ -11,7 +11,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   const user = ref(null)
 
   // ================================================================== computed
-  const isLoggedIn = computed(() => session.value !== null)
+  const loggedIn = computed(() => session.value !== null)
   const ethereum = computed(() => process.client ? window.ethereum : undefined)
   const metamaskInstalled = computed(() => ethereum.value && ethereum.value.isMetaMask)
 
@@ -56,7 +56,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     session,
     user,
     // ----- computed
-    isLoggedIn,
+    loggedIn,
     ethereum,
     metamaskInstalled,
     // ----- actions
