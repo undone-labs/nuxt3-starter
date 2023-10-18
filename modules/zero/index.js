@@ -40,6 +40,7 @@ const addEntriesToPublicRuntimeConfig = (nuxt) => {
   nuxt.options.runtimeConfig.public.algolia.indexName = algolia.indexName
   nuxt.options.runtimeConfig.public.algolia.disable = algolia.disable || false
   nuxt.options.runtimeConfig.public.auth = nuxt.options.auth
+  nuxt.options.runtimeConfig.public.ls = nuxt.options.ls
 }
 
 // ///////////////////////////////////////////////////////////// registerPlugins
@@ -60,7 +61,8 @@ const registerComponents = (path, log = false) => {
     const name = component.split('.vue')[0]
     addComponent({
       name,
-      filePath: resolve(path, component)
+      filePath: resolve(path, component),
+      global: true
     })
     if (log) { console.log(`🧩 [zero:component] ${name}`) }
   })
@@ -145,7 +147,7 @@ const registerContentDirectories = (nuxt, path, tag) => {
   nuxt.options.content.sources = Object.assign(sources, {
     [useUnSlugify(tag, 'camel-case')]: {
       driver: 'fs',
-      prefix: `/zero/${tag}`, // All content inside this source will be prefixed with this
+      prefix: `/zero/${tag}`, // All content inside this source will be prefixed with /zero
       base: path
     }
   })
