@@ -39,6 +39,7 @@ module.exports = {
         "max": 3
       }
     }],
-    'vue/script-setup-uses-vars': 'error'
+    'vue/script-setup-uses-vars': 'error',
+    'vue/no-v-for-template-key': 'off'
   }
 }
