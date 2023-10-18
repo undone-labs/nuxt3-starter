@@ -1,0 +1,40 @@
+{
+  "panels": [
+    {
+      "title": "Lorem ipsum dolor sit amet",
+      "image": "https://placekitten.com/300/301"
+    },
+    {
+      "title": "Etiam a nibh ac tortor rhoncus malesuada",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": " Fusce orci felis, scelerisque in viverra eget",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Maecenas nec gravida enim",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Morbi posuere quis nunc et ullamcorper",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Sed accumsan sem a est laoreet",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Aliquam odio neque",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Aliquam odio neque",
+      "image": "https://placekitten.com/300/300"
+    },
+    {
+      "title": "Nullam vitae ante porttitor",
+      "image": "https://placekitten.com/300/300"
+    }
+  ]
+}
