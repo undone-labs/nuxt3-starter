@@ -65,7 +65,8 @@ const sections = [
       { path: '/markdown-parser', text: 'Markdown Parser' },
       { path: '/dropdown', text: 'Dropdown' },
       { path: '/algolia', text: 'Algolia Search' },
-      { path: '/api-preview', text: 'API Preview' }
+      { path: '/api-preview', text: 'API Preview' },
+      { path: '/alert', text: 'Alert' }
     ]
   },
   {
