@@ -5,17 +5,22 @@
       Slider
     </h1>
 
-    <ZeroSlider slider-id="demo-slider">
-      <template
-        v-for="(panel, i) in panels"
-        :key="`slide-${i}`">
-        <div
+    <ZeroSlider slider-id="demoSlider">
+
+      <template #panels>
+        <ZeroSliderPanel
+          v-for="(panel, i) in panels"
+          :key="`slide-${i}`"
+          slider-id="demoSlider"
+          :panel-index="i"
           class="slider-panel">
-          <img
-            class="panel-image"
-            :src="panel.image" />
-          <p v-html="panel.title" />
-        </div>
+          <template #panel-content>
+            <img
+              class="panel-image"
+              :src="panel.image" />
+            <p v-html="panel.title" />
+          </template>
+        </ZeroSliderPanel>
       </template>
 
     </ZeroSlider>
@@ -26,7 +31,8 @@
 <script setup>
 // ======================================================================= Setup
 definePageMeta({
-  layout: 'zero-layout'
+  layout: 'zero-layout',
+  authenticate: false
 })
 
 // ======================================================================== Data
@@ -42,5 +48,10 @@ const panels = ref(content.value[0].panels)
 </script>
 
 <style lang="scss" scoped>
-
+// //////////////////////////////////////////////////////////// Component Tweaks
+.slider-panel {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 </style>

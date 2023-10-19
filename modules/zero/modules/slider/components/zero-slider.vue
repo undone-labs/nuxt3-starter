@@ -1,14 +1,22 @@
 <template>
   <div class="slider">
-    <div class="track-wrapper" :style="{ width, transform, height }">
 
-      <renderedTrack />
+    <div
+      ref="track"
+      :style="{ height }"
+      class="track">
+
+
+      <slot name="panels" />
 
     </div>
+
   </div>
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia"
+
 // ======================================================================= Props
 const props = defineProps({
   sliderId: {
@@ -25,23 +33,20 @@ const props = defineProps({
 // ======================================================================= Setup
 const sliderStore = useZeroSliderStore()
 const slots = useSlots()
+const { sliders } = storeToRefs(sliderStore)
 
 // ======================================================================== Data
-const track = ref(null)
-const currentPanel = ref(false)
-const slidesRef = ref(slots.default()[0].children)
-const panelCount = ref(slidesRef.value.length)
-
 const localId = ref(useUuid().v4())
+const track = ref(null)
+const slidesRef = ref(slots.panels()[0].children)
+
 const height = ref(false)
-const transitionend = ref(false)
 
 // ==================================================================== Computed
 const id = computed(() => { return `${props.sliderId}|${localId.value}` })
-const width = computed(() => { return `${panelCount.value * 100}%` })
-const transform = computed(() => { return `translateX(-${currentPanel.value * 50}%)` })
-
-const renderedTrack = computed(() => { return h('div', { class:'track', ref: 'track' }, slots.default()) })
+const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
+const panelCount = computed(() => slidesRef.value.length)
+const currentPanel = computed(() => slider.currentPanel ? slider.currentPanel : props.startPanelIndex)
 
 // ==================================================================== Watchers
 // watch(currentPanel, () => {
@@ -49,7 +54,7 @@ const renderedTrack = computed(() => { return h('div', { class:'track', ref: 'tr
 // })
 
 // ======================================================================= Hooks
-onMounted(async () => {
+onMounted(() => {
   const startPanelIndex = props.startPanelIndex
   if (startPanelIndex < 0) {
     throw new Error(`The start panel index cannot be a negative number. You supplied a value of ${startPanelIndex}`)
@@ -58,26 +63,18 @@ onMounted(async () => {
     throw new Error(`You entered a start panel index (${startPanelIndex}) that is higher than the amount of panels available (${panelCount})`)
   }
   sliderStore.setSlider({
-    id,
+    id: id.value,
     sliderId: props.sliderId,
     currentPanel: props.startPanelIndex,
-    panelCount
+    panelCount: panelCount.value,
+    panelPositions: [...Array(panelCount.value).keys()]
   })
-  currentPanel.value = sliderStore.getSliderCurrentPanel(id)
-  transitionend.value = (e) => {
-    const propertyName = e.propertyName
-    if (propertyName === 'height' || propertyName === 'transform') {
-      $emit('sliderTransitionEnd')
-    }
-  }
-  track.value.addEventListener('transitionend', transitionend)
 
-  // setHeight()
+  setHeight()
 })
 
 onBeforeUnmount (() => {
-  sliderStore.removeSlider(id)
-  if (transitionend) { track.value.removeEventListener('transitionend', transitionend) }
+  sliderStore.removeSlider(props.sliderId)
 })
 
 // ===================================================================== Methods
@@ -86,7 +83,6 @@ onBeforeUnmount (() => {
  */
 const setHeight = () => {
   nextTick(() => {
-    console.log('height ', track.value.children[currentPanel.value].clientHeight)
     height.value = `${track.value.children[currentPanel.value].clientHeight}px`
   })
 }
@@ -100,14 +96,20 @@ const setHeight = () => {
 }
 
 .track {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   overflow: hidden;
+  width: 100%;
   transition: transform 150ms ease-in-out, height 150ms ease-in-out;
 }
 
 :deep(.slider-panel) {
+  position: absolute;
+  left: 0;
+  top: 0;
   flex: 1;
+  width: 100%;
 }
 </style>
