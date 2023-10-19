@@ -1,15 +1,7 @@
 <template>
-  <div class="slider">
+  <div ref="track" class="slider" :style="{ height }">
 
-    <div
-      ref="track"
-      :style="{ height }"
-      class="track">
-
-
-      <slot name="panels" />
-
-    </div>
+    <slot name="panels" />
 
   </div>
 </template>
@@ -45,13 +37,8 @@ const height = ref(false)
 // ==================================================================== Computed
 const id = computed(() => { return `${props.sliderId}|${localId.value}` })
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
+const currentPanel = computed(() => slider.value ? slider.value.currentPanel : props.startPanelIndex)
 const panelCount = computed(() => slidesRef.value.length)
-const currentPanel = computed(() => slider.currentPanel ? slider.currentPanel : props.startPanelIndex)
-
-// ==================================================================== Watchers
-// watch(currentPanel, () => {
-//     setHeight()
-// })
 
 // ======================================================================= Hooks
 onMounted(() => {
@@ -65,11 +52,11 @@ onMounted(() => {
   sliderStore.setSlider({
     id: id.value,
     sliderId: props.sliderId,
-    currentPanel: props.startPanelIndex,
+    currentPanel: startPanelIndex,
     panelCount: panelCount.value,
-    panelPositions: [...Array(panelCount.value).keys()]
+    panelPositions: [...Array(panelCount.value).keys()].map(el => (el + startPanelIndex + panelCount.value - 1) % panelCount.value),
+    animatedPanels: []
   })
-
   setHeight()
 })
 
@@ -92,14 +79,7 @@ const setHeight = () => {
 <style lang="scss" scoped>
 // ///////////////////////////////////////////////////////////////////// General
 .slider {
-  overflow: hidden;
-}
-
-.track {
   position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   overflow: hidden;
   width: 100%;
   transition: transform 150ms ease-in-out, height 150ms ease-in-out;

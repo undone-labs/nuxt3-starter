@@ -1,6 +1,6 @@
 <template>
   <div
-    class="slider-panel"
+    :class="['slider-panel', { animate }]"
     :style="getSlideStyles()">
 
     <slot name="panel-content" />
@@ -31,6 +31,9 @@ const { sliders } = storeToRefs(sliderStore)
 // ==================================================================== Computed
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
 const panelPositions = computed(() => slider ? slider.value.panelPositions : false)
+const animatedPanels = computed(() => slider ? slider.value.animatedPanels : false)
+
+const animate = computed(() => animatedPanels.value ? animatedPanels.value.includes(props.panelIndex) : false)
 
 // ======================================================================= Hooks
 
@@ -41,7 +44,7 @@ const panelPositions = computed(() => slider ? slider.value.panelPositions : fal
 const getSlideStyles =  () => {
   if (!panelPositions.value) { return false }
   const position = panelPositions.value.indexOf(props.panelIndex)
-  const transform = `translateX(${position * 100}%)`
+  const transform = `translateX(${(position - 1) * 100}%)`
   const styles = { transform }
   return styles
 }
@@ -50,12 +53,11 @@ const getSlideStyles =  () => {
 
 <style lang="scss" scoped>
 .slider-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   flex: 1;
   width: 100%;
-  transition: transform 250ms ease;
+  &.animate {
+    transition: transform 500ms ease;
+  }
 }
 
 </style>
