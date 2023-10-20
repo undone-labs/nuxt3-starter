@@ -1,7 +1,7 @@
 <template>
   <div class="slider-button" @click="changePanel($event, props.direction)">
 
-    <slot #button-content />
+    <slot name="button-content" />
 
   </div>
 </template>
@@ -27,29 +27,41 @@ const { sliders } = storeToRefs(sliderStore)
 
 // ==================================================================== Computed
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
-const panelPositions = computed(() => slider.value ? slider.value.panelPositions : false)
-const currentPanel = computed(() => slider.value ? slider.value.currentPanel : false)
+const panelPositions = computed(() => slider ? slider.value.panelPositions : false)
+const displayOptions = computed(() => slider ? slider.value.displayOptions : false)
 
 // ===================================================================== Methods
+/**
+ * @method calculateAnimatedPanels
+ */
+const calculateAnimatedPanels = (direction) => {
+  const defaultDisplay = displayOptions.value.default
+  let animatedPanels
+  switch(direction) {
+    case 'previous':
+      animatedPanels = [...panelPositions.value].slice(0, defaultDisplay + 1)
+      break
+    case 'next':
+      animatedPanels = [...panelPositions.value].slice(1, defaultDisplay + 2)
+  }
+  return animatedPanels
+}
 /**
  * @method changePanel
  */
 const changePanel = (e, direction) => {
   e.stopPropagation()
   const updatedPositions = [...panelPositions.value]
-  const animatedPanels = [currentPanel.value]
   if (direction === 'previous') {
-    animatedPanels.push(updatedPositions[0])
     updatedPositions.unshift(updatedPositions.pop())
   } else if (direction === 'next') {
-    animatedPanels.push(updatedPositions[2])
     updatedPositions.push(updatedPositions.shift())
   }
   sliderStore.updateSlider({
     sliderId: props.sliderId,
     panelPositions: updatedPositions,
-    currentPanel: updatedPositions[1],
-    animatedPanels
+    currentPanel: useCalculateCurrentPanel(displayOptions.value.default, updatedPositions),
+    animatedPanels: calculateAnimatedPanels(direction)
   })
 }
 </script>

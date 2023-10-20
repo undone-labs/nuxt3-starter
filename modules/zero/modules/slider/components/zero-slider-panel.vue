@@ -32,6 +32,7 @@ const { sliders } = storeToRefs(sliderStore)
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
 const panelPositions = computed(() => slider ? slider.value.panelPositions : false)
 const animatedPanels = computed(() => slider ? slider.value.animatedPanels : false)
+const displayOptions = computed(() => slider ? slider.value.displayOptions : false)
 
 const animate = computed(() => animatedPanels.value ? animatedPanels.value.includes(props.panelIndex) : false)
 
@@ -45,7 +46,8 @@ const getSlideStyles =  () => {
   if (!panelPositions.value) { return false }
   const position = panelPositions.value.indexOf(props.panelIndex)
   const transform = `translateX(${(position - 1) * 100}%)`
-  const styles = { transform }
+  const width = `${100 / displayOptions.value.default}%`
+  const styles = { transform, width }
   return styles
 }
 

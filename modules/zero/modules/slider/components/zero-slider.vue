@@ -15,10 +15,12 @@ const props = defineProps({
     type: String,
     required: true
   },
-  startPanelIndex: {
-    type: Number,
+  displayOptions: {
+    type: Object,
     required: false,
-    default: 0
+    default: () => {
+        return { default: 1 }
+      }
   }
 })
 
@@ -37,25 +39,20 @@ const height = ref(false)
 // ==================================================================== Computed
 const id = computed(() => { return `${props.sliderId}|${localId.value}` })
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
-const currentPanel = computed(() => slider.value ? slider.value.currentPanel : props.startPanelIndex)
+const currentPanel = computed(() => slider.value ? slider.value.currentPanel : false)
 const panelCount = computed(() => slidesRef.value.length)
 
 // ======================================================================= Hooks
 onMounted(() => {
-  const startPanelIndex = props.startPanelIndex
-  if (startPanelIndex < 0) {
-    throw new Error(`The start panel index cannot be a negative number. You supplied a value of ${startPanelIndex}`)
-  }
-  if (startPanelIndex > panelCount - 1) {
-    throw new Error(`You entered a start panel index (${startPanelIndex}) that is higher than the amount of panels available (${panelCount})`)
-  }
+  const panelPositions = [...Array(panelCount.value).keys()].map(el => (el + currentPanel.value + panelCount.value - 1) % panelCount.value)
   sliderStore.setSlider({
     id: id.value,
     sliderId: props.sliderId,
-    currentPanel: startPanelIndex,
+    currentPanel: currentPanel.value || useCalculateCurrentPanel(props.displayOptions.default, panelPositions),
     panelCount: panelCount.value,
-    panelPositions: [...Array(panelCount.value).keys()].map(el => (el + startPanelIndex + panelCount.value - 1) % panelCount.value),
-    animatedPanels: []
+    panelPositions,
+    animatedPanels: [],
+    displayOptions: props.displayOptions
   })
   setHeight()
 })
@@ -70,6 +67,7 @@ onBeforeUnmount (() => {
  */
 const setHeight = () => {
   nextTick(() => {
+    // track.value.children[currentPanel.value] is the currently visible/central panel DOM element
     height.value = `${track.value.children[currentPanel.value].clientHeight}px`
   })
 }

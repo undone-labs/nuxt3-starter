@@ -5,41 +5,90 @@
       Slider
     </h1>
 
-    <ZeroSlider slider-id="demoSlider">
+    <!--**
+        * [Slider] one slide at a time
+        * -->
+    <div class="slider-wrapper">
+      <ZeroSlider :slider-id="singlePanelSliderId">
 
-      <template #panels>
-        <ZeroSliderPanel
-          v-for="(panel, i) in panels"
-          :key="`slide-${i}`"
-          slider-id="demoSlider"
-          :panel-index="i">
-          <template #panel-content>
-            <img
-              class="panel-image"
-              :src="panel.image" />
-            <p v-html="panel.title" />
+        <template #panels>
+          <ZeroSliderPanel
+            v-for="(panel, i) in singlePanelSlider.panels"
+            :key="`slide-${i}`"
+            :slider-id="singlePanelSliderId"
+            :panel-index="i">
+            <template #panel-content>
+              <img
+                class="panel-image"
+                :src="panel.image" />
+              <p v-html="panel.title" />
+            </template>
+          </ZeroSliderPanel>
+        </template>
+
+      </ZeroSlider>
+      <div class="button-row">
+        <ZeroSliderButton
+          :slider-id="singlePanelSliderId"
+          direction="previous">
+          <template #button-content>
+            {{ "<- PREVIOUS" }}
           </template>
-        </ZeroSliderPanel>
-      </template>
+        </ZeroSliderButton>
 
-    </ZeroSlider>
+        <span> This slider shows one slide at a time </span>
 
-    <div class="button-row">
-      <ZeroSliderButton
-        slider-id="demoSlider"
-        direction="previous">
-        <template #button-content>
-          {{ "<- PREVIOUS" }}
+        <ZeroSliderButton
+          :slider-id="singlePanelSliderId"
+          direction="next">
+          <template #button-content>
+            {{ "NEXT ->" }}
+          </template>
+        </ZeroSliderButton>
+      </div>
+    </div>
+
+    <!--**
+        * [Slider] 3 slides at a time
+        * -->
+    <div class="slider-wrapper">
+      <ZeroSlider :slider-id="triplePanelSliderId" :display-options="triplePanelSlider.display_options">
+
+        <template #panels>
+          <ZeroSliderPanel
+            v-for="(panel, i) in triplePanelSlider.panels"
+            :key="`slide-${i}`"
+            :slider-id="triplePanelSliderId"
+            :panel-index="i">
+            <template #panel-content>
+              <img
+                class="panel-image"
+                :src="panel.image" />
+              <p v-html="panel.title" />
+            </template>
+          </ZeroSliderPanel>
         </template>
-      </ZeroSliderButton>
 
-      <ZeroSliderButton
-        slider-id="demoSlider"
-        direction="next">
-        <template #button-content>
-          {{ "NEXT ->" }}
-        </template>
-      </ZeroSliderButton>
+      </ZeroSlider>
+      <div class="button-row">
+        <ZeroSliderButton
+          :slider-id="triplePanelSliderId"
+          direction="previous">
+          <template #button-content>
+            {{ "<- PREVIOUS" }}
+          </template>
+        </ZeroSliderButton>
+
+        <span> This slider shows three slides at a time </span>
+
+        <ZeroSliderButton
+          :slider-id="triplePanelSliderId"
+          direction="next">
+          <template #button-content>
+            {{ "NEXT ->" }}
+          </template>
+        </ZeroSliderButton>
+      </div>
     </div>
 
   </main>
@@ -60,8 +109,13 @@ const { data: content } = await useAsyncData('content', () => {
     }
   }).find()
 })
+// ==================================================================== Computed
+const singlePanelSlider = computed(() => content.value[0].demo_slider_single_panel)
+const singlePanelSliderId = useUnSlugify(singlePanelSlider.value.id, 'camel-case', '_')
 
-const panels = ref(content.value[0].panels)
+const triplePanelSlider = computed(() => content.value[0].demo_slider_triple_panel)
+const triplePanelSliderId = useUnSlugify(triplePanelSlider.value.id, 'camel-case', '_')
+
 </script>
 
 <style lang="scss" scoped>
@@ -71,6 +125,11 @@ const panels = ref(content.value[0].panels)
   justify-content: space-between;
 }
 // //////////////////////////////////////////////////////////// Component Tweaks
+.slider-wrapper {
+  &:not(:last-child) {
+    margin-bottom: 5rem;
+  }
+}
 .slider {
   margin-bottom: 1rem;
 }
@@ -79,6 +138,11 @@ const panels = ref(content.value[0].panels)
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 toRem(10);
+}
+
+.panel-image {
+  width: 100%;
 }
 
 .slider-button {

@@ -1,48 +1,103 @@
 {
-  "panels": [
-    {
-      "title": "Lorem ipsum dolor sit amet",
-      "image": "https://placekitten.com/300/300"
+  "demo_slider_single_panel": {
+    "id": "demo_slider_single_panel",
+    "panels": [
+      {
+        "title": "Lorem ipsum dolor sit amet",
+        "image": "https://placekitten.com/300/300"
+      },
+      {
+        "title": "Maecenas nec gravida enim",
+        "image": "https://placekitten.com/301/300"
+      },
+      {
+        "title": "Morbi posuere quis nunc et ullamcorper",
+        "image": "https://placekitten.com/299/301"
+      },
+      {
+        "title": "Sed accumsan sem a est laoreet",
+        "image": "https://placekitten.com/301/301"
+      },
+      {
+        "title": "Etiam a nibh ac tortor rhoncus malesuada",
+        "image": "https://placekitten.com/302/300"
+      },
+      {
+        "title": " Fusce orci felis, scelerisque in viverra eget",
+        "image": "https://placekitten.com/300/302"
+      },
+      {
+        "title": "Aliquam odio neque",
+        "image": "https://placekitten.com/298/301"
+      },
+      {
+        "title": "Nullam vitae ante porttitor",
+        "image": "https://placekitten.com/301/302"
+      },
+      {
+        "title": "Vestibulum quis pulvinar nulla",
+        "image": "https://placekitten.com/302/302"
+      },
+      {
+        "title": "Cras accumsan nec nunc in suscipit",
+        "image": "https://placekitten.com/303/300"
+      },
+      {
+        "title": "Quisque a efficitur ipsum",
+        "image": "https://placekitten.com/302/303"
+      }
+    ]
+  },
+  "demo_slider_triple_panel": {
+    "id": "demo_slider_triple_panel",
+    "display_options": {
+      "default": 3
     },
-    {
-      "title": "Maecenas nec gravida enim",
-      "image": "https://placekitten.com/301/300"
-    },
-    {
-      "title": "Morbi posuere quis nunc et ullamcorper",
-      "image": "https://placekitten.com/299/301"
-    },
-    {
-      "title": "Sed accumsan sem a est laoreet",
-      "image": "https://placekitten.com/301/301"
-    },
-    {
-      "title": "Etiam a nibh ac tortor rhoncus malesuada",
-      "image": "https://placekitten.com/302/300"
-    },
-    {
-      "title": " Fusce orci felis, scelerisque in viverra eget",
-      "image": "https://placekitten.com/300/302"
-    },
-    {
-      "title": "Aliquam odio neque",
-      "image": "https://placekitten.com/298/301"
-    },
-    {
-      "title": "Nullam vitae ante porttitor",
-      "image": "https://placekitten.com/301/302"
-    },
-    {
-      "title": "Vestibulum quis pulvinar nulla",
-      "image": "https://placekitten.com/302/302"
-    },
-    {
-      "title": "Cras accumsan nec nunc in suscipit",
-      "image": "https://placekitten.com/303/300"
-    },
-    {
-      "title": "Quisque a efficitur ipsum",
-      "image": "https://placekitten.com/302/303"
-    }
-  ]
+    "panels": [
+      {
+        "title": "Lorem ipsum dolor sit amet",
+        "image": "https://placekitten.com/300/300"
+      },
+      {
+        "title": "Maecenas nec gravida enim",
+        "image": "https://placekitten.com/301/300"
+      },
+      {
+        "title": "Morbi posuere quis nunc et ullamcorper",
+        "image": "https://placekitten.com/299/301"
+      },
+      {
+        "title": "Sed accumsan sem a est laoreet",
+        "image": "https://placekitten.com/301/301"
+      },
+      {
+        "title": "Etiam a nibh ac tortor rhoncus malesuada",
+        "image": "https://placekitten.com/302/300"
+      },
+      {
+        "title": " Fusce orci felis, scelerisque in viverra eget",
+        "image": "https://placekitten.com/300/302"
+      },
+      {
+        "title": "Aliquam odio neque",
+        "image": "https://placekitten.com/298/301"
+      },
+      {
+        "title": "Nullam vitae ante porttitor",
+        "image": "https://placekitten.com/301/302"
+      },
+      {
+        "title": "Vestibulum quis pulvinar nulla",
+        "image": "https://placekitten.com/302/302"
+      },
+      {
+        "title": "Cras accumsan nec nunc in suscipit",
+        "image": "https://placekitten.com/303/300"
+      },
+      {
+        "title": "Quisque a efficitur ipsum",
+        "image": "https://placekitten.com/302/303"
+      }
+    ]
+  }
 }
