@@ -28,21 +28,20 @@ const { sliders } = storeToRefs(sliderStore)
 // ==================================================================== Computed
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
 const panelPositions = computed(() => slider ? slider.value.panelPositions : false)
-const displayOptions = computed(() => slider ? slider.value.displayOptions : false)
+const display = computed(() => slider ? slider.value.display : false)
 
 // ===================================================================== Methods
 /**
  * @method calculateAnimatedPanels
  */
 const calculateAnimatedPanels = (direction) => {
-  const defaultDisplay = displayOptions.value.default
   let animatedPanels
   switch(direction) {
     case 'previous':
-      animatedPanels = [...panelPositions.value].slice(0, defaultDisplay + 1)
+      animatedPanels = [...panelPositions.value].slice(0, display.value + 1)
       break
     case 'next':
-      animatedPanels = [...panelPositions.value].slice(1, defaultDisplay + 2)
+      animatedPanels = [...panelPositions.value].slice(1, display.value + 2)
   }
   return animatedPanels
 }
@@ -60,7 +59,7 @@ const changePanel = (e, direction) => {
   sliderStore.updateSlider({
     sliderId: props.sliderId,
     panelPositions: updatedPositions,
-    currentPanel: useCalculateCurrentPanel(displayOptions.value.default, updatedPositions),
+    currentPanel: useCalculateCurrentPanel(display.value, updatedPositions),
     animatedPanels: calculateAnimatedPanels(direction)
   })
 }

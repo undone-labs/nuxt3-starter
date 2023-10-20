@@ -32,7 +32,6 @@ const { sliders } = storeToRefs(sliderStore)
 // ======================================================================== Data
 const localId = ref(useUuid().v4())
 const track = ref(null)
-const slidesRef = ref(slots.panels()[0].children)
 
 const height = ref(false)
 
@@ -40,7 +39,21 @@ const height = ref(false)
 const id = computed(() => { return `${props.sliderId}|${localId.value}` })
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
 const currentPanel = computed(() => slider.value ? slider.value.currentPanel : false)
-const panelCount = computed(() => slidesRef.value.length)
+const breakpoints = computed(() => {
+  const data = {}
+  data.default = props.displayOptions.default
+  if (props.displayOptions.hasOwnProperty('ultralarge')) { data['140.625rem'] = props.displayOptions.ultralarge }
+  if (props.displayOptions.hasOwnProperty('xlarge')) { data['90rem'] = props.displayOptions.xlarge }
+  if (props.displayOptions.hasOwnProperty('large')) { data['85rem'] = props.displayOptions.large }
+  if (props.displayOptions.hasOwnProperty('medium')) { data['64rem'] = props.displayOptions.medium }
+  if (props.displayOptions.hasOwnProperty('small')) { data['53.125rem'] = props.displayOptions.small }
+  if (props.displayOptions.hasOwnProperty('mini')) { data['40rem'] = props.displayOptions.mini }
+  if (props.displayOptions.hasOwnProperty('tiny')) { data['25.9375rem'] = props.displayOptions.tiny }
+  return data
+})
+const display = computed(() => slider.value ? slider.value.display : matchBreakpointDisplayAmount())
+const panelCount = ref(slots.panels()[0].children.length)
+
 
 // ======================================================================= Hooks
 onMounted(() => {
@@ -52,7 +65,7 @@ onMounted(() => {
     panelCount: panelCount.value,
     panelPositions,
     animatedPanels: [],
-    displayOptions: props.displayOptions
+    display: display.value
   })
   setHeight()
 })
@@ -70,6 +83,26 @@ const setHeight = () => {
     // track.value.children[currentPanel.value] is the currently visible/central panel DOM element
     height.value = `${track.value.children[currentPanel.value].clientHeight}px`
   })
+}
+
+/**
+ * @method matchBreakpointDisplayAmount
+ */
+const matchBreakpointDisplayAmount = () => {
+  let updatedDisplay
+  let reset = true
+  for (const breakpoint in breakpoints.value) {
+    if (window.matchMedia(`(max-width: ${breakpoint})`).matches) {
+      if (reset) { reset = false}
+      if (display.value !== breakpoints.value[breakpoint]) {
+        updatedDisplay = breakpoints.value[breakpoint]
+      }
+    }
+  }
+  if (reset && display.value !== breakpoints.value.default) {
+    updatedDisplay = breakpoints.value.default
+  }
+  return updatedDisplay
 }
 
 </script>

@@ -16,7 +16,7 @@ export const useZeroSliderStore = defineStore('zero-slider', () => {
    *   panelCount: Number
    *   panelPositions: [] - index of panels in the DOM, first visible panel is at index 1
    *   animatedPanels: [] - panelPosition indexes of animating panels
-   *   displayOptions: { default: Number, breakpointName: Number etc. }
+   *   display: Number - number of panels displayed
    * }
    */
 

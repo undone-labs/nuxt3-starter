@@ -51,7 +51,9 @@
   "demo_slider_triple_panel": {
     "id": "demo_slider_triple_panel",
     "display_options": {
-      "default": 3
+      "default": 5,
+      "medium": 3,
+      "tiny": 1
     },
     "panels": [
       {
