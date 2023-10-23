@@ -60,11 +60,9 @@ buttonStore.setButton({ id, loading: false })
 // ======================================================================== Data
 const { buttons } = storeToRefs(buttonStore)
 
-// ======================================================================= Watch
+// ==================================================================== Computed
 const button = computed(() => buttons.value[id])
 const loading = computed(() => button.value.loading)
-
-// ==================================================================== Computed
 const component = computed(() => {
   const tag = props.tag
   if (tag !== 'nuxt-link') { return tag }

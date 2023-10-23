@@ -4,10 +4,6 @@
 
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import {
-  useRuntimeConfig
-} from '#imports'
-
 import { appendResponseHeader, getQuery } from 'h3'
 import { Agent } from 'undici'
 
@@ -16,7 +12,6 @@ import { Agent } from 'undici'
 export default async (event, options = {}) => {
   try {
     const config = useRuntimeConfig()
-    const method = options.method
     // Add forward / to url if none exists
     let url = options.url
     if (url.charAt(0) !== '/') { url = `/${url}` }

@@ -147,5 +147,10 @@ export default defineNuxtConfig({
      */
     // redirectAfterLogin: '/zero-kitchen-sink/authentication/redirect-after-login',
     // redirectAfterLogout: '/zero-kitchen-sink/authentication/redirect-after-logout'
+  },
+  // /////////////////////////////////////////////////////////// [Composable] ls
+  // ---------------------------------------------------------------------------
+  ls: {
+    prefix: 'filplus__'
   }
 })
