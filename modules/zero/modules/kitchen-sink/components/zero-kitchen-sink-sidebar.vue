@@ -60,13 +60,14 @@ const baseURL = '/zero-kitchen-sink'
 
 const sections = [
   {
-    title: 'Components',
+    title: 'Modules/Components',
     links: [
       { path: '/markdown-parser', text: 'Markdown Parser' },
       { path: '/dropdown', text: 'Dropdown' },
       { path: '/algolia', text: 'Algolia Search' },
       { path: '/api-preview', text: 'API Preview' },
-      { path: '/slider', text: 'Slider' }
+      { path: '/slider', text: 'Slider' },
+      { path: '/form', text: 'Form' }
     ]
   },
   {
