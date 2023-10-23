@@ -48,8 +48,8 @@
       }
     ]
   },
-  "demo_slider_triple_panel": {
-    "id": "demo_slider_triple_panel",
+  "demo_slider_five_panels": {
+    "id": "demo_slider_five_panels",
     "display_options": {
       "default": 5,
       "medium": 3,

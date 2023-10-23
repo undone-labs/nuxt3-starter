@@ -51,18 +51,18 @@
     </div>
 
     <!--**
-        * [Slider] 3 slides at a time
+        * [Slider] 5 slides by default,
         * -->
     <div class="slider-wrapper">
       <span class="slider-caption"> This slider shows five slides by default,  three slides at medium, and one slide at mini </span>
 
-      <ZeroSlider :slider-id="triplePanelSliderId" :display-options="triplePanelSlider.display_options">
+      <ZeroSlider :slider-id="fivePanels" :display-options="fivePanelSlider.display_options">
 
         <template #panels>
           <ZeroSliderPanel
-            v-for="(panel, i) in triplePanelSlider.panels"
+            v-for="(panel, i) in fivePanelSlider.panels"
             :key="`slide-${i}`"
-            :slider-id="triplePanelSliderId"
+            :slider-id="fivePanels"
             :panel-index="i">
             <template #panel-content>
               <img
@@ -77,7 +77,7 @@
 
       <div class="button-row">
         <ZeroSliderButton
-          :slider-id="triplePanelSliderId"
+          :slider-id="fivePanels"
           direction="previous">
           <template #button-content>
             {{ "<- PREVIOUS" }}
@@ -86,7 +86,7 @@
 
 
         <ZeroSliderButton
-          :slider-id="triplePanelSliderId"
+          :slider-id="fivePanels"
           direction="next">
           <template #button-content>
             {{ "NEXT ->" }}
@@ -117,8 +117,8 @@ const { data: content } = await useAsyncData('content', () => {
 const singlePanelSlider = computed(() => content.value[0].demo_slider_single_panel)
 const singlePanelSliderId = useUnSlugify(singlePanelSlider.value.id, 'camel-case', '_')
 
-const triplePanelSlider = computed(() => content.value[0].demo_slider_triple_panel)
-const triplePanelSliderId = useUnSlugify(triplePanelSlider.value.id, 'camel-case', '_')
+const fivePanelSlider = computed(() => content.value[0].demo_slider_five_panels)
+const fivePanels = useUnSlugify(fivePanelSlider.value.id, 'camel-case', '_')
 
 </script>
 
