@@ -9,6 +9,8 @@
         * [Slider] one slide at a time
         * -->
     <div class="slider-wrapper">
+      <span class="slider-caption"> This slider shows one slide at a time </span>
+
       <ZeroSlider :slider-id="singlePanelSliderId">
 
         <template #panels>
@@ -27,6 +29,7 @@
         </template>
 
       </ZeroSlider>
+
       <div class="button-row">
         <ZeroSliderButton
           :slider-id="singlePanelSliderId"
@@ -36,7 +39,6 @@
           </template>
         </ZeroSliderButton>
 
-        <span> This slider shows one slide at a time </span>
 
         <ZeroSliderButton
           :slider-id="singlePanelSliderId"
@@ -52,6 +54,8 @@
         * [Slider] 3 slides at a time
         * -->
     <div class="slider-wrapper">
+      <span class="slider-caption"> This slider shows five slides by default,  three slides at medium, and one slide at mini </span>
+
       <ZeroSlider :slider-id="triplePanelSliderId" :display-options="triplePanelSlider.display_options">
 
         <template #panels>
@@ -70,6 +74,7 @@
         </template>
 
       </ZeroSlider>
+
       <div class="button-row">
         <ZeroSliderButton
           :slider-id="triplePanelSliderId"
@@ -79,7 +84,6 @@
           </template>
         </ZeroSliderButton>
 
-        <span> This slider shows three slides at a time </span>
 
         <ZeroSliderButton
           :slider-id="triplePanelSliderId"
@@ -146,11 +150,20 @@ const triplePanelSliderId = useUnSlugify(triplePanelSlider.value.id, 'camel-case
 }
 
 .slider-button {
+  height: fit-content;
   padding: 0 toRem(10);
   background-color: var(--divider);
   border-radius: toRem(4);
   &:hover {
     background-color: var(--link-hover-color);
   }
+  @include small {
+    order: 3;
+  }
+}
+
+.slider-caption {
+  display: block;
+  text-align: center;
 }
 </style>

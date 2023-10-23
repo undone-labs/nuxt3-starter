@@ -15,7 +15,7 @@
 }
 
 [class~="grid"], [class*="grid-"], [class*="grid_"] {
-  width: $gridWidth;
+  // width: $gridWidth;
   margin: 0 auto;
   @include gridMaxMQ {
     padding: 0 4.1665%;

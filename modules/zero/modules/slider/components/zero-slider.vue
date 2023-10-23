@@ -32,8 +32,9 @@ const { sliders } = storeToRefs(sliderStore)
 // ======================================================================== Data
 const localId = ref(useUuid().v4())
 const track = ref(null)
-
 const height = ref(false)
+const resizeObserver = ref(null)
+const resize = ref(null)
 
 // ==================================================================== Computed
 const id = computed(() => { return `${props.sliderId}|${localId.value}` })
@@ -56,7 +57,7 @@ const panelCount = ref(slots.panels()[0].children.length)
 
 
 // ======================================================================= Hooks
-onMounted(() => {
+onMounted(async () => {
   const panelPositions = [...Array(panelCount.value).keys()].map(el => (el + currentPanel.value + panelCount.value - 1) % panelCount.value)
   sliderStore.setSlider({
     id: id.value,
@@ -67,24 +68,39 @@ onMounted(() => {
     animatedPanels: [],
     display: display.value
   })
-  setHeight()
+   await nextTick(() => {
+    setHeight()
+    resize.value = useThrottle(resizeFunctions, 200)
+    resizeObserver.value = new ResizeObserver(resize.value)
+    resizeObserver.value.observe(track.value)
+  })
 })
 
 onBeforeUnmount (() => {
   sliderStore.removeSlider(props.sliderId)
+  resizeObserver.value.disconnect()
 })
 
 // ===================================================================== Methods
 /**
  * @method setHeight
  */
-const setHeight = () => {
+const resizeFunctions = () => {
   nextTick(() => {
-    // track.value.children[currentPanel.value] is the currently visible/central panel DOM element
-    height.value = `${track.value.children[currentPanel.value].clientHeight}px`
+    setHeight()
+    sliderStore.updateSlider({
+      sliderId: props.sliderId,
+      display: matchBreakpointDisplayAmount()
+    })
   })
 }
-
+/**
+ * @method setHeight
+ */
+const setHeight = () => {
+  // track.value.children[currentPanel.value] is the currently visible/central panel DOM element
+  height.value = `${track.value.children[currentPanel.value].clientHeight}px`
+}
 /**
  * @method matchBreakpointDisplayAmount
  */
@@ -94,12 +110,10 @@ const matchBreakpointDisplayAmount = () => {
   for (const breakpoint in breakpoints.value) {
     if (window.matchMedia(`(max-width: ${breakpoint})`).matches) {
       if (reset) { reset = false}
-      if (display.value !== breakpoints.value[breakpoint]) {
-        updatedDisplay = breakpoints.value[breakpoint]
-      }
+      updatedDisplay = breakpoints.value[breakpoint]
     }
   }
-  if (reset && display.value !== breakpoints.value.default) {
+  if (reset) {
     updatedDisplay = breakpoints.value.default
   }
   return updatedDisplay

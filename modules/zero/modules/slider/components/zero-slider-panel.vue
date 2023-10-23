@@ -1,7 +1,7 @@
 <template>
   <div
     :class="['slider-panel', { animate }]"
-    :style="getSlideStyles()">
+    :style="slideStyles">
 
     <slot name="panel-content" />
 
@@ -26,8 +26,6 @@ const props = defineProps({
 const sliderStore = useZeroSliderStore()
 const { sliders } = storeToRefs(sliderStore)
 
-// ======================================================================== Data
-
 // ==================================================================== Computed
 const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[props.sliderId] : false)
 const panelPositions = computed(() => slider.value.panelPositions )
@@ -36,18 +34,14 @@ const display = computed(() => slider.value.display)
 
 const animate = computed(() => animatedPanels.value ? animatedPanels.value.includes(props.panelIndex) : false)
 
-// ===================================================================== Methods
-/**
- * @method getSlideStyles
- */
-const getSlideStyles =  () => {
+const slideStyles = computed(() => {
   if (!panelPositions.value) { return false }
   const position = panelPositions.value.indexOf(props.panelIndex)
-  const transform = `translateX(${(position - 1) * 100}%)`
-  const width = `${100 / display.value}%`
-  const styles = { transform, width }
-  return styles
-}
+  return {
+    transform: `translateX(${(position - 1) * 100}%)`,
+    width: `${100 / display.value}%`
+  }
+})
 
 </script>
 

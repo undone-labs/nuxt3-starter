@@ -53,7 +53,7 @@
     "display_options": {
       "default": 5,
       "medium": 3,
-      "tiny": 1
+      "mini": 1
     },
     "panels": [
       {
