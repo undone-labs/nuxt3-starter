@@ -154,7 +154,8 @@ const fivePanels = useUnSlugify(fivePanelSlider.value.id, 'camel-case', '_')
   padding: 0 toRem(10);
   background-color: var(--divider);
   border-radius: toRem(4);
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: var(--link-hover-color);
   }
   @include small {

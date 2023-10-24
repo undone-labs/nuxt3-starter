@@ -1,9 +1,12 @@
 <template>
-  <div class="slider-button" @click="changePanel($event, props.direction)">
+  <ZeroButton
+    :loader="id"
+    class="slider-button"
+    @click="changePanel($event, props.direction)">
 
     <slot name="button-content" />
 
-  </div>
+  </ZeroButton>
 </template>
 <script setup>
 // ===================================================================== Imports
@@ -23,6 +26,10 @@ const props = defineProps({
 
 // ======================================================================= Setup
 const sliderStore = useZeroSliderStore()
+const buttonStore = useZeroButtonStore()
+const id = `${props.sliderId}${props.direction[0].toUpperCase()}${props.direction.slice(1)}Button`
+
+// ======================================================================== Data
 const { sliders } = storeToRefs(sliderStore)
 
 // ==================================================================== Computed
@@ -62,6 +69,7 @@ const changePanel = (e, direction) => {
     currentPanel: useCalculateCurrentPanel(display.value, updatedPositions),
     animatedPanels: calculateAnimatedPanels(direction)
   })
+  buttonStore.setButton({ id, loading: false })
 }
 </script>
 <style lang="scss" scoped>
