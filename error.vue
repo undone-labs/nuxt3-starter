@@ -15,6 +15,8 @@
             {{ error.message }}
           </div>
 
+          <pre v-if="error.stack"><code>{{ error.stack }}</code></pre>
+
           <nuxt-link
             v-if="error.data?.from"
             :to="error.data.from">

@@ -1,7 +1,5 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import { useRuntimeConfig } from '#imports'
-
 import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-auth-store'
 import { useZeroButtonStore } from '@/modules/zero/modules/button/stores/use-zero-button-store'
 
