@@ -1,7 +1,7 @@
 <template>
   <ZeroButton
     class="toggle-accordion-button"
-    loader="toggleAccordionMultiple"
+    :loader="id"
     @clicked="toggleAllAccordionSections(accordionId)">
 
     <slot :all-sections-open="allSectionsOpen" />
@@ -24,7 +24,7 @@ const props = defineProps({
 // ======================================================================= Setup
 const accordionStore = useZeroAccordionStore()
 const buttonStore = useZeroButtonStore()
-
+const id = `${props.accordionId}Toggle`
 // ======================================================================== Data
 const { accordions } = storeToRefs(accordionStore)
 
@@ -38,7 +38,7 @@ const allSectionsOpen = computed(() => accordion.value ? accordion.value.allSect
  */
  const toggleAllAccordionSections = (accordionId) => {
   accordionStore.toggleAllSections(accordionId)
-  buttonStore.setButton({ id: `${accordionId}Toggle` , loading: false })
+  buttonStore.setButton({ id, loading: false })
 }
 
 </script>
