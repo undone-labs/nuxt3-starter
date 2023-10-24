@@ -1,10 +1,13 @@
 <template>
-  <div :class="['accordion-section', { open }]">
+  <div
+    :class="['accordion-section', { open }]"
+    tabindex="0"
+    @click="toggleSection"
+    @keydown.enter="toggleSection">
 
     <div
       ref="header"
-      :class="['accordion-header', { open }]"
-      @click="toggleSection">
+      :class="['accordion-header', { open }]">
       <slot name="header" />
 
     </div>
