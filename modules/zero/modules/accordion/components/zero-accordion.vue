@@ -66,7 +66,7 @@ const handleKeyboardNavigation = (e) => {
   const meta = e.metaKey || e.ctrlKey
   const f = e.keyCode === 70 || e.code === 70 || e.key === 'f'
   if (meta && f) {
-    expandAll(true)
+    accordionStore.toggleAllSections(props.accordionId)
   }
 }
 </script>
