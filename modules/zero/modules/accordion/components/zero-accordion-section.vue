@@ -39,8 +39,8 @@ const { accordions } = storeToRefs(accordionStore)
 const height = ref('0px')
 const header = ref(null)
 const content = ref(null)
-// const resize = ref(false)
-// const resizeObserver = ref(false)
+const resize = ref(false)
+const resizeObserver = ref(false)
 
 // ==================================================================== Computed
 const accordion = computed(() => accordions.value[props.accordionId])
@@ -61,20 +61,18 @@ watch(open, () => {
 // ======================================================================= Hooks
 onMounted(() => {
   accordionStore.setAccordionSection(props.accordionId, sectionId.value)
-  // nextTick(() => {
-  //   resize.value = useThrottle(() => {
-  //     if (height.value !== '0px') {
-  //       height.value = content.value.clientHeight + 'px'
-  //     }
-  //   }, 100)
-  //   resizeObserver.value = new ResizeObserver(resize.value)
-  //   resizeObserver.value.observe(header.value)
-  // })
+  nextTick(() => {
+    resize.value = useThrottle(() => {
+      setHeight()
+    }, 100)
+    resizeObserver.value = new ResizeObserver(resize.value)
+    resizeObserver.value.observe(header.value)
+  })
 })
 
-// onBeforeUnmount(() => {
-//   resizeObserver.value.disconnect()
-// })
+onBeforeUnmount(() => {
+  resizeObserver.value.disconnect()
+})
 
 // ===================================================================== Methods
 /**
@@ -87,8 +85,9 @@ onMounted(() => {
  * @method setHeight
  */
  const setHeight = () => {
-  if(open.value && height.value === '0px') {
-    height.value = `${content.value.children[0].clientHeight}px`
+  if(open.value) {
+    const contentHeight = `${content.value.children[0].clientHeight}px`
+    if(height.value !== contentHeight) { height.value = contentHeight }
   }
   else {
     height.value = '0px'
