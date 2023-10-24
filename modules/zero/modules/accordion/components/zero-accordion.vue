@@ -17,6 +17,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  toggleOnLoad: {
+    type: Boolean,
+    required: false,
+    default: false // can't be true if multiple is false
   }
 })
 
@@ -43,6 +48,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
+  if(props.multiple && props.toggleOnLoad) { accordionStore.toggleAllSections(props.accordionId) }
   keydown.value = handleKeyboardNavigation
   window.addEventListener('keydown', keydown.value)
 })
