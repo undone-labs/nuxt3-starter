@@ -41,18 +41,22 @@ export const useZeroAccordionStore = defineStore('zero-accordion', () => {
    * @method toggleAccordionSection
    */
   const toggleAccordionSection = (accordionId, sectionId) => {
+    const active = accordions.value[accordionId].active
     if(!accordions.value[accordionId].multiple) {
-      accordions.value[accordionId].active = sectionId
+      if(active === sectionId) {
+        accordions.value[accordionId].active = false
+      } else {
+        accordions.value[accordionId].active = sectionId
+      }
     } else {
-      const index = accordions.value[accordionId].active.indexOf(sectionId)
+      const index = active.indexOf(sectionId)
       if(index === -1) {
-
         accordions.value[accordionId].active.push(sectionId)
       } else {
         accordions.value[accordionId].active = accordions.value[accordionId].active.toSpliced(index, 1)
       }
     }
-    if (accordions.value[accordionId].active.length === accordions.value[accordionId].children.length) {
+    if (active.length === accordions.value[accordionId].children.length) {
       accordions.value[accordionId].allSectionsOpen = true
     }
   }
@@ -64,8 +68,9 @@ export const useZeroAccordionStore = defineStore('zero-accordion', () => {
     if(!accordions.value[accordionId].multiple) {
       return
     }
-    if (accordions.value[accordionId].active.length < accordions.value[accordionId].children.length) {
-      accordions.value[accordionId].active = [...accordions.value[accordionId].children]
+    const children = accordions.value[accordionId].children
+    if (accordions.value[accordionId].active.length < children.length) {
+      accordions.value[accordionId].active = [...children]
       accordions.value[accordionId].allSectionsOpen = true
     } else {
       accordions.value[accordionId].active = []
