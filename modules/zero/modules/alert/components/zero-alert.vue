@@ -1,70 +1,67 @@
-<script>
+<template>
+  <!-- parent HTML element needs to be the containing block to component for
+       styling to work as expected -->
+  <div :class="['alert', { open }]">
+    <slot :accepted="accepted" :rejected="rejected" />
+
+  </div>
+</template>
+<script setup>
 // ===================================================================== Imports
-import { mapActions } from 'vuex'
+import { storeToRefs } from 'pinia'
 
-// ====================================================================== Export
-export default {
-  name: 'Alert',
+// ======================================================================= Props
+const props = defineProps({
+  alertId: {
+    type: String,
+    required: true
+  }
+})
 
-  props: {
-    alertId: {
-      type: String,
-      required: true
-    }
-  },
+// ======================================================================= Setup
+const emit = defineEmits(['completed'])
+const alertStore = useZeroAlertStore()
+const id = `${props.alertId}|${useUuid().v4()}`
+alertStore.setAlert({ id, alertId: props.alertId, isOpen: false })
+// ======================================================================== Data
+const { alerts } = storeToRefs(alertStore)
 
-  data () {
-    const localId = this.$uuid.v4()
-    return {
-      localId
-    }
-  },
+// ==================================================================== Computed
+const open = computed(() => alerts.value ? alerts.value[props.alertId].isOpen : null)
 
-  computed: {
-    id () {
-      return `${this.alertId}|${this.localId}`
-    },
-    alert () {
-      return this.$alert(this.alertId)
-    },
-    isOpen () {
-      return this.$alert(this.alertId).isOpen()
-    }
-  },
+// ======================================================================= Hooks
+onBeforeUnmount(() => {
+  alertStore.removeAlert(props.alertId)
+})
 
-  mounted () {
-    this.registerAlert({
-      id: this.id,
-      alertId: this.alertId
-    })
-  },
+// ===================================================================== Methods
+/**
+ * @method accepted
+ */
+const accepted = () => {
+  emit('completed', true)
+  alertStore.closeAlert({ alertId: props.alertId, completed: true })
+}
+/**
+ * @method rejected
+ */
+const rejected = () => {
+  emit('completed', false)
+  alertStore.closeAlert({ alertId: props.alertId, completed: false })
+}
 
-  beforeDestroy () {
-    this.deregisterAlert(this.id)
-  },
-
-  methods: {
-    ...mapActions({
-      registerAlert: 'alert/registerAlert',
-      deregisterAlert: 'alert/deregisterAlert'
-    }),
-    triggerAlertAction () {
-      const alert = this.alert.fetch()
-      const action = alert.action
-      const storeAction = alert.storeAction
-      const data = alert.data
-      if (action === 'store' && storeAction) {
-        this.$store.dispatch(storeAction, data)
-      }
-    }
-  },
-
-  render () {
-    return this.$scopedSlots.default({
-      isOpen: this.isOpen,
-      triggerAlertAction: this.triggerAlertAction,
-      closeAlert: this.alert.close
-    })
+</script>
+<style lang="scss" scoped>
+.alert {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(-100%);
+  transition: 150ms ease-in;
+  &.open {
+    transform: translateY(0%);
   }
 }
-</script>
+</style>

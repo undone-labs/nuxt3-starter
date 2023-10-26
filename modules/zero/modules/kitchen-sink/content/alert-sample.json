@@ -1,0 +1,31 @@
+{
+  "demo_form": {
+    "title": "Demo Form",
+    "scaffold": {
+      "ecosystem_associates_radio": {
+        "type": "radio",
+        "modelKey": "ecosystem_associates_radio",
+        "formId": "filplus_application",
+        "label": "Ecosystem associates",
+        "description": "Is this project associated with ecosystem stakeholders or other relevant projects?",
+        "required": true,
+        "output": "option",
+        "validationMessage": {
+          "required": "This field is required"
+        },
+        "options": [
+          { "label": "Yes" },
+          { "label": "No" }
+        ],
+        "defaultValue": ""
+      }
+    },
+    "alert": {
+      "text": "Are you sure you want to submit this form? This action cannot be undone",
+      "buttons": {
+        "accept": "Submit Form",
+        "reject": "cancel"
+      }
+    }
+  }
+}
