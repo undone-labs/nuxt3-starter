@@ -56,7 +56,10 @@
     <div class="slider-wrapper">
       <span class="slider-caption"> This slider shows five slides by default,  three slides at medium, and one slide at mini </span>
 
-      <ZeroSlider :slider-id="fivePanels" :display-options="fivePanelSlider.display_options">
+      <ZeroSlider
+        :slider-id="fivePanels"
+        :display-options="fivePanelSlider.display_options"
+        :click-to-center="true">
 
         <template #panels>
           <ZeroSliderPanel

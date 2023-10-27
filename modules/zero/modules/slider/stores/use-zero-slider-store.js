@@ -40,6 +40,7 @@ export const useZeroSliderStore = defineStore('zero-slider', () => {
    * @method updateSlider
    */
   const updateSlider = (updatedSlider) => {
+    console.log('updating slider ', updateSlider)
     const sliderId = updatedSlider.sliderId
     sliders.value[sliderId] = {...sliders.value[sliderId], ...updatedSlider}
   }

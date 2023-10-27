@@ -21,6 +21,11 @@ const props = defineProps({
     default: () => {
         return { default: 1 }
       }
+  },
+  clickToCenter: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -58,15 +63,17 @@ const panelCount = ref(slots.panels()[0].children.length)
 
 // ======================================================================= Hooks
 onMounted(async () => {
-  const panelPositions = [...Array(panelCount.value).keys()].map(el => (el + currentPanel.value + panelCount.value - 1) % panelCount.value)
+  const panelPositions = [...Array(panelCount.value).keys()].map(el => (el + panelCount.value - 1) % panelCount.value)
   sliderStore.setSlider({
     id: id.value,
     sliderId: props.sliderId,
-    currentPanel: currentPanel.value || useCalculateCurrentPanel(props.displayOptions.default, panelPositions),
+    // currentPanel: currentPanel.value || useCalculateCurrentPanel(props.displayOptions.default, panelPositions),
+    display: display.value,
+    currentPanel: currentPanel.value || panelPositions[useCalculateCurrentPanelIndex(display.value)],
     panelCount: panelCount.value,
     panelPositions,
     animatedPanels: [],
-    display: display.value
+    clickToCenter: props.clickToCenter
   })
    await nextTick(() => {
     setHeight()

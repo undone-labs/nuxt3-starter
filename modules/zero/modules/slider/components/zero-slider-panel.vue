@@ -1,7 +1,8 @@
 <template>
   <div
-    :class="['slider-panel', { animate }]"
-    :style="slideStyles">
+    :class="['slider-panel', { animate }, { clickable: clickToCenter }]"
+    :style="slideStyles"
+    @click="panelClick()">
 
     <slot name="panel-content" />
 
@@ -10,6 +11,7 @@
 
 <script setup>
 import { storeToRefs } from "pinia"
+import { useCalculatePanelPositions } from "../composables/use-calculate-panel-positions";
 
 // ======================================================================= Props
 const props = defineProps({
@@ -23,6 +25,7 @@ const props = defineProps({
   }
 })
 // ======================================================================= Setup
+// const emit = defineEmits(['clicked'])
 const sliderStore = useZeroSliderStore()
 const { sliders } = storeToRefs(sliderStore)
 
@@ -31,6 +34,8 @@ const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[prop
 const panelPositions = computed(() => slider.value.panelPositions )
 const animatedPanels = computed(() => slider.value.animatedPanels)
 const display = computed(() => slider.value.display)
+const currentPanel = computed(() => slider.value.currentPanel)
+const clickToCenter = computed(() => slider.value.clickToCenter)
 
 const animate = computed(() => animatedPanels.value ? animatedPanels.value.includes(props.panelIndex) : false)
 
@@ -43,6 +48,38 @@ const slideStyles = computed(() => {
   }
 })
 
+// ===================================================================== Methods
+/**
+ * @method calculateAnimatedPanels
+ */
+ const calculateAnimatedPanels = (updatedPositions) => {
+  let animatedPanels
+  const indexDifference = Math.abs(currentPanel.value - props.panelIndex)
+  switch(true) {
+    case (props.panelIndex < currentPanel.value):
+      animatedPanels = [...updatedPositions].slice(1, display.value + indexDifference + 1)
+      break
+    case (props.panelIndex > currentPanel.value):
+      animatedPanels = [...panelPositions.value].slice(1, display.value + indexDifference + 1)
+      // panel(s) dissapearing from view (on left)need different styling applied
+    }
+  return animatedPanels
+}
+/**
+ * @method panelClick
+ */
+const panelClick = () => {
+  if (clickToCenter.value) {
+    const updatedPositions = useCalculatePanelPositions(props.panelIndex, panelPositions.value, display.value)
+    sliderStore.updateSlider({
+      sliderId: props.sliderId,
+      currentPanel: props.panelIndex,
+      panelPositions: updatedPositions,
+      animatedPanels: calculateAnimatedPanels(updatedPositions)
+    })
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -50,6 +87,9 @@ const slideStyles = computed(() => {
   flex: 1;
   &.animate {
     transition: transform 500ms ease;
+  }
+  &.clickable {
+    cursor: pointer;
   }
 }
 

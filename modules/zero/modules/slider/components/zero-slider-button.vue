@@ -11,6 +11,7 @@
 <script setup>
 // ===================================================================== Imports
 import { storeToRefs } from 'pinia'
+import { useCalculateCurrentPanelIndex } from '../composables/use-calculate-current-panel-index';
 
 // ======================================================================= Props
 const props = defineProps({
@@ -66,7 +67,7 @@ const changePanel = (e, direction) => {
   sliderStore.updateSlider({
     sliderId: props.sliderId,
     panelPositions: updatedPositions,
-    currentPanel: useCalculateCurrentPanel(display.value, updatedPositions),
+    currentPanel: updatedPositions[useCalculateCurrentPanelIndex(display.value)],
     animatedPanels: calculateAnimatedPanels(direction)
   })
   buttonStore.setButton({ id, loading: false })
