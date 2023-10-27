@@ -63,7 +63,8 @@ const panelCount = ref(slots.panels()[0].children.length)
 
 // ======================================================================= Hooks
 onMounted(async () => {
-  const panelPositions = [...Array(panelCount.value).keys()].map(el => (el + panelCount.value - 1) % panelCount.value)
+  const panelArray = [...Array(panelCount.value).keys()].map(el => el)
+  const panelPositions = useCalculatePanelPositions(0, panelArray, display.value)
   sliderStore.setSlider({
     id: id.value,
     sliderId: props.sliderId,

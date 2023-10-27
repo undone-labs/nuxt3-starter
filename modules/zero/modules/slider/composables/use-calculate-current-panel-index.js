@@ -8,6 +8,6 @@ export const useCalculateCurrentPanelIndex = (display) => {
   } else {
     // if displaying an odd number of panels, currentPanel is the index
     // of the middle visible panel in panelPositions
-    return Math.ceil(display / 2)
+    return display - 1
   }
 }

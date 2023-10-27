@@ -25,7 +25,6 @@ const props = defineProps({
   }
 })
 // ======================================================================= Setup
-// const emit = defineEmits(['clicked'])
 const sliderStore = useZeroSliderStore()
 const { sliders } = storeToRefs(sliderStore)
 
@@ -43,7 +42,7 @@ const slideStyles = computed(() => {
   if (!panelPositions.value) { return false }
   const position = panelPositions.value.indexOf(props.panelIndex)
   return {
-    transform: `translateX(${(position - 1) * 100}%)`,
+    transform: `translateX(${(position - (Math.floor(display.value / 2))) * 100}%)`,
     width: `${100 / display.value}%`
   }
 })
