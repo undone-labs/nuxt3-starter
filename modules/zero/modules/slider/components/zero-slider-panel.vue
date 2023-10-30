@@ -33,7 +33,6 @@ const slider = computed(() => sliders.value[props.sliderId] ? sliders.value[prop
 const panelPositions = computed(() => slider.value.panelPositions )
 const animatedPanels = computed(() => slider.value.animatedPanels)
 const display = computed(() => slider.value.display)
-const currentPanel = computed(() => slider.value.currentPanel)
 const clickToCenter = computed(() => slider.value.clickToCenter)
 
 const animate = computed(() => animatedPanels.value ? animatedPanels.value.includes(props.panelIndex) : false)
@@ -49,32 +48,16 @@ const slideStyles = computed(() => {
 
 // ===================================================================== Methods
 /**
- * @method calculateAnimatedPanels
- */
- const calculateAnimatedPanels = (updatedPositions) => {
-  let animatedPanels
-  const indexDifference = Math.abs(currentPanel.value - props.panelIndex)
-  switch(true) {
-    case (props.panelIndex < currentPanel.value):
-      animatedPanels = [...updatedPositions].slice(1, display.value + indexDifference + 1)
-      break
-    case (props.panelIndex > currentPanel.value):
-      animatedPanels = [...panelPositions.value].slice(1, display.value + indexDifference + 1)
-      // panel(s) dissapearing from view (on left)need different styling applied
-    }
-  return animatedPanels
-}
 /**
  * @method panelClick
  */
 const panelClick = () => {
   if (clickToCenter.value) {
-    const updatedPositions = useCalculatePanelPositions(props.panelIndex, panelPositions.value, display.value)
     sliderStore.updateSlider({
       sliderId: props.sliderId,
       currentPanel: props.panelIndex,
-      panelPositions: updatedPositions,
-      animatedPanels: calculateAnimatedPanels(updatedPositions)
+      panelPositions: useCalculatePanelPositions(props.panelIndex, panelPositions.value, display.value),
+      animatedPanels: useCalculateAnimatedPanels(props.panelIndex, panelPositions.value, display.value)
     })
   }
 }

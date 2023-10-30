@@ -63,12 +63,19 @@ const panelCount = ref(slots.panels()[0].children.length)
 
 // ======================================================================= Hooks
 onMounted(async () => {
+  for (const option in props.displayOptions) {
+    if (panelCount.value < props.displayOptions[option] + 2) {
+      throw new Error(`There aren't enough panels to display ${props.displayOptions[option]} panels at breakpoint ${option}.`)
+    }
+    if ((props.clickToCenter && panelCount.value < (props.displayOptions[option] * 2) - 1)) {
+      throw new Error(`There aren't enough panels to animate panels clicking to center while displaying ${props.displayOptions[option]} panels at breakpoint ${option}. Reduce the number of displayed panels or disable clickToCenter.`)
+    }
+  }
   const panelArray = [...Array(panelCount.value).keys()].map(el => el)
   const panelPositions = useCalculatePanelPositions(0, panelArray, display.value)
   sliderStore.setSlider({
     id: id.value,
     sliderId: props.sliderId,
-    // currentPanel: currentPanel.value || useCalculateCurrentPanel(props.displayOptions.default, panelPositions),
     display: display.value,
     currentPanel: currentPanel.value || panelPositions[useCalculateCurrentPanelIndex(display.value)],
     panelCount: panelCount.value,

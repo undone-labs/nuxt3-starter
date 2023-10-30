@@ -40,35 +40,25 @@ const display = computed(() => slider ? slider.value.display : false)
 
 // ===================================================================== Methods
 /**
- * @method calculateAnimatedPanels
- */
-const calculateAnimatedPanels = (direction) => {
-  let animatedPanels
-  switch(direction) {
-    case 'previous':
-      animatedPanels = [...panelPositions.value].slice(0, display.value + 1)
-      break
-    case 'next':
-      animatedPanels = [...panelPositions.value].slice(1, display.value + 2)
-  }
-  return animatedPanels
-}
-/**
  * @method changePanel
  */
 const changePanel = (e, direction) => {
   e.stopPropagation()
   const updatedPositions = [...panelPositions.value]
+  const currentPanelIndex = useCalculateCurrentPanelIndex(display.value)
+  let animatedPanels
   if (direction === 'previous') {
     updatedPositions.unshift(updatedPositions.pop())
+    animatedPanels = useCalculateAnimatedPanels(panelPositions.value[currentPanelIndex - 1], panelPositions.value, display.value)
   } else if (direction === 'next') {
     updatedPositions.push(updatedPositions.shift())
+    animatedPanels = useCalculateAnimatedPanels(panelPositions.value[currentPanelIndex + 1], panelPositions.value, display.value)
   }
   sliderStore.updateSlider({
     sliderId: props.sliderId,
     panelPositions: updatedPositions,
-    currentPanel: updatedPositions[useCalculateCurrentPanelIndex(display.value)],
-    animatedPanels: calculateAnimatedPanels(direction)
+    currentPanel: updatedPositions[currentPanelIndex],
+    animatedPanels
   })
   buttonStore.setButton({ id, loading: false })
 }
