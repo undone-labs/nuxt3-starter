@@ -41,7 +41,7 @@ const slideStyles = computed(() => {
   if (!panelPositions.value) { return false }
   const position = panelPositions.value.indexOf(props.panelIndex)
   return {
-    transform: `translateX(${(position - (Math.floor(display.value / 2))) * 100}%)`,
+    transform: `translateX(${(position - (Math.max(Math.floor(display.value / 2), 1))) * 100}%)`,
     width: `${100 / display.value}%`
   }
 })
@@ -66,7 +66,6 @@ const panelClick = () => {
 
 <style lang="scss" scoped>
 .slider-panel {
-  flex: 1;
   &.animate {
     transition: transform 500ms ease;
   }

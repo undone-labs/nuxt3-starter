@@ -3,6 +3,10 @@
 
     <slot name="panels" />
 
+    <!-- controls slot available if slider buttons/dots are required to be
+         visible in the body of the panel -->
+    <slot name="controls" />
+
   </div>
 </template>
 
@@ -133,6 +137,12 @@ const matchBreakpointDisplayAmount = () => {
   }
   return updatedDisplay
 }
+
+// ==================================================================== Watchers
+// if the panels are different heights this watcher will need to be enabled
+// watch(currentPanel, (oldPanel, newPanel) => {
+//   if (oldPanel !== newPanel) { setHeight() }
+// })
 
 </script>
 

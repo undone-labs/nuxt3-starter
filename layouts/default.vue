@@ -30,7 +30,5 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 .layout {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
 }
 </style>

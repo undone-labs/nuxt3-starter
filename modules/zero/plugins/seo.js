@@ -1,7 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtPlugin, useHead } from '#imports'
-import SeoContent from '../../data/seo.json'
+import SeoContent from '@/data/seo.json'
 import CloneDeep from 'lodash/cloneDeep'
 
 // /////////////////////////////////////////////////////////////////// Functions

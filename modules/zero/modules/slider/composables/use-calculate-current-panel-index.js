@@ -1,7 +1,7 @@
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useCalculateCurrentPanelIndex = (display) => {
-  if(display % 2 === 0) {
+  if(display === 1 || display % 2 === 0) {
     // if displaying an even number of panels, currentPanel is
     // index 1 in in panelPositions
     return 1
