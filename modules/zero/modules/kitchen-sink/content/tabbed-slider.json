@@ -1,0 +1,29 @@
+{
+  "slides": [
+    {
+      "slug": "lorem-ipsum",
+      "title": "Lorem ipsum",
+      "content": {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "Integer quis ornare nibh. Fusce ornare, odio non rutrum dignissim, velit urna faucibus nulla, vitae ultricies libero ipsum quis metus. Vestibulum rutrum egestas tortor, non ornare ante varius sit amet. Aliquam rhoncus urna sit amet accumsan venenatis. Cras vestibulum, quam sed commodo auctor, diam justo accumsan mi, a ultricies enim ante in nisi. Aenean vitae maximus ex. Mauris at lorem ultrices, suscipit lorem dapibus, tincidunt turpis. Donec fermentum ex a molestie tincidunt. Maecenas consectetur auctor tortor. "
+      }
+    },
+    {
+      "slug": "phasellus-et-nisl",
+      "title": "Phasellus et nisl",
+      "disabled": true,
+      "content": {
+        "title": "Phasellus et nisl auctor, cursus erat ac, ullamcorper elit.",
+        "text": "Vivamus tincidunt gravida sapien eget lacinia. Cras varius mauris vel diam pellentesque, at maximus ante rhoncus. Donec porta, libero tristique imperdiet elementum, augue magna placerat augue, ut aliquet augue nisi a augue. Sed convallis cursus malesuada. Proin ut lectus id eros congue tempus at eu odio. In orci enim, laoreet vel mauris vel, tristique dapibus risus. Ut sollicitudin, sem sed pellentesque luctus, quam lectus mollis elit, ac faucibus lacus mi eget diam. Vestibulum rutrum quam vel massa rutrum, ac mollis ex lobortis. Proin in fermentum felis. Phasellus id leo quis justo sodales sollicitudin eget sit amet ante. Vestibulum congue sed leo eget euismod. Donec rutrum augue mauris, nec varius mi tristique et. Vivamus bibendum, augue quis ullamcorper dictum, erat tellus viverra neque, nec condimentum justo nulla quis sem. Sed fringilla orci id ipsum rutrum accumsan. Aenean ullamcorper arcu nec turpis elementum, nec dictum augue laoreet."
+      }
+    },
+    {
+      "slug": "pellentesque-habitant",
+      "title": "Pellentesque habitant",
+      "content": {
+        "title": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "text": "Fusce ullamcorper in massa non scelerisque. Quisque neque turpis, tempus sit amet quam et, lacinia ultricies risus. Donec orci magna, mattis non posuere a, tempus ut nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent non enim cursus, lacinia orci id, eleifend turpis. Vestibulum ex urna, dapibus non purus eu, bibendum aliquam odio. Vestibulum est velit, posuere at odio nec, congue dignissim libero."
+      }
+    }
+  ]
+}

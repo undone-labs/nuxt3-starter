@@ -66,7 +66,8 @@ const sections = [
       { path: '/dropdown', text: 'Dropdown' },
       { path: '/algolia', text: 'Algolia Search' },
       { path: '/api-preview', text: 'API Preview' },
-      { path: '/form', text: 'Form' }
+      { path: '/form', text: 'Form' },
+      { path: '/tabbed-slider', text: 'Tabbed Slider' },
     ]
   },
   {
