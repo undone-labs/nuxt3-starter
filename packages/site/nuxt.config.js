@@ -43,14 +43,6 @@ export default defineNuxtConfig({
   },
   // ================================================================== Compiler
   vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // make SCSS variables, functions and mixins globally accessible
-          additionalData: '@use "sass:math"; @import "@/assets/scss/settings.scss";'
-        }
-      }
-    },
     assetsInclude: ['**/*.md']
   },
   // ======================================================== Development Server

@@ -1,10 +1,16 @@
 <template>
-  <div class="asd">
-    {{ zeroUuid().v4() }}
-    <ZeroMarkdownParser markdown="### hello" />
-    <ZeroButton>
-      Helloooo
-    </ZeroButton>
+  <div class="page">
+    <div class="grid">
+      <div class="col">
+
+        {{ zeroUuid().v4() }}
+        <ZeroMarkdownParser markdown="### hello" />
+        <ZeroButton>
+          Helloooo
+        </ZeroButton>
+
+      </div>
+    </div>
   </div>
 </template>
 

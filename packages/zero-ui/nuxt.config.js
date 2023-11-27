@@ -17,20 +17,31 @@ export default defineNuxtConfig({
     }
   },
   // ================================================================== Compiler
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // make SCSS variables, functions and mixins globally accessible
+          additionalData: '@use "sass:math"; @import "@/../zero-ui/assets/scss/utilities.scss"; @import "@/assets/scss/settings.scss";'
+        }
+      }
+    },
+    assetsInclude: ['**/*.md']
+  },
+  // ================================================================== Compiler
   build: {
     transpile: ['@vuepic/vue-datepicker']
   },
+  // ============================================================= Global Styles
+  css: [
+    '@/../zero-ui/assets/scss/main.scss'
+  ],
   // =================================================================== Modules
   modules: [
     '@nuxtjs/algolia',
     'nuxt-simple-robots', // https://github.com/harlan-zw/nuxt-simple-robots
     'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
     'nuxt-primevue' // https://github.com/primefaces/primevue-nuxt-module
-  ],
-  // =================================================================== Modules
-  modules: [
-    './modules/eslint-nuxt3-globals.ts',
-    './modules/zero'
   ],
   // ========================================================== [Module] sitemap
   sitemap: {},

@@ -2,6 +2,9 @@
  * This file should NOT contain any styling (classes or IDs). It should only contain
  * variables, functions, mixins, etc. If you want to override core utility functions
  * or mixins, you can do it here by including the entity with the same name.
+ *
+ * Because nuxt layers don't support merging of vite.css.preprocessorOptions.scss.additionalData
+ * values between layers, this file is imported in the zero-ui repo package
  */
 
 // /////////////////////////////////////////////////////////////////// Variables
