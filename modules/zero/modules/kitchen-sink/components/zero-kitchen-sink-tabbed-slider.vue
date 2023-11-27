@@ -76,6 +76,7 @@ const props = defineProps({
     }
     &.disabled {
       cursor: no-drop;
+      opacity: 0.6;
     }
   }
 }
