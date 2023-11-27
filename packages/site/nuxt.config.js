@@ -101,7 +101,10 @@ export default defineNuxtConfig({
     composables: {
       addTextToClipboard: { enable: true },
       delay: { enable: true },
-      ls: { enable: true },
+      ls: {
+        enable: true
+        // prefix: 'nuxt3starter__'
+      },
       scrollTo: { enable: true },
       slugify: { enable: true },
       throttle: { enable: true },
@@ -115,51 +118,35 @@ export default defineNuxtConfig({
     modules: {
       button: { enable: true },
       form: { enable: true },
-      algolia: { enable: false },
-      auth: { enable: false }
+      algolia: {
+        enable: false
+        // apiKey: process.env.ALGOLIA_API_KEY,
+        // applicationId: process.env.ALGOLIA_APPLICATION_ID,
+        // indexName: `${process.env.ALGOLIA_INDEX_ID}__${env}`,
+        // sources: [
+        //   { path: Path.resolve(__dirname, 'content'), contentDirectoryName: 'content' }
+        // ]
+      },
+      auth: {
+        enable: false
+        // redirectUnauthenticated: '',
+        // /**
+        //  * string or object
+        //  *
+        //  * if object, replace part of path with key's value from user (user) db
+        //  * object, for example example:
+        //  *
+        //  * {
+        //  *   path: '/zero-kitchen-sink/:user/redirect-after-login',
+        //  *   match: {
+        //  *     ':user': 'username'
+        //  *   }
+        //  * }
+        //  */
+        // redirectAfterLogin: '',
+        // redirectAfterLogout: ''
+      }
     }
-    // -------------------------------------------------------- [Module] Algolia
-    // algolia: {
-    //   disable: true
-    //   // apiKey: process.env.ALGOLIA_API_KEY,
-    //   // applicationId: process.env.ALGOLIA_APPLICATION_ID,
-    //   // indexName: `${process.env.ALGOLIA_INDEX_ID}__${env}`,
-    //   // sources: [
-    //   //   { path: Path.resolve(__dirname, 'content'), contentDirectoryName: 'content' }
-    //   // ]
-    // },
-    // // ----------------------------------------------------------- [Module] Auth
-    // auth: {
-    //   disable: true,
-    //   redirectUnauthenticated: '',
-    //   /**
-    //    * string or object
-    //    *
-    //    * if object, replace part of path with key's value from user (user) db
-    //    * object, for example example:
-    //    *
-    //    * {
-    //    *   path: '/zero-kitchen-sink/:user/redirect-after-login',
-    //    *   match: {
-    //    *     ':user': 'username'
-    //    *   }
-    //    * }
-    //    */
-    //   redirectAfterLogin: '',
-    //   redirectAfterLogout: ''
-    // },
-    // // ------------------------------------------------------- [Module] Primevue
-    // primevue: {
-    //   disable: true,
-    //   components: {
-    //     prefix: 'PrimeVue',
-    //     include: ['FileUpload']
-    //   }
-    // },
-    // // --------------------------------------------------------- [Composable] ls
-    // ls: {
-    //   prefix: 'nuxt3starter__'
-    // }
   },
   // ==================================================== [Module] @nuxt/content
   content: {

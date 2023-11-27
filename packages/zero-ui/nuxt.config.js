@@ -33,5 +33,13 @@ export default defineNuxtConfig({
     './modules/zero'
   ],
   // ========================================================== [Module] sitemap
-  sitemap: {}
+  sitemap: {},
+  // ========================================================= [Module] Primevue
+  primevue: {
+    disable: true,
+    components: {
+      prefix: 'PrimeVue',
+      include: ['FileUpload']
+    }
+  }
 })
