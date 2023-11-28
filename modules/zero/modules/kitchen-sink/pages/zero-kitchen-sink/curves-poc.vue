@@ -8,10 +8,10 @@
     <section class="poc">
       <div class="grid">
 
-        <div class="col-4">
+        <div ref="container" class="col-4">
           <ClipPath
-            :target-width="500"
-            :target-height="500"
+            v-if="container"
+            :mirror-dimensions="() => container"
             anchor-type="corner"
             :anchor-position="4"
             :border-radius="8">
@@ -20,14 +20,10 @@
               <TestSvg />
             </template>
 
-            <template #background>
+            <template #clipped-content>
               <div class="image-wrapper">
                 <img src="/bubbles-resize.jpeg" />
               </div>
-            </template>
-
-            <template #foreground>
-
             </template>
 
           </ClipPath>
@@ -36,8 +32,7 @@
         <div class="col-4">
           <div class="text-1">
             <div class="content">
-              {{ path }}
-            </div>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.            </div>
           </div>
         </div>
 
@@ -48,6 +43,8 @@
 </template>
 
 <script setup>
+const container = ref(null)
+
 </script>
 
 <style lang="scss" scoped>
@@ -65,4 +62,5 @@
     height: 100%;
   }
 }
+
 </style>

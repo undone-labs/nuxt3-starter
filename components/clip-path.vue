@@ -1,15 +1,19 @@
 <template>
   <div class="container">
 
-    <slot name="svg-path"></slot>
+    <div ref="svgSlot" class="svg-slot">
+
+      <slot name="svg-path"></slot>
+
+    </div>
 
     <svg class="svg-clip-path">
       <defs>
         <clipPath
           v-if="path"
-          id="clip-path-element"
+          :id="`clip-path-${clipPathElementId}`"
           clipPathUnits="objectBoundingBox"
-          :transform="`scale(${1 / dimensions.w} ${1 / dimensions.h})`">
+          :transform="`scale(${1 / svgDimensions.rX} ${1 / (svgDimensions.rY)})`">
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -24,12 +28,12 @@
       :style="wrapper">
       <div
         :class="['clipped-content', anchor]"
-        :style="{ width: `${dimensions.w}px`, height: `${dimensions.h}px`}">
-        <slot name="background"></slot>
+        :style="{ width: `${dimensions.w}px`, height: `${dimensions.h}px`, clipPath: `url(#clip-path-${clipPathElementId})` }">
+        
+        <slot name="clipped-content"></slot>
+
       </div>
     </div>
-
-    <slot name="foreground"></slot>
 
   </div>
 </template>
@@ -40,12 +44,12 @@ import { parseSVG, makeAbsolute } from 'svg-path-parser'
 
 // ======================================================================= Props
 const props = defineProps({
-  targetWidth: {
+  targetContentWidth: {
     type: Number,
     required: false,
     default: 0
   },
-  targetHeight: {
+  targetContentHeight: {
     type: Number,
     required: false,
     default: 0
@@ -64,12 +68,21 @@ const props = defineProps({
     type: Number,
     required: false,
     default: 0
+  },
+  mirrorDimensions: {
+    type: Function,
+    required: false,
+    default: () => null
   }
 })
 
-const path = ref('')
+// ======================================================================== Data
 const clipPathElementId = ref(useUuid().v4())
-const instance = getCurrentInstance()
+const svgSlot = ref(null)
+const path = ref('')
+const width = ref(0)
+const height = ref(0)
+const resizeEventListener = ref(false)
 
 // ==================================================================== Computed
 const parsed = computed(() => {
@@ -82,9 +95,7 @@ const xValues = computed(() => {
   return parsed.value.map(el => {
     const coords = []
     Object.keys(el).forEach((key) => {
-      if (key.charAt(0) === 'x') {
-        coords.push(el[key])
-      }
+      if (key.charAt(0) === 'x') { coords.push(el[key]) }
     })
     return coords
   }).flat()
@@ -94,9 +105,7 @@ const yValues = computed(() => {
   return parsed.value.map(el => {
     const coords = []
     Object.keys(el).forEach((key) => {
-      if (key.charAt(0) === 'y') {
-        coords.push(el[key])
-      }
+      if (key.charAt(0) === 'y') { coords.push(el[key]) }
     })
     return coords
   }).flat()
@@ -119,8 +128,8 @@ const svgDimensions = computed(() => {
 
 const anchor = computed(() => `${props.anchorType}-${props.anchorPosition}`)
 const wrapper = computed(() => props.borderRadius ? { borderRadius: `${props.borderRadius}px` } : null)
-const scaleX = computed(() => props.targetWidth ? (props.targetWidth / svgDimensions.value.rX) : 1)
-const scaleY = computed(() => props.targetHeight ? (props.targetHeight / svgDimensions.value.rY) : 1)
+const scaleX = computed(() => width.value ? (width.value / svgDimensions.value.rX) : 1)
+const scaleY = computed(() => height.value ? (height.value / svgDimensions.value.rY) : 1)
 const dimensions = computed(() => {
   const dim = {
     w: svgDimensions.value.rX * scaleX.value,
@@ -129,23 +138,54 @@ const dimensions = computed(() => {
   return typeof dim.w === 'number' && typeof dim.h === 'number' ? dim : { w: 1, h: 1 }
 })
 
+// ======================================================================= Hooks
 onMounted(() => {
   path.value = findPathElement()
+  if (props.targetContentWidth) {
+    width.value = props.targetContentWidth
+  }
+  if (props.targetContentHeight) {
+    height.value = props.targetContentHeight
+  }
+  if (props.mirrorDimensions()) {
+    resizeEventListener.value = () => { resizeDimensions() }
+    window.addEventListener('resize', resizeEventListener.value)
+  }
 })
 
+onBeforeUnmount(() => {
+  if (resizeEventListener.value) {
+    window.removeEventListener('resize', resizeEventListener.value)
+  }
+})
+
+// ===================================================================== Methods
 const findPathElement = () => {
-  const el = instance.subTree.children[0].children[0]?.el
-  if (el) {
-    const pathEl = el.nodeName.toLowerCase() === 'path' ? el : el.querySelector('path')
+  const slot = svgSlot.value
+  if (slot) {
+    const pathEl = slot.querySelector('path')
     if (pathEl) {
       return pathEl.getAttribute('d')
     }
   }
   return null
 }
+
+const resizeDimensions = () => {
+  const mirror = props.mirrorDimensions()
+  const rect = mirror.getBoundingClientRect()
+  if (!props.targetContentWidth) {
+    width.value = rect.width
+  }
+  if (!props.targetContentHeight) {
+    height.value = rect.height
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
+// ///////////////////////////////////////////////////////////////////// General
 .container {
   position: relative;
 }
@@ -161,9 +201,9 @@ const findPathElement = () => {
   top: 0;
   left: 0;
   overflow: hidden;
-  // border-radius: toRem(8);
 }
 
+.svg-slot,
 .svg-clip-path {
   position: absolute;
   top: -9999px;
@@ -173,8 +213,6 @@ const findPathElement = () => {
 }
 
 .clipped-content {
-  // --clip-path-id: '#clip-path-element';
-  clip-path: url(#clip-path-element);
   position: absolute;
   &.center-1 {
     top: 0;
