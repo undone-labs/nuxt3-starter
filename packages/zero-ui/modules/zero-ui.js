@@ -24,8 +24,6 @@ import {
 const { resolve } = createResolver(import.meta.url)
 const globalPrefix = 'Zero'
 
-// import { useSlugify } from '../composables/slugify'
-
 // ////////////////////////////////////////////////////////////////////// Config
 // -----------------------------------------------------------------------------
 const meta = {
@@ -147,7 +145,7 @@ const registerStores = path => {
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  console.log('📦 [load:module] zero')
+  console.log('📦 [load:module] zero-ui')
   const options = nuxt.options
   if (!options.hasOwnProperty('zero')) { return }
   const zeroOptions = options.zero
@@ -175,7 +173,6 @@ const setup = (_, nuxt) => {
       }
     }
   }
-  // process.exit(0)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export

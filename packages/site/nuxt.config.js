@@ -1,3 +1,5 @@
+console.log('⚡️ load:site')
+
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
@@ -40,10 +42,6 @@ export default defineNuxtConfig({
       backendUrl: env === 'development' ? `${baseUrls[env]}:${backendPort}` : `${baseUrls[env]}/api`,
       serverFlag: env
     }
-  },
-  // ================================================================== Compiler
-  vite: {
-    assetsInclude: ['**/*.md']
   },
   // ======================================================== Development Server
   devServer: {

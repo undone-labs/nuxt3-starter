@@ -1,7 +1,8 @@
+console.log('⚡️ load:zero-ui')
+
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
-import Path from 'path'
 
 // /////////////////////////////////////////////////////////// Variables & Setup
 // -----------------------------------------------------------------------------
@@ -20,9 +21,12 @@ export default defineNuxtConfig({
   vite: {
     css: {
       preprocessorOptions: {
-        scss: {
-          // make SCSS variables, functions and mixins globally accessible
-          additionalData: '@use "sass:math"; @import "@/../zero-ui/assets/scss/utilities.scss"; @import "@/assets/scss/settings.scss";'
+        scss: { // make SCSS variables, functions and mixins globally accessible
+          additionalData: `
+            @use "sass:math";
+            @import "@/../zero-ui/assets/scss/settings.scss";
+            @import "@/assets/scss/settings.scss";
+          `
         }
       }
     },
@@ -36,6 +40,12 @@ export default defineNuxtConfig({
   css: [
     '@/../zero-ui/assets/scss/main.scss'
   ],
+  // ================================================================ Components
+  /**
+   * @note Empty array because components are selectively auto-loaded by the
+   * `zero-ui` module
+   */
+  components: [],
   // =================================================================== Modules
   modules: [
     '@nuxtjs/algolia',

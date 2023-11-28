@@ -92,12 +92,12 @@ hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('json', json)
 hljs.registerLanguage('curl', hljsCurl)
 props.sliders.forEach(slider => {
-  const sliderId = useUuid().v4()
+  const sliderId = zeroUuid().v4()
   slider.slides.forEach(slide => {
     const content = typeof slide.content === 'object' ?
       JSON.stringify(slide.content, undefined, 2).trim() :
       slide.content.trim()
-    slide.id = useUuid().v4()
+    slide.id = zeroUuid().v4()
     slide.sliderId = sliderId
     slide.highlighted = hljs.highlight(content, { language: slide.language }).value
   })
