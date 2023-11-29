@@ -26,6 +26,12 @@ export const useGeneralStore = defineStore('general', () => {
       true
   })
 
+  const language = computed(() => {
+    return settings.value.hasOwnProperty('language') ?
+      settings.value.language :
+      'en'
+  })
+
   const languageSelectorVisible = computed(() => {
     return settings.value.hasOwnProperty('languageSelectorVisible') ?
       settings.value.languageSelectorVisible :
@@ -53,7 +59,16 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setLanguage
+   */
+
+  const setLanguage = newLanguage => {
+    settings.value.language = newLanguage
+    localStorage.setItem('language', newLanguage)
+  }
+
+  /**
+   * @method setActiveSection
    */
 
   const setActiveSection = hash => {
@@ -61,7 +76,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method compileMagellanLinks
    */
 
   const compileMagellanLinks = () => {
@@ -80,7 +95,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setActiveLinkMarkerHeight
    */
 
   const setActiveLinkMarkerHeight = () => {
@@ -91,7 +106,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setClipboard
    */
 
   const setClipboard = text => {
@@ -108,10 +123,12 @@ export const useGeneralStore = defineStore('general', () => {
     // ----- computed
     theme,
     themeToggleVisible,
+    language,
     languageSelectorVisible,
     // ----- actions
     setSettings,
     setTheme,
+    setLanguage,
     setActiveSection,
     compileMagellanLinks,
     setActiveLinkMarkerHeight,

@@ -48,5 +48,9 @@ onMounted(() => {
   if (initialTheme) {
     generalStore.setTheme(initialTheme)
   }
+  const initialLanguage = localStorage.getItem('language')
+  if (initialLanguage) {
+    generalStore.setLanguage(initialLanguage)
+  }
 })
 </script>

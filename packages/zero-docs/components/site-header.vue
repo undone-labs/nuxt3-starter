@@ -37,6 +37,7 @@
 
       <DropdownSelector
         v-if="languageSelectorVisible"
+        :default-selected-index="defaultSelectedLanguage"
         :options="languageOptions" />
 
     </div>
@@ -48,6 +49,7 @@
 // ======================================================================== Data
 const generalStore = useGeneralStore()
 const { languageSelectorVisible } = storeToRefs(generalStore)
+const { language } = storeToRefs(generalStore)
 
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
@@ -61,6 +63,7 @@ const { data: Header } = await useAsyncData('header', async () => {
 const links = Header.value.navigation
 const githubUrl = Header.value.toolbar.github_url
 const languageOptions = Header.value.toolbar.language_options
+const defaultSelectedLanguage = languageOptions.indexOf(language.value.toUpperCase()) || 0
 
 const route = useRoute()
 const contentPath = `/docs${route.path}`
