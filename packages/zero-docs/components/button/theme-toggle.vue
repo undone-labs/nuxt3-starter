@@ -16,9 +16,6 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import { storeToRefs } from 'pinia'
-
 // ======================================================================= Setup
 const generalStore = useGeneralStore()
 
