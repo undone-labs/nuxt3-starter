@@ -1,5 +1,3 @@
-@use 'sass:math';
-
 // Make the breakpoints
 @mixin bp($breakpoint) {
   $query: map-get($gl-mq-list, $breakpoint);

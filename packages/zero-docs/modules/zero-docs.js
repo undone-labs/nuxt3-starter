@@ -1,5 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
+import Fs from 'fs-extra'
+
 import {
   defineNuxtModule
 } from 'nuxt/kit'
@@ -14,10 +16,26 @@ const meta = {
   }
 }
 
+// /////////////////////////////////////////////////////////////////// Functions
+// -----------------------------------------------------------------------------
+/**
+ * @method validateKeyMustBeObject
+ */
+
+const checkIfTargetDocsDirectoryExists = options => {
+  const sources = options.sources
+  const exists = Fs.existsSync(sources.targetDocs.base)
+  if (exists) {
+    delete sources.srcDocs
+  }
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
-const setup = () => {
+const setup = (_, nuxt) => {
   console.log('📦 [load:module] zero-docs')
+  const options = nuxt.options
+  checkIfTargetDocsDirectoryExists(options.content)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
