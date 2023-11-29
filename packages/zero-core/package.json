@@ -1,5 +1,5 @@
 {
-  "name": "zero-ui",
+  "name": "zero-core",
   "version": "1.0.0",
   "description": "Supercharge your Nuxt3 setup 💪",
   "dependencies": {

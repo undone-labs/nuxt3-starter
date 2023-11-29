@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
   },
   extends: [
-    '../zero-ui'
+    '../zero-core'
   ],
   // ===================================================== Runtime Configuration
   runtimeConfig: {
@@ -78,7 +78,7 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     '@nuxt/content'
   ],
-  // =========================================================== [Layer] zero-ui
+  // ========================================================= [Layer] zero-core
   zero: {
     components: {
       ApiExplorer: { enable: true },
