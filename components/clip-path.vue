@@ -13,7 +13,7 @@
           v-if="path"
           :id="`clip-path-${clipPathElementId}`"
           clipPathUnits="objectBoundingBox"
-          :transform="`scale(${1 / svgDimensions.rX} ${1 / (svgDimensions.rY)})`">
+          :transform="`scale(${1 / svgPathData.rangeX} ${1 / (svgPathData.rangeY)})`">
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -40,7 +40,7 @@
 
 <script setup>
 // ====================================================================== Import
-import { parseSVG, makeAbsolute } from 'svg-path-parser'
+import { useSvgPathData } from '../modules/zero/modules/kitchen-sink/composables/use-svg-path-data.js'
 
 // ======================================================================= Props
 const props = defineProps({
@@ -85,55 +85,15 @@ const height = ref(0)
 const resizeEventListener = ref(false)
 
 // ==================================================================== Computed
-const parsed = computed(() => {
-  const commands = parseSVG(path.value)
-  makeAbsolute(commands)
-  return commands
-})
-
-const xValues = computed(() => {
-  return parsed.value.map(el => {
-    const coords = []
-    Object.keys(el).forEach((key) => {
-      if (key.charAt(0) === 'x') { coords.push(el[key]) }
-    })
-    return coords
-  }).flat()
-})
-
-const yValues = computed(() => {
-  return parsed.value.map(el => {
-    const coords = []
-    Object.keys(el).forEach((key) => {
-      if (key.charAt(0) === 'y') { coords.push(el[key]) }
-    })
-    return coords
-  }).flat()
-})
-
-const bounds = computed(() => {
-  return {
-    minX: Math.min(...xValues.value),
-    maxX: Math.max(...xValues.value),
-    minY: Math.min(...yValues.value),
-    maxY: Math.max(...yValues.value)
-  }
-})
-
-const svgDimensions = computed(() => {
-  const rX = Math.abs(bounds.value.maxX - bounds.value.minX)
-  const rY = Math.abs(bounds.value.maxY - bounds.value.minY)
-  return { rX, rY }
-})
-
+const svgPathData = computed(() => path.value ? useSvgPathData(path.value) : { rangeX: 1, rangeY: 1 })
 const anchor = computed(() => `${props.anchorType}-${props.anchorPosition}`)
 const wrapper = computed(() => props.borderRadius ? { borderRadius: `${props.borderRadius}px` } : null)
-const scaleX = computed(() => width.value ? (width.value / svgDimensions.value.rX) : 1)
-const scaleY = computed(() => height.value ? (height.value / svgDimensions.value.rY) : 1)
+const scaleX = computed(() => width.value ? (width.value / svgPathData.value.rangeX) : 1)
+const scaleY = computed(() => height.value ? (height.value / svgPathData.value.rangeY) : 1)
 const dimensions = computed(() => {
   const dim = {
-    w: svgDimensions.value.rX * scaleX.value,
-    h: svgDimensions.value.rY * scaleY.value
+    w: svgPathData.value.rangeX * scaleX.value,
+    h: svgPathData.value.rangeY * scaleY.value
   }
   return typeof dim.w === 'number' && typeof dim.h === 'number' ? dim : { w: 1, h: 1 }
 })
@@ -148,6 +108,7 @@ onMounted(() => {
     height.value = props.targetContentHeight
   }
   if (props.mirrorDimensions()) {
+    resizeDimensions()
     resizeEventListener.value = () => { resizeDimensions() }
     window.addEventListener('resize', resizeEventListener.value)
   }

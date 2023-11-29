@@ -8,9 +8,10 @@
     <section class="poc">
       <div class="grid">
 
-        <div ref="container" class="col-4">
+        <div ref="container" class="col-4" data-push-left="off-2">
           <ClipPath
             v-if="container"
+            :target-content-height="300"
             :mirror-dimensions="() => container"
             anchor-type="corner"
             :anchor-position="4"
@@ -29,10 +30,55 @@
           </ClipPath>
         </div>
 
-        <div class="col-4">
+        <div class="col-4" data-push-right="off-2">
           <div class="text-1">
             <div class="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.            </div>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div ref="ctn" class="relative">
+            <ClipPath anchor-type="corner" :anchor-position="1" :border-radius="20" class="background">
+
+              <template #svg-path>
+                <TestSvg2 />
+              </template>
+
+              <template #clipped-content>
+                <ClipPath anchor-type="corner" :anchor-position="3" :border-radius="20" class="background inner">
+                  <template #svg-path>
+                    <TestSvg2 />
+                  </template>
+                  <template #clipped-content>
+                    <div class="image-wrapper">
+                      <img src="/bubbles-wide.jpg.webp" />
+                    </div>
+                  </template>
+                </ClipPath>
+              </template>
+
+            </ClipPath>
+
+            <div class="foreground">
+              <div class="text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="canvas-based-poc">
+            <CanvasClipPath
+              :guidelines-x="[50, 400]"
+              :breakpoints-x="[50, 400]">
+              <template #svg-path>
+                <TestSvg2 />
+              </template>
+            </CanvasClipPath>
           </div>
         </div>
 
@@ -44,7 +90,7 @@
 
 <script setup>
 const container = ref(null)
-
+const ctn = ref(null)
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +107,28 @@ const container = ref(null)
     width: 100%;
     height: 100%;
   }
+}
+
+.background {
+  position: absolute;
+  &.inner {
+    :deep(.clipped-content) {
+      left: 0;
+    }
+  }
+}
+
+.relative,
+.foreground {
+  position: relative;
+}
+
+.text {
+  padding: 5rem 3rem;
+  color: white;
+  font-weight: 500;
+  font-size: toRem(20);
+  min-height: toRem(400);
 }
 
 </style>
