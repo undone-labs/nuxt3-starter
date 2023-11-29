@@ -1,5 +1,3 @@
-@use 'sass:math';
-
 // calculate width of one col in %
 $gl-colUnit: math.div(100%, $gl-colCount);
 
