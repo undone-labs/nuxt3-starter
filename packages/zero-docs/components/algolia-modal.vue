@@ -41,9 +41,6 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import { storeToRefs } from 'pinia'
-
 // ======================================================================== Data
 const algoliaStore = useZeroAlgoliaStore()
 const { activeResult } = storeToRefs(algoliaStore)

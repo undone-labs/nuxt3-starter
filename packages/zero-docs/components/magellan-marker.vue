@@ -5,9 +5,6 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import { storeToRefs } from 'pinia'
-
 // ======================================================================== Data
 const linkElement = ref(null)
 const activeLinkMarkerHeight = ref('0px')
