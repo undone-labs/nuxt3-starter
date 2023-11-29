@@ -12,12 +12,14 @@
 .layout {
   position: relative;
   z-index: 100;
+  overflow-x: hidden;
 }
 
 [class~="grid"], [class*="grid-"], [class*="grid_"] {
   width: $gridWidth;
   margin: 0 auto;
   @include gridMaxMQ {
+    width: 100%;
     padding: 0 4.1665%;
   }
   &[class*="-noGutter"] {

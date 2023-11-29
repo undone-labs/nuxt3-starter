@@ -1,12 +1,11 @@
 // ////////////////////////////////////////////////////////////////////// Import
 // -----------------------------------------------------------------------------
-import { parseSVG, makeAbsolute } from 'svg-path-parser'
+import { parseSVG } from 'svg-path-parser'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useSvgPathData = (path) => {
   const commands = parseSVG(path)
-  // makeAbsolute(commands)
   
   const xValues = commands.map(el => {
     const coords = []

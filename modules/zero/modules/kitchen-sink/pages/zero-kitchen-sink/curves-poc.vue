@@ -39,46 +39,26 @@
         </div>
 
         <div class="col-12">
-          <div ref="ctn" class="relative">
-            <ClipPath anchor-type="corner" :anchor-position="1" :border-radius="20" class="background">
-
-              <template #svg-path>
-                <TestSvg2 />
-              </template>
-
-              <template #clipped-content>
-                <ClipPath anchor-type="corner" :anchor-position="3" :border-radius="20" class="background inner">
-                  <template #svg-path>
-                    <TestSvg2 />
-                  </template>
-                  <template #clipped-content>
-                    <div class="image-wrapper">
-                      <img src="/bubbles-wide.jpg.webp" />
-                    </div>
-                  </template>
-                </ClipPath>
-              </template>
-
-            </ClipPath>
-
-            <div class="foreground">
-              <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-12">
           <div class="canvas-based-poc">
+
             <CanvasClipPath
-              :guidelines-x="[50, 400]"
-              :breakpoints-x="[50, 400]">
+              :display-guides="false"
+              :breakpoints-x="[50, 550, 720, 1220]">
               <template #svg-path>
                 <TestSvg2 />
+              </template>
+              <template #clipped-content>
+                <div class="bubbles"></div>
+              </template>
+              <template #overlay-content>
+                <div class="overlay">
+                  <div class="text">
+                    Lörem ipsum plaliga tähåskapet relig men proktig telererar reabel, pangar. Geopuras ultrar megabesk otånera vanylig utan nylöbel soplabel.
+                  </div>
+                </div>
               </template>
             </CanvasClipPath>
+
           </div>
         </div>
 
@@ -90,7 +70,6 @@
 
 <script setup>
 const container = ref(null)
-const ctn = ref(null)
 </script>
 
 <style lang="scss" scoped>
@@ -131,4 +110,27 @@ const ctn = ref(null)
   min-height: toRem(400);
 }
 
+.canvas-based-poc {
+  .overlay {
+    position: relative;
+    height: toRem(364);
+    padding: 5rem 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .text {
+      padding: 0;
+      min-height: unset;
+      text-align: center;
+    }
+  }
+}
+
+.bubbles {
+  width: 100%;
+  height: 100%;
+  background-image: url('/bubbles-wide.jpg.webp');
+  background-size: 1200px 801px;
+  background-position: center;
+}
 </style>

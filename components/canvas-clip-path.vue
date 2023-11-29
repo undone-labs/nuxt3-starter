@@ -1,28 +1,43 @@
 <template>
-  <div class="container">
+  <div ref="container" class="container canvas-clip-path">
+
+    <svg class="svg-clip-path">
+      <defs>
+        <clipPath v-if="clipPath" :id="`clip-path-${clipPathElementId}`">
+          <path clip-rule="evenodd" :d="clipPath" fill="none" />
+        </clipPath>
+      </defs>
+    </svg>
 
     <div ref="svgSlot" class="svg-slot">
-
       <slot name="svg-path"></slot>
-
     </div>
 
-    <canvas ref="canvas"></canvas>
+    <div
+      class="clipped-content"
+      :style="{ width: `${clipPathData.rangeX}px`, height: `${clipPathData.rangeY}px`, clipPath: `url(#clip-path-${clipPathElementId})` }">
+      <slot name="clipped-content"></slot>
+    </div>
+
+    <canvas v-if="props.displayGuides" ref="canvas"></canvas>
+
+    <div class="overlay-content">
+      <slot name="overlay-content"></slot>
+    </div>
 
   </div>
 </template>
 
 <script setup>
 // ====================================================================== Import
-import CloneDeep from 'lodash.clonedeep'
 import { useSvgPathData } from '../modules/zero/modules/kitchen-sink/composables/use-svg-path-data.js'
 
 // ======================================================================= Props
 const props = defineProps({
-  guidelinesX: {
-    type: Array,
+  displayGuides: {
+    type: Boolean,
     required: false,
-    default: () => []
+    default: false
   },
   breakpointsX: {
     type: Array,
@@ -31,100 +46,65 @@ const props = defineProps({
   }
 })
 // ======================================================================== Data
+const clipPathElementId = ref(useUuid().v4())
 const svgSlot = ref(null)
-const path = ref('')
+const originalPath = ref('')
+const container = ref(null)
 const canvas= ref(null)
 const width = ref(0)
-const height = ref(0)
 const resizeEventListener = ref(false)
 
 // ==================================================================== Computed
-const svgPathData = computed(() => path.value ? useSvgPathData(path.value) : false)
+const svgPathData = computed(() => originalPath.value ? useSvgPathData(originalPath.value) : false)
 
-const computedPath = ref('')
-// const computedPath = computed(() => {
-//   if (svgPathData.value) {
-//     if (props.breakpointsX.length) {
-//       const commands = CloneDeep(svgPathData.value.commands)
-//       for (let i = 0; i < props.breakpointsX.length; i = i + 2) {
-//         const start = props.breakpointsX[i]
-//         const end = props.breakpointsX[i + 1]
-//         const dif = end - start
-//         commands.forEach((item) => {
-//           const xCoords = Object.keys(item).filter(key => key.startsWith('x'))
-//           xCoords.forEach((key) => {
-//             if (item[key] > start) {
-//               item[key] = item[key] - dif
-//             }
-//           })
-//         })
-//         // const intersections = commands.filter(item => {
-//         //   const xCoords = Object.keys(item).filter(key => key.startsWith('x')).map(key => item[key])
-//         //   return xCoords.some(val => val >= start && val <= end) || (Math.min(...xCoords) <= start && Math.max(...xCoords) >= end)
-//         // })
-//         // intersections.forEach(line => {
-//         //   if (line.x > start) {
-//         //     line.x = start
-//         //   }
-//         // })
-//       }
+const startPointsX = computed(() => {
+  const arr = []
+  props.breakpointsX.forEach((el, i) => { if (i % 2 === 0) { arr.push(el) }})
+  return arr
+})
 
-//       let recompiled = ''
-//       for (let i = 0; i < commands.length; i++) {
-//         const cmd = commands[i]
-//         const coords = [cmd.x, cmd.y]
-//         if (cmd.x1 && cmd.y1) { coords.push(cmd.x1, cmd.y1) }
-//         if (cmd.x2 && cmd.y2) { coords.push(cmd.x2, cmd.y2) }
-//         recompiled = recompiled + `${cmd.code} ` + coords.join(' ') + ' '
-//       }
-//       console.log('recompiled')
-//       console.log(recompiled)
-//       return recompiled
-//     } else {
-//       return svgPathData.value.path
-//     }
-//   }
-//   return false
-// })
+const maxDeltasX = computed(() => {
+  const arr = []
+  for (let i = 0; i < props.breakpointsX.length; i = i + 2) {
+    arr.push(props.breakpointsX[i + 1] - props.breakpointsX[i])
+  }
+  return arr
+})
 
-// watch(computedPath, (val) => {
-//   console.log(val)
-// })
+const clipPath = computed(() => {
+  if (props.displayGuides) {
+    return originalPath.value
+  }
+  if (svgPathData.value && width.value) {
+    const globalDelta = svgPathData.value.rangeX - width.value
+    const path = [originalPath.value]
+    let shift = 0
+    for (let i = 0; i < maxDeltasX.value.length; i++) {
+      const delta = Math.min(globalDelta / maxDeltasX.value.length, maxDeltasX.value[i])
+      const nextPath = contractPathRegion(path[i], startPointsX.value[i] - shift, delta)
+      path.push(nextPath)
+      shift = shift + delta
+    }
+    return path[path.length - 1]
+  }
+  return false
+})
+
+const clipPathData = computed(() => clipPath.value ? useSvgPathData(clipPath.value) : false)
+
+// ==================================================================== Watchers
+watch(clipPath, () => {
+  if (props.displayGuides) {
+    drawClipRegion()
+  }
+})
+
 // ======================================================================= Hooks
 onMounted(() => {
-  path.value = findPathElement()
-  // drawClipRegion()
-  // resizeDimensions()
-  // resizeEventListener.value = () => { resizeDimensions() }
-  // window.addEventListener('resize', resizeEventListener.value)
-
-  const moves = path.value.split(/(?<=[MmLlHhVvCcSsQqTtAaZz])/)
-  const parsed = []
-  moves.forEach((move) => {
-    if (move.length > 1) {
-      parsed.push(move.substring(0, move.length - 2), move.charAt(move.length - 1))
-    } else {
-      parsed.push(move)
-    }
-  })
-  const test = parsed.map(item => item.split(' '))
-  console.log(test)
-  const start = props.breakpointsX[0]
-  const end = props.breakpointsX[1]
-  const dif = end - start
-  test.forEach((arr, i) => {
-    const val = parseFloat(arr[0])
-    if (typeof val === 'number') {
-      arr.forEach((num, j) => {
-        if (j % 2 === 0 && num > start) {
-          test[i][j] = num - dif
-        }
-      })
-    }
-  })
-
-  computedPath.value = test.flat().join(' ')
-  drawClipRegion()
+  originalPath.value = findPathElement()
+  resizeDimensions()
+  resizeEventListener.value = useThrottle(() => { resizeDimensions() }, 50)
+  window.addEventListener('resize', resizeEventListener.value)
 })
 
 onBeforeUnmount(() => {
@@ -145,21 +125,46 @@ const findPathElement = () => {
   return null
 }
 
+const parsePathData = (path) => {
+  const moves = path.split(/(?<=[MmLlHhVvCcSsQqTtAaZz])/).map(move => move.trim())
+  const parsed = []
+  moves.forEach((move) => {
+    if (move.length > 1) {
+      parsed.push(move.substring(0, move.length - 2).trim(), move.charAt(move.length - 1))
+    } else {
+      parsed.push(move)
+    }
+  })
+  return parsed.map(item => item.split(' '))
+}
+
+const contractPathRegion = (path, start, dif) => {
+  const parsed = parsePathData(path)
+  parsed.forEach((arr, i) => {
+    const val = parseFloat(arr[0])
+    if (!isNaN(val)) {
+      const cmd = parsed[i - 1]
+      if (cmd[0] !== 'V') {
+        arr.forEach((num, j) => {
+          if (j % 2 === 0 && num > start) {
+            parsed[i][j] = num - dif
+          }
+        })
+      }
+    }
+  })
+  return parsed.flat().join(' ')
+}
+
 const drawClipRegion = () => {
-  if (canvas.value && svgPathData.value) {
-    const w = svgPathData.value.rangeX
-    const h = svgPathData.value.rangeY
+  if (canvas.value && clipPathData.value) {
+    const w = clipPathData.value.rangeX
+    const h = clipPathData.value.rangeY
     canvas.value.width = w
     canvas.value.height = h
     const ctx = canvas.value.getContext("2d")
-    const region = new Path2D(computedPath.value)
-
-    ctx.clip(region, "evenodd")
-    ctx.fillStyle = "blue"
-    ctx.fillRect(0, 0, w, h)
-
-    for (let i = 0; i < props.guidelinesX.length; i++) {
-      const x = props.guidelinesX[i]
+    for (let i = 0; i < props.breakpointsX.length; i++) {
+      const x = props.breakpointsX[i]
       ctx.beginPath()
       ctx.moveTo(x, 0)
       ctx.lineTo(x, h)
@@ -170,7 +175,9 @@ const drawClipRegion = () => {
 }
 
 const resizeDimensions = () => {
-  console.log('resize')
+  const ctn = container.value
+  const rect = ctn.getBoundingClientRect()
+  width.value = rect.width
 }
 
 </script>
@@ -205,41 +212,15 @@ const resizeDimensions = () => {
 
 .clipped-content {
   position: absolute;
-  &.center-1 {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &.center-2 {
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &.center-3 {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &.center-4 {
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &.corner-1 {
-    left: 0;
-    top: 0;
-  }
-  &.corner-2 {
-    right: 0;
-    top: 0;
-  }
-  &.corner-3 {
-    right: 0;
-    bottom: 0;
-  }
-  &.corner-4 {
-    left: 0;
-    bottom: 0;
-  }
+  top: 0;
+  left: 0;
+}
+
+.overlay-content {
+  position: relative;
+}
+
+canvas {
+  position: absolute;
 }
 </style>
