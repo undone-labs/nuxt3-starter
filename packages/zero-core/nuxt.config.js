@@ -1,4 +1,4 @@
-console.log('⚡️ load:zero-ui')
+console.log('⚡️ load:zero-core')
 
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         scss: { // make SCSS variables, functions and mixins globally accessible
           additionalData: `
             @use "sass:math";
-            @import "@/../zero-ui/assets/scss/settings.scss";
+            @import "@/../zero-core/assets/scss/settings.scss";
             @import "@/assets/scss/settings.scss";
           `
         }
@@ -38,12 +38,12 @@ export default defineNuxtConfig({
   },
   // ============================================================= Global Styles
   css: [
-    '@/../zero-ui/assets/scss/main.scss'
+    '@/../zero-core/assets/scss/main.scss'
   ],
   // ================================================================ Components
   /**
    * @note Empty array because components are selectively auto-loaded by the
-   * `zero-ui` module
+   * `zero-core` module
    */
   components: { dirs: [] },
   // =================================================================== Modules

@@ -30,7 +30,7 @@
     "upgrade-nuxt-docs": "npm run upgrade-nuxt -w docs"
   },
   "workspaces": [
-    "packages/zero-ui",
+    "packages/zero-core",
     "packages/zero-docs",
     "packages/site",
     "packages/docs"

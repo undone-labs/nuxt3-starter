@@ -27,8 +27,8 @@ const globalPrefix = 'Zero'
 // ////////////////////////////////////////////////////////////////////// Config
 // -----------------------------------------------------------------------------
 const meta = {
-  name: '@undone-labs/nuxt-module-zero-ui',
-  configKey: 'nuxtModuleZeroUi',
+  name: '@undone-labs/nuxt-module-zero-core',
+  configKey: 'nuxtModuleZeroCore',
   compatibility: {
     nuxt: '^3.0.0'
   }
@@ -145,7 +145,7 @@ const registerStores = path => {
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  console.log('📦 [load:module] zero-ui')
+  console.log('📦 [load:module] zero-core')
   const options = nuxt.options
   if (!options.hasOwnProperty('zero')) { return }
   const zeroOptions = options.zero

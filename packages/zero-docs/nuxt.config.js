@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         scss: { // make SCSS variables, functions and mixins globally accessible
           additionalData: `
             @use "sass:math";
-            @import "@/../zero-ui/assets/scss/settings.scss";
+            @import "@/../zero-core/assets/scss/settings.scss";
             @import "@/../zero-docs/assets/scss/settings.scss";
             @import "@/assets/scss/settings.scss";
           `
