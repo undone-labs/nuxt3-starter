@@ -55,19 +55,22 @@ export default defineNuxtConfig({
         driver: 'fs',
         prefix: '/docs',
         base: Path.resolve(__dirname, 'content')
+      },
+      docs: {
+        driver: 'fs',
+        prefix: '/docs',
+        base: Path.resolve(__dirname, '../docs', 'content')
+      },
+      dataZero: {
+        driver: 'fs',
+        prefix: '/data',
+        base: Path.resolve(__dirname, 'data')
+      },
+      dataDocs: {
+        driver: 'fs',
+        prefix: '/data',
+        base: Path.resolve(__dirname, '../docs', 'data')
       }
     }
-    // sources: {
-    //   base: {
-    //     driver: 'fs',
-    //     prefix: '/docs',
-    //     base: Path.resolve(__dirname, 'content')
-    //   },
-    //   docs: {
-    //     driver: 'fs',
-    //     prefix: '/docs',
-    //     base: Path.resolve(__dirname, '../docs', 'content')
-    //   }
-    // }
   }
 })

@@ -82,13 +82,19 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import Footer from '@/data/footer'
-
 // ======================================================================== Data
-const support = Footer.panel_left
-const help = Footer.panel_right
-const legal = Footer.panel_bottom
+const { data: Footer } = await useAsyncData('footer', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/footer.json' }
+    }
+  }).find()
+  return content.pop()
+})
+
+const support = Footer.value.panel_left
+const help = Footer.value.panel_right
+const legal = Footer.value.panel_bottom
 </script>
 
 <style lang="scss" scoped>

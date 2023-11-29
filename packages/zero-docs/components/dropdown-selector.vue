@@ -39,7 +39,7 @@ const props = defineProps({
  * @method handleOptionSelect
  */
 
-const handleOptionSelect = (option) => {
+const handleOptionSelect = option => {
   if (process.dev) {
     console.log(option)
     // fire i18n here

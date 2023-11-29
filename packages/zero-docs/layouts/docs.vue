@@ -9,7 +9,7 @@
 
     <slot />
 
-    <!-- <SiteFooter /> -->
+    <SiteFooter />
 
   </div>
 </template>
@@ -31,9 +31,22 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 const generalStore = useGeneralStore()
 const { theme } = storeToRefs(generalStore)
 
+const { data: Settings } = await useAsyncData('settings', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/settings.json' }
+    }
+  }).find()
+  return content.pop()
+})
+
+generalStore.setSettings(Settings.value)
+
 // ======================================================================= Hooks
 onMounted(() => {
   const initialTheme = localStorage.getItem('theme')
-  generalStore.setTheme(initialTheme || theme.value)
+  if (initialTheme) {
+    generalStore.setTheme(initialTheme)
+  }
 })
 </script>

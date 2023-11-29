@@ -33,11 +33,17 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import Sidebar from '@/data/sidebar.json'
-
 // ======================================================================== Data
 const route = useRoute()
+
+const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/sidebar.json' }
+    }
+  }).find()
+  return content.pop().body
+})
 
 // ===================================================================== Methods
 /**

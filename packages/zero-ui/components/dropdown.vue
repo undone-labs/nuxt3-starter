@@ -7,14 +7,19 @@
       name="toggle-button"
       :toggle-panel="togglePanel"
       :panel-open="panelOpen"
-      :close-panel="closePanel" />
+      :close-panel="closePanel"
+      :selected="selected">
+    </slot>
 
     <div :class="['panel-container', { open: panelOpen }]">
 
       <div class="panel">
         <slot
           name="dropdown-panel"
-          :close-panel="closePanel" />
+          :close-panel="closePanel"
+          :set-selected="setSelected"
+          :is-selected="isSelected">
+        </slot>
       </div>
 
     </div>
@@ -23,29 +28,48 @@
 </template>
 
 <script setup>
-// ======================================================================= Setup
+// ======================================================================= Props
 const props = defineProps({
   toggleOn: {
     type: String,
     required: false,
     default: 'click'
+  },
+  displaySelected: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  defaultOption: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 
-const emit = defineEmits(['dropdownPanelToggled'])
+const emit = defineEmits(['dropdownPanelToggled', 'optionSelected'])
 
 // ======================================================================== Data
 const panelOpen = ref(false)
+const selected = ref('')
 
 // ==================================================================== Watchers
-watch(panelOpen, state => {
-  emit('dropdownPanelToggled', state)
+watch(panelOpen, (state) => { emit('dropdownPanelToggled', state) })
+
+watch(selected, (val) => { emit('optionSelected', val) })
+
+// ======================================================================= Hooks
+onMounted(() => {
+  if (props.defaultOption) {
+    setSelected(props.defaultOption)
+  }
 })
 
-// ===================================================================== Methods
+// ===================================================================== Methdos
 /**
  * @method togglePanel
  */
+
 const togglePanel = () => {
   if (props.toggleOn === 'click') {
     panelOpen.value = !panelOpen.value
@@ -55,10 +79,30 @@ const togglePanel = () => {
 /**
  * @method closePanel
  */
+
 const closePanel = () => {
-  if (props.toggleOn === 'click') {
+  if (props.toggleOn === 'click' && panelOpen.value) {
     panelOpen.value = false
   }
+}
+
+/**
+ * @method setSelected
+ */
+
+const setSelected = value => {
+  if (props.displaySelected) {
+    selected.value = value
+  }
+  closePanel()
+}
+
+/**
+ * @method isSelected
+ */
+
+const isSelected = value => {
+  return value === selected.value
 }
 </script>
 

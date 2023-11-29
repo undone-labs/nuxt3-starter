@@ -92,15 +92,13 @@ const generalStore = useGeneralStore()
 const pageSlug = dirNameSplit[1]
 const pageHeading = useToPascalCase(pageSlug, ' ')
 
-const { data: content } = await useAsyncData('content', () => {
+const { data: content } = await useAsyncData('page-content', () => {
   return queryContent({
     where: {
       _path: { $contains: contentPath }
     }
   }).find()
 })
-
-// console.log(content.value)
 
 const routePathSplitLength = route.path.split('/').length
 const sectionCount = content.value.length

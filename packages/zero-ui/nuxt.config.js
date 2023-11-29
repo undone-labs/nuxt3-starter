@@ -45,7 +45,7 @@ export default defineNuxtConfig({
    * @note Empty array because components are selectively auto-loaded by the
    * `zero-ui` module
    */
-  components: [],
+  components: { dirs: [] },
   // =================================================================== Modules
   modules: [
     '@nuxtjs/algolia',

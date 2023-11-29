@@ -35,9 +35,9 @@
 
       <!-- <ButtonAlgoliaSearch /> -->
 
-      <!-- <DropdownSelector
+      <DropdownSelector
         v-if="languageSelectorVisible"
-        :options="languageOptions" /> -->
+        :options="languageOptions" />
 
     </div>
 
@@ -45,19 +45,27 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import Header from '@/data/header'
-
 // ======================================================================== Data
 const generalStore = useGeneralStore()
 const { languageSelectorVisible } = storeToRefs(generalStore)
-const links = Header.navigation
-const githubUrl = Header.toolbar.github_url
-const languageOptions = Header.toolbar.language_options
+
+const { data: Header } = await useAsyncData('header', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/header.json' }
+    }
+  }).find()
+  return content.pop()
+})
+
+const links = Header.value.navigation
+const githubUrl = Header.value.toolbar.github_url
+const languageOptions = Header.value.toolbar.language_options
 
 const route = useRoute()
-const contentPath = `/docs/content${route.path}`
-const { data: content } = await useAsyncData('content', () => {
+const contentPath = `/docs${route.path}`
+
+const { data: content } = await useAsyncData('site-header-page-content', () => {
   return queryContent({
     where: {
       _path: { $contains: contentPath }

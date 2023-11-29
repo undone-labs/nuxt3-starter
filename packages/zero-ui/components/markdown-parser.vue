@@ -122,7 +122,7 @@ onMounted(async () => {
       const type = button.getAttribute('data-type')
       const text = type === 'heading' ? `${baseURL}#${hash}` : button.nextElementSibling.textContent
       button.addEventListener('click', () => {
-        useAddTextToClipboard(text)
+        zeroAddTextToClipboard(text)
         generalStore.setClipboard(text)
         clearCopiedStates()
         if (type === 'heading') {

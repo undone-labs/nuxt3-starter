@@ -86,8 +86,8 @@ export default defineNuxtConfig({
       ApiInformation: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
-      Paginator: { enable: true },
-      TabbedSlider: { enable: true }
+      Paginator: { enable: false },
+      TabbedSlider: { enable: false }
     },
     composables: {
       addTextToClipboard: { enable: true },
