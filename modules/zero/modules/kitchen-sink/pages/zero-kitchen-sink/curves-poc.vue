@@ -6,44 +6,39 @@
     </h1>
 
     <section class="poc">
-      <div class="grid">
 
-        <div ref="container" class="col-4" data-push-left="off-2">
-          <ClipPath
-            v-if="container"
-            :target-content-height="300"
-            :mirror-dimensions="() => container"
-            anchor-type="corner"
-            :anchor-position="4"
-            :border-radius="8">
-
-            <template #svg-path>
-              <TestSvg />
-            </template>
-
-            <template #clipped-content>
-              <div class="image-wrapper">
-                <img src="/bubbles-resize.jpeg" />
-              </div>
-            </template>
-
-          </ClipPath>
-        </div>
-
-        <div class="col-4" data-push-right="off-2">
-          <div class="text-1">
-            <div class="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
+      <div class="grid-equalHeight">
+        <div class="col-6" data-push-left="off-0">
+          <div class="title">
+            heading heading heading
           </div>
         </div>
-
-        <div class="col-12">
-          <div class="canvas-based-poc">
-
-            <CanvasClipPath
+        <div
+          class="col-6"
+          data-push-right="off-0">
+          <div class="example-1">
+            <ResponsiveClipPath
               :display-guides="false"
-              :breakpoints-x="[50, 550, 720, 1220]">
+              :breakpoints-x="[130, 480]"
+              :breakpoints-y="[30, 150, 400, 530]">
+              <template #svg-path>
+                <TestSvg1 />
+              </template>
+              <template #clipped-content>
+                <div class="squidgie"></div>
+              </template>
+            </ResponsiveClipPath>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-12">
+          <div class="example-2">
+            <ResponsiveClipPath
+              :display-guides="false"
+              :breakpoints-x="[50, 550, 720, 1220]"
+              :breakpoints-y="[70, 290]">
               <template #svg-path>
                 <TestSvg2 />
               </template>
@@ -51,79 +46,52 @@
                 <div class="bubbles"></div>
               </template>
               <template #overlay-content>
-                <div class="overlay">
+                <div class="content">
                   <div class="text">
                     Lörem ipsum plaliga tähåskapet relig men proktig telererar reabel, pangar. Geopuras ultrar megabesk otånera vanylig utan nylöbel soplabel.
                   </div>
                 </div>
               </template>
-            </CanvasClipPath>
-
+            </ResponsiveClipPath>
           </div>
         </div>
-
       </div>
+
     </section>
 
   </main>
 </template>
 
 <script setup>
-const container = ref(null)
 </script>
 
 <style lang="scss" scoped>
 .poc {
-  display: flex;
-  justify-content: center;
   padding: 5rem 0;
 }
 
-.image-wrapper {
-  width: 100%;
-  height: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-  }
+.title {
+  padding: 8rem 1rem;
+  font-size: toRem(60);
+  font-weight: 500;
 }
 
-.background {
-  position: absolute;
-  &.inner {
-    :deep(.clipped-content) {
-      left: 0;
-    }
-  }
+.example-2 {
+  margin-top: 3rem;
 }
 
-.relative,
-.foreground {
-  position: relative;
+.content {
+  padding: 5rem 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .text {
-  padding: 5rem 3rem;
   color: white;
-  font-weight: 500;
+  font-weight: 600;
   font-size: toRem(20);
-  min-height: toRem(400);
-}
-
-.canvas-based-poc {
-  .overlay {
-    position: relative;
-    height: toRem(364);
-    padding: 5rem 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .text {
-      padding: 0;
-      min-height: unset;
-      text-align: center;
-    }
-  }
+  text-align: center;
 }
 
 .bubbles {
@@ -131,6 +99,14 @@ const container = ref(null)
   height: 100%;
   background-image: url('/bubbles-wide.jpg.webp');
   background-size: 1200px 801px;
+  background-position: center;
+}
+
+.squidgie {
+  width: 100%;
+  height: 100%;
+  background-image: url('/bubbles-1.jpeg');
+  background-size: 600px;
   background-position: center;
 }
 </style>

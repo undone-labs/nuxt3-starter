@@ -38,6 +38,5 @@ export const useSvgPathData = (path) => {
     rangeY,
     commands,
     path
-    // relative: parseSVG(path)
   }
 }
