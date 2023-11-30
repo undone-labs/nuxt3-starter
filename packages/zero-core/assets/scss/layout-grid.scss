@@ -18,6 +18,7 @@
   width: $gridWidth;
   margin: 0 auto;
   @include gridMaxMQ {
+    width: 100%;
     padding: 0 4.1665%;
   }
   &[class*="-noGutter"] {
