@@ -83,18 +83,29 @@
 
 <script setup>
 // ======================================================================== Data
-const { data: Footer } = await useAsyncData('footer', async () => {
-  const content = await queryContent({
-    where: {
-      _file: { $contains: 'data/footer.json' }
-    }
-  }).find()
-  return content.pop()
-})
+const generalStore = useGeneralStore()
+const { language } = storeToRefs(generalStore)
 
-const support = Footer.value.panel_left
-const help = Footer.value.panel_right
-const legal = Footer.value.panel_bottom
+const { data: Footer } = await useAsyncData(
+  'footer',
+  async () => {
+    const content = await queryContent({
+      where: {
+        _file: { $contains: `data/${language.value}/footer.json` }
+      }
+    }).find()
+    return content.pop()
+  },
+  {
+    watch: [language]
+  }
+)
+
+// ==================================================================== Computed
+const support = computed(() => Footer.value.panel_left)
+const help = computed(() => Footer.value.panel_right)
+const legal = computed(() => Footer.value.panel_bottom)
+
 </script>
 
 <style lang="scss" scoped>

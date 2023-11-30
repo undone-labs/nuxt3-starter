@@ -34,16 +34,22 @@
 
 <script setup>
 // ======================================================================== Data
+const generalStore = useGeneralStore()
+const { language } = storeToRefs(generalStore)
 const route = useRoute()
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: 'data/sidebar.json' }
+      _file: { $contains: `data/${language.value}/sidebar.json` }
     }
   }).find()
   return content.pop().body
-})
+  },
+  {
+    watch: [language]
+  }
+)
 
 // ===================================================================== Methods
 /**

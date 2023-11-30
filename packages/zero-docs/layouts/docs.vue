@@ -29,16 +29,20 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 }
 // ======================================================================== Data
 const generalStore = useGeneralStore()
-const { theme } = storeToRefs(generalStore)
+const { language } = storeToRefs(generalStore)
 
 const { data: Settings } = await useAsyncData('settings', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: 'data/settings.json' }
+      _file: { $contains: `data/${language.value}/settings.json` }
     }
   }).find()
   return content.pop()
-})
+  },
+  {
+    watch: [language]
+  }
+)
 
 generalStore.setSettings(Settings.value)
 

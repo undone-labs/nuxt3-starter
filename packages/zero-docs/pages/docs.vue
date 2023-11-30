@@ -1,7 +1,21 @@
 <script setup>
 // ===================================================================== Imports
-import Sidebar from '@/data/sidebar.json'
+const generalStore = useGeneralStore()
+const { language } = storeToRefs(generalStore)
+
+const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: `data/${language.value}/sidebar.json` }
+    }
+  }).find()
+  return content.pop().body
+  },
+  {
+    watch: [language]
+  }
+)
 
 // ======================================================================= Setup
-await navigateTo(`/${Sidebar[0].slug}${Sidebar[0].children[0].href}`)
+await navigateTo(`/${Sidebar.value[0].slug}${Sidebar.value[0].children[0].href}`)
 </script>

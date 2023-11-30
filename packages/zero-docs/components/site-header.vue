@@ -54,16 +54,16 @@ const { language } = storeToRefs(generalStore)
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: 'data/header.json' }
+      _file: { $contains: `data/${language.value}/header.json` }
     }
   }).find()
   return content.pop()
-})
+  },
+  {
+    watch: [language]
+  }
+)
 
-const links = Header.value.navigation
-const githubUrl = Header.value.toolbar.github_url
-const languageOptions = Header.value.toolbar.language_options
-const defaultSelectedLanguage = languageOptions.indexOf(language.value.toUpperCase()) || 0
 
 const route = useRoute()
 const contentPath = `/docs${route.path}`
@@ -81,6 +81,15 @@ const routeActive = ref(undefined)
 if (content.value.length > 0) {
   routeActive.value = content.value[0]._file.includes('docs') ? '/docs' : undefined
 }
+
+// ==================================================================== Computed
+const links = computed(() => Header.value.navigation)
+const githubUrl = computed(() => Header.value.toolbar.github_url)
+const languageOptions = computed(() => Header.value.toolbar.language_options)
+
+
+const defaultSelectedLanguage = languageOptions.value.indexOf(language.value.toUpperCase()) || 0
+
 </script>
 
 <style lang="scss" scoped>
