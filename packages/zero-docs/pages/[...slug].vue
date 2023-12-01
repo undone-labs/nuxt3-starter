@@ -294,7 +294,7 @@ const getPreviewComponentName = path => {
   &:not(:nth-child(2)) {
     padding-top: 2rem;
     border-top: solid 2px var(--background-color__secondary);
-    transition: border-color 500ms;
+    transition: transitions();
   }
   &:not(:nth-last-child(2)) {
     padding-bottom: 2rem;

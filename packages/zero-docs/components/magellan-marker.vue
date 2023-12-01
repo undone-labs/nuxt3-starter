@@ -42,7 +42,7 @@ watch(route, () => {
   width: 0.25rem;
   background-color: var(--link-color);
   border-radius: toRem(4);
-  transition: 150ms ease-in-out;
+  transition: transitions(150ms ease-in-out);
   &.hide {
     opacity: 0;
   }

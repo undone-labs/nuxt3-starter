@@ -46,14 +46,19 @@ export const useGeneralStore = defineStore('general', () => {
    * @method setTheme
    */
 
-  const setTheme = newTheme => {
+  const setTheme = async (newTheme) => {
+    document.documentElement.classList.add('theme-transition')
+    await zeroDelay(50)
     settings.value.theme = newTheme
     localStorage.setItem('theme', newTheme)
-    document.documentElement.className = newTheme
+    document.documentElement.classList = `${newTheme} theme-transition`
+    await zeroDelay(500)
+    document.documentElement.classList.remove('theme-transition')
+
   }
 
   /**
-   * @method setTheme
+   * @method setActiveSection
    */
 
   const setActiveSection = hash => {
@@ -61,7 +66,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method compileMagellanLinks
    */
 
   const compileMagellanLinks = () => {
@@ -80,7 +85,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setActiveLinkMarkerHeight
    */
 
   const setActiveLinkMarkerHeight = () => {
@@ -91,7 +96,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setClipboard
    */
 
   const setClipboard = text => {

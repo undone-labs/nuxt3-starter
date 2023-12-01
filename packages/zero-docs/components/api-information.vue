@@ -142,13 +142,13 @@ const getHeading = (key, section) => {
   margin-bottom: toRem(4);
   padding-bottom: toRem(4);
   border-bottom: 1px solid var(--divider);
-  transition: color 500ms, border-color 500ms;
+  transition: transitions();
 }
 
 .entry {
   margin-bottom: 1rem;
   padding-top: 1rem;
-  transition: border-color 500ms;
+  transition: transitions();
   &:not(:nth-child(2)) {
     border-top: 1px solid var(--divider);
   }
@@ -165,12 +165,12 @@ const getHeading = (key, section) => {
   line-height: 1;
   font-weight: 700;
   margin-right: 0.5rem;
-  transition: color 500ms, background-color 500ms;
+  transition: transitions();
 }
 
 .type {
   font-weight: 500;
-  transition: color 500ms;
+  transition: transitions();
 }
 
 :deep(.description) {
@@ -190,13 +190,13 @@ table {
 tbody {
   tr {
     border-top: 1px solid var(--divider);
-    transition: border-color 500ms;
+    transition: transitions();
   }
 }
 
 .http-code,
 th {
-  transition: color 500ms;
+  transition: transitions();
 }
 
 th {

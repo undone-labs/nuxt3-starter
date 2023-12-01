@@ -72,6 +72,7 @@ $replace4: #000000;
   --algolia__highlight: #{$blueRibbon}; // not used because contrast too intense
   --api-explorer__http-status-code__background-color: #{$mercury};
   --api-explorer__http-status-code__color: #{$blueViolet};
+  --theme-transition: '';
 }
 
 .dark {
@@ -101,7 +102,20 @@ $replace4: #000000;
   --api-explorer__http-status-code__color: #{$portage};
 }
 
+.theme-transition {
+  --theme-transition: background-color 500ms ease-in, color 500ms ease-in, border-color 500ms ease-in, fill 500ms ease-in, stroke 500ms ease-in;
+}
+
 // ===================================================================== Styling
+@function transitions($transitions...) {
+  $chain: '';
+  @each $transition in $transitions {
+    $chain: $chain + $transition + ', ';
+  }
+  $chain: $chain + var(--theme-transition);
+  @return unquote($chain);
+}
+
 @mixin shadow1 {
 	box-shadow: 0.125rem 0px 1rem 0.3125rem rgb(black, 0.7);
 }

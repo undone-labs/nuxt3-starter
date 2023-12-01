@@ -113,18 +113,18 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
   &:hover {
     &.prev {
       .icon-arrow.left {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         transform: translateX(-0.5rem);
       }
     }
     &.next {
       .icon-arrow.right {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         transform: rotate(180deg) translateX(-0.5rem);
       }
     }
     .page-title {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       color: var(--link-color);
     }
   }
@@ -148,7 +148,7 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
 .label,
 .page-title,
 .directory-title {
-  transition: 500ms;
+  transition: transitions();
 }
 
 .label {
@@ -158,7 +158,7 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
 
 :deep(.icon-arrow) {
   width: toRem(14);
-  transition: 150ms ease-out;
+  transition: transitions(150ms ease-out);
   &.left {
     margin-right: toRem(11);
   }
@@ -168,7 +168,7 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
   }
   path {
     fill: var(--theme-color);
-    transition: 500ms;
+    transition: transitions();
   }
 }
 
@@ -190,7 +190,7 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
   width: toRem(16);
   path,
   rect {
-    transition: 500ms;
+    transition: transitions();
   }
   path {
     fill: var(--theme-color);

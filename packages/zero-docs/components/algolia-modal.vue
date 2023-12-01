@@ -65,12 +65,12 @@ const { activeResult } = storeToRefs(algoliaStore)
   background-color: var(--algolia__searchbox__background-color);
   border: 2px solid var(--divider);
   border-radius: toRem(10);
-  transition: border 250ms ease;
+  transition: transitions(border 250ms ease);
   &.focused {
     border-color: var(--link-color);
     .ais-SearchBox-submitIcon {
       path {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         fill: var(--link-color);
       }
     }
@@ -101,7 +101,7 @@ const { activeResult } = storeToRefs(algoliaStore)
   margin: 0 toRem(18);
   path {
     fill: var(--theme-color);
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
   }
 }
 
@@ -113,7 +113,7 @@ const { activeResult } = storeToRefs(algoliaStore)
   &:hover {
     .ais-SearchBox-resetIcon {
       path {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         fill: var(--link-color);
       }
     }
@@ -124,7 +124,7 @@ const { activeResult } = storeToRefs(algoliaStore)
   margin: 0 toRem(18);
   path {
     fill: var(--theme-color);
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
   }
 }
 

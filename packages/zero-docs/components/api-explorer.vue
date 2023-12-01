@@ -124,7 +124,7 @@ props.sliders.forEach(slider => {
   font-size: toRem(16);
   color: var(--theme-color);
   background-color: transparent;
-  transition: color 500ms;
+  transition: transitions();
   &:not(:last-child) {
     margin-right: toRem(7);
   }
@@ -138,7 +138,7 @@ props.sliders.forEach(slider => {
   padding-bottom: toRem(1);
   background-color: var(--api-explorer__http-status-code__background-color);
   border-radius: toRem(2);
-  transition: background-color 500ms, color 500ms;
+  transition: transitions();
 }
 
 .slider {
@@ -146,20 +146,20 @@ props.sliders.forEach(slider => {
   border-radius: toRem(5);
   margin-bottom: toRem(18);
   overflow: hidden;
-  transition: border-color 500ms;
+  transition: transitions();
 }
 
 .slider-tabs {
   display: flex;
   border-bottom: solid 2px var(--divider);
   background-color: var(--background-color__secondary);
-  transition: background-color 500ms, color 500ms, border-color 500ms;
+  transition: transitions();
 }
 
 .slide-content {
   padding: toRem(12) toRem(24);
   background-color: var(--background-color);
-  transition: background-color 500ms, color 500ms;
+  transition: transitions();
   pre {
     display: flex;
     margin: 0;
@@ -172,7 +172,7 @@ props.sliders.forEach(slider => {
   padding: toRem(7) toRem(24);
   cursor: pointer;
   color: var(--theme-color);
-  transition: color 500ms;
+  transition: transitions();
   &:after {
     content: '';
     position: absolute;
@@ -183,7 +183,7 @@ props.sliders.forEach(slider => {
   &.active {
     &:after {
       border-bottom: solid 3px var(--link-color);
-      transition: border-color 500ms;
+      transition: transitions();
     }
   }
   &:not(:last-child) {

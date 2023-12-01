@@ -95,7 +95,7 @@ if (content.value.length > 0) {
   background-color: var(--background-color);
   border-bottom: 1px solid var(--divider);
   z-index: 1000;
-  transition: background-color 500ms, border-color 500ms;
+  transition: transitions();
 }
 
 // /////////////////////////////////////////////////////////////////// Site Logo
@@ -108,9 +108,9 @@ if (content.value.length > 0) {
 .logo {
   display: block;
   height: 100%;
-  transition: 150ms ease-out;
+  transition: transitions(150ms ease-out);
   &:hover {
-    transition: 150ms ease-in;
+    transition: transitions(150ms ease-in);
     transform: scale(1.05);
   }
 }
@@ -138,7 +138,7 @@ if (content.value.length > 0) {
   }
   &:hover {
     &:before {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       height: toRem(5);
     }
   }
@@ -152,11 +152,11 @@ if (content.value.length > 0) {
     width: 100%;
     height: 0px;
     background-color: var(--theme-color);
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
   }
   &.active {
     &:before {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       height: toRem(5);
     }
   }
@@ -179,7 +179,7 @@ if (content.value.length > 0) {
 .github-link {
   display: flex;
   :deep(path) {
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
     fill: var(--theme-color);
   }
 }

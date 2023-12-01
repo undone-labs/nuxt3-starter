@@ -37,9 +37,9 @@ const iterateCount = () => {
   padding: 1rem;
   border: 2px solid var(--divider);
   border-radius: 1rem;
-  transition: border-color 500ms;
+  transition: transitions();
   > * {
-    transition: color 500ms, background-color 500ms, border-color 500ms, transform 150ms;
+    transition: transitions(transform 150ms);
   }
 }
 
@@ -63,7 +63,7 @@ const iterateCount = () => {
   color: var(--theme-color__inverted);
   background-color: var(--theme-color);
   &:hover {
-    transition: transform 150ms;
+    transition: transitions(transform 150ms);
     transform: scale(1.1);
   }
 }

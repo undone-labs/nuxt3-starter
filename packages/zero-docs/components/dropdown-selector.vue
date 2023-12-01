@@ -66,7 +66,7 @@ const handleOptionSelect = option => {
   &:hover,
   &.panel-open {
     &:before {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       opacity: 1;
     }
   }
@@ -81,7 +81,7 @@ const handleOptionSelect = option => {
     border-radius: toRem(5);
     opacity: 0;
     z-index: -1;
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
   }
   span,
   :deep(svg) {
@@ -96,7 +96,7 @@ const handleOptionSelect = option => {
 .dropdown-option {
   padding: toRem(5) toRem(10);
   white-space: nowrap;
-  transition: 500ms;
+  transition: transitions(500ms);
   &:hover {
     color: var(--link-color);
   }

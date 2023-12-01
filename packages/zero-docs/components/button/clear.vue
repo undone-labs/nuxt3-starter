@@ -114,7 +114,7 @@ const props = defineProps({
   &:hover {
     :deep(.text) {
       color: var(--link-color);
-      transition: color .25s ease;
+      transition: transitions(color .25s ease);
     }
   }
 }

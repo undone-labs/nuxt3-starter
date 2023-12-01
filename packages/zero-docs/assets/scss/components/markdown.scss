@@ -66,7 +66,7 @@
   hr {
     margin-bottom: 2rem;
     border: solid 1px var(--background-color__secondary);
-    transition: border-color 500ms;
+    transition: transitions();
   }
 
   // ====================================================================== Code
@@ -108,7 +108,7 @@
         transform: translateY(-25%);
         border-radius: 50%;
         background-color: var(--theme-color);
-        transition: background-color 500ms;
+        transition: transitions();
       }
     }
   }
@@ -121,7 +121,7 @@
     &:before {
       background-color: transparent;
       border: solid 1px var(--theme-color);
-      transition: border-color 500ms;
+      transition: transitions();
     }
   }
 
@@ -130,7 +130,7 @@
     margin: 0;
     padding-left: toRem(36);
     border-left: toRem(5) solid var(--background-color__secondary);
-    transition: border-color 500ms;
+    transition: transitions();
     &:not(:first-child) {
       margin-top: 2rem;
     }
@@ -145,7 +145,7 @@
   //   padding: toRem(21) toRem(23);
   //   border-radius: toRem(10);
   //   background-color: var(--background-color__secondary);
-  //   transition: background-color 500ms;
+  //   transition: transitions();
   //   p {
   //     @include h4;
   //     margin-bottom: toRem(9);
@@ -169,7 +169,7 @@
   //       margin: 0;
   //       border-radius: 50%;
   //       background-color: var(--theme-color);
-  //       transition: 500ms;
+  //       transition: transitions();
   //     }
   //   }
   // }
@@ -180,7 +180,7 @@
     border-top: solid 2px var(--divider);
     border-bottom: solid 2px var(--divider);
     margin-bottom: 1.25rem;
-    transition: 500ms;
+    transition: transitions();
   }
 
   th,
@@ -200,11 +200,11 @@
 
   thead > tr {
     background-color: var(--background-color);
-    transition: background-color 500ms;
+    transition: transitions();
   }
 
   tbody > tr {
-    transition: background-color 500ms;
+    transition: transitions();
     &:nth-child(odd) {
       background-color: var(--background-color__secondary);
     }
@@ -226,7 +226,7 @@
     position: relative;
     &:hover {
       .copy-button {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         opacity: 1;
       }
     }
@@ -239,9 +239,9 @@
       padding-right: toRem(8);
       color: var(--link-color);
       opacity: 0;
-      transition: 150ms ease-out;
+      transition: transitions(150ms ease-out);
       &:hover {
-        transition: 150ms ease-in;
+        transition: transitions(150ms ease-in);
         color: var(--link-color);
       }
       &[data-tooltip] {

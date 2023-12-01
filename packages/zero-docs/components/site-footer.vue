@@ -101,7 +101,7 @@ const legal = Footer.value.panel_bottom
 // ///////////////////////////////////////////////////////////////////// General
 #site-footer {
   background-color: var(--background-color);
-  transition: background-color 500ms;
+  transition: transitions();
 }
 
 .full {
@@ -116,7 +116,7 @@ section {
 .section-legal {
   padding-top: toRem(30);
   border-top: solid 0.125rem var(--background-color__secondary);
-  transition: border-color 500ms;
+  transition: transitions();
 }
 
 .section-support {
@@ -126,12 +126,12 @@ section {
 .heading {
   @include h2;
   margin-bottom: toRem(19);
-  transition: color 500ms;
+  transition: transitions();
 }
 
 .description {
   margin-bottom: toRem(28);
-  transition: color 500ms;
+  transition: transitions();
 }
 
 .links-column,
@@ -156,7 +156,7 @@ section {
     width: toRem(5);
     height: toRem(5);
     background-color: var(--link-color);
-    transition: background-color 500ms;
+    transition: transitions();
     &:hover {
       background-color: var(--link-hover-color);
     }
