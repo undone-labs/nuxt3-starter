@@ -1,0 +1,198 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the API for the Spade Tenant Application",
+        "title": "Spade Tenant API",
+        "termsOfService": "https://spade.storage",
+        "contact": {
+            "name": "API Support",
+            "url": "https://docs.spade.storage"
+        },
+        "license": {
+            "name": "Apache 2.0 Apache-2.0 OR MIT",
+            "url": "https://github.com/data-preservation-programs/spade/blob/master/LICENSE.md"
+        },
+        "version": "1.0.0"
+    },
+    "host": "api.spade.storage",
+    "basePath": "/tenant",
+    "paths": {
+        "/collections": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets info about collections",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Auth token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ResponseEnvelope"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "$ref": "#/definitions/api.Collection"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Creates a new collection",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Auth token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Collection to create",
+                        "name": "collection",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.MutableCollection"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ResponseEnvelope"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "$ref": "#/definitions/api.Collection"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/collectionUUID": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Modify a collection",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Auth token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Collection UUID to modify",
+                        "name": "collectionUUID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Collection data to update",
+                        "name": "collection",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.MutableCollection"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ResponseEnvelope"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "$ref": "#/definitions/api.Collection"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete a collection",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Auth token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Collection UUID to modify",
+                        "name": "collectionUUID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ResponseEnvelope"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "preview": {}
+}

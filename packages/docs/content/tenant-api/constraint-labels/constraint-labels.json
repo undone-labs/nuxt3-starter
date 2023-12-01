@@ -1,0 +1,62 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the API for the Spade Tenant Application",
+        "title": "Spade Tenant API",
+        "termsOfService": "https://spade.storage",
+        "contact": {
+            "name": "API Support",
+            "url": "https://docs.spade.storage"
+        },
+        "license": {
+            "name": "Apache 2.0 Apache-2.0 OR MIT",
+            "url": "https://github.com/data-preservation-programs/spade/blob/master/LICENSE.md"
+        },
+        "version": "1.0.0"
+    },
+    "host": "api.spade.storage",
+    "basePath": "/tenant",
+    "paths": {
+        "/constraint-labels": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List all constraint labels for the tenant",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Auth token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ResponseEnvelope"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/api.Label"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "preview": {}
+}
