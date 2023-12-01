@@ -124,7 +124,7 @@ const isCurrentRoute = (path) => {
   &:hover:not(.router-link-active) {
     cursor: pointer;
     .button-label {
-      transition: transitions(500ms ease-in);
+      transition: transitions(500ms ease-in, color 200ms ease);
       color: var(--link-color);
     }
   }

@@ -24,6 +24,7 @@ body {
   font-family: $font_Primary;
   background-color: var(--background-color);
   transition: transitions();
+  // transition: testfunc(var(--theme-transition));
 }
 
 .page {

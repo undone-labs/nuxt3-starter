@@ -72,7 +72,7 @@ $replace4: #000000;
   --algolia__highlight: #{$blueRibbon}; // not used because contrast too intense
   --api-explorer__http-status-code__background-color: #{$mercury};
   --api-explorer__http-status-code__color: #{$blueViolet};
-  --theme-transition: '';
+  --theme-transition: display 0s linear; // this is just a dummy value that has no effect (needed for the transitions sass function)
 }
 
 .dark {
@@ -113,6 +113,15 @@ $replace4: #000000;
     $chain: $chain + $transition + ', ';
   }
   $chain: $chain + var(--theme-transition);
+  @return unquote($chain);
+}
+
+@function testfunc($transitions...) {
+  $chain: '';
+  @each $transition in $transitions {
+    $chain: $chain + $transition + ', ';
+  }
+  @debug $chain;
   @return unquote($chain);
 }
 
