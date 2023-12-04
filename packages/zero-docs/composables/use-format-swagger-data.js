@@ -44,25 +44,19 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
             }
           : queryParams = {}
             queryParams[name] = {
-              type: param.type,
-              description: param.description,
-              required: param.required
+            type: param.type,
+            description: param.description,
+            required: param.required
             }
         break
       case 'body':
-        const type = resolveRequestSchema(param.schema, definitions)
-        bodyParams
-          ? bodyParams[name] = {
-            type,
-            description: param.description,
-            required: param.required
+        const type = requestTypeStringFromSchema(param.schema, definitions)
+        bodyParams = {}
+        bodyParams[name] = {
+          type,
+          description: param.description,
+          required: param.required
           }
-          : bodyParams = {}
-          bodyParams[name] = {
-              type,
-              description: param.description,
-              required: param.required
-            }
         break
       case 'path':
         pathParams
@@ -72,10 +66,10 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
             required: param.required
           }
           : pathParams = {}
-          pathParams[name] = {
+            pathParams[name] = {
             type: param.type,
-              description: param.description,
-              required: param.required
+            description: param.description,
+            required: param.required
             }
         break
       // other param (Parameter Object) possible value of param.in are 'formData'
@@ -84,28 +78,42 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
   return { paramHeaders, queryParams, bodyParams, pathParams }
 }
 
-// /////////////////////////////////////////////////////////////// resolveSchema
-const resolveRequestSchema = (schemaObject, definitions) => {
-  console.log('schemaObject ', schemaObject)
-  let typeString = Array.isArray(schemaObject.type)
-    ? schemaObject.type.reduce((str, primitiveType, i, array) => {
-      if (i === array.length - 1) {
-        return str.concat(primitiveType)
+// ///////////////////////////////////////////////// requestTypeStringFromSchema
+const requestTypeStringFromSchema = (schemaObject, definitions) => {
+  const createTypeString = (schema, defs) => {
+    if (schema.type) {
+      let typeString = Array.isArray(schema.type)
+        ? schema.type.reduce((str, primitiveType, i, array) => {
+          if (i === array.length - 1) {
+            return str.concat(primitiveType)
+          }
+          return str.concat(primitiveType, ' or ')
+        }, '')
+        : schema.type
+      if (typeString.includes('array')) {
+        const itemsSchema = resolveRef(schema.items.$ref, defs) || schema.items.type
+        typeof itemsSchema === 'string'
+          ? typeString = typeString.concat(' of ', itemsSchema, 's')
+          : typeString = typeString.concat(' of ', itemsSchema.type, 's')
       }
-      return str.concat(primitiveType, ' or ')
-    }, '')
-    : schemaObject.type
-  if (typeString.includes('array')) {
-    const itemsSchema = getDefinition(schemaObject.items.$ref, definitions) || schemaObject.items.type
-    typeof itemsSchema === 'string'
-      ? typeString = typeString.concat(' of ', itemsSchema, 's')
-      : typeString = typeString.concat(' of ', itemsSchema.type, 's')
+      return typeString
+    }
   }
-  return typeString
+  // ------------- if Schema Object is $ref, resolve $ref then build type string
+  if (schemaObject.$ref) {
+    const resolvedSchemaRef = resolveRef(schemaObject.$ref, definitions)
+    return createTypeString(resolvedSchemaRef, definitions)
+  }
+  // ------------------------------------------ otherwise just build type string
+  return createTypeString(schemaObject, definitions)
 }
 
-// /////////////////////////////////////////////////////////// resolveDefinition
-const getDefinition = (ref, definitions) => {
+// /////////////////////////////////////////////////////////// resolveRef
+
+
+
+// ////////////////////////////////////////////////////////////////// resolveRef
+const resolveRef = (ref, definitions) => {
   if (typeof ref === 'undefined') { return false }
   const refPath = ref.slice(14).split('/')
   let refValue = refPath.reduce((value, key) => value[key], definitions)
