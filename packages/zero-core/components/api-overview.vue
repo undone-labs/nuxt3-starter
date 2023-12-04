@@ -1,5 +1,5 @@
 <template>
-  <div v-if="headers || queryParameters || responseCodes" class="api-information">
+  <div v-if="headers || queryParameters || responseCodes" class="api-overview">
 
     <!-- =========================================================== headers -->
     <div v-if="headers" class="headers section">
@@ -127,7 +127,7 @@ const getHeading = (key, section) => {
 
 <style lang="scss" scoped>
 // ///////////////////////////////////////////////////////////////////// General
-.api-information {
+.api-overview {
   margin-top: 3rem;
 }
 

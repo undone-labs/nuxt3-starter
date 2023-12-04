@@ -34,11 +34,6 @@
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
               class="markdown" />
             <ZeroApiInformation
-              v-if="section.apiPreview"
-              :headers="section.apiPreview.headers"
-              :query-parameters="section.apiPreview.query_parameters"
-              :response-codes="section.apiPreview.response_codes" />
-            <ApiInformation
               v-if="section.apiOverview"
               :headers="section.apiOverview.headers"
               :query-parameters="section.apiOverview.queryParameters"
