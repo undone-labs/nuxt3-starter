@@ -38,6 +38,11 @@
               :headers="section.apiPreview.headers"
               :query-parameters="section.apiPreview.query_parameters"
               :response-codes="section.apiPreview.response_codes" />
+            <ApiInformation
+              v-if="section.apiOverview"
+              :headers="section.apiOverview.headers"
+              :query-parameters="section.apiOverview.queryParameters"
+              :response-codes="section.apiOverview.responseCodes" />
           </div>
         </div>
 
@@ -123,9 +128,22 @@ const headerHeightOffset = computed(() => headerHeight.value * 3)
 
 const pageContent = computed(() => {
   const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
-  array.forEach((mdContent) => {
+  array.forEach(async (mdContent) => {
     const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
-    if (jsonContent) { mdContent.apiPreview = jsonContent }
+    if (jsonContent) {
+      if (Object.hasOwn(jsonContent, 'swagger')) {
+        const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
+          return queryContent({
+            where: {
+              _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
+            }
+          }).findOne()
+        })
+        mdContent.apiOverview = useFormatSwaggerData(jsonContent, {...definitionsSchema.value.definitions})
+      } else {
+        mdContent.apiPreview = jsonContent
+      }
+    }
   })
   return array
 })

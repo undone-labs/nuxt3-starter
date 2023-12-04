@@ -89,7 +89,7 @@
   },
   {
     "title": "Spade APIs",
-    "slug": "api",
+    "slug": "tenant-api",
     "icon": "",
     "children": [
       {
