@@ -55,7 +55,7 @@ const { data: Header } = await useAsyncData('header', async () => {
       _file: { $contains: 'data/header.json' }
     }
   }).find()
-  return content.pop()
+  return content[0]
 })
 
 const links = Header.value.navigation

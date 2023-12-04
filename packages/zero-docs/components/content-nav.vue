@@ -42,7 +42,7 @@ const { data: Sidebar } = await useAsyncData('sidebar', async () => {
       _file: { $contains: 'data/sidebar.json' }
     }
   }).find()
-  return content.pop().body
+  return content[0].body
 })
 
 // ===================================================================== Methods
