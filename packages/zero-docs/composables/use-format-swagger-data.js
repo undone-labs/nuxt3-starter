@@ -12,6 +12,7 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
   let paramHeaders = false
   let queryParams = false
   let bodyParams = false
+  let pathParams = false
   parameters.forEach(async (param) => {
     const name = param.name
     switch (param.in) {
@@ -63,10 +64,24 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
               required: param.required
             }
         break
-      // other param (Parameter Object) possible values of param.in are 'path', 'formData', or 'body
+      case 'path':
+        pathParams
+          ? pathParams[name] = {
+            type: param.type,
+            description: param.description,
+            required: param.required
+          }
+          : pathParams = {}
+          pathParams[name] = {
+            type: param.type,
+              description: param.description,
+              required: param.required
+            }
+        break
+      // other param (Parameter Object) possible value of param.in are 'formData'
     }
   })
-  return { paramHeaders, queryParams, bodyParams }
+  return { paramHeaders, queryParams, bodyParams, pathParams }
 }
 
 // /////////////////////////////////////////////////////////////// resolveSchema
@@ -121,6 +136,7 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
   let headers
   let queryParameters
   let bodyParameters
+  let pathParameters
   const responseCodes = {}
 
   Object.keys(paths).forEach((path) => {
@@ -129,10 +145,11 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
 
       const requestMethodConfig = paths[path][requestMethod]
       // ------------ overview + preview: compile header values and query params
-      const { paramHeaders, queryParams, bodyParams } = getHeadersAndQueryParams(requestMethodConfig.parameters, definitions)
+      const { paramHeaders, queryParams, bodyParams, pathParams } = getHeadersAndQueryParams(requestMethodConfig.parameters, definitions)
       headers = paramHeaders ? {...paramHeaders} : false
       queryParameters = queryParams ? {...queryParams} : false
       bodyParameters = bodyParams ? {...bodyParams} : false
+      pathParameters = pathParams ? {...pathParams} : false
       Object.keys(requestMethodConfig.responses).forEach(code => {
         const response = requestMethodConfig.responses[code]
       //   // -------------------------------- overview: compile HTTP request codes
@@ -140,5 +157,5 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
       })
     })
   })
-  return { overview: { headers, queryParameters, bodyParameters, responseCodes }, preview }
+  return { overview: { headers, queryParameters, bodyParameters, pathParameters, responseCodes }, preview }
 }

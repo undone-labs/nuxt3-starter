@@ -38,6 +38,7 @@
               :headers="section.apiOverview.headers"
               :query-parameters="section.apiOverview.queryParameters"
               :body-parameters="section.apiOverview.bodyParameters"
+              :path-parameters="section.apiOverview.pathParameters"
               :response-codes="section.apiOverview.responseCodes" />
           </div>
         </div>
