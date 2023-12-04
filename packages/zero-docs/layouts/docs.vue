@@ -28,8 +28,8 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
 }
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { theme } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { theme } = storeToRefs(docsStore)
 
 const { data: Settings } = await useAsyncData('settings', async () => {
   const content = await queryContent({
@@ -40,13 +40,13 @@ const { data: Settings } = await useAsyncData('settings', async () => {
   return content.pop()
 })
 
-generalStore.setSettings(Settings.value)
+docsStore.setSettings(Settings.value)
 
 // ======================================================================= Hooks
 onMounted(() => {
   const initialTheme = localStorage.getItem('theme')
   if (initialTheme) {
-    generalStore.setTheme(initialTheme)
+    docsStore.setTheme(initialTheme)
   }
 })
 </script>

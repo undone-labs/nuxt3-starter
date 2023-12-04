@@ -33,7 +33,7 @@
               :markdown="section.raw"
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
               class="markdown" />
-            <ApiInformation
+            <ZeroApiInformation
               v-if="section.apiPreview"
               :headers="section.apiPreview.headers"
               :query-parameters="section.apiPreview.query_parameters"
@@ -45,7 +45,7 @@
         <div class="col-4_lg-3_md-4">
           <div class="preview">
 
-            <ApiExplorer
+            <ZeroApiExplorer
               v-if="section.apiPreview"
               :sliders="section.apiPreview.sliders" />
 
@@ -87,7 +87,7 @@ const navigatedByRoute = ref(false)
 const navigatedByRouteDebounce = ref(null)
 const ctx = getCurrentInstance()
 const dirNameSplit = route.path.slice(1).split('/')
-const generalStore = useGeneralStore()
+const docsStore = useZeroDocsStore()
 
 const pageSlug = dirNameSplit[1]
 const pageHeading = useToPascalCase(pageSlug, ' ')
@@ -138,12 +138,12 @@ watch(route, async route => {
     clearTimeout(navigatedByRouteDebounce.value)
   }, 100)
   navigatedByRoute.value = true
-  generalStore.setActiveSection({ id: route.hash.slice(1) })
+  docsStore.setActiveSection({ id: route.hash.slice(1) })
   if (process.client) {
     await nextTick(() => {
-      const linksExist = generalStore.compileMagellanLinks()
+      const linksExist = docsStore.compileMagellanLinks()
       if (linksExist) {
-        generalStore.setActiveLinkMarkerHeight()
+        docsStore.setActiveLinkMarkerHeight()
       }
     })
   }
@@ -191,13 +191,13 @@ const intersectionObserveHeadings = () => {
     if (intersectingTop && !navigatedByRoute.value) {
       // console.log(entryId, sectionId)
       // console.log(entry)
-      generalStore.setActiveSection(
+      docsStore.setActiveSection(
         sectionId !== '' ? { id: entryId, sectionId } : { id: entryId }
       )
       // if (entryId !== hash) {
       //   // activePath = `${route.path}#${entryId}`
       //   // activeSection =
-      //   // generalStore.setActiveSection(
+      //   // docsStore.setActiveSection(
       //   //   sectionId !== '' ? { id: entryId, sectionId } : { id: entryId }
       //   // )
       // } else {
@@ -209,7 +209,7 @@ const intersectionObserveHeadings = () => {
       //   // } else {
       //   //   activeSection = false
       //   // }
-      //   // generalStore.setActiveSection(activeSection)
+      //   // docsStore.setActiveSection(activeSection)
       // }
     }
     // if (!navigatedByRoute.value && !intersectingTop && activeSection) {
@@ -237,10 +237,10 @@ const detectPageScrolledToEdgesOfViewport = () => {
       const bodyHeight = document.body.offsetHeight
       if (y <= headerHeight.value) {
         // history.replaceState({}, null, route.path)
-        // generalStore.setActiveSection(false)
+        // docsStore.setActiveSection(false)
       } else if (y + viewportHeight >= bodyHeight) {
         // history.replaceState({}, null, `${route.path}#${lastMagellanNavItemId}`)
-        generalStore.setActiveSection(
+        docsStore.setActiveSection(
           lastMagellanNavItemSectionId !== '' ?
             { id: lastMagellanNavItemId, sectionId: lastMagellanNavItemSectionId } :
             { id: lastMagellanNavItemId }

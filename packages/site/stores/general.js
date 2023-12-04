@@ -1,32 +1,24 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import { ref } from '#imports'
+// import { ref } from '#imports'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useGeneralStore = defineStore('general', () => {
   // ===================================================================== state
-  const clipboard = ref(false)
-  const theme = ref('light')
+  // add a variable
 
   // =================================================================== actions
 
   /**
-   * @method setTheme
+   * @method doSomething
    */
 
-  const setTheme = (newTheme) => {
-    theme.value = newTheme
-    localStorage.setItem('theme', newTheme)
-    document.documentElement.className = newTheme
-  }
+  // const doSomething = () => {}
 
   // ==================================================================== return
   return {
     // ----- state
-    clipboard,
-    theme,
     // ----- actions
-    setTheme
   }
 })

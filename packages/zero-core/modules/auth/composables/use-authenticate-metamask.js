@@ -9,7 +9,7 @@
 // -----------------------------------------------------------------------------
 import Web3 from 'web3'
 
-import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-auth-store'
+import { useZeroAuthStore } from '../stores/use-zero-auth-store'
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
