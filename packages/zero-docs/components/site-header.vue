@@ -46,8 +46,8 @@
 
 <script setup>
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { languageSelectorVisible } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { languageSelectorVisible } = storeToRefs(docsStore)
 
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({

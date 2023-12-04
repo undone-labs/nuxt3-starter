@@ -46,6 +46,12 @@ export default defineNuxtConfig({
    * `zero-core` module
    */
   components: { dirs: [] },
+  // ============================================================ [Module] Pinia
+  pinia: {
+    storesDirs: [
+      '../zero-core/stores/**'
+    ]
+  },
   // =================================================================== Modules
   modules: [
     '@nuxtjs/algolia',

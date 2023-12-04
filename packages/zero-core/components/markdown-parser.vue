@@ -35,7 +35,7 @@ const baseURL = `${runtimeConfig.public.siteUrl}${route.path}`
 const textCopied = 'Copied!'
 const textNotCopiedUrl = 'Click to copy link'
 const textNotCopiedCode = 'Copy'
-const generalStore = useGeneralStore()
+const zeroStore = useZeroStore()
 const parsed = ref(null)
 let copyButtons = []
 
@@ -123,7 +123,7 @@ onMounted(async () => {
       const text = type === 'heading' ? `${baseURL}#${hash}` : button.nextElementSibling.textContent
       button.addEventListener('click', () => {
         zeroAddTextToClipboard(text)
-        generalStore.setClipboard(text)
+        zeroStore.setClipboard(text)
         clearCopiedStates()
         if (type === 'heading') {
           button.setAttribute('data-tooltip', textCopied)

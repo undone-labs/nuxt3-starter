@@ -16,11 +16,9 @@
 </template>
 
 <script setup>
-// ======================================================================= Setup
-const generalStore = useGeneralStore()
-
 // ======================================================================== Data
-const { theme, themeToggleVisible } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { theme, themeToggleVisible } = storeToRefs(docsStore)
 
 // ===================================================================== Methods
 /**
@@ -28,7 +26,7 @@ const { theme, themeToggleVisible } = storeToRefs(generalStore)
  */
 const toggleTheme = () => {
   const toggle = theme.value === 'light' ? 'dark' : 'light'
-  generalStore.setTheme(toggle)
+  docsStore.setTheme(toggle)
 }
 </script>
 

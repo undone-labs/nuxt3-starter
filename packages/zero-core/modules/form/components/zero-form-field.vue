@@ -187,7 +187,7 @@ const updateValue = async value => {
  */
 
 const getLocalStorageValue = () => {
-  const form = JSON.parse(useLs().get(`form__${formId}`))
+  const form = JSON.parse(zeroLs().get(`form__${formId}`))
   if (!form) { return undefined }
   const field = form[modelKey]
   if (!field) { return undefined }

@@ -1,7 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-auth-store'
-import { useZeroButtonStore } from '@/modules/zero/modules/button/stores/use-zero-button-store'
+import { useZeroAuthStore } from '../stores/use-zero-auth-store'
+import { useZeroButtonStore } from '../../button/stores/use-zero-button-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
