@@ -66,7 +66,7 @@ const props = defineProps({
 })
 
 // ======================================================================== Data
-const generalStore = useGeneralStore()
+const zeroStore = useZeroStore()
 const activeSlides = ref({})
 const copiedCodeBlock = ref(null)
 
@@ -74,7 +74,7 @@ const copiedCodeBlock = ref(null)
 /**
  * @method setActiveSlide
  */
-const setActiveSlide = (slide) => {
+const setActiveSlide = slide => {
   activeSlides.value[slide.sliderId] = slide.id
 }
 
@@ -83,7 +83,7 @@ const setActiveSlide = (slide) => {
  */
 const copyText = (id, text) => {
   useAddTextToClipboard(text)
-  generalStore.setClipboard(text)
+  zeroStore.setClipboard(text)
   copiedCodeBlock.value = id
 }
 

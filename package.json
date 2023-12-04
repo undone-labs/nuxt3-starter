@@ -20,6 +20,10 @@
     "node": ">=20.9.0"
   },
   "scripts": {
+    "dev-ui": "npm run dev -w zero-ui",
+    "build-ui": "npm run build -w packages/zero-ui",
+    "start-ui": "node packages/zero-ui/.output/server/index.mjs",
+    "upgrade-nuxt-ui": "npm run upgrade-nuxt -w zero-ui",
     "dev-site": "npm run dev -w site",
     "build-site": "npm run build -w packages/site",
     "start-site": "node packages/site/.output/server/index.mjs",
@@ -32,6 +36,7 @@
   "workspaces": [
     "packages/zero-core",
     "packages/zero-docs",
+    "packages/zero-ui",
     "packages/site",
     "packages/docs"
   ]

@@ -15,8 +15,8 @@ const baseUrls = {
 }
 
 const frontendPort = (function () {
-  if (env === 'development') { return 10010 }
-  return env === 'stable' ? 10020 : 10030
+  if (env === 'development') { return 17070 }
+  return env === 'stable' ? 17080 : 17090
 }())
 
 const backendPort = (function () {

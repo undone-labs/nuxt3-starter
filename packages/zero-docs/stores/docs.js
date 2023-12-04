@@ -1,13 +1,11 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { ref, computed } from '#imports'
-import Settings from '@/data/settings.json'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useGeneralStore = defineStore('general', () => {
+export const useZeroDocsStore = defineStore('docs', () => {
   // ===================================================================== state
-  const clipboard = ref(false)
   const settings = ref({})
   const activeSection = ref(false)
   const activeLinkMarkerHeight = ref(0)
@@ -53,7 +51,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setActiveSection
    */
 
   const setActiveSection = hash => {
@@ -61,7 +59,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method compileMagellanLinks
    */
 
   const compileMagellanLinks = () => {
@@ -80,7 +78,7 @@ export const useGeneralStore = defineStore('general', () => {
   }
 
   /**
-   * @method setTheme
+   * @method setActiveLinkMarkerHeight
    */
 
   const setActiveLinkMarkerHeight = () => {
@@ -90,18 +88,9 @@ export const useGeneralStore = defineStore('general', () => {
     }
   }
 
-  /**
-   * @method setTheme
-   */
-
-  const setClipboard = text => {
-    clipboard.value = text
-  }
-
   // ==================================================================== return
   return {
     // ----- state
-    clipboard,
     activeSection,
     magellanLinks,
     activeLinkMarkerHeight,
@@ -114,7 +103,6 @@ export const useGeneralStore = defineStore('general', () => {
     setTheme,
     setActiveSection,
     compileMagellanLinks,
-    setActiveLinkMarkerHeight,
-    setClipboard
+    setActiveLinkMarkerHeight
   }
 })

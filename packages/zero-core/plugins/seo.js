@@ -1,7 +1,6 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtPlugin, useHead } from '#imports'
-import SeoContent from '@/data/seo.json'
 import CloneDeep from 'lodash/cloneDeep'
 
 // /////////////////////////////////////////////////////////////////// Functions
@@ -9,9 +8,12 @@ import CloneDeep from 'lodash/cloneDeep'
 const seo = (key, override) => {
   const config = useRuntimeConfig()
   const route = useRoute()
-  let entry = CloneDeep(SeoContent[key])
-  const defaults = CloneDeep(SeoContent._) // global SEO values
+  const zeroStore = useZeroStore()
+  const { seo: SeoContent } = storeToRefs(zeroStore)
+  if (!SeoContent.value._) { return }
+  const defaults = CloneDeep(SeoContent.value._) // global SEO values
   if (!defaults) { throw new Error('Missing default "_" SEO entry') }
+  let entry = CloneDeep(SeoContent.value[key])
   /**
    * Gather data and merge with defaults
    */

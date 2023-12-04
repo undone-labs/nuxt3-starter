@@ -3,7 +3,7 @@
 class Ls {
   // =============================================================== constructor
   constructor (options) {
-    this.prefix = options.prefix
+    this.prefix = options.prefix || 'zero'
   }
 
   // ======================================================================= get
@@ -26,5 +26,5 @@ class Ls {
 // -----------------------------------------------------------------------------
 export default () => {
   const config = useRuntimeConfig()
-  return new Ls(config.public.ls)
+  return new Ls(config.public.ls || {})
 }
