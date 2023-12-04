@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       path: '@/../zero-docs/components'
     },
     {
-      path: '@/../zero-docs/content',
+      path: '@/../zero-docs/content/',
       prefix: 'Preview',
       global: true
     }
