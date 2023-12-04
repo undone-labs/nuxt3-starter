@@ -147,6 +147,11 @@ export default defineNuxtConfig({
         driver: 'fs',
         prefix: '/zero-ui',
         base: Path.resolve(__dirname, 'content')
+      },
+      data: {
+        driver: 'fs',
+        prefix: '/data',
+        base: Path.resolve(__dirname, 'data')
       }
     }
   }

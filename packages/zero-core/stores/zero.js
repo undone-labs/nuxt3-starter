@@ -7,6 +7,7 @@ import { ref } from '#imports'
 export const useZeroStore = defineStore('zero', () => {
   // ===================================================================== state
   const clipboard = ref(false)
+  const seo = ref({})
 
   // =================================================================== actions
 
@@ -18,11 +19,21 @@ export const useZeroStore = defineStore('zero', () => {
     clipboard.value = text
   }
 
+  /**
+   * @method setSeo
+   */
+
+  const setSeo = content => {
+    seo.value = content
+  }
+
   // ==================================================================== return
   return {
     // ----- state
     clipboard,
+    seo,
     // ----- actions
-    setClipboard
+    setClipboard,
+    setSeo
   }
 })

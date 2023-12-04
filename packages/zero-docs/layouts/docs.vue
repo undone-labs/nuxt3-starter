@@ -30,6 +30,7 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
 const { theme } = storeToRefs(docsStore)
+const zeroStore = useZeroStore()
 
 const { data: Settings } = await useAsyncData('settings', async () => {
   const content = await queryContent({
@@ -41,6 +42,17 @@ const { data: Settings } = await useAsyncData('settings', async () => {
 })
 
 docsStore.setSettings(Settings.value)
+
+const { data: Seo } = await useAsyncData('seo', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/seo.json' }
+    }
+  }).find()
+  return content[0]
+})
+
+zeroStore.setSeo(Seo)
 
 // ======================================================================= Hooks
 onMounted(() => {
