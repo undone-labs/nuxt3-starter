@@ -37,6 +37,7 @@
               v-if="section.apiOverview"
               :headers="section.apiOverview.headers"
               :query-parameters="section.apiOverview.queryParameters"
+              :body-parameters="section.apiOverview.bodyParameters"
               :response-codes="section.apiOverview.responseCodes" />
           </div>
         </div>
@@ -99,6 +100,13 @@ const { data: content } = await useAsyncData('page-content', () => {
     }
   }).find()
 })
+const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
+    return queryContent({
+      where: {
+        _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
+      }
+    }).findOne()
+  })
 
 const routePathSplitLength = route.path.split('/').length
 const sectionCount = content.value.length
@@ -123,17 +131,11 @@ const headerHeightOffset = computed(() => headerHeight.value * 3)
 
 const pageContent = computed(() => {
   const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
-  array.forEach(async (mdContent) => {
+  array.forEach((mdContent) => {
     const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
     if (jsonContent) {
       if (Object.hasOwn(jsonContent, 'swagger')) {
-        const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
-          return queryContent({
-            where: {
-              _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
-            }
-          }).findOne()
-        })
+        // console.log('definitionsSchema ', definitionsSchema)
         mdContent.apiOverview = useFormatSwaggerData(jsonContent, {...definitionsSchema.value.definitions})
       } else {
         mdContent.apiPreview = jsonContent

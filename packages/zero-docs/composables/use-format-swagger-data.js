@@ -11,7 +11,8 @@
 const getHeadersAndQueryParams = (parameters, definitions) => {
   let paramHeaders = false
   let queryParams = false
-  parameters.forEach((param) => {
+  let bodyParams = false
+  parameters.forEach(async (param) => {
     const name = param.name
     switch (param.in) {
       case 'header':
@@ -23,37 +24,75 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
         paramHeaders
           ? paramHeaders[name] = {
             type: param.type,
-            description: param.description
+            description: param.description,
+            required: param.required
           }
           : paramHeaders = {}
             paramHeaders[name] = {
               type: param.type,
-              description: param.description
+              description: param.description,
+              required: param.required
             }
         break
       case 'query':
         queryParams
           ? queryParams[name] = {
               type: param.type,
-              description: param.description
+              description: param.description,
+              required: param.required
             }
           : queryParams = {}
             queryParams[name] = {
               type: param.type,
-              description: param.description
+              description: param.description,
+              required: param.required
             }
-      break
+        break
+      case 'body':
+        const type = resolveRequestSchema(param.schema, definitions)
+        bodyParams
+          ? bodyParams[name] = {
+            type,
+            description: param.description,
+            required: param.required
+          }
+          : bodyParams = {}
+          bodyParams[name] = {
+              type,
+              description: param.description,
+              required: param.required
+            }
+        break
       // other param (Parameter Object) possible values of param.in are 'path', 'formData', or 'body
     }
   })
-  return { paramHeaders, queryParams, }
+  return { paramHeaders, queryParams, bodyParams }
+}
+
+// /////////////////////////////////////////////////////////////// resolveSchema
+const resolveRequestSchema = (schemaObject, definitions) => {
+  console.log('schemaObject ', schemaObject)
+  let typeString = Array.isArray(schemaObject.type)
+    ? schemaObject.type.reduce((str, primitiveType, i, array) => {
+      if (i === array.length - 1) {
+        return str.concat(primitiveType)
+      }
+      return str.concat(primitiveType, ' or ')
+    }, '')
+    : schemaObject.type
+  if (typeString.includes('array')) {
+    const itemsSchema = getDefinition(schemaObject.items.$ref, definitions) || schemaObject.items.type
+    typeof itemsSchema === 'string'
+      ? typeString = typeString.concat(' of ', itemsSchema, 's')
+      : typeString = typeString.concat(' of ', itemsSchema.type, 's')
+  }
+  return typeString
 }
 
 // /////////////////////////////////////////////////////////// resolveDefinition
-const resolveDefinition = (ref, definitions) => {
+const getDefinition = (ref, definitions) => {
   if (typeof ref === 'undefined') { return false }
-  const inSameFile = ref.startsWith('#definitions/')
-  const refPath = inSameFile ? ref.slice(13).split('/') : null
+  const refPath = ref.slice(14).split('/')
   let refValue = refPath.reduce((value, key) => value[key], definitions)
   return refValue
 }
@@ -81,17 +120,19 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
   const { swagger, info, host, basePath, paths } = swaggerObject
   let headers
   let queryParameters
+  let bodyParameters
   const responseCodes = {}
 
   Object.keys(paths).forEach((path) => {
     Object.keys(paths[path]).forEach(requestMethod => {
-      const pathSlug = path.slice(1)
+      // const pathSlug = path.slice(1)
 
       const requestMethodConfig = paths[path][requestMethod]
       // ------------ overview + preview: compile header values and query params
-      const { paramHeaders, queryParams} = getHeadersAndQueryParams(requestMethodConfig.parameters, definitions)
+      const { paramHeaders, queryParams, bodyParams } = getHeadersAndQueryParams(requestMethodConfig.parameters, definitions)
       headers = paramHeaders ? {...paramHeaders} : false
       queryParameters = queryParams ? {...queryParams} : false
+      bodyParameters = bodyParams ? {...bodyParams} : false
       Object.keys(requestMethodConfig.responses).forEach(code => {
         const response = requestMethodConfig.responses[code]
       //   // -------------------------------- overview: compile HTTP request codes
@@ -99,5 +140,5 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
       })
     })
   })
-  return { headers, queryParameters, responseCodes }
+  return { headers, queryParameters, bodyParameters, responseCodes }
 }

@@ -53,6 +53,32 @@
       </template>
     </div>
 
+    <!-- =================================================== body parameters -->
+    <div v-if="bodyParameters" class="body-parameters section">
+      <div class="heading">
+        {{ getHeading('body_parameters', bodyParameters) }}
+      </div>
+      <template v-for="(parameter, key) in props.bodyParameters">
+        <div
+          v-if="key !== '_section_heading'"
+          :key="key"
+          class="entry">
+          <div class="metadata">
+            <div class="key">
+              {{ key }}
+            </div>
+            <div class="type">
+              {{ parameter.type }}
+            </div>
+          </div>
+          <ZeroMarkdownParser
+            v-if="parameter.description"
+            :markdown="parameter.description"
+            class="description" />
+        </div>
+      </template>
+    </div>
+
     <!-- ==================================================== response codes -->
     <div v-if="responseCodes" class="response-codes section">
       <div class="heading">
@@ -94,17 +120,22 @@
 // ======================================================================= Props
 const props = defineProps({
   headers: {
-    type: Object,
+    type: [Object, Boolean],
     required: false,
     default: undefined
   },
   queryParameters: {
-    type: Object,
+    type: [Object, Boolean],
+    required: false,
+    default: undefined
+  },
+  bodyParameters: {
+    type: [Object, Boolean],
     required: false,
     default: undefined
   },
   responseCodes: {
-    type: Object,
+    type: [Object, Boolean],
     required: false,
     default: undefined
   }
@@ -119,6 +150,7 @@ const getHeading = (key, section) => {
   const map = {
     headers: "Headers",
     query_parameters: "Query Parameters",
+    body_parameters: "Body Parameters",
     response_codes: "HTTP Response Status Codes"
   }
   return section._section_heading || map[key]
