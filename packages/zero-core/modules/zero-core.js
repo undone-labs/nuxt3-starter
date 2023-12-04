@@ -13,12 +13,11 @@ import {
   addComponent,
   addImportsDir,
   addImports,
-  addPlugin
-  // addImports,
-  // extendPages,
-  // addLayout,
-  // addServerHandler,
-  // addRouteMiddleware
+  addPlugin,
+  extendPages,
+  addLayout,
+  addServerHandler,
+  addRouteMiddleware
 } from 'nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
@@ -56,6 +55,23 @@ const convertCase = (string, to = 'kebab') => {
   if (to === 'kebab') { return KebabCase(startCase) }
   if (to === 'camel') { return CamelCase(startCase) }
   return string
+}
+
+// //////////////////////////////////////////////////////////////////////// walk
+const walk = (dir, next) => {
+  Fs.readdirSync(dir, { withFileTypes: true }).forEach(dirEnt => {
+    const name = dirEnt.name
+    const path = resolve(dirEnt.path, dirEnt.name)
+    const ext = Path.extname(name).toLowerCase()
+    const isDirectory = Fs.statSync(path).isDirectory()
+    isDirectory ?
+      walk(path, next) :
+      next({
+        path,
+        name,
+        ext
+      })
+  })
 }
 
 /**
@@ -117,12 +133,18 @@ const registerComposables = (path, composables) => {
 const registerPlugins = (path, plugins) => {
   path = resolve(path, 'plugins')
   if (!Fs.existsSync(path)) { return }
-  Object.keys(plugins).forEach(slug => {
-    const plugin = plugins[slug]
-    if (plugin.enable) {
-      addPlugin(resolve(path, slug))
-    }
-  })
+  if (plugins) {
+    Object.keys(plugins).forEach(slug => {
+      const plugin = plugins[slug]
+      if (plugin.enable) {
+        addPlugin(resolve(path, slug))
+      }
+    })
+  } else {
+    Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(plugin => {
+      addPlugin(resolve(path, plugin))
+    })
+  }
 }
 
 /**
@@ -142,6 +164,78 @@ const registerStores = path => {
   })
 }
 
+/**
+ * @method registerServerRoute
+ */
+
+const registerServerRoute = path => {
+  path = resolve(path, 'server', 'api')
+  if (!Fs.existsSync(path)) { return }
+  const divider = 'server'
+  walk(path, file => {
+    addServerHandler({
+      route: file.path.split(divider).pop().replace(file.ext, ''),
+      handler: resolve(file.path)
+    })
+  })
+}
+
+/**
+ * @method registerPages
+ */
+
+const registerPages = path => {
+  path = resolve(path, 'pages')
+  if (!Fs.existsSync(path)) { return }
+  const divider = 'pages'
+  walk(path, file => {
+    if (file.ext === '.vue') {
+      const route = file.path.split(divider).pop().replace(file.ext, '')
+      extendPages(pages => {
+        pages.push({
+          file: file.path,
+          name: `Zero${StartCase(route).replaceAll(' ', '')}`,
+          path: route
+        })
+      })
+    }
+  })
+}
+
+/**
+ * @method registerLayouts
+ */
+
+const registerLayouts = path => {
+  path = resolve(path, 'layouts')
+  if (!Fs.existsSync(path)) { return }
+  Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(layout => {
+    const slug = layout.split('.vue')[0]
+    addLayout({
+      filename: layout,
+      write: true,
+      src: resolve(path, layout),
+    }, slug)
+  })
+}
+
+/**
+ * @method registerMiddleware
+ */
+
+const registerMiddleware = path => {
+  path = resolve(path, 'middleware')
+  if (!Fs.existsSync(path)) { return }
+  Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(middleware => {
+    const slug = middleware.split('.js')[0]
+    addRouteMiddleware({
+      name: slug,
+      path: resolve(path, middleware),
+      global: true
+    })
+  })
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
@@ -155,6 +249,7 @@ const setup = (_, nuxt) => {
   registerComposables(basePath, zeroOptions.composables)
   registerPlugins(basePath, zeroOptions.plugins)
   registerStores(basePath)
+  // registerServerRoute(basePath)
   const modulesPath = resolve(basePath, 'modules')
   const modules = Fs.readdirSync(modulesPath)
   const len = modules.length
@@ -170,9 +265,14 @@ const setup = (_, nuxt) => {
         registerComposables(modulePath)
         registerPlugins(modulePath)
         registerStores(modulePath)
+        registerServerRoute(modulePath)
+        registerPages(modulePath)
+        registerLayouts(modulePath)
+        registerMiddleware(modulePath)
       }
     }
   }
+  // process.exit(0)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export

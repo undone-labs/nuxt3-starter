@@ -119,23 +119,23 @@ export default defineNuxtConfig({
         // ]
       },
       auth: {
-        enable: false
-        // redirectUnauthenticated: '',
-        // /**
-        //  * string or object
-        //  *
-        //  * if object, replace part of path with key's value from user (user) db
-        //  * object, for example example:
-        //  *
-        //  * {
-        //  *   path: '/zero-kitchen-sink/:user/redirect-after-login',
-        //  *   match: {
-        //  *     ':user': 'username'
-        //  *   }
-        //  * }
-        //  */
-        // redirectAfterLogin: '',
-        // redirectAfterLogout: ''
+        enable: true,
+        redirectUnauthenticated: '/authentication/redirect-unauthenticated',
+        /**
+         * string or object
+         *
+         * if object, replace part of path with key's value from user (user) db
+         * object, for example example:
+         *
+         * {
+         *   path: '/zero-kitchen-sink/:user/redirect-after-login',
+         *   match: {
+         *     ':user': 'username'
+         *   }
+         * }
+         */
+        redirectAfterLogin: '/authentication/redirect-after-login',
+        redirectAfterLogout: '/authentication/redirect-after-logout'
       }
     }
   },
