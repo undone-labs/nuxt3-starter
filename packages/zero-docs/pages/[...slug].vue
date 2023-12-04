@@ -33,7 +33,7 @@
               :markdown="section.raw"
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
               class="markdown" />
-            <ZeroApiInformation
+            <ZeroApiOverview
               v-if="section.apiOverview"
               :headers="section.apiOverview.headers"
               :query-parameters="section.apiOverview.queryParameters"
@@ -45,7 +45,7 @@
         <div class="col-4_lg-3_md-4">
           <div class="preview">
 
-            <ZeroApiExplorer
+            <ZeroApiPreview
               v-if="section.apiPreview"
               :sliders="section.apiPreview.sliders" />
 
