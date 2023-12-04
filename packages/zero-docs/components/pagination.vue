@@ -48,24 +48,33 @@
 
 <script setup>
 // ===================================================================== Imports
-import Sidebar from '@/data/sidebar.json'
+// import Sidebar from '@/data/sidebar.json'
+
+const { data: Sidebar } = await useAsyncData('sidebar-pagination', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: 'data/sidebar.json' }
+    }
+  }).find()
+  return content[0].body
+})
 
 // ======================================================================== Data
 const route = useRoute()
 const currentPath = route.path
 
 const navigation = []
-const dirCount = Sidebar.length
-const firstDir = Sidebar[0]
-const lastDir = Sidebar.slice(-1)[0]
-Sidebar.forEach((directory, dirIndex) => {
+const dirCount = Sidebar.value.length
+const firstDir = Sidebar.value[0]
+const lastDir = Sidebar.value.slice(-1)[0]
+Sidebar.value.forEach((directory, dirIndex) => {
   const dirSlug = directory.slug
   const pages = directory.children
   pages.forEach((page, pageIndex) => {
     const inFirstDir = dirIndex === 0
     const inLastDir = dirIndex === dirCount - 1
-    const previousDir = inFirstDir ? lastDir : Sidebar[dirIndex - 1]
-    const nextDir = inLastDir ? firstDir : Sidebar[dirIndex + 1]
+    const previousDir = inFirstDir ? lastDir : Sidebar.value[dirIndex - 1]
+    const nextDir = inLastDir ? firstDir : Sidebar.value[dirIndex + 1]
     navigation.push({
       ...(pageIndex === 0 && { previousDir }),
       ...(pageIndex === pages.length - 1 && { nextDir }),
