@@ -117,7 +117,7 @@ const getEndpointUrl = (path, basePath = false, domain = false, ) => {
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useFormatSwaggerData = (swaggerObject, definitions) => {
-  const { swagger, info, host, basePath, paths } = swaggerObject
+  const { swagger, info, host, basePath, paths, preview } = swaggerObject
   let headers
   let queryParameters
   let bodyParameters
@@ -140,5 +140,5 @@ export const useFormatSwaggerData = (swaggerObject, definitions) => {
       })
     })
   })
-  return { headers, queryParameters, bodyParameters, responseCodes }
+  return { overview: { headers, queryParameters, bodyParameters, responseCodes }, preview }
 }

@@ -135,8 +135,9 @@ const pageContent = computed(() => {
     const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
     if (jsonContent) {
       if (Object.hasOwn(jsonContent, 'swagger')) {
-        // console.log('definitionsSchema ', definitionsSchema)
-        mdContent.apiOverview = useFormatSwaggerData(jsonContent, {...definitionsSchema.value.definitions})
+        const { overview, preview } = useFormatSwaggerData(jsonContent, {...definitionsSchema.value.definitions})
+        mdContent.apiOverview = overview
+        mdContent.apiPreview = preview
       } else {
         mdContent.apiPreview = jsonContent
       }
