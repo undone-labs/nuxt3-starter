@@ -86,13 +86,13 @@ const registerComponents = (path, components) => {
   if (components) {
     Object.keys(components).forEach(name => {
       const component = components[name]
-      name = `${globalPrefix}${name}`
+      const prefixed = `${globalPrefix}${name}`
       if (component.enable) {
         addComponent({
-          name,
+          name: prefixed,
           filePath: resolve(path, `${convertCase(name, 'kebab')}.vue`)
         })
-        console.log(Chalk.black(`       <${name} />`))
+        console.log(Chalk.black(`       <${prefixed} />`))
       }
     })
   } else {
