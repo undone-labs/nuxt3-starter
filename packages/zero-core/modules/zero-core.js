@@ -82,7 +82,7 @@ const walk = (dir, next) => {
 const registerComponents = (path, components) => {
   path = resolve(path, 'components')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Components'))
+  console.log(Chalk.bold('     → Components'))
   if (components) {
     Object.keys(components).forEach(name => {
       const component = components[name]
@@ -114,7 +114,7 @@ const registerComponents = (path, components) => {
 const registerComposables = (path, composables) => {
   path = resolve(path, 'composables')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Composables'))
+  console.log(Chalk.bold('     → Composables'))
   if (composables) {
     Object.keys(composables).forEach(name => {
       const composable = composables[name]
@@ -147,7 +147,7 @@ const registerComposables = (path, composables) => {
 const registerPlugins = (path, plugins) => {
   path = resolve(path, 'plugins')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Plugins'))
+  console.log(Chalk.bold('     → Plugins'))
   if (plugins) {
     Object.keys(plugins).forEach(slug => {
       const plugin = plugins[slug]
@@ -171,7 +171,7 @@ const registerPlugins = (path, plugins) => {
 const registerStores = path => {
   path = resolve(path, 'stores')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Stores'))
+  console.log(Chalk.bold('     → Stores'))
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(store => {
     const slug = store.split('.js')[0]
     const name = convertCase(slug, 'camel')
@@ -190,7 +190,7 @@ const registerStores = path => {
 const registerServerRoute = path => {
   path = resolve(path, 'server', 'api')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Server API'))
+  console.log(Chalk.bold('     → Server API'))
   const divider = 'server'
   walk(path, file => {
     const route = file.path.split(divider).pop().replace(file.ext, '')
@@ -209,7 +209,7 @@ const registerServerRoute = path => {
 const registerPages = path => {
   path = resolve(path, 'pages')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Routes'))
+  console.log(Chalk.bold('     → Routes'))
   const divider = 'pages'
   walk(path, file => {
     if (file.ext === '.vue') {
@@ -233,7 +233,7 @@ const registerPages = path => {
 const registerLayouts = path => {
   path = resolve(path, 'layouts')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Layouts'))
+  console.log(Chalk.bold('     → Layouts'))
   Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(layout => {
     const slug = layout.split('.vue')[0]
     addLayout({
@@ -252,7 +252,7 @@ const registerLayouts = path => {
 const registerMiddleware = path => {
   path = resolve(path, 'middleware')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.green.bold('     → Middleware'))
+  console.log(Chalk.bold('     → Middleware'))
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(middleware => {
     const slug = middleware.split('.js')[0]
     addRouteMiddleware({
@@ -270,8 +270,7 @@ const setup = (_, nuxt) => {
   const hex1 = '#C36B00'
   const hex2 = '#DB7800'
   const hex3 = '#FFFFFF'
-  const colon = Chalk.gray.bold(':')
-  console.log('  📦', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(' zero-core ')}`)
+  console.log('  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex(hex3).bold(' zero-core ')}`)
   const options = nuxt.options
   if (!options.hasOwnProperty('zero')) { return }
   const zeroOptions = options.zero
@@ -292,7 +291,7 @@ const setup = (_, nuxt) => {
     const moduleOptions = zeroOptions.modules[module]
     if (moduleOptions.enable) {
       if (Fs.statSync(modulePath).isDirectory()) {
-        console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:submodule ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)
+        console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)
         registerComponents(modulePath)
         registerComposables(modulePath)
         registerPlugins(modulePath)
@@ -304,7 +303,6 @@ const setup = (_, nuxt) => {
       }
     }
   }
-  process.exit(0)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
