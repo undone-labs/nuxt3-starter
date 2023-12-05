@@ -17,11 +17,6 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
     const name = param.name
     switch (param.in) {
       case 'header':
-        // OpenAPI ignores Parameter Objects where .in is 'header' and .name is 'accept', 'content-type' or 'authorization'
-        // - accept is set by the Media Type keys in openApiObject.paths.<path>.get.responses.<code>.content ( .<code> is a Response Object)
-        // - content-type is defined in the same Respons`e Object as accept, see Media Type Object docs for details
-        // - authorization is set in openApiObject.security.<reference to openApiObject.components.securitySchemes.<Security Schemes Object>
-        // accept header is included in the parameters for get-cats.json so the logic to compile docs copy is less complicated
         paramHeaders
           ? paramHeaders[name] = {
             type: param.type,
