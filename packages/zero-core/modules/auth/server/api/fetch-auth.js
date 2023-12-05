@@ -3,7 +3,7 @@
 import { defineEventHandler } from '#imports'
 import { readBody } from 'h3'
 
-import useFetchAuthNitro from '@/modules/zero/modules/auth/composables/use-fetch-auth-nitro'
+import useFetchAuthNitro from '../../composables/use-fetch-auth-nitro'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------

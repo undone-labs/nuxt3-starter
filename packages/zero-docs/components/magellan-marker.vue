@@ -9,8 +9,8 @@
 const linkElement = ref(null)
 const activeLinkMarkerHeight = ref('0px')
 const route = useRoute()
-const generalStore = useGeneralStore()
-const { activeUrlHash } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { activeUrlHash } = storeToRefs(docsStore)
 
 // ==================================================================== Computed
 const activeLinkMarkerPosition = computed(() => {

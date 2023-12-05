@@ -1,7 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import { useValidateField } from '@/modules/zero/modules/form/composables/use-validate-field'
-import { useZeroFormStore } from '@/modules/zero/modules/form/stores/use-zero-form-store'
+import { useValidateField } from './use-validate-field'
+import { useZeroFormStore } from '../stores/use-zero-form-store'
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------

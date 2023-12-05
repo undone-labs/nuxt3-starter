@@ -1,6 +1,6 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import { useZeroAuthStore } from '@/modules/zero/modules/auth/stores/use-zero-auth-store'
+import { useZeroAuthStore } from '../stores/use-zero-auth-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -20,7 +20,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       headers,
       query: { guarded }
     })
-    // const authenticated = data.value
     if (guarded && !authenticated) {
       throw new Error('Looks like the page you\'re looking for doesn\'t exist')
     } else if (authenticated) {

@@ -31,12 +31,12 @@ const linkElement = ref(null)
 const magellanMenu = ref(null)
 const scrollTop = ref(0)
 const scrollMagellanMenuEventListenerFunction = ref(null)
-const generalStore = useGeneralStore()
+const docsStore = useZeroDocsStore()
 const {
   activeSection,
   magellanLinks,
   activeLinkMarkerHeight
-} = storeToRefs(generalStore)
+} = storeToRefs(docsStore)
 
 // ==================================================================== Computed
 const activeLinkMarkerPosition = computed(() => {
