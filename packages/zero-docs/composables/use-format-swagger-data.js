@@ -50,6 +50,7 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
             }
         break
       case 'body':
+        console.log('param ', param)
         const type = requestTypeStringFromSchema(param.schema, definitions)
         bodyParams = {}
         bodyParams[name] = {
