@@ -81,6 +81,7 @@ export default defineNuxtConfig({
   ],
   // ========================================================= [Layer] zero-core
   zero: {
+    log: false,
     components: {
       ApiExplorer: { enable: true },
       ApiInformation: { enable: true },

@@ -5,6 +5,7 @@ import Path from 'path'
 import StartCase from 'lodash/startcase'
 import KebabCase from 'lodash/kebabcase'
 import CamelCase from 'lodash/camelcase'
+import Chalk from 'chalk'
 
 import {
   defineNuxtModule,
@@ -81,20 +82,27 @@ const walk = (dir, next) => {
 const registerComponents = (path, components) => {
   path = resolve(path, 'components')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Components'))
   if (components) {
     Object.keys(components).forEach(name => {
       const component = components[name]
+      name = `${globalPrefix}${name}`
       if (component.enable) {
         addComponent({
-          name: `${globalPrefix}${name}`,
+          name,
           filePath: resolve(path, `${convertCase(name, 'kebab')}.vue`)
         })
+        console.log(Chalk.black(`       <${name} />`))
       }
     })
   } else {
     addComponentsDir({
       path,
       global: true
+    })
+    Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(component => {
+      const name = StartCase(component.replace('.vue', '')).replaceAll(' ', '')
+      console.log(Chalk.black(`       <${name} />`))
     })
   }
 }
@@ -106,6 +114,7 @@ const registerComponents = (path, components) => {
 const registerComposables = (path, composables) => {
   path = resolve(path, 'composables')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Composables'))
   if (composables) {
     Object.keys(composables).forEach(name => {
       const composable = composables[name]
@@ -119,10 +128,15 @@ const registerComposables = (path, composables) => {
           as: name,
           from: resolve(path, slug)
         })
+        console.log(Chalk.black(`       ${name}()`))
       }
     })
   } else {
     addImportsDir(path)
+    Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(composable => {
+      const name = CamelCase(composable.replace('.js', ''))
+      console.log(Chalk.black(`       ${name}()`))
+    })
   }
 }
 
@@ -133,16 +147,19 @@ const registerComposables = (path, composables) => {
 const registerPlugins = (path, plugins) => {
   path = resolve(path, 'plugins')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Plugins'))
   if (plugins) {
     Object.keys(plugins).forEach(slug => {
       const plugin = plugins[slug]
       if (plugin.enable) {
         addPlugin(resolve(path, slug))
       }
+      console.log(Chalk.black(`       ${slug}.js`))
     })
   } else {
     Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(plugin => {
       addPlugin(resolve(path, plugin))
+      console.log(Chalk.black(`       ${plugin}`))
     })
   }
 }
@@ -154,13 +171,15 @@ const registerPlugins = (path, plugins) => {
 const registerStores = path => {
   path = resolve(path, 'stores')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Stores'))
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(store => {
     const slug = store.split('.js')[0]
-    console.log(`🧺 [zero:store] ${slug}`)
+    const name = convertCase(slug, 'camel')
     addImports({
-      name: convertCase(slug, 'camel'),
+      name,
       from: resolve(path, store)
     })
+    console.log(Chalk.black(`       ${name}()`))
   })
 }
 
@@ -171,12 +190,15 @@ const registerStores = path => {
 const registerServerRoute = path => {
   path = resolve(path, 'server', 'api')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Server API'))
   const divider = 'server'
   walk(path, file => {
+    const route = file.path.split(divider).pop().replace(file.ext, '')
     addServerHandler({
-      route: file.path.split(divider).pop().replace(file.ext, ''),
+      route,
       handler: resolve(file.path)
     })
+    console.log(Chalk.blue(`       ${route}`))
   })
 }
 
@@ -187,6 +209,7 @@ const registerServerRoute = path => {
 const registerPages = path => {
   path = resolve(path, 'pages')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Routes'))
   const divider = 'pages'
   walk(path, file => {
     if (file.ext === '.vue') {
@@ -198,6 +221,7 @@ const registerPages = path => {
           path: route
         })
       })
+      console.log(Chalk.blue(`       ${route}`))
     }
   })
 }
@@ -209,6 +233,7 @@ const registerPages = path => {
 const registerLayouts = path => {
   path = resolve(path, 'layouts')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Layouts'))
   Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(layout => {
     const slug = layout.split('.vue')[0]
     addLayout({
@@ -216,6 +241,7 @@ const registerLayouts = path => {
       write: true,
       src: resolve(path, layout),
     }, slug)
+    console.log(Chalk.black(`       ${slug}`))
   })
 }
 
@@ -226,6 +252,7 @@ const registerLayouts = path => {
 const registerMiddleware = path => {
   path = resolve(path, 'middleware')
   if (!Fs.existsSync(path)) { return }
+  console.log(Chalk.green.bold('     → Middleware'))
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(middleware => {
     const slug = middleware.split('.js')[0]
     addRouteMiddleware({
@@ -233,13 +260,18 @@ const registerMiddleware = path => {
       path: resolve(path, middleware),
       global: true
     })
+    console.log(Chalk.black(`       ${slug}`))
   })
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  console.log('📦 [load:module] zero-core')
+  const hex1 = '#C36B00'
+  const hex2 = '#DB7800'
+  const hex3 = '#FFFFFF'
+  const colon = Chalk.gray.bold(':')
+  console.log('  📦', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(' zero-core ')}`)
   const options = nuxt.options
   if (!options.hasOwnProperty('zero')) { return }
   const zeroOptions = options.zero
@@ -260,7 +292,7 @@ const setup = (_, nuxt) => {
     const moduleOptions = zeroOptions.modules[module]
     if (moduleOptions.enable) {
       if (Fs.statSync(modulePath).isDirectory()) {
-        console.log(`🧰 [zero:module] ${module}`)
+        console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:submodule ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)
         registerComponents(modulePath)
         registerComposables(modulePath)
         registerPlugins(modulePath)
@@ -272,7 +304,7 @@ const setup = (_, nuxt) => {
       }
     }
   }
-  // process.exit(0)
+  process.exit(0)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
