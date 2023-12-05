@@ -1,7 +1,7 @@
 <script setup>
 // ===================================================================== Imports
-const generalStore = useGeneralStore()
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { language } = storeToRefs(docsStore)
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
   const content = await queryContent({

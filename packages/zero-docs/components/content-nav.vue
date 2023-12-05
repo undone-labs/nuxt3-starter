@@ -34,8 +34,8 @@
 
 <script setup>
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { language } = storeToRefs(docsStore)
 const route = useRoute()
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
@@ -44,7 +44,7 @@ const { data: Sidebar } = await useAsyncData('sidebar', async () => {
       _file: { $contains: `data/${language.value}/sidebar.json` }
     }
   }).find()
-  return content.pop().body
+  return content[0].body
   },
   {
     watch: [language]

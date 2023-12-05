@@ -28,8 +28,11 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
 }
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { theme } = storeToRefs(docsStore)
+const { language } = storeToRefs(docsStore)
+
+const zeroStore = useZeroStore()
 
 const { data: Settings } = await useAsyncData('settings', async () => {
   const content = await queryContent({
@@ -37,24 +40,35 @@ const { data: Settings } = await useAsyncData('settings', async () => {
       _file: { $contains: `data/${language.value}/settings.json` }
     }
   }).find()
-  return content.pop()
+  return content[0]
   },
   {
     watch: [language]
   }
 )
 
-generalStore.setSettings(Settings.value)
+docsStore.setSettings(Settings.value)
+
+const { data: Seo } = await useAsyncData('seo', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: `data/${language.value}/seo.json` }
+    }
+  }).find()
+  return content[0]
+})
+
+zeroStore.setSeo(Seo)
 
 // ======================================================================= Hooks
 onMounted(() => {
   const initialTheme = localStorage.getItem('theme')
   if (initialTheme) {
-    generalStore.setTheme(initialTheme)
+    docsStore.setTheme(initialTheme)
   }
   const initialLanguage = localStorage.getItem('language')
   if (initialLanguage) {
-    generalStore.setLanguage(initialLanguage)
+    docsStore.setLanguage(initialLanguage)
   }
 })
 </script>

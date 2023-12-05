@@ -47,9 +47,9 @@
 
 <script setup>
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { languageSelectorVisible } = storeToRefs(generalStore)
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { languageSelectorVisible } = storeToRefs(docsStore)
+const { language } = storeToRefs(docsStore)
 
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
@@ -57,7 +57,7 @@ const { data: Header } = await useAsyncData('header', async () => {
       _file: { $contains: `data/${language.value}/header.json` }
     }
   }).find()
-  return content.pop()
+  return content[0]
   },
   {
     watch: [language]

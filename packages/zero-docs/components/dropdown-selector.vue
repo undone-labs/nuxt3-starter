@@ -41,7 +41,7 @@ const props = defineProps({
 })
 
 // ======================================================================== Data
-const generalStore = useGeneralStore()
+const docsStore = useZeroDocsStore()
 
 // ===================================================================== Methods
 /**
@@ -51,7 +51,7 @@ const generalStore = useGeneralStore()
 const handleOptionSelect = option => {
   if (process.dev) {
     // fire i18n here
-    generalStore.setLanguage(option.toLowerCase())
+    docsStore.setLanguage(option.toLowerCase())
   }
 }
 </script>

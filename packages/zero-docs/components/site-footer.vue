@@ -83,8 +83,8 @@
 
 <script setup>
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { language } = storeToRefs(docsStore)
 
 const { data: Footer } = await useAsyncData(
   'footer',
@@ -94,7 +94,7 @@ const { data: Footer } = await useAsyncData(
         _file: { $contains: `data/${language.value}/footer.json` }
       }
     }).find()
-    return content.pop()
+    return content[0]
   },
   {
     watch: [language]

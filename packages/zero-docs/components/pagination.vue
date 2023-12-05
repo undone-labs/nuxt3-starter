@@ -49,8 +49,8 @@
 <script setup>
 
 // ======================================================================== Data
-const generalStore = useGeneralStore()
-const { language } = storeToRefs(generalStore)
+const docsStore = useZeroDocsStore()
+const { language } = storeToRefs(docsStore)
 const route = useRoute()
 const currentPath = route.path
 
