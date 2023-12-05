@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 // /////////////////////////////////////////////////////////////////////// Notes
 // -----------------------------------------------------------------------------
-// anything referenced in comments in Title Case is part of the OpenAPI
+// anything referenced in comments in Title Case is part of the Swagger
 //  specification and details can be found in the docs
-//  https://spec.openapis.org/oas/v3.1.0
+//  https://spec.openapis.org/oas/v2.0
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
@@ -50,7 +50,6 @@ const getHeadersAndQueryParams = (parameters, definitions) => {
             }
         break
       case 'body':
-        console.log('param ', param)
         const type = requestTypeStringFromSchema(param.schema, definitions)
         bodyParams = {}
         bodyParams[name] = {
@@ -109,33 +108,12 @@ const requestTypeStringFromSchema = (schemaObject, definitions) => {
   return createTypeString(schemaObject, definitions)
 }
 
-// /////////////////////////////////////////////////////////// resolveRef
-
-
-
 // ////////////////////////////////////////////////////////////////// resolveRef
 const resolveRef = (ref, definitions) => {
   if (typeof ref === 'undefined') { return false }
   const refPath = ref.slice(14).split('/')
   let refValue = refPath.reduce((value, key) => value[key], definitions)
   return refValue
-}
-
-// ////////////////////////////////////////////////////////////// getEndpointUrl
-const getEndpointUrl = (path, basePath = false, domain = false, ) => {
-  // basePath is stored in <Server Object>.variables which can also store other
-  //  variables for URL template substitution
-  if (domain) {
-    if (basePath) {
-      const domainBasePath = domain.replace('{basePath}', basePath)
-      return `${domainBasePath}${path}`
-    }
-    return `${domain}${path}`
-  }
-  if (basePath) {
-      return `${basePath}${path}`
-  }
-  return path
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
