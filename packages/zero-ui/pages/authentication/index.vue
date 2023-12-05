@@ -5,42 +5,42 @@
       Authentication
     </h1>
 
-    <ZeroKitchenSinkButton
+    <ZeroUiButton
       v-bind="loginWithGithubButton"
       :disabled="loggedIn"
       @clicked="useLoginWith('github')">
       Login with GitHub
-    </ZeroKitchenSinkButton>
+    </ZeroUiButton>
 
     <client-only>
-      <ZeroKitchenSinkButton
+      <ZeroUiButton
         v-bind="loginWithMetamaskButton"
         :disabled="loggedIn"
         @clicked="useLoginWith('metamask')">
         {{ metamaskInstalled ? 'Login with MetaMask' : 'Click here to install MetaMask' }}
-      </ZeroKitchenSinkButton>
+      </ZeroUiButton>
     </client-only>
 
-    <ZeroKitchenSinkButton
+    <ZeroUiButton
       v-bind="logoutButton"
       :disabled="!loggedIn"
       @clicked="useLogout()">
       Logout
-    </ZeroKitchenSinkButton>
+    </ZeroUiButton>
 
     <template v-if="loggedIn">
       <h3>Providers</h3>
-      <ZeroKitchenSinkButton
+      <ZeroUiButton
         v-bind="registerOauthProviderGithubButton"
         @clicked="useLoginWith('github')">
         Connect Github
-      </ZeroKitchenSinkButton>
+      </ZeroUiButton>
       <client-only>
-        <ZeroKitchenSinkButton
+        <ZeroUiButton
           v-bind="registerOauthProviderMetamaskButton"
           @clicked="useLoginWith('metamask')">
           {{ metamaskInstalled ? 'Connect MetaMask' : 'Click here to install MetaMask' }}
-        </ZeroKitchenSinkButton>
+        </ZeroUiButton>
       </client-only>
     </template>
 
