@@ -10,12 +10,9 @@ const { data: Sidebar } = await useAsyncData('sidebar', async () => {
     }
   }).find()
   return content.pop().body
-  },
-  {
-    watch: [language]
   }
 )
 
 // ======================================================================= Setup
-await navigateTo(`/${Sidebar.value[0].slug}${Sidebar.value[0].children[0].href}`)
+await navigateTo(`/${language.value}/${Sidebar.value[0].slug}${Sidebar.value[0].children[0].href}`)
 </script>

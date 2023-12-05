@@ -42,6 +42,8 @@ const props = defineProps({
 
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
+const { language } = storeToRefs(docsStore)
+const router = useRouter()
 
 // ===================================================================== Methods
 /**
@@ -52,6 +54,7 @@ const handleOptionSelect = option => {
   if (process.dev) {
     // fire i18n here
     docsStore.setLanguage(option.toLowerCase())
+    router.replace( { params: { language : language.value } })
   }
 }
 </script>
