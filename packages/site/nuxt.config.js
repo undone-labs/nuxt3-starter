@@ -77,8 +77,8 @@ export default defineNuxtConfig({
   // ========================================================= [Layer] zero-core
   zero: {
     components: {
-      ApiExplorer: { enable: true },
-      ApiInformation: { enable: true },
+      ApiPreview: { enable: true },
+      ApiOverview: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: true },
