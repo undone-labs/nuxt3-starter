@@ -1,6 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import Fs from 'fs-extra'
+import Chalk from 'chalk'
 
 import {
   defineNuxtModule
@@ -33,7 +34,7 @@ const checkIfTargetDocsDirectoryExists = options => {
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  console.log('📦 [load:module] zero-docs')
+  console.log('\n  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex('#FFFFFF').bold(' zero-docs ')}\n`)
   const options = nuxt.options
   checkIfTargetDocsDirectoryExists(options.content)
 }

@@ -1,5 +1,3 @@
-console.log('⚡️ load:docs')
-
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
@@ -29,9 +27,6 @@ const backendPort = (function () {
 export default defineNuxtConfig({
   // =================================================================== General
   devtools: { enabled: false },
-  site: {
-    url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
-  },
   extends: [
     '../zero-docs',
     '../zero-core'
@@ -82,8 +77,8 @@ export default defineNuxtConfig({
   // ========================================================= [Layer] zero-core
   zero: {
     components: {
-      ApiExplorer: { enable: true },
-      ApiInformation: { enable: true },
+      ApiPreview: { enable: true },
+      ApiOverview: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: false },

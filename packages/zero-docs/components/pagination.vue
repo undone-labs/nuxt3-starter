@@ -49,7 +49,6 @@
 <script setup>
 
 // ======================================================================== Data
-const docsStore = useZeroDocsStore()
 const route = useRoute()
 const routeLang = route.params.language
 const currentPath = route.path
@@ -60,7 +59,7 @@ const { data: Sidebar } = await useAsyncData('sidebar', async () => {
       _file: { $contains: `data/${routeLang}/sidebar.json` }
     }
   }).find()
-  return content.pop().body
+  return content[0].body
   },
   {
     watch: [routeLang]

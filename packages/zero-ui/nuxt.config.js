@@ -1,5 +1,3 @@
-console.log('⚡️ load:zero-ui')
-
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
@@ -30,9 +28,6 @@ const backendPort = (function () {
 export default defineNuxtConfig({
   // =================================================================== General
   devtools: { enabled: false },
-  site: {
-    url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
-  },
   extends: [
     '../zero-core'
   ],
@@ -82,8 +77,8 @@ export default defineNuxtConfig({
   // ========================================================= [Layer] zero-core
   zero: {
     components: {
-      ApiExplorer: { enable: true },
-      ApiInformation: { enable: true },
+      ApiPreview: { enable: true },
+      ApiOverview: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: true },
@@ -119,23 +114,23 @@ export default defineNuxtConfig({
         // ]
       },
       auth: {
-        enable: false
-        // redirectUnauthenticated: '',
-        // /**
-        //  * string or object
-        //  *
-        //  * if object, replace part of path with key's value from user (user) db
-        //  * object, for example example:
-        //  *
-        //  * {
-        //  *   path: '/zero-kitchen-sink/:user/redirect-after-login',
-        //  *   match: {
-        //  *     ':user': 'username'
-        //  *   }
-        //  * }
-        //  */
-        // redirectAfterLogin: '',
-        // redirectAfterLogout: ''
+        enable: true,
+        redirectUnauthenticated: '/authentication/redirect-unauthenticated',
+        /**
+         * string or object
+         *
+         * if object, replace part of path with key's value from user (user) db
+         * object, for example example:
+         *
+         * {
+         *   path: '/zero-kitchen-sink/:user/redirect-after-login',
+         *   match: {
+         *     ':user': 'username'
+         *   }
+         * }
+         */
+        redirectAfterLogin: '/authentication/redirect-after-login',
+        redirectAfterLogout: '/authentication/redirect-after-logout'
       }
     }
   },
