@@ -102,12 +102,12 @@ const { data: content } = await useAsyncData('page-content', () => {
   }).find()
 })
 const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
-    return queryContent({
-      where: {
-        _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
-      }
-    }).findOne()
-  })
+  return queryContent({
+    where: {
+      _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
+    }
+  }).findOne()
+})
 
 const routePathSplitLength = route.path.split('/').length
 const sectionCount = content.value.length
@@ -118,6 +118,8 @@ if (routePathSplitLength < 3 || sectionCount === 0) {
     message: 'Looks like the page you\'re looking for doesn\'t exist'
   })
 }
+
+const pageContent = ref([])
 
 // ======================================================================= Setup
 nuxtApp.$seo(
@@ -130,9 +132,14 @@ nuxtApp.$seo(
 // ==================================================================== Computed
 const headerHeightOffset = computed(() => headerHeight.value * 3)
 
-const pageContent = computed(() => {
+// ===================================================================== Methods
+/**
+ * @method generatePageContent
+ */
+
+const generatePageContent = () => {
   const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
-  array.forEach((mdContent) => {
+  array.forEach(mdContent => {
     const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
     if (jsonContent) {
       if (Object.hasOwn(jsonContent, 'swagger')) {
@@ -144,49 +151,9 @@ const pageContent = computed(() => {
       }
     }
   })
-  return array
-})
+  pageContent.value = array
+}
 
-// ==================================================================== Watchers
-watch(route, async route => {
-  if (navigatedByRouteDebounce.value) { clearTimeout(navigatedByRouteDebounce.value) }
-  navigatedByRouteDebounce.value = setTimeout(() => {
-    navigatedByRoute.value = false
-    clearTimeout(navigatedByRouteDebounce.value)
-  }, 100)
-  navigatedByRoute.value = true
-  docsStore.setActiveSection({ id: route.hash.slice(1) })
-  if (process.client) {
-    await nextTick(() => {
-      const linksExist = docsStore.compileMagellanLinks()
-      if (linksExist) {
-        docsStore.setActiveLinkMarkerHeight()
-      }
-    })
-  }
-}, { immediate: true })
-
-// ======================================================================= Hooks
-onMounted(async () => {
-  // Need the following line for HMR to play nice with @nuxt/content module due to the following issue: https://github.com/nuxt/content/issues/1799
-  await new Promise((resolve) => setTimeout(resolve))
-  await nextTick(() => {
-    const header = document.getElementById('site-header')
-    headerHeight.value = header.offsetHeight
-    sections.value = Array.from(document.querySelectorAll('#markdown *[id]'))
-    intersectionObserveHeadings()
-    detectPageScrolledToEdgesOfViewport()
-  })
-})
-
-onBeforeUnmount(() => {
-  sections.value.forEach((section) => {
-    intersectionObserver.value.unobserve(section)
-  })
-  window.removeEventListener('scroll', scrollWindowEventListenerFunction.value)
-})
-
-// ===================================================================== Methods
 /**
  * @method intersectionObserveHeadings
  * @see {@link https://www.smashingmagazine.com/2018/01/deferring-lazy-loading-intersection-observer-api/} for a thorough overview of how the IntersectionObserver works
@@ -279,6 +246,46 @@ const getPreviewComponentName = path => {
   if (previewExists) { return previewComponentName }
   return false
 }
+
+// ==================================================================== Watchers
+watch(route, async route => {
+  generatePageContent()
+  if (navigatedByRouteDebounce.value) { clearTimeout(navigatedByRouteDebounce.value) }
+  navigatedByRouteDebounce.value = setTimeout(() => {
+    navigatedByRoute.value = false
+    clearTimeout(navigatedByRouteDebounce.value)
+  }, 100)
+  navigatedByRoute.value = true
+  docsStore.setActiveSection({ id: route.hash.slice(1) })
+  if (process.client) {
+    await nextTick(() => {
+      const linksExist = docsStore.compileMagellanLinks()
+      if (linksExist) {
+        docsStore.setActiveLinkMarkerHeight()
+      }
+    })
+  }
+}, { immediate: true })
+
+// ======================================================================= Hooks
+onMounted(async () => {
+  // Need the following line for HMR to play nice with @nuxt/content module due to the following issue: https://github.com/nuxt/content/issues/1799
+  await new Promise((resolve) => setTimeout(resolve))
+  await nextTick(() => {
+    const header = document.getElementById('site-header')
+    headerHeight.value = header.offsetHeight
+    sections.value = Array.from(document.querySelectorAll('#markdown *[id]'))
+    intersectionObserveHeadings()
+    detectPageScrolledToEdgesOfViewport()
+  })
+})
+
+onBeforeUnmount(() => {
+  sections.value.forEach((section) => {
+    intersectionObserver.value.unobserve(section)
+  })
+  window.removeEventListener('scroll', scrollWindowEventListenerFunction.value)
+})
 </script>
 
 <style lang="scss" scoped>
