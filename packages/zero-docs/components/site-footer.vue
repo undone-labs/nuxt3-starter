@@ -83,21 +83,19 @@
 
 <script setup>
 // ======================================================================== Data
-const docsStore = useZeroDocsStore()
-const { language } = storeToRefs(docsStore)
+const route = useRoute()
+const routeLang = computed(() => route.params.language)
 
-const { data: Footer } = await useAsyncData(
-  'footer',
-  async () => {
+const { data: Footer } = await useAsyncData( 'footer', async () => {
     const content = await queryContent({
       where: {
-        _file: { $contains: `data/${language.value}/footer.json` }
+        _file: { $contains: `data/${routeLang.value}/footer.json` }
       }
     }).find()
     return content[0]
   },
   {
-    watch: [language]
+    watch: [routeLang]
   }
 )
 

@@ -50,20 +50,20 @@
 
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
-const { language } = storeToRefs(docsStore)
 const route = useRoute()
+const routeLang = route.params.language
 const currentPath = route.path
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${language.value}/sidebar.json` }
+      _file: { $contains: `data/${routeLang}/sidebar.json` }
     }
   }).find()
   return content.pop().body
   },
   {
-    watch: [language]
+    watch: [routeLang]
   }
 )
 
@@ -89,7 +89,7 @@ Sidebar.value.forEach((directory, dirIndex) => {
       dirSlug,
       dirIcon: directory.icon,
       title: page.title,
-      path: `/${dirSlug}${page.href}`
+      path: `/${routeLang}/${dirSlug}${page.href}`
     })
   })
 })

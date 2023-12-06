@@ -20,8 +20,8 @@
 
       <ButtonClear
         v-for="link in directory.children"
-        :key="generateLink(language, directory.slug, link.href)"
-        :to="generateLink(language, directory.slug, link.href)"
+        :key="generateLink(routeLang, directory.slug, link.href)"
+        :to="generateLink(routeLang, directory.slug, link.href)"
         :tag="link.type"
         :disabled="isCurrentRoute(generateLink(directory.slug, link.href))"
         class="link">
@@ -34,20 +34,19 @@
 
 <script setup>
 // ======================================================================== Data
-const docsStore = useZeroDocsStore()
-const { language } = storeToRefs(docsStore)
 const route = useRoute()
+const routeLang = computed(() => route.params.language)
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${language.value}/sidebar.json` }
+      _file: { $contains: `data/${routeLang.value}/sidebar.json` }
     }
   }).find()
   return content[0].body
   },
   {
-    watch: [language]
+    watch: [routeLang]
   }
 )
 

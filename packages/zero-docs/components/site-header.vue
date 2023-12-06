@@ -49,23 +49,22 @@
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
 const { languageSelectorVisible } = storeToRefs(docsStore)
-const { language } = storeToRefs(docsStore)
+const route = useRoute()
+const routeLang = computed(() => route.params.language)
 
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${language.value}/header.json` }
+      _file: { $contains: `data/${routeLang.value}/header.json` }
     }
   }).find()
   return content[0]
   },
   {
-    watch: [language]
+    watch: [routeLang]
   }
 )
 
-
-const route = useRoute()
 const contentPath = `/docs${route.path}`
 
 const { data: content } = await useAsyncData('site-header-page-content', () => {
@@ -88,7 +87,7 @@ const githubUrl = computed(() => Header.value.toolbar.github_url)
 const languageOptions = computed(() => Header.value.toolbar.language_options)
 
 
-const defaultSelectedLanguage = languageOptions.value.indexOf(language.value.toUpperCase()) || 0
+const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.language.toUpperCase()) || 0
 
 </script>
 
