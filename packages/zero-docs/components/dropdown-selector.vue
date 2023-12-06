@@ -42,19 +42,17 @@ const props = defineProps({
 
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
-const { language } = storeToRefs(docsStore)
-const router = useRouter()
+const route = useRoute()
 
 // ===================================================================== Methods
 /**
  * @method handleOptionSelect
  */
-
 const handleOptionSelect = option => {
   if (process.dev) {
-    // fire i18n here
-    docsStore.setLanguage(option.toLowerCase())
-    router.replace( { params: { language : language.value } })
+    const optionLowerCase = option.toLowerCase()
+    docsStore.setLanguage(optionLowerCase)
+    navigateTo(`/${optionLowerCase}${route.params.slug.reduce((acc, slugStr) => { return acc.concat('/', slugStr) }, '')}`)
   }
 }
 </script>
