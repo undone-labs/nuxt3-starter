@@ -62,8 +62,11 @@ export const useZeroDocsStore = defineStore('docs', () => {
    * @method compileMagellanLinks
    */
 
-  const compileMagellanLinks = () => {
-    const headings = Array.from(document.querySelectorAll('#markdown *[id]'))
+  const compileMagellanLinks = headings => {
+    if (headings.length === 0) {
+      magellanLinks.value = []
+      return
+    }
     magellanLinks.value = headings.reduce((acc, item) => {
       acc.push({
         level: `level-${item.localName}`,
@@ -74,7 +77,7 @@ export const useZeroDocsStore = defineStore('docs', () => {
       })
       return acc
     }, [])
-    return magellanLinks.value.length > 0
+    setActiveLinkMarkerHeight()
   }
 
   /**
