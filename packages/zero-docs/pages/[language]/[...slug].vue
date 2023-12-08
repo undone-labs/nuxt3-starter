@@ -32,7 +32,8 @@
               id="markdown"
               :markdown="section.raw"
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
-              class="markdown" />
+              class="markdown"
+              @found-heading-nodes="docsStore.compileMagellanLinks" />
             <ZeroApiOverview
               v-if="section.apiOverview"
               :headers="section.apiOverview.headers"
@@ -262,15 +263,6 @@ watch(route, async route => {
   }, 100)
   navigatedByRoute.value = true
   docsStore.setActiveSection({ id: route.hash.slice(1) })
-  if (process.client) {
-    await nextTick(() => {
-      console.log('route ', route.fullPath)
-      const linksExist = docsStore.compileMagellanLinks()
-      if (linksExist) {
-        docsStore.setActiveLinkMarkerHeight()
-      }
-    })
-  }
 }, { immediate: true })
 
 // ======================================================================= Hooks
