@@ -33,10 +33,11 @@
         <IconGithub />
       </ZeroButton>
 
-      <!-- <ButtonAlgoliaSearch /> -->
+      <ButtonAlgoliaSearch />
 
       <DropdownSelector
         v-if="languageSelectorVisible"
+        :default-selected-index="defaultSelectedLanguage"
         :options="languageOptions" />
 
     </div>
@@ -48,21 +49,18 @@
 // ======================================================================== Data
 const docsStore = useZeroDocsStore()
 const { languageSelectorVisible } = storeToRefs(docsStore)
+const route = useRoute()
+const routeLang = computed(() => route.params.language)
 
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: 'data/header.json' }
+      _file: { $contains: `data/${routeLang.value}/header.json` }
     }
   }).find()
   return content[0]
-})
+}, { watch: [routeLang] })
 
-const links = Header.value.navigation
-const githubUrl = Header.value.toolbar.github_url
-const languageOptions = Header.value.toolbar.language_options
-
-const route = useRoute()
 const contentPath = `/docs${route.path}`
 
 const { data: content } = await useAsyncData('site-header-page-content', () => {
@@ -78,6 +76,15 @@ const routeActive = ref(undefined)
 if (content.value.length > 0) {
   routeActive.value = content.value[0]._file.includes('docs') ? '/docs' : undefined
 }
+
+// ==================================================================== Computed
+const links = computed(() => Header.value.navigation)
+const githubUrl = computed(() => Header.value.toolbar.github_url)
+const languageOptions = computed(() => Header.value.toolbar.language_options)
+
+
+const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.language.toUpperCase()) || 0
+
 </script>
 
 <style lang="scss" scoped>
