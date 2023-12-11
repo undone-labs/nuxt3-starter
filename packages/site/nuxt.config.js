@@ -1,8 +1,7 @@
-console.log('⚡️ load:site')
-
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtConfig } from 'nuxt/config'
+import Path from 'path'
 
 // /////////////////////////////////////////////////////////// Variables & Setup
 // -----------------------------------------------------------------------------
@@ -29,9 +28,6 @@ const backendPort = (function () {
 export default defineNuxtConfig({
   // =================================================================== General
   devtools: { enabled: false },
-  site: {
-    url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
-  },
   extends: [
     '../zero-core'
   ],
@@ -81,8 +77,8 @@ export default defineNuxtConfig({
   // ========================================================= [Layer] zero-core
   zero: {
     components: {
-      ApiExplorer: { enable: true },
-      ApiInformation: { enable: true },
+      ApiPreview: { enable: true },
+      ApiOverview: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: true },
@@ -140,6 +136,13 @@ export default defineNuxtConfig({
   },
   // ==================================================== [Module] @nuxt/content
   content: {
-    watch: false
+    watch: false,
+    sources: {
+      data: {
+        driver: 'fs',
+        prefix: '/data',
+        base: Path.resolve(__dirname, 'data')
+      }
+    }
   }
 })

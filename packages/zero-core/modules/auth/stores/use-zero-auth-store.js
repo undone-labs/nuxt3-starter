@@ -1,7 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineStore } from 'pinia'
-import { useFetchAuth } from '@/modules/zero/modules/auth/composables/use-fetch-auth'
+import { useFetchAuth } from '../composables/use-fetch-auth'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------

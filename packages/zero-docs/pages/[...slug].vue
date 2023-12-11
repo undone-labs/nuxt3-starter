@@ -32,12 +32,15 @@
               id="markdown"
               :markdown="section.raw"
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
-              class="markdown" />
-            <ApiInformation
-              v-if="section.apiPreview"
-              :headers="section.apiPreview.headers"
-              :query-parameters="section.apiPreview.query_parameters"
-              :response-codes="section.apiPreview.response_codes" />
+              class="markdown"
+              @found-heading-nodes="docsStore.compileMagellanLinks" />
+            <ZeroApiOverview
+              v-if="section.apiOverview"
+              :headers="section.apiOverview.headers"
+              :query-parameters="section.apiOverview.queryParameters"
+              :body-parameters="section.apiOverview.bodyParameters"
+              :path-parameters="section.apiOverview.pathParameters"
+              :response-codes="section.apiOverview.responseCodes" />
           </div>
         </div>
 
@@ -45,7 +48,7 @@
         <div class="col-4_lg-3_md-4">
           <div class="preview">
 
-            <ApiExplorer
+            <ZeroApiPreview
               v-if="section.apiPreview"
               :sliders="section.apiPreview.sliders" />
 
@@ -87,7 +90,7 @@ const navigatedByRoute = ref(false)
 const navigatedByRouteDebounce = ref(null)
 const ctx = getCurrentInstance()
 const dirNameSplit = route.path.slice(1).split('/')
-const generalStore = useGeneralStore()
+const docsStore = useZeroDocsStore()
 
 const pageSlug = dirNameSplit[1]
 const pageHeading = useToPascalCase(pageSlug, ' ')
@@ -98,6 +101,13 @@ const { data: content } = await useAsyncData('page-content', () => {
       _path: { $contains: contentPath }
     }
   }).find()
+})
+const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
+  return queryContent({
+    where: {
+      _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
+    }
+  }).findOne()
 })
 
 const routePathSplitLength = route.path.split('/').length
@@ -110,6 +120,8 @@ if (routePathSplitLength < 3 || sectionCount === 0) {
   })
 }
 
+const pageContent = ref([])
+
 // ======================================================================= Setup
 nuxtApp.$seo(
   '*',
@@ -121,55 +133,28 @@ nuxtApp.$seo(
 // ==================================================================== Computed
 const headerHeightOffset = computed(() => headerHeight.value * 3)
 
-const pageContent = computed(() => {
-  const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
-  array.forEach((mdContent) => {
-    const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
-    if (jsonContent) { mdContent.apiPreview = jsonContent }
-  })
-  return array
-})
-
-// ==================================================================== Watchers
-watch(route, async route => {
-  if (navigatedByRouteDebounce.value) { clearTimeout(navigatedByRouteDebounce.value) }
-  navigatedByRouteDebounce.value = setTimeout(() => {
-    navigatedByRoute.value = false
-    clearTimeout(navigatedByRouteDebounce.value)
-  }, 100)
-  navigatedByRoute.value = true
-  generalStore.setActiveSection({ id: route.hash.slice(1) })
-  if (process.client) {
-    await nextTick(() => {
-      const linksExist = generalStore.compileMagellanLinks()
-      if (linksExist) {
-        generalStore.setActiveLinkMarkerHeight()
-      }
-    })
-  }
-}, { immediate: true })
-
-// ======================================================================= Hooks
-onMounted(async () => {
-  // Need the following line for HMR to play nice with @nuxt/content module due to the following issue: https://github.com/nuxt/content/issues/1799
-  await new Promise((resolve) => setTimeout(resolve))
-  await nextTick(() => {
-    const header = document.getElementById('site-header')
-    headerHeight.value = header.offsetHeight
-    sections.value = Array.from(document.querySelectorAll('#markdown *[id]'))
-    intersectionObserveHeadings()
-    detectPageScrolledToEdgesOfViewport()
-  })
-})
-
-onBeforeUnmount(() => {
-  sections.value.forEach((section) => {
-    intersectionObserver.value.unobserve(section)
-  })
-  window.removeEventListener('scroll', scrollWindowEventListenerFunction.value)
-})
-
 // ===================================================================== Methods
+/**
+ * @method generatePageContent
+ */
+
+const generatePageContent = () => {
+  const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
+  array.forEach(mdContent => {
+    const jsonContent = content.value.find(item => item._path === mdContent._path && item._extension === 'json')
+    if (jsonContent) {
+      if (Object.hasOwn(jsonContent, 'swagger')) {
+        const { overview, preview } = useFormatSwaggerData(jsonContent, {...definitionsSchema?.value?.definitions})
+        mdContent.apiOverview = overview
+        mdContent.apiPreview = preview
+      } else {
+        mdContent.apiPreview = jsonContent
+      }
+    }
+  })
+  pageContent.value = array
+}
+
 /**
  * @method intersectionObserveHeadings
  * @see {@link https://www.smashingmagazine.com/2018/01/deferring-lazy-loading-intersection-observer-api/} for a thorough overview of how the IntersectionObserver works
@@ -191,13 +176,13 @@ const intersectionObserveHeadings = () => {
     if (intersectingTop && !navigatedByRoute.value) {
       // console.log(entryId, sectionId)
       // console.log(entry)
-      generalStore.setActiveSection(
+      docsStore.setActiveSection(
         sectionId !== '' ? { id: entryId, sectionId } : { id: entryId }
       )
       // if (entryId !== hash) {
       //   // activePath = `${route.path}#${entryId}`
       //   // activeSection =
-      //   // generalStore.setActiveSection(
+      //   // docsStore.setActiveSection(
       //   //   sectionId !== '' ? { id: entryId, sectionId } : { id: entryId }
       //   // )
       // } else {
@@ -209,7 +194,7 @@ const intersectionObserveHeadings = () => {
       //   // } else {
       //   //   activeSection = false
       //   // }
-      //   // generalStore.setActiveSection(activeSection)
+      //   // docsStore.setActiveSection(activeSection)
       // }
     }
     // if (!navigatedByRoute.value && !intersectingTop && activeSection) {
@@ -237,10 +222,10 @@ const detectPageScrolledToEdgesOfViewport = () => {
       const bodyHeight = document.body.offsetHeight
       if (y <= headerHeight.value) {
         // history.replaceState({}, null, route.path)
-        // generalStore.setActiveSection(false)
+        // docsStore.setActiveSection(false)
       } else if (y + viewportHeight >= bodyHeight) {
         // history.replaceState({}, null, `${route.path}#${lastMagellanNavItemId}`)
-        generalStore.setActiveSection(
+        docsStore.setActiveSection(
           lastMagellanNavItemSectionId !== '' ?
             { id: lastMagellanNavItemId, sectionId: lastMagellanNavItemSectionId } :
             { id: lastMagellanNavItemId }
@@ -262,6 +247,38 @@ const getPreviewComponentName = path => {
   if (previewExists) { return previewComponentName }
   return false
 }
+
+// ==================================================================== Watchers
+watch(route, async route => {
+  generatePageContent()
+  if (navigatedByRouteDebounce.value) { clearTimeout(navigatedByRouteDebounce.value) }
+  navigatedByRouteDebounce.value = setTimeout(() => {
+    navigatedByRoute.value = false
+    clearTimeout(navigatedByRouteDebounce.value)
+  }, 100)
+  navigatedByRoute.value = true
+  docsStore.setActiveSection({ id: route.hash.slice(1) })
+}, { immediate: true })
+
+// ======================================================================= Hooks
+onMounted(async () => {
+  // Need the following line for HMR to play nice with @nuxt/content module due to the following issue: https://github.com/nuxt/content/issues/1799
+  await new Promise((resolve) => setTimeout(resolve))
+  await nextTick(() => {
+    const header = document.getElementById('site-header')
+    headerHeight.value = header.offsetHeight
+    sections.value = Array.from(document.querySelectorAll('#markdown *[id]'))
+    intersectionObserveHeadings()
+    detectPageScrolledToEdgesOfViewport()
+  })
+})
+
+onBeforeUnmount(() => {
+  sections.value.forEach((section) => {
+    intersectionObserver.value.unobserve(section)
+  })
+  window.removeEventListener('scroll', scrollWindowEventListenerFunction.value)
+})
 </script>
 
 <style lang="scss" scoped>

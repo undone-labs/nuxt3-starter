@@ -89,7 +89,7 @@ const { data: Footer } = await useAsyncData('footer', async () => {
       _file: { $contains: 'data/footer.json' }
     }
   }).find()
-  return content.pop()
+  return content[0]
 })
 
 const support = Footer.value.panel_left
