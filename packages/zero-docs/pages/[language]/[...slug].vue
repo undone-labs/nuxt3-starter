@@ -101,11 +101,7 @@ const { data: content } = await useAsyncData('page-content', () => {
       _path: { $contains: contentPath.value }
     }
   }).find()
-  },
-  {
-    watch: [contentPath.value]
-  }
-)
+}, { watch: [contentPath] })
 
 const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
   return queryContent({

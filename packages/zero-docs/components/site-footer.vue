@@ -93,11 +93,7 @@ const { data: Footer } = await useAsyncData( 'footer', async () => {
       }
     }).find()
     return content[0]
-  },
-  {
-    watch: [routeLang]
-  }
-)
+}, { watch: [routeLang] } )
 
 // ==================================================================== Computed
 const support = computed(() => Footer.value.panel_left)

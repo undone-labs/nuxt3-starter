@@ -50,21 +50,17 @@
 
 // ======================================================================== Data
 const route = useRoute()
-const routeLang = route.params.language
 const currentPath = route.path
+const routeLang = computed(() => route.params.language)
 
 const { data: Sidebar } = await useAsyncData('sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${routeLang}/sidebar.json` }
+      _file: { $contains: `data/${routeLang.value}/sidebar.json` }
     }
   }).find()
   return content[0].body
-  },
-  {
-    watch: [routeLang]
-  }
-)
+}, { watch: [routeLang] })
 
 const navigation = []
 const dirCount = Sidebar.value.length

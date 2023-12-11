@@ -41,11 +41,7 @@ const { data: Settings } = await useAsyncData('settings', async () => {
     }
   }).find()
   return content[0]
-  },
-  {
-    watch: [language]
-  }
-)
+}, { watch: [language] })
 
 docsStore.setSettings(Settings.value)
 

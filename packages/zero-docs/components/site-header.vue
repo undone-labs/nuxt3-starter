@@ -59,11 +59,7 @@ const { data: Header } = await useAsyncData('header', async () => {
     }
   }).find()
   return content[0]
-  },
-  {
-    watch: [routeLang]
-  }
-)
+}, { watch: [routeLang] })
 
 const contentPath = `/docs${route.path}`
 
