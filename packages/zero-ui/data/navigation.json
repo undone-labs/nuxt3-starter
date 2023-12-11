@@ -18,5 +18,11 @@
       { "path": "/authentication/redirect-after-login", "text": "redirectAfterLogin 🛡️" },
       { "path": "/authentication/redirect-after-logout", "text": "redirectAfterLogout" }
     ]
+  },
+  {
+    "title": "PoC",
+    "links": [
+      { "path": "/poc/responsive-clipper", "text": "Responsive Clipper" }
+    ]
   }
 ]

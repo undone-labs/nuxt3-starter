@@ -16,16 +16,16 @@
 
 <script setup>
 // ======================================================================= Setup
-const generalStore = useGeneralStore()
+const docsStore = useZeroDocsStore()
 
 // ======================================================================== Data
-const { theme } = storeToRefs(generalStore)
+const { theme } = storeToRefs(docsStore)
 
 // ======================================================================= Hooks
 onMounted(() => {
   const initialTheme = localStorage.getItem('theme')
   if (initialTheme) {
-    generalStore.setTheme(initialTheme)
+    docsStore.setTheme(initialTheme)
   }
 })
 
@@ -35,7 +35,7 @@ onMounted(() => {
  */
 const toggleTheme = () => {
   const toggle = theme.value === 'light' ? 'dark' : 'light'
-  generalStore.setTheme(toggle)
+  docsStore.setTheme(toggle)
 }
 </script>
 
