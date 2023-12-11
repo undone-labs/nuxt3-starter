@@ -1,9 +1,13 @@
 <template>
   <main class="page">
 
-    <h1 class="h3">
+    <h1 class="page-heading">
       Curved sections and borders PoC
     </h1>
+
+    <ZeroMarkdownParser
+      :markdown="content[0].raw"
+      class="markdown" />
 
     <section class="poc">
 
@@ -18,7 +22,6 @@
           data-push-right="off-0">
           <div class="example-1">
             <PocResponsiveClipper
-              :display-guides="false"
               :breakpoints-x="[130, 480]"
               :breakpoints-y="[30, 150, 400, 530]">
               <template #svg-path>
@@ -36,7 +39,6 @@
         <div class="col-12">
           <div class="example-2">
             <PocResponsiveClipper
-              :display-guides="false"
               :breakpoints-x="[50, 550, 720, 1220]"
               :breakpoints-y="[70, 290]">
               <template #svg-path>
@@ -61,6 +63,17 @@
 
   </main>
 </template>
+
+<script setup>
+// ======================================================================== Data
+const { data: content } = await useAsyncData('content', () => {
+  return queryContent({
+    where: {
+      _path: { $contains: '/zero-ui/responsive-clipper' }
+    }
+  }).find()
+})
+</script>
 
 <style lang="scss" scoped>
 // ///////////////////////////////////////////////////////////////////// General
