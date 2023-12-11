@@ -47,21 +47,20 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-// import Sidebar from '@/data/sidebar.json'
-
-const { data: Sidebar } = await useAsyncData('sidebar-pagination', async () => {
-  const content = await queryContent({
-    where: {
-      _file: { $contains: 'data/sidebar.json' }
-    }
-  }).find()
-  return content[0].body
-})
 
 // ======================================================================== Data
 const route = useRoute()
 const currentPath = route.path
+const routeLang = computed(() => route.params.language)
+
+const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+  const content = await queryContent({
+    where: {
+      _file: { $contains: `data/${routeLang.value}/sidebar.json` }
+    }
+  }).find()
+  return content[0].body
+}, { watch: [routeLang] })
 
 const navigation = []
 const dirCount = Sidebar.value.length
@@ -85,7 +84,7 @@ Sidebar.value.forEach((directory, dirIndex) => {
       dirSlug,
       dirIcon: directory.icon,
       title: page.title,
-      path: `/${dirSlug}${page.href}`
+      path: `/${routeLang}/${dirSlug}${page.href}`
     })
   })
 })

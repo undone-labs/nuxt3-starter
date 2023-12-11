@@ -24,6 +24,12 @@ export const useZeroDocsStore = defineStore('docs', () => {
       true
   })
 
+  const language = computed(() => {
+    return settings.value.hasOwnProperty('language') ?
+      settings.value.language :
+      'en'
+  })
+
   const languageSelectorVisible = computed(() => {
     return settings.value.hasOwnProperty('languageSelectorVisible') ?
       settings.value.languageSelectorVisible :
@@ -48,6 +54,15 @@ export const useZeroDocsStore = defineStore('docs', () => {
     settings.value.theme = newTheme
     localStorage.setItem('theme', newTheme)
     document.documentElement.className = newTheme
+  }
+
+  /**
+   * @method setLanguage
+   */
+
+  const setLanguage = newLanguage => {
+    settings.value.language = newLanguage
+    localStorage.setItem('language', newLanguage)
   }
 
   /**
@@ -100,10 +115,12 @@ export const useZeroDocsStore = defineStore('docs', () => {
     // ----- computed
     theme,
     themeToggleVisible,
+    language,
     languageSelectorVisible,
     // ----- actions
     setSettings,
     setTheme,
+    setLanguage,
     setActiveSection,
     compileMagellanLinks,
     setActiveLinkMarkerHeight
