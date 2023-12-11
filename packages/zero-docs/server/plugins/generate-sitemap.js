@@ -46,7 +46,7 @@ const walk = (dir, split, next) => {
         `${Chalk.underline.red.bold('error:layer:zero-docs ')}${Chalk.bgRed.hex('#FFFFFF').bold(' server/plugins/generate-sitemap.js ')}\n`,
         `    Content can only be nested up to 3 directories deep.\n`,
         `    Example: ${Chalk.blue('/en/the-docs-directory/data')}\n`,
-        `    ${Chalk.red('Server should be restarted once nesting is fixed')}`
+        Chalk.red('    Server should be restarted once nesting is fixed')
       )
       process.exit(0)
     }

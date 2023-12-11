@@ -33,7 +33,7 @@
         <IconGithub />
       </ZeroButton>
 
-      <!-- <ButtonAlgoliaSearch /> -->
+      <ButtonAlgoliaSearch />
 
       <DropdownSelector
         v-if="languageSelectorVisible"
