@@ -62,6 +62,10 @@ zeroStore.setSeo(Seo)
   // }
 }
 
+:deep(.page-heading) {
+  margin-bottom: 3rem;
+}
+
 // :deep(h1), :deep(.h1),
 // :deep(h2), :deep(.h2),
 // :deep(h3), :deep(.h3),
