@@ -1,7 +1,7 @@
 <template>
   <div class="layout default">
 
-    <!-- <AlgoliaModal /> -->
+    <AlgoliaModal />
 
     <SiteHeader />
 
@@ -34,14 +34,13 @@ const { language } = storeToRefs(docsStore)
 
 const zeroStore = useZeroStore()
 
-const { data: Settings } = await useAsyncData('settings', async () => {
-  const content = await queryContent({
+const { data: Settings } = await useAsyncData('settings', () => {
+  return queryContent({
     where: {
-      _file: { $contains: `data/${language.value}/settings.json` }
+      _file: { $contains: 'data/settings.json' }
     }
   }).find()
-  return content[0]
-}, { watch: [language] })
+})
 
 docsStore.setSettings(Settings.value)
 
