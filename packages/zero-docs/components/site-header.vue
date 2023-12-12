@@ -33,7 +33,8 @@
         <IconGithub />
       </ZeroButton>
 
-      <ButtonAlgoliaSearch />
+      <!-- must be placed behind a v-if="algoliaEnabled" -->
+      <ButtonAlgoliaSearch v-if="algoliaEnabled" />
 
       <DropdownSelector
         v-if="languageSelectorVisible"
@@ -77,14 +78,15 @@ if (content.value.length > 0) {
   routeActive.value = content.value[0]._file.includes('docs') ? '/docs' : undefined
 }
 
+const config = useRuntimeConfig()
+const algoliaEnabled = config.public?.zeroAlgolia?.enable
+
 // ==================================================================== Computed
 const links = computed(() => Header.value.navigation)
 const githubUrl = computed(() => Header.value.toolbar.github_url)
 const languageOptions = computed(() => Header.value.toolbar.language_options)
 
-
 const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.language.toUpperCase()) || 0
-
 </script>
 
 <style lang="scss" scoped>

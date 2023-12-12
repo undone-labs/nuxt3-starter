@@ -1,7 +1,8 @@
 <template>
   <div class="layout default">
 
-    <AlgoliaModal />
+    <!-- must be placed behind a v-if="algoliaEnabled" -->
+    <AlgoliaModal v-if="algoliaEnabled" />
 
     <SiteHeader />
 
@@ -54,6 +55,9 @@ const { data: Seo } = await useAsyncData('seo', async () => {
 })
 
 zeroStore.setSeo(Seo)
+
+const config = useRuntimeConfig()
+const algoliaEnabled = config.public?.zeroAlgolia?.enable
 
 // ======================================================================= Hooks
 onMounted(() => {
