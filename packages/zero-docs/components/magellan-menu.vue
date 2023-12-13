@@ -113,7 +113,7 @@ const hashIsActive = (link) => {
 }
 
 .title {
-  @include h6;
+  @include magellanTitle;
   position: absolute;
   top: toRem(21);
   opacity: 0.7;
