@@ -106,7 +106,7 @@ const { data: content } = await useAsyncData('page-content', () => {
 const { data: definitionsSchema } = await useAsyncData('definitions-schema', () => {
   return queryContent({
     where: {
-      _path: { $contains: `/docs/${dirNameSplit[0]}/definitions-schema` }
+      _path: { $contains: `/docs/${dirNameSplit[0]}/${dirNameSplit[1]}/definitions-schema` }
     }
   }).findOne()
 })
