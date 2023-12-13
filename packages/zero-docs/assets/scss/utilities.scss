@@ -52,7 +52,8 @@ $replace4: #000000;
   --background-color__secondary: white;
   --theme-toggle__background-color: #{$wildSand};
   --theme-toggle__border-color: #{$alto};
-  --theme-toggle__onHover: #{$codGray};
+  --theme-toggle__icon-container: white;
+  --theme-toggle__icon-container__onHover: #{$codGray};
   --theme-toggle__icon__onHover: #{$wildSand};
   --theme-color: #{$codGray};
   --theme-color__inverted: #{$wildSand};
@@ -72,6 +73,8 @@ $replace4: #000000;
   --algolia__highlight: #{$blueRibbon}; // not used because contrast too intense
   --api-preview__http-status-code__background-color: #{$mercury};
   --api-preview__http-status-code__color: #{$blueViolet};
+  --scrollbar-background-color: #{$wildSand};
+  --scrollbar-thumb-color: #{$alto};
 }
 
 .dark {
@@ -79,7 +82,8 @@ $replace4: #000000;
   --background-color__secondary: black;
   --theme-toggle__background-color: #383838;
   --theme-toggle__border-color: #5A5A5A;
-  --theme-toggle__onHover: #{$wildSand};
+  --theme-toggle__icon-container: black;
+  --theme-toggle__icon-container__onHover: #{$wildSand};
   --theme-toggle__icon__onHover: #{$codGray};
   --theme-color: #{$wildSand};
   --theme-color__inverted: #{$codGray};
@@ -99,6 +103,8 @@ $replace4: #000000;
   --algolia__highlight: #{$blueRibbon}; // not used because contrast too intense
   --api-preview__http-status-code__background-color: #{$mineShaft};
   --api-preview__http-status-code__color: #{$portage};
+  --scrollbar-background-color: #{$codGray};
+  --scrollbar-thumb-color: #{$alto};
 }
 
 // ===================================================================== Styling
@@ -162,4 +168,26 @@ $replace4: #000000;
 @mixin selection-light {
   ::-moz-selection { background: $melrose; }
   ::selection { background: $melrose; }
+}
+
+@mixin scrollbars(
+  $size: 10px,
+  $thumb-color: var(--scrollbar-thumb-color),
+  $background-color: var(--scrollbar-background-color)
+) {
+  // Chrome & Safari
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $thumb-color;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  // Firefox (though Chrome + Edge are working on support)
+  transition: scrollbar-color 500ms;
+  scrollbar-color: $thumb-color $background-color;
 }
