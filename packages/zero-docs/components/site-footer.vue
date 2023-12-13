@@ -162,7 +162,9 @@ section {
     height: toRem(5);
     background-color: var(--link-color);
     transition: background-color 500ms;
-    &:hover {
+  }
+  &:hover {
+    &::before {
       background-color: var(--link-hover-color);
     }
   }
