@@ -106,6 +106,12 @@ $replace4: #000000;
   --theme-transition: background-color 500ms ease-in, color 500ms ease-in, border-color 500ms ease-in, fill 500ms ease-in, stroke 500ms ease-in;
 }
 
+.theme-transition > * {
+  transition-duration: 500ms !important;
+  transition-delay: 0s !important;
+  transition-timing-function: ease-in !important;
+}
+
 // ===================================================================== Styling
 @function transitions($transitions...) {
   $chain: '';
@@ -113,15 +119,6 @@ $replace4: #000000;
     $chain: $chain + $transition + ', ';
   }
   $chain: $chain + var(--theme-transition);
-  @return unquote($chain);
-}
-
-@function testfunc($transitions...) {
-  $chain: '';
-  @each $transition in $transitions {
-    $chain: $chain + $transition + ', ';
-  }
-  @debug $chain;
   @return unquote($chain);
 }
 
