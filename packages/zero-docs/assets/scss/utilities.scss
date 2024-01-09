@@ -112,16 +112,6 @@ $replace4: #000000;
   transition-timing-function: ease-in !important;
 }
 
-.theme-transition {
-  --theme-transition: background-color 500ms ease-in, color 500ms ease-in, border-color 500ms ease-in, fill 500ms ease-in, stroke 500ms ease-in;
-}
-
-.theme-transition > * {
-  transition-duration: 500ms !important;
-  transition-delay: 0s !important;
-  transition-timing-function: ease-in !important;
-}
-
 // ===================================================================== Styling
 @function transitions($transitions...) {
   $chain: '';
