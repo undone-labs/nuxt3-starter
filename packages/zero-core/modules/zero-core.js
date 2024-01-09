@@ -58,7 +58,10 @@ const convertCase = (string, to = 'kebab') => {
   return string
 }
 
-// //////////////////////////////////////////////////////////////////////// walk
+/**
+ * @method walk
+ */
+
 const walk = (dir, next) => {
   Fs.readdirSync(dir, { withFileTypes: true }).forEach(dirEnt => {
     const name = dirEnt.name
@@ -288,7 +291,7 @@ const setup = (_, nuxt) => {
     const module = modules[i]
     const modulePath = resolve(modulesPath, module)
     if (!Fs.statSync(modulePath).isDirectory()) { continue }
-    const moduleOptions = zeroOptions.modules[module]
+    const moduleOptions = zeroOptions.modules[module] || {}
     if (moduleOptions.enable) {
       if (Fs.statSync(modulePath).isDirectory()) {
         console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)

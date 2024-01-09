@@ -24,6 +24,12 @@ export const useZeroDocsStore = defineStore('docs', () => {
       true
   })
 
+  const language = computed(() => {
+    return settings.value.hasOwnProperty('language') ?
+      settings.value.language :
+      'en'
+  })
+
   const languageSelectorVisible = computed(() => {
     return settings.value.hasOwnProperty('languageSelectorVisible') ?
       settings.value.languageSelectorVisible :
@@ -56,6 +62,15 @@ export const useZeroDocsStore = defineStore('docs', () => {
   }
 
   /**
+   * @method setLanguage
+   */
+
+  const setLanguage = newLanguage => {
+    settings.value.language = newLanguage
+    localStorage.setItem('language', newLanguage)
+  }
+
+  /**
    * @method setActiveSection
    */
 
@@ -67,8 +82,11 @@ export const useZeroDocsStore = defineStore('docs', () => {
    * @method compileMagellanLinks
    */
 
-  const compileMagellanLinks = () => {
-    const headings = Array.from(document.querySelectorAll('#markdown *[id]'))
+  const compileMagellanLinks = headings => {
+    if (headings.length === 0) {
+      magellanLinks.value = []
+      return
+    }
     magellanLinks.value = headings.reduce((acc, item) => {
       acc.push({
         level: `level-${item.localName}`,
@@ -79,7 +97,7 @@ export const useZeroDocsStore = defineStore('docs', () => {
       })
       return acc
     }, [])
-    return magellanLinks.value.length > 0
+    setActiveLinkMarkerHeight()
   }
 
   /**
@@ -102,10 +120,12 @@ export const useZeroDocsStore = defineStore('docs', () => {
     // ----- computed
     theme,
     themeToggleVisible,
+    language,
     languageSelectorVisible,
     // ----- actions
     setSettings,
     setTheme,
+    setLanguage,
     setActiveSection,
     compileMagellanLinks,
     setActiveLinkMarkerHeight

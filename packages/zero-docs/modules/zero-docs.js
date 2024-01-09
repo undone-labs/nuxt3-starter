@@ -20,7 +20,7 @@ const meta = {
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
 /**
- * @method validateKeyMustBeObject
+ * @method checkIfTargetDocsDirectoryExists
  */
 
 const checkIfTargetDocsDirectoryExists = options => {

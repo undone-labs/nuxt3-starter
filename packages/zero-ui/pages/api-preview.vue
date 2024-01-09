@@ -9,7 +9,7 @@
       API Information
     </h3>
 
-    <ZeroApiInformation
+    <ZeroApiOverview
       :headers="apiPreview.headers"
       :query-parameters="apiPreview.query_parameters"
       :response-codes="apiPreview.response_codes" />
@@ -18,7 +18,7 @@
       API Explorer
     </h3>
 
-    <ZeroApiExplorer
+    <ZeroApiPreview
       :sliders="apiPreview.sliders" />
 
   </main>
