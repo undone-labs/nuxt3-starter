@@ -118,7 +118,7 @@ const hashIsActive = (link) => {
   top: toRem(21);
   opacity: 0.7;
   font-size: toRem(14);
-  transition: color 500ms;
+  transition: transitions();
 }
 
 .active-link-marker {
@@ -128,7 +128,7 @@ const hashIsActive = (link) => {
   width: 0.25rem;
   background-color: var(--link-color);
   border-radius: toRem(4);
-  transition: 150ms ease-in-out, background-color 500ms;
+  transition: transitions(150ms ease-in-out, background-color 500ms);
   @include gridMaxMQ {
     left: calc(#{$sidebarPadding} - 0.5rem);
   }

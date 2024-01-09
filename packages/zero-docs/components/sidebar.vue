@@ -28,7 +28,7 @@
   height: calc(100% - #{$siteHeaderHeight});
   background-color: var(--background-color);
   border-right: 1px solid var(--divider);
-  transition: background-color 500ms, border-color 500ms;
+  transition: transitions();
   @include gridMaxMQ {
     left: 0;
   }
@@ -85,7 +85,7 @@
     height: 1px;
     width: calc(100% + (100vw - $gridWidth) / 2);
     background-color: var(--divider);
-    transition: background-color 500ms;
+    transition: transitions();
     @include gridMaxMQ {
       width: calc(100% + (100vw * 0.041665));
     }

@@ -146,7 +146,7 @@ $font_Mono: 'PFD in Mono', sans-serif, monospace;
   font-family: $font_Mono;
   font-size: toRem(14);
   white-space: break-spaces;
-  transition: background-color 500ms, color 500ms;
+  transition: transitions();
 }
 
 @mixin blockCode {
@@ -158,14 +158,14 @@ $font_Mono: 'PFD in Mono', sans-serif, monospace;
   line-height: leading(21, 14);
   font-family: $font_Mono;
   white-space: break-spaces;
-  transition: background-color 500ms, color 500ms;
+  transition: transitions();
 }
 
 @mixin p1Link {
   @include p1;
   font-weight: 500;
   color: var(--link-color);
-  transition: color 500ms;
+  transition: transitions();
   &:hover {
     color: var(--link-hover-color);
   }
@@ -174,7 +174,7 @@ $font_Mono: 'PFD in Mono', sans-serif, monospace;
 // ////////////////////////////////////////////////////////////////////// Sizing
 // -----------------------------------------------------------------------------
 h1, h2, h3, h4, h5, h6, li, p {
-  transition: color 500ms;
+  transition: transitions();
 }
 
 h1, .h1,
@@ -270,7 +270,7 @@ button {
   letter-spacing: 0.2px;
   white-space: break-spaces;
   color: var(--theme-color);
-  transition: color 500ms;
+  transition: transitions();
   &:hover {
     cursor: pointer;
     color: var(--link-color);

@@ -4,7 +4,7 @@
   height: 0.375rem;
   transition: 150ms ease-out;
   path {
-    transition: inherit;
+    transition: transitions();
     stroke: var(--theme-color);
   }
   &.up,

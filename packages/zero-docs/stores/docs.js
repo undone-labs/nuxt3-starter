@@ -50,10 +50,15 @@ export const useZeroDocsStore = defineStore('docs', () => {
    * @method setTheme
    */
 
-  const setTheme = newTheme => {
+  const setTheme = async newTheme => {
+    document.documentElement.classList.add('theme-transition')
+    await zeroDelay(50)
     settings.value.theme = newTheme
     localStorage.setItem('theme', newTheme)
-    document.documentElement.className = newTheme
+    document.documentElement.classList = `${newTheme} theme-transition`
+    await zeroDelay(500)
+    document.documentElement.classList.remove('theme-transition')
+
   }
 
   /**

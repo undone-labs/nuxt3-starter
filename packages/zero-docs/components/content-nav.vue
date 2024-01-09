@@ -96,7 +96,7 @@ const isCurrentRoute = (path) => {
   margin-right: toRem(14);
   path,
   rect {
-    transition: 500ms;
+    transition: transitions(500ms ease);
   }
   path {
     fill: var(--theme-color);
@@ -110,7 +110,7 @@ const isCurrentRoute = (path) => {
   @include sidebarSectionTitle;
   padding: toRem(4) 0;
   margin: 0;
-  transition: color 200ms;
+  transition: transitions();
   color: var(--sidebar__title-color);
   &.active {
     color: var(--sidebar__title-color__active);
@@ -129,7 +129,7 @@ const isCurrentRoute = (path) => {
   &:hover:not(.router-link-active) {
     cursor: pointer;
     .button-label {
-      transition: 500ms ease-in;
+      transition: transitions(500ms ease-in, color 200ms ease);
       color: var(--link-color);
     }
   }
@@ -145,7 +145,7 @@ const isCurrentRoute = (path) => {
   }
   .button-label {
     @include sidebar;
-    transition: color 500ms;
+    transition: transitions();
   }
 }
 </style>

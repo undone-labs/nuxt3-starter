@@ -104,7 +104,7 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
   background-color: var(--background-color);
   border-bottom: 1px solid var(--divider);
   z-index: 1000;
-  transition: background-color 500ms, border-color 500ms;
+  transition: transitions();
 }
 
 // /////////////////////////////////////////////////////////////////// Site Logo
@@ -117,9 +117,9 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
 .logo {
   display: block;
   height: 100%;
-  transition: 150ms ease-out;
+  transition: transitions(150ms ease-out);
   &:hover {
-    transition: 150ms ease-in;
+    transition: transitions(150ms ease-in);
     transform: scale(1.05);
   }
 }
@@ -147,7 +147,7 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
   }
   &:hover {
     &:before {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       height: toRem(5);
     }
   }
@@ -161,11 +161,11 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
     width: 100%;
     height: 0px;
     background-color: var(--theme-color);
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
   }
   &.active {
     &:before {
-      transition: 150ms ease-in;
+      transition: transitions(150ms ease-in);
       height: toRem(5);
     }
   }
@@ -188,7 +188,7 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
 .github-link {
   display: flex;
   :deep(path) {
-    transition: 150ms ease-out;
+    transition: transitions(150ms ease-out);
     fill: var(--theme-color);
   }
 }

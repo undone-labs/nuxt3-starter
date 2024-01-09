@@ -42,7 +42,7 @@ $toggleHeight: toRem(30);
   border-radius: toRem(17.5);
   box-sizing: border-box;
   background-color: var(--theme-toggle__background-color);
-  transition: 150ms ease-out;
+  transition: transitions(150ms ease-out);
   &:hover {
     .icon-container {
       background-color: var(--theme-toggle__onHover);
@@ -67,7 +67,7 @@ $toggleHeight: toRem(30);
   background-color: var(--background-color);
   border-radius: 50%;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  transition: background-color 500ms, transform 150ms ease-out;
+  transition: transitions(transform 150ms ease-out);
 }
 
 .icon {
@@ -75,7 +75,7 @@ $toggleHeight: toRem(30);
   width: toRem(10);
   height: toRem(10);
   :deep(path) {
-    transition: 500ms;
+    transition: transitions();
     fill: var(--theme-color);
   }
 }
@@ -84,7 +84,7 @@ $toggleHeight: toRem(30);
 .light,
 .dark {
   .icon-container {
-    transition: background-color 500ms, transform 150ms ease-in;
+    transition: transitions(transform 150ms ease-in);
   }
 }
 
