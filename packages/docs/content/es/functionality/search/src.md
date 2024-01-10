@@ -1,3 +1,0 @@
----
-title: Search, en español
----

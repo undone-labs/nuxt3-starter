@@ -1,6 +1,8 @@
 <template>
   <div class="layout default">
 
+    <NuxtLoadingIndicator />
+
     <!-- must be placed behind a v-if="algoliaEnabled" -->
     <AlgoliaModal v-if="algoliaEnabled" />
 
@@ -23,8 +25,8 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
       { name: 'msapplication-config', content: '/public/favicon/light/browserconfig.xml' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/public/favicon/light/favicon-96x96.png' },
-      { rel: 'manifest', href: '/public/favicon/light/manifest.json' }
+      { rel: 'icon', type: 'image/x-icon', href: '/public/favicon/light/favicon-96x96.png' }
+      // { rel: 'manifest', href: '/public/favicon/light/manifest.json' }
     ]
   })
 }
@@ -40,7 +42,7 @@ const { data: Settings } = await useAsyncData('settings', () => {
     where: {
       _file: { $contains: 'data/settings.json' }
     }
-  }).find()
+  }).findOne()
 })
 
 docsStore.setSettings(Settings.value)
@@ -54,7 +56,7 @@ const { data: Seo } = await useAsyncData('seo', async () => {
   return content[0]
 })
 
-zeroStore.setSeo(Seo)
+zeroStore.setSeo(Seo.value)
 
 const config = useRuntimeConfig()
 const algoliaEnabled = config.public?.zeroAlgolia?.enable

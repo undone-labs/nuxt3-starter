@@ -21,7 +21,6 @@
 
   </div>
 </template>
-
 <script setup>
 // ======================================================================= Setup
 const props = defineProps({
