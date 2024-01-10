@@ -1,0 +1,24 @@
+{
+  "navigation": [
+    {
+      "tag": "nuxt-link",
+      "to": "/en/introduction/overview",
+      "label": "DOCS"
+    },
+    {
+      "tag": "a",
+      "to": "https://spade.storage",
+      "label": "ABOUT",
+      "target": "_blank"
+    },
+    {
+      "tag": "nuxt-link",
+      "to": "/en/tenant-api/addresses",
+      "label": "API"
+    }
+  ],
+  "toolbar": {
+    "github_url": "https://github.com/data-preservation-programs/spade-website/tree/main/packages/docs/content/en",
+    "language_options": [{ "slug": "EN", "name": "English"}]
+  }
+}

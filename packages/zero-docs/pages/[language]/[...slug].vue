@@ -98,7 +98,7 @@ const ctx = getCurrentInstance()
 const dirNameSplit = route.path.slice(1).split('/')
 const docsStore = useZeroDocsStore()
 
-const pageSlug = dirNameSplit[2]
+const pageSlug = dirNameSplit.pop()
 const pageHeading = useToPascalCase(pageSlug, ' ')
 
 const { data: content } = await useAsyncData(`page-content-md-${route.path}`, async () => {
