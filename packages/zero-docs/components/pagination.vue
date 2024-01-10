@@ -47,7 +47,6 @@
 </template>
 
 <script setup>
-
 // ======================================================================== Data
 const route = useRoute()
 const currentPath = route.path
@@ -56,7 +55,7 @@ const routeLang = computed(() => route.params.language)
 const { data: Sidebar } = await useAsyncData('pagination-sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${routeLang.value}/sidebar.json` }
+      _file: { $contains: `data/${routeLang.value}/sidebar` }
     }
   }).find()
   return content[0].body

@@ -132,7 +132,6 @@ const requestTypeStringFromSchema = (schemaObject, definitions) => {
 // ////////////////////////////////////////////////////////////////// resolveRef
 const resolveRef = (ref, definitions) => {
   if (typeof ref === 'undefined') { return false }
-    console.log(ref)
   const refPath = ref.slice(14).split('/')
   let refValue = refPath.reduce((value, key) => value[key], definitions)
   return refValue
