@@ -44,13 +44,11 @@ const checkIfTargetDocsDirectoryExists = options => {
 const checkIfTargetDataDirectoryExists = options => {
   const sources = options.sources
   const exists = Fs.existsSync(sources.targetData.base)
-  console.log(exists)
   if (exists) {
     delete sources.srcData
   } else {
     delete sources.targetData
   }
-  console.log(sources)
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup

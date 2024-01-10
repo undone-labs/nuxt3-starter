@@ -8,12 +8,10 @@
 // -----------------------------------------------------------------------------
 // ////////////////////////////////////////////////////////// getSecurityHeaders
 const getSecurityHeaders = (security, securityDefinitions) => {
-  // console.log('security ', security)
   let securityHeaders = false
-  if (security) {
+  if (security && securityDefinitions) {
     security.forEach(securityRequirements => {
       Object.keys(securityRequirements).forEach(securityScheme => {
-        // console.log('securityDefinitions[securityScheme] ', securityDefinitions[securityScheme])
         const name = securityDefinitions[securityScheme].name
         securityHeaders
           ? securityHeaders[name] = {
@@ -30,9 +28,9 @@ const getSecurityHeaders = (security, securityDefinitions) => {
       })
     })
   }
-  // console.log('securityHeaders ', securityHeaders)
   return securityHeaders
 }
+
 // //////////////////////////////////////////////////// getHeadersAndQueryParams
 const getHeadersAndQueryParams = (parameters, definitions) => {
   let paramHeaders = false
@@ -134,6 +132,7 @@ const requestTypeStringFromSchema = (schemaObject, definitions) => {
 // ////////////////////////////////////////////////////////////////// resolveRef
 const resolveRef = (ref, definitions) => {
   if (typeof ref === 'undefined') { return false }
+    console.log(ref)
   const refPath = ref.slice(14).split('/')
   let refValue = refPath.reduce((value, key) => value[key], definitions)
   return refValue
@@ -153,9 +152,7 @@ export const useFormatSwaggerData = (swaggerObject, definitionsSchema) => {
   const responseCodes = {}
   Object.keys(paths).forEach((path) => {
     Object.keys(paths[path]).forEach(requestMethod => {
-      // const pathSlug = path.slice(1)
       const requestMethodConfig = paths[path][requestMethod]
-      // console.log('requestMethodConfig ', requestMethodConfig)
       // ------------ overview + preview: compile header values and query params
       const { paramHeaders, queryParams, bodyParams, pathParams } = getHeadersAndQueryParams(requestMethodConfig.parameters || false, definitions)
       const securityHeaders = getSecurityHeaders(requestMethodConfig.security || false, securityDefinitions)
@@ -166,7 +163,7 @@ export const useFormatSwaggerData = (swaggerObject, definitionsSchema) => {
       pathParameters = pathParams ? {...pathParams} : false
       Object.keys(requestMethodConfig?.responses).forEach(code => {
         const response = requestMethodConfig.responses[code]
-      //   // -------------------------------- overview: compile HTTP request codes
+        // -------------------------------- overview: compile HTTP request codes
         responseCodes[code] = response.description
       })
     })
