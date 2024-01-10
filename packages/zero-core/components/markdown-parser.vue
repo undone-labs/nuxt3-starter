@@ -21,7 +21,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  section: { // used to scope headings, needs to match sync.js
+  section: { // used to scope headings
     type: String,
     required: false,
     default: ''

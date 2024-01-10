@@ -3,7 +3,7 @@
 const docsStore = useZeroDocsStore()
 const { language } = storeToRefs(docsStore)
 
-const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+const { data: Sidebar } = await useAsyncData('docs-page-sidebar-data', async () => {
   const content = await queryContent({
     where: {
       _file: { $contains: `data/${language.value}/sidebar.json` }
