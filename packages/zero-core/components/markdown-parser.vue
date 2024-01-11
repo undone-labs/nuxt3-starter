@@ -10,10 +10,6 @@
 <script setup>
 // ===================================================================== Imports
 import Kramed from 'kramed'
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
-import json from 'highlight.js/lib/languages/json'
-import hljsCurl from 'highlightjs-curl'
 
 // ======================================================================== Data
 const props = defineProps({
@@ -43,10 +39,9 @@ let copyButtons = []
 const emit = defineEmits(['foundHeadingNodes'])
 
 // ============================================================== [Setup] Kramed
-hljs.registerLanguage('javascript', javascript)
-hljs.registerLanguage('js', javascript)
-hljs.registerLanguage('json', json)
-hljs.registerLanguage('curl', hljsCurl)
+/**
+ * @note link | a
+ */
 
 renderer.link = function (href, title, text) {
   const split = text.split('||')
@@ -66,6 +61,10 @@ renderer.link = function (href, title, text) {
   }
   return `<a href="${href}" ${attributeString}>${split[0]}</a>`
 }
+
+/**
+ * @note heading | h1, h2, h3, h4, h5, h6
+ */
 
 renderer.heading = function (text, level) {
   const escapedText = text.toLowerCase()
@@ -89,17 +88,18 @@ renderer.heading = function (text, level) {
   `
 }
 
+/**
+ * @note code
+ */
+
 renderer.code = function (code, language) {
-  const languageInstalled = hljs.getLanguage(language)
-  const highlighted = language && languageInstalled ?
-    hljs.highlight(code, { language }) :
-    hljs.highlightAuto(code)
+  const highlighted = zeroHighlightCode(code, language)
   return `
     <div class="code-wrapper" ${highlighted.language ? `data-language="${highlighted.language}"` : false}>
       <button class="copy-button" data-type="code">
         Copy
       </button>
-      <pre><code class="code-block">${highlighted.value}</code></pre>
+      <pre><code class="code-block">${highlighted.code}</code></pre>
     </div>
   `
 }
