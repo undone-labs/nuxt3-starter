@@ -1,0 +1,31 @@
+{
+  "navigation": [
+    {
+      "tag": "nuxt-link",
+      "to": "/docs",
+      "label": "Docs"
+    },
+    {
+      "tag": "nuxt-link",
+      "to": "/",
+      "label": "About"
+    },
+    {
+      "tag": "nuxt-link",
+      "to": "/",
+      "label": "Ecosystem"
+    },
+    {
+      "tag": "nuxt-link",
+      "to": "/",
+      "label": "API"
+    }
+  ],
+  "toolbar": {
+    "github_url": "https://github.com/undone-labs/nuxt3-starter",
+    "language_options": [
+      { "slug": "EN", "name": "English"},
+      { "slug": "ES", "name": "Español"}
+    ]
+  }
+}
