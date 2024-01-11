@@ -35,7 +35,6 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
   const updateAlert = (alert) => {
     console.log('updating alert ', alert)
     const alertId = alert.alertId
-    // console.log('updating alert ', alerts.value[alertId])
     if (alerts.value[alertId]) { alerts.value[alertId] = {...alerts.value[alertId], ...alert} }
   }
 
