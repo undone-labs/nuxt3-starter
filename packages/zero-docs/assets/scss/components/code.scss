@@ -34,8 +34,7 @@
     line-height: 1;
     color: var(--theme-color);
     background-color: var(--background-color__secondary);
-    border-radius: toRem(4) toRem(4) 0 0;
-    border-bottom: 1px solid var(--code__block__background-color);
+    border-radius: toRem(4);
     opacity: 0;
     transition: 150ms ease-out;
     &:hover {
@@ -72,6 +71,7 @@ html {
     */
 
     color: var(--code__block__color);
+    font-size: toRem(13);
 
     .hljs-comment,
     .hljs-quote {

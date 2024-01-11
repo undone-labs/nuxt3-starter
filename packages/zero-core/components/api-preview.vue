@@ -190,7 +190,6 @@ props.sliders.forEach(slider => {
 }
 
 .copy-button {
-  top: 0;
   right: 0;
 }
 
