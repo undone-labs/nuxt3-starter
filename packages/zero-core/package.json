@@ -20,8 +20,8 @@
     "nuxt-primevue": "^0.2.0",
     "nuxt-simple-robots": "^3.1.5",
     "nuxt-simple-sitemap": "^4.1.6",
-    "remark-mdc": "^2.1.0",
-    "undici": "^6.0.1",
+    "remark-mdc": "^3.0.0",
+    "undici": "^6.3.0",
     "uuid": "^9.0.1",
     "web3": "^4.1.2"
   }

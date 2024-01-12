@@ -37,12 +37,27 @@ const checkIfTargetDocsDirectoryExists = options => {
   }
 }
 
+/**
+ * @method checkIfTargetDataDirectoryExists
+ */
+
+const checkIfTargetDataDirectoryExists = options => {
+  const sources = options.sources
+  const exists = Fs.existsSync(sources.targetData.base)
+  if (exists) {
+    delete sources.srcData
+  } else {
+    delete sources.targetData
+  }
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
   console.log('\n  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex('#FFFFFF').bold(' zero-docs ')}\n`)
   const options = nuxt.options
   checkIfTargetDocsDirectoryExists(options.content)
+  checkIfTargetDataDirectoryExists(options.content)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export

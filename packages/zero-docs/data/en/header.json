@@ -4,21 +4,6 @@
       "tag": "nuxt-link",
       "to": "/docs",
       "label": "Docs"
-    },
-    {
-      "tag": "nuxt-link",
-      "to": "/",
-      "label": "About"
-    },
-    {
-      "tag": "nuxt-link",
-      "to": "/",
-      "label": "Ecosystem"
-    },
-    {
-      "tag": "nuxt-link",
-      "to": "/",
-      "label": "API"
     }
   ],
   "toolbar": {

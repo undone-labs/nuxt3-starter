@@ -3,7 +3,7 @@
     <div class="grid-noBottom">
       <div class="col-10" data-push-left="off-2">
 
-        <div class="footer-contents">
+        <div class="footer-content">
           <div class="grid-noGutter full">
 
             <div class="col-8">
@@ -117,7 +117,8 @@ const legal = computed(() => Footer.value.panel_bottom)
 // ///////////////////////////////////////////////////////////////////// General
 #site-footer {
   background-color: var(--background-color);
-  transition: background-color 500ms;
+  border-top: solid 0.125rem var(--background-color__secondary);
+  transition: border-color 500ms, background-color 500ms;
 }
 
 .full {
@@ -128,11 +129,11 @@ section {
   padding-bottom: toRem(30);
 }
 
-.footer-contents,
-.section-legal {
-  padding-top: toRem(30);
-  border-top: solid 0.125rem var(--background-color__secondary);
-  transition: border-color 500ms;
+.footer-content {
+  padding: toRem(30) 2rem 1.25rem 2rem;
+  @include gridMaxMQ {
+    padding-left: 0;
+  }
 }
 
 .section-support {
