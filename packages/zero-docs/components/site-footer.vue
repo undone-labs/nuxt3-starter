@@ -85,7 +85,7 @@
 const route = useRoute()
 const routeLang = computed(() => route.params.language )
 
-const { data: Settings } = await useAsyncData('settings', () => {
+const { data: Settings } = await useAsyncData('footer-settings', () => {
   return queryContent({
     where: {
       _file: { $contains: 'data/settings.json' }
@@ -93,7 +93,7 @@ const { data: Settings } = await useAsyncData('settings', () => {
   }).findOne()
 })
 
-const { data: Footer } = await useAsyncData( 'footer', async () => {
+const { data: Footer } = await useAsyncData('footer', async () => {
   const content = await queryContent({
     where: {
       _file: {

@@ -37,7 +37,7 @@ const { language } = storeToRefs(docsStore)
 
 const zeroStore = useZeroStore()
 
-const { data: Settings } = await useAsyncData('settings', () => {
+const { data: Settings } = await useAsyncData('docs-page-settings', () => {
   return queryContent({
     where: {
       _file: { $contains: 'data/settings.json' }
