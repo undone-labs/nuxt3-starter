@@ -110,7 +110,10 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
   flex-direction: row;
   justify-content: space-between;
   margin-top: 3rem;
-  padding-right: 2.5rem;
+  padding: 0 2rem 0 2rem;
+  @include gridMaxMQ {
+    padding-left: 0;
+  }
   &.single {
     justify-content: flex-end;
   }
