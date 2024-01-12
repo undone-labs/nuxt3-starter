@@ -1,3 +1,0 @@
----
-title: SP Eligibility Criteria
----
