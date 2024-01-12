@@ -195,7 +195,7 @@ const defaultSelectedLanguage = routeLang.value ?
   align-items: center;
   & > * {
     &:not(:last-child) {
-      margin-right: toRem(38);
+      margin-right: toRem(24);
     }
   }
 }
@@ -203,12 +203,15 @@ const defaultSelectedLanguage = routeLang.value ?
 .github-link {
   display: flex;
   transition: 150ms ease-in;
-  :deep(path) {
-    transition: 150ms ease-out;
-    fill: var(--theme-color);
-  }
   &:hover {
     transform: scale(1.15)
+  }
+  .icon.github {
+    width: toRem(20);
+    :deep(path) {
+      transition: 150ms ease-out;
+      fill: var(--theme-color);
+    }
   }
 }
 </style>
