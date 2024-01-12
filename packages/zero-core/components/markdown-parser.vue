@@ -43,6 +43,22 @@ const emit = defineEmits(['foundHeadingNodes'])
  * @note link | a
  */
 
+renderer.paragraph = function(paragraph) {
+  if (paragraph.startsWith(':::tip') && paragraph.endsWith(':::')) {
+    const headingEndIndex = paragraph.search(/\n/)
+    const tipBlockHeading = paragraph.slice(6,headingEndIndex )
+    const tipBlockText = paragraph.slice(headingEndIndex, (paragraph.length - 3))
+    console.log('tipblocktext ', )
+    return `
+      <div class="tip-block">
+        <div class="heading">${tipBlockHeading}</div>
+        <p class="text">${tipBlockText}</p>
+      </div>
+    `
+  }
+  return `<p>${paragraph}</p>`
+}
+
 renderer.link = function (href, title, text) {
   const split = text.split('||')
   const len = split.length
