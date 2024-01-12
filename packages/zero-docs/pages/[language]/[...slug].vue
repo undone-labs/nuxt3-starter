@@ -80,6 +80,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import StartCase from 'lodash/startCase'
+
 // ======================================================================= Setup
 definePageMeta({
   layout: 'docs'
@@ -260,7 +263,7 @@ const detectPageScrolledToEdgesOfViewport = () => {
  */
 const getPreviewComponentName = path => {
   const componentList = ctx.appContext.components
-  const previewComponentName = 'Preview' + useToPascalCase(path.replace('/docs/', '').replace('/', '-'))
+  const previewComponentName = `Preview ${StartCase(path.replace('/docs/', '').replaceAll('/', '-'))}`.replaceAll(' ', '')
   const previewExists = componentList.hasOwnProperty(previewComponentName)
   if (previewExists) { return previewComponentName }
   return false
