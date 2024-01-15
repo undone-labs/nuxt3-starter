@@ -177,7 +177,7 @@ section {
   }
   &:hover {
     &::before {
-      background-color: var(--link-hover-color)
+      background-color: var(--link-hover-color);
     }
   }
 }
