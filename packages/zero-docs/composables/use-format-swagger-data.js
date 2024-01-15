@@ -152,7 +152,6 @@ export const useFormatSwaggerData = (swaggerObject, definitionsSchema) => {
   Object.keys(paths).forEach((path) => {
     Object.keys(paths[path]).forEach(requestMethod => {
       const requestMethodConfig = paths[path][requestMethod]
-      console.log('requestMethodConfig ', requestMethodConfig)
       // ------------ overview + preview: compile header values and query params
       const { paramHeaders, queryParams, bodyParams, pathParams } = getHeadersAndQueryParams(requestMethodConfig.parameters || false, definitions)
       const securityHeaders = getSecurityHeaders(requestMethodConfig.security || false, securityDefinitions)
