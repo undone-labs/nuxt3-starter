@@ -330,8 +330,10 @@ onBeforeUnmount(() => {
   }
 }
 
-:deep(.content) {
+:deep(.markdown) {
   h2, h3, h4, h5, h6 {
+    position: sticky;
+    top: calc(#{$siteHeaderHeight} + 1.75rem);
     scroll-margin-top: calc(#{$siteHeaderHeight} + 1.75rem);
   }
   @include customMaxMQ(toRem(1366)) {
