@@ -39,7 +39,7 @@
               @click="copyText(slide.id, slide.highlighted)">
               {{ copiedCodeBlock === slide.id ? 'Copied!' : 'Copy' }}
             </button>
-            <pre><code class="code-block" v-html="slide.highlighted"></code></pre>
+            <pre><code class="code-block" v-html="slide.highlighted.code" /></pre>
           </div>
         </div>
 
@@ -50,12 +50,6 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
-import json from 'highlight.js/lib/languages/json'
-import hljsCurl from 'highlightjs-curl'
-
 // ======================================================================= Props
 const props = defineProps({
   sliders: {
@@ -88,9 +82,6 @@ const copyText = (id, text) => {
 }
 
 // ======================================================================= Hooks
-hljs.registerLanguage('javascript', javascript)
-hljs.registerLanguage('json', json)
-hljs.registerLanguage('curl', hljsCurl)
 props.sliders.forEach(slider => {
   const sliderId = zeroUuid().v4()
   slider.slides.forEach(slide => {
@@ -99,7 +90,7 @@ props.sliders.forEach(slider => {
       slide.content.trim()
     slide.id = zeroUuid().v4()
     slide.sliderId = sliderId
-    slide.highlighted = hljs.highlight(content, { language: slide.language }).value
+    slide.highlighted = zeroHighlightCode(content, slide.language)
   })
   setActiveSlide(slider.slides[0])
 })
@@ -199,7 +190,6 @@ props.sliders.forEach(slider => {
 }
 
 .copy-button {
-  top: 0;
   right: 0;
 }
 

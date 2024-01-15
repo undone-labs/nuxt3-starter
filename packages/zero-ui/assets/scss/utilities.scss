@@ -50,6 +50,7 @@ $replace4: #000000;
 :root {
   --background-color: #{$wildSand};
   --background-color__secondary: white;
+  --background-color__tertiary: #{$mercury};
   --theme-toggle__background-color: #{$wildSand};
   --theme-toggle__border-color: #{$alto};
   --theme-toggle__onHover: #{$codGray};
