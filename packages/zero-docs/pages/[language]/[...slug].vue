@@ -80,6 +80,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import StartCase from 'lodash/startCase'
+
 // ======================================================================= Setup
 definePageMeta({
   layout: 'docs'
@@ -98,7 +101,7 @@ const ctx = getCurrentInstance()
 const dirNameSplit = route.path.slice(1).split('/')
 const docsStore = useZeroDocsStore()
 
-const pageSlug = dirNameSplit[2]
+const pageSlug = dirNameSplit[dirNameSplit.length - 1]
 const pageHeading = useToPascalCase(pageSlug, ' ')
 
 const { data: content } = await useAsyncData(`page-content-md-${route.path}`, async () => {
@@ -260,7 +263,7 @@ const detectPageScrolledToEdgesOfViewport = () => {
  */
 const getPreviewComponentName = path => {
   const componentList = ctx.appContext.components
-  const previewComponentName = 'Preview' + useToPascalCase(path.replace('/docs/', '').replace('/', '-'))
+  const previewComponentName = `Preview ${StartCase(path.replace('/docs/', '').replaceAll('/', '-'))}`.replaceAll(' ', '')
   const previewExists = componentList.hasOwnProperty(previewComponentName)
   if (previewExists) { return previewComponentName }
   return false

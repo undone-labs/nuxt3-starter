@@ -86,6 +86,7 @@ export default defineNuxtConfig({
     },
     composables: {
       addTextToClipboard: { enable: true },
+      highlightCode: { enable: true },
       delay: { enable: true },
       ls: { enable: true },
       scrollTo: { enable: true },

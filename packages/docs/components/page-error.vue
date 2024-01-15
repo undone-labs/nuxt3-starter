@@ -4,30 +4,29 @@
     <SiteHeader />
 
     <div class="grid">
-      <div class="col-6_md-8" data-push-left="off-2_lg-3_md-0">
+      <div class="col-6">
         <div class="page-content">
 
           <h1 class="heading">
-            {{ error.statusCode }}
+            {{ statusCode }}
           </h1>
 
           <div class="message">
-            {{ error.message }}
+            {{ message }}
           </div>
 
-          <pre v-if="error.stack"><code>{{ error.stack }}</code></pre>
+          <pre v-if="stack && stack !== ''"><code>{{ stack }}</code></pre>
 
-          <nuxt-link
-            v-if="error.data?.from"
-            :to="error.data.from">
-            Go back
-          </nuxt-link>
+          <ButtonClear
+            class="button-home"
+            tag="nuxt-link"
+            to="/">
+            Back to Home
+          </ButtonClear>
 
         </div>
       </div>
     </div>
-
-    <SiteFooter />
 
   </div>
 </template>
@@ -35,9 +34,25 @@
 <script setup>
 // ======================================================================== Data
 defineProps({
-  error: {
+  statusCode: {
+    type: Number,
+    required: false,
+    default: 404
+  },
+  message: {
+    type: String,
+    required: false,
+    default: 'Looks like the page you\'re looking for doesn\'t exist'
+  },
+  stack: {
+    type: String,
+    required: false,
+    default: ''
+  },
+  data: {
     type: Object,
-    required: true
+    required: false,
+    default: () => {}
   }
 })
 </script>

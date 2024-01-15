@@ -1,7 +1,6 @@
 <template>
   <svg
-    width="24"
-    height="25"
+    class="icon github"
     viewBox="0 0 24 25"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">

@@ -31,6 +31,7 @@
     "dev-docs": "npm run dev -w docs",
     "build-docs": "npm run build -w packages/docs",
     "start-docs": "node packages/docs/.output/server/index.mjs",
+    "generate-docs": "npm run generate -w docs",
     "upgrade-nuxt-docs": "npm run upgrade-nuxt -w docs"
   },
   "workspaces": [

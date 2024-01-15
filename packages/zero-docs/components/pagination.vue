@@ -47,16 +47,15 @@
 </template>
 
 <script setup>
-
 // ======================================================================== Data
 const route = useRoute()
 const currentPath = route.path
 const routeLang = computed(() => route.params.language)
 
-const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+const { data: Sidebar } = await useAsyncData('pagination-sidebar', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${routeLang.value}/sidebar.json` }
+      _file: { $contains: `data/${routeLang.value}/sidebar` }
     }
   }).find()
   return content[0].body
@@ -111,7 +110,10 @@ const nextSection = currentPage?.pageIndex === currentPage?.dirPageCount - 1 ? c
   flex-direction: row;
   justify-content: space-between;
   margin-top: 3rem;
-  padding-right: 2.5rem;
+  padding: 0 2rem 0 2rem;
+  @include gridMaxMQ {
+    padding-left: 0;
+  }
   &.single {
     justify-content: flex-end;
   }
