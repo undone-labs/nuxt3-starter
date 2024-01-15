@@ -29,18 +29,14 @@ const props = defineProps({
 const accordionStore = useZeroAccordionStore()
 
 // ======================================================================== Data
-const localId = ref(uuid().v4())
 const keydown = ref(false)
-
-// ==================================================================== Computed
-const id = computed(() => `${props.accordionId}|${localId.value}`)
 
 // ======================================================================= Hooks
 onBeforeMount(() => {
   accordionStore.setAccordion({
     accordionId: props.accordionId,
     multiple: props.multiple,
-    id: id.value,
+    id: props.accordionId,
     children: [],
     active: props.multiple ? [] : false,
     allSectionsOpen: false

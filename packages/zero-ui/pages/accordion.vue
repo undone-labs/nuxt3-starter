@@ -78,11 +78,10 @@ const { data: content } = await useAsyncData('content', () => {
   }).find()
 })
 
-const demoAccordionId = computed(() => content.value[0].demo_accordion.id )
-const demoAccordionSections = computed(() => content.value[0].demo_accordion.sections )
-const demoAccordionMultipleId = computed(() => content.value[0].demo_accordion_multiple.id )
-const demoAccordionMultiple = computed(() => content.value[0].demo_accordion_multiple )
-
+const demoAccordionId = computed(() => content.value[0].demo_accordion.id)
+const demoAccordionSections = computed(() => content.value[0].demo_accordion.sections)
+const demoAccordionMultipleId = computed(() => content.value[0].demo_accordion_multiple.id)
+const demoAccordionMultiple = computed(() => content.value[0].demo_accordion_multiple)
 </script>
 
 <style lang="scss" scoped>

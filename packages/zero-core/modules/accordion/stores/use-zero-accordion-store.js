@@ -6,26 +6,27 @@ import { defineStore } from 'pinia'
 // -----------------------------------------------------------------------------
 export const useZeroAccordionStore = defineStore('zero-accordion', () => {
   // ===================================================================== state
-  const accordions = ref({})
-   /**
+  /**
    * Expected accordion structure:
    * {
    *  sections: []
    * }
    */
+  const accordions = ref({})
+
   // =================================================================== actions
 
   /**
    * @method setAccordion
    */
-  const setAccordion = (payload) => {
+  const setAccordion = payload => {
     accordions.value[payload.accordionId] = payload
   }
 
   /**
    * @method removeAccordion
-  */
- const removeAccordion = (accordionId) => {
+   */
+  const removeAccordion = accordionId => {
    delete accordions.value[accordionId]
   }
 
@@ -64,8 +65,8 @@ export const useZeroAccordionStore = defineStore('zero-accordion', () => {
   /**
    * @method toggleAllSections
    */
-  const toggleAllSections = (accordionId) => {
-    if(!accordions.value[accordionId].multiple) {
+  const toggleAllSections = accordionId => {
+    if (!accordions.value[accordionId].multiple) {
       return
     }
     const children = accordions.value[accordionId].children
