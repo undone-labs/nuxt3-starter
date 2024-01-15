@@ -52,7 +52,7 @@
 const alertStore = useZeroAlertStore()
 
 // ======================================================================== Data
-const { data: content } = await useAsyncData('content', () => {
+const { data: content } = await useAsyncData('alert-content', () => {
   return queryContent({
     where: {
       _path: { $contains: '/zero-ui/alert' }
