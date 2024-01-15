@@ -26,7 +26,7 @@
 
 <script setup>
 // ======================================================================== Data
-const { data: content } = await useAsyncData('content', () => {
+const { data: content } = await useAsyncData('api-preview-content', () => {
   return queryContent({
     where: {
       _path: { $contains: '/zero-ui/api-preview' }

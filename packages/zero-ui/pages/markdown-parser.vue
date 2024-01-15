@@ -14,7 +14,7 @@
 
 <script setup>
 // ======================================================================== Data
-const { data: content } = await useAsyncData('content', () => {
+const { data: content } = await useAsyncData('markdown-sample-content', () => {
   return queryContent({
     where: {
       _path: { $contains: '/zero-ui/markdown-sample' }

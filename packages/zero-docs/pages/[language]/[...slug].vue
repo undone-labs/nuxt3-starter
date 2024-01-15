@@ -162,10 +162,12 @@ const generatePageContent = () => {
   }
   const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
   array.forEach(mdContent => {
+
     const jsonData = jsonContent.value.find(item => item._path === mdContent._path)
     if (jsonData) {
       if (Object.hasOwn(jsonData, 'swagger')) {
         const { overview, preview } = useFormatSwaggerData(jsonData, {...definitionsSchema.value})
+
         mdContent.apiOverview = overview
         mdContent.apiPreview = preview
       } else {
@@ -328,8 +330,10 @@ onBeforeUnmount(() => {
   }
 }
 
-:deep(.content) {
+:deep(.markdown) {
   h2, h3, h4, h5, h6 {
+    position: sticky;
+    top: calc(#{$siteHeaderHeight} + 1.75rem);
     scroll-margin-top: calc(#{$siteHeaderHeight} + 1.75rem);
   }
   @include customMaxMQ(toRem(1366)) {

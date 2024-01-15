@@ -213,5 +213,8 @@ const defaultSelectedLanguage = routeLang.value ?
       fill: var(--theme-color);
     }
   }
+  &:hover {
+    transform: scale(1.15)
+  }
 }
 </style>

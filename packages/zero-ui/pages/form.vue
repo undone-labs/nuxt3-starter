@@ -24,7 +24,7 @@
 
 <script setup>
 // ======================================================================== Data
-const { data: content } = await useAsyncData('content', () => {
+const { data: content } = await useAsyncData('form-content', () => {
   return queryContent({
     where: {
       _path: { $contains: '/zero-ui/form' }

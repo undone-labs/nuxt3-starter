@@ -40,8 +40,50 @@ const emit = defineEmits(['foundHeadingNodes'])
 
 // ============================================================== [Setup] Kramed
 /**
+ * @method splitOutputIntoSections
+ */
+
+ const splitOutputIntoSections = (err, parsed) => {
+  if (err) { console.log('error during parsing: ', err) }
+  const content = parsed.split(/(<h\d{1})/g)
+  const sectionIndexes = []
+  content.forEach((element, index) => {
+    if (element.startsWith('<h')) {
+      sectionIndexes.splice(0, 0, index)
+    }
+  })
+  const sectionedOutput = [...content]
+  sectionIndexes.forEach((element, index) => {
+    if (index === 0) {
+      sectionedOutput.push('</section>')
+    }
+    sectionedOutput.splice(element, 0, '<section>')
+    if (index !== (sectionIndexes.length -1)) {
+      sectionedOutput.splice(element, 0, '</section>')
+    }
+  })
+  return sectionedOutput.join('')
+}
+
+/**
  * @note link | a
  */
+
+renderer.paragraph = function(paragraph) {
+  if (paragraph.startsWith(':::tip') && paragraph.endsWith(':::')) {
+    const headingEndIndex = paragraph.search(/\n/)
+    const tipBlockHeading = paragraph.slice(6,headingEndIndex )
+    const tipBlockText = paragraph.slice(headingEndIndex, (paragraph.length - 3))
+    console.log('tipblocktext ', )
+    return `
+      <div class="tip-block">
+        <div class="heading">${tipBlockHeading}</div>
+        <p class="text">${tipBlockText}</p>
+      </div>
+    `
+  }
+  return `<p>${paragraph}</p>`
+}
 
 renderer.link = function (href, title, text) {
   const split = text.split('||')
@@ -104,7 +146,7 @@ renderer.code = function (code, language) {
   `
 }
 
-parsed.value = Kramed(props.markdown, { renderer })
+parsed.value = Kramed(props.markdown, { renderer }, splitOutputIntoSections)
 
 // ===================================================================== Methods
 /**
@@ -160,7 +202,7 @@ const collectAndEmitHeadingNodes = () => {
 watch(
   () => props.markdown,
   incoming => {
-    parsed.value = Kramed(incoming, { renderer })
+    parsed.value = Kramed(incoming, { renderer }, splitOutputIntoSections)
   }
 )
 

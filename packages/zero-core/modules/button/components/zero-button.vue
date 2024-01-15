@@ -15,7 +15,7 @@
 
 <script setup>
 // ===================================================================== Imports
-import useUuid from '../../../composables/uuid'
+import zeroUuid from '../../../composables/uuid'
 
 // ======================================================================= Props
 const props = defineProps({
