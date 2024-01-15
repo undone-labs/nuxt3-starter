@@ -1,11 +1,15 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
+import Path from 'path'
 import Fs from 'fs-extra'
 import Chalk from 'chalk'
 
 import {
+  createResolver,
   defineNuxtModule
 } from 'nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
 
 // ////////////////////////////////////////////////////////////////////// Config
 // -----------------------------------------------------------------------------
@@ -28,12 +32,14 @@ const checkIfTargetDocsDirectoryExists = options => {
   const exists = Fs.existsSync(sources.targetDocs.base)
   if (exists) {
     delete sources.srcDocs
+  } else {
+    delete sources.targetDocs
   }
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
-const setup = (_, nuxt) => {
+const setup = async (_, nuxt) => {
   console.log('\n  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex('#FFFFFF').bold(' zero-docs ')}\n`)
   const options = nuxt.options
   checkIfTargetDocsDirectoryExists(options.content)

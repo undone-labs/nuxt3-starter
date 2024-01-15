@@ -9,9 +9,8 @@ const { data: Sidebar } = await useAsyncData('sidebar', async () => {
       _file: { $contains: `data/${language.value}/sidebar.json` }
     }
   }).find()
-  return content.pop().body
-  }
-)
+  return content[0].body
+})
 
 // ======================================================================= Setup
 await navigateTo(`/${language.value}/${Sidebar.value[0].slug}${Sidebar.value[0].children[0].href}`)

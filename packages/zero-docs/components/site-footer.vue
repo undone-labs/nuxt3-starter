@@ -1,6 +1,6 @@
 <template>
   <footer id="site-footer">
-    <div class="grid">
+    <div class="grid-noBottom">
       <div class="col-10" data-push-left="off-2">
 
         <div class="footer-contents">
@@ -75,7 +75,6 @@
 
           </div>
         </div>
-
       </div>
     </div>
   </footer>
@@ -84,22 +83,34 @@
 <script setup>
 // ======================================================================== Data
 const route = useRoute()
-const routeLang = computed(() => route.params.language)
+const routeLang = computed(() => route.params.language )
+
+const { data: Settings } = await useAsyncData('settings', () => {
+  return queryContent({
+    where: {
+      _file: { $contains: 'data/settings.json' }
+    }
+  }).findOne()
+})
 
 const { data: Footer } = await useAsyncData( 'footer', async () => {
-    const content = await queryContent({
-      where: {
-        _file: { $contains: `data/${routeLang.value}/footer.json` }
+  const content = await queryContent({
+    where: {
+      _file: {
+        $in: [
+          `data/${routeLang.value}/footer.json`,
+          `data/${Settings.value.language}/footer.json`
+        ]
       }
-    }).find()
-    return content[0]
+    }
+  }).find()
+  return content[0]
 }, { watch: [routeLang] } )
 
 // ==================================================================== Computed
 const support = computed(() => Footer.value.panel_left)
 const help = computed(() => Footer.value.panel_right)
 const legal = computed(() => Footer.value.panel_bottom)
-
 </script>
 
 <style lang="scss" scoped>
@@ -162,8 +173,10 @@ section {
     height: toRem(5);
     background-color: var(--link-color);
     transition: background-color 500ms;
-    &:hover {
-      background-color: var(--link-hover-color);
+  }
+  &:hover {
+    &::before {
+      background-color: var(--link-hover-color)
     }
   }
 }

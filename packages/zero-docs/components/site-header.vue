@@ -28,15 +28,16 @@
         tag="a"
         :to="githubUrl"
         target="_blank"
-        :disabled="!githubUrl"
+        :disabled="!githubUrl || githubUrl === ''"
         class="github-link">
         <IconGithub />
       </ZeroButton>
 
-      <ButtonAlgoliaSearch />
+      <!-- must be placed behind a v-if="algoliaEnabled" -->
+      <ButtonAlgoliaSearch v-if="algoliaEnabled" />
 
       <DropdownSelector
-        v-if="languageSelectorVisible"
+        v-if="languageSelectorVisible && defaultSelectedLanguage !== -1"
         :default-selected-index="defaultSelectedLanguage"
         :options="languageOptions" />
 
@@ -52,10 +53,23 @@ const { languageSelectorVisible } = storeToRefs(docsStore)
 const route = useRoute()
 const routeLang = computed(() => route.params.language)
 
+const { data: Settings } = await useAsyncData('settings', () => {
+  return queryContent({
+    where: {
+      _file: { $contains: 'data/settings.json' }
+    }
+  }).findOne()
+})
+
 const { data: Header } = await useAsyncData('header', async () => {
   const content = await queryContent({
     where: {
-      _file: { $contains: `data/${routeLang.value}/header.json` }
+      _file: {
+        $in: [
+          `data/${routeLang.value}/header.json`,
+          `data/${Settings.value.language}/header.json`
+        ]
+      }
     }
   }).find()
   return content[0]
@@ -77,14 +91,17 @@ if (content.value.length > 0) {
   routeActive.value = content.value[0]._file.includes('docs') ? '/docs' : undefined
 }
 
+const config = useRuntimeConfig()
+const algoliaEnabled = config.public?.zeroAlgolia?.enable
+
 // ==================================================================== Computed
 const links = computed(() => Header.value.navigation)
 const githubUrl = computed(() => Header.value.toolbar.github_url)
 const languageOptions = computed(() => Header.value.toolbar.language_options)
 
-
-const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.language.toUpperCase()) || 0
-
+const defaultSelectedLanguage = routeLang.value ?
+  languageOptions.value.findIndex(option => option.slug.toUpperCase() === routeLang.value.toUpperCase()) :
+  -1
 </script>
 
 <style lang="scss" scoped>
@@ -185,9 +202,13 @@ const defaultSelectedLanguage = languageOptions.value.indexOf(route.params.langu
 
 .github-link {
   display: flex;
+  transition: 150ms ease-in;
   :deep(path) {
     transition: 150ms ease-out;
     fill: var(--theme-color);
+  }
+  &:hover {
+    transform: scale(1.15)
   }
 }
 </style>
