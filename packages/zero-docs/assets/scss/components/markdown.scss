@@ -7,13 +7,17 @@
 .markdown, .markdown-user-input {
   // ================================================================ Typography
   section {
-    &:not(:first-child) {
-      margin-top: 3.5rem;
+    &:not(:last-child) {
+      margin-bottom: 3.5rem;
     }
   }
 
   h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1.25rem;
+    display: inline-block;
+    background-color: var(--background-color);
+    + p {
+      margin-top: 1.25rem;
+    }
     + ul, + ol {
       margin-top: 2rem;
     }
@@ -141,41 +145,6 @@
       margin-bottom: 2rem;
     }
   }
-  /**
-   * @TODO convert the below to a :::tip component
-   */
-  // blockquote > blockquote {
-  //   padding: toRem(21) toRem(23);
-  //   border-radius: toRem(10);
-  //   background-color: var(--background-color__secondary);
-  //   transition: background-color 500ms;
-  //   p {
-  //     @include h4;
-  //     margin-bottom: toRem(9);
-  //   }
-  //   ul {
-  //     margin-bottom: toRem(3);
-  //   }
-  //   li {
-  //     position: relative;
-  //     padding-left: toRem(22);
-  //     margin: 0;
-  //     @include p2;
-  //     &:before {
-  //       content: "";
-  //       display: block;
-  //       position: absolute;
-  //       left: 0.5rem;
-  //       top: 0.625rem;
-  //       width: 4px;
-  //       height: 4px;
-  //       margin: 0;
-  //       border-radius: 50%;
-  //       background-color: var(--theme-color);
-  //       transition: 500ms;
-  //     }
-  //   }
-  // }
 
   .tip-block {
     position: relative;
@@ -243,10 +212,11 @@
 
   // ============================================================= Heading Links
   .heading-anchor {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     position: relative;
+    z-index: 10;
     &:hover {
       .copy-button {
         transition: 150ms ease-in;
