@@ -25,6 +25,7 @@ const props = defineProps({
 const accordionStore = useZeroAccordionStore()
 const buttonStore = useZeroButtonStore()
 const id = `${props.accordionId}Toggle`
+
 // ======================================================================== Data
 const { accordions } = storeToRefs(accordionStore)
 
@@ -36,9 +37,8 @@ const allSectionsOpen = computed(() => accordion.value ? accordion.value.allSect
 /**
  * @method toggleAllAccordionSections
  */
- const toggleAllAccordionSections = (accordionId) => {
+const toggleAllAccordionSections = (accordionId) => {
   accordionStore.toggleAllSections(accordionId)
   buttonStore.setButton({ id, loading: false })
 }
-
 </script>

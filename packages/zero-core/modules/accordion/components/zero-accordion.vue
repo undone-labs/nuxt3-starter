@@ -48,7 +48,9 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  if(props.multiple && props.toggleOnLoad) { accordionStore.toggleAllSections(props.accordionId) }
+  if (props.multiple && props.toggleOnLoad) {
+    accordionStore.toggleAllSections(props.accordionId)
+  }
   keydown.value = handleKeyboardNavigation
   window.addEventListener('keydown', keydown.value)
 })

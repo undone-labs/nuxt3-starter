@@ -65,7 +65,7 @@ watch(open, () => {
 onMounted(() => {
   accordionStore.setAccordionSection(props.accordionId, sectionId.value)
   nextTick(() => {
-    resize.value = useThrottle(() => {
+    resize.value = zeroThrottle(() => {
       setHeight()
     }, 100)
     resizeObserver.value = new ResizeObserver(resize.value)
@@ -81,22 +81,23 @@ onBeforeUnmount(() => {
 /**
  * @method toggle
  */
- const toggleSection = () => {
+const toggleSection = () => {
   accordionStore.toggleAccordionSection(props.accordionId, sectionId.value)
 }
+
 /**
  * @method setHeight
  */
- const setHeight = () => {
-  if(open.value) {
+const setHeight = () => {
+  if (open.value) {
     const contentHeight = `${content.value.children[0].clientHeight}px`
-    if(height.value !== contentHeight) { height.value = contentHeight }
-  }
-  else {
+    if (height.value !== contentHeight) {
+      height.value = contentHeight
+    }
+  } else {
     height.value = '0px'
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
