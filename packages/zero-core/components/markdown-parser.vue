@@ -40,6 +40,32 @@ const emit = defineEmits(['foundHeadingNodes'])
 
 // ============================================================== [Setup] Kramed
 /**
+ * @method splitOutputIntoSections
+ */
+
+ const splitOutputIntoSections = (err, parsed) => {
+  if (err) { console.log('error during parsing: ', err) }
+  const content = parsed.split(/(<h\d{1})/g)
+  const sectionIndexes = []
+  content.forEach((element, index) => {
+    if (element.startsWith('<h')) {
+      sectionIndexes.splice(0, 0, index)
+    }
+  })
+  const sectionedOutput = [...content]
+  sectionIndexes.forEach((element, index) => {
+    if (index === 0) {
+      sectionedOutput.push('</section>')
+    }
+    sectionedOutput.splice(element, 0, '<section>')
+    if (index !== (sectionIndexes.length -1)) {
+      sectionedOutput.splice(element, 0, '</section>')
+    }
+  })
+  return sectionedOutput.join('')
+}
+
+/**
  * @note link | a
  */
 
@@ -120,7 +146,7 @@ renderer.code = function (code, language) {
   `
 }
 
-parsed.value = Kramed(props.markdown, { renderer })
+parsed.value = Kramed(props.markdown, { renderer }, splitOutputIntoSections)
 
 // ===================================================================== Methods
 /**
@@ -176,7 +202,7 @@ const collectAndEmitHeadingNodes = () => {
 watch(
   () => props.markdown,
   incoming => {
-    parsed.value = Kramed(incoming, { renderer })
+    parsed.value = Kramed(incoming, { renderer }, splitOutputIntoSections)
   }
 )
 
