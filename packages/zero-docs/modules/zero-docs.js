@@ -3,10 +3,12 @@
 import Path from 'path'
 import Fs from 'fs-extra'
 import Chalk from 'chalk'
+import StartCase from 'lodash/startCase'
 
 import {
   createResolver,
-  defineNuxtModule
+  defineNuxtModule,
+  addComponent
 } from 'nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
@@ -51,6 +53,52 @@ const checkIfTargetDataDirectoryExists = options => {
   }
 }
 
+/**
+ * @method walk
+ */
+
+const walk = (dir, next) => {
+  Fs.readdirSync(dir, { withFileTypes: true }).forEach(dirEnt => {
+    const name = dirEnt.name
+    const path = resolve(dirEnt.path, dirEnt.name)
+    const ext = Path.extname(name).toLowerCase()
+    const isDirectory = Fs.statSync(path).isDirectory()
+    isDirectory ?
+      walk(path, next) :
+      next({
+        path,
+        name,
+        ext
+      })
+  })
+}
+
+/**
+ * @method registerComponents
+ */
+
+const registerComponents = source => {
+  const split = source.path
+  walk(source.base, file => {
+    if (file.ext === '.vue') {
+      const path = file.path
+      const name = file.name
+      const split = path.split(`${source.prefix}/content/`).pop().split('/')
+      const compiled = []
+      split.forEach(entry => {
+        let output = entry.replace('.vue', '').trim().replace(/^(\d+.)/, '').trim()
+        output = StartCase(output).replace(' ', '')
+        compiled.push(output)
+      })
+      addComponent({
+        name: `Preview${compiled.join('')}`,
+        filePath: resolve(path),
+        global: true
+      })
+    }
+  })
+}
+
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
@@ -58,6 +106,8 @@ const setup = async (_, nuxt) => {
   const options = nuxt.options
   checkIfTargetDocsDirectoryExists(options.content)
   checkIfTargetDataDirectoryExists(options.content)
+  const sources = options.content.sources
+  registerComponents(sources.srcDocs || sources.targetDocs)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
