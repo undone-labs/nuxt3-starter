@@ -7,7 +7,8 @@
       { "path": "/algolia", "text": "Algolia Search" },
       { "path": "/api-preview", "text": "API Preview" },
       { "path": "/form", "text": "Form" },
-      { "path": "/accordion", "text": "Accordion" }
+      { "path": "/accordion", "text": "Accordion" },
+      { "path": "/alert", "text": "Alert" }
     ]
   },
   {

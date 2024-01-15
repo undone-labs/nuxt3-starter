@@ -105,6 +105,7 @@ export default defineNuxtConfig({
       button: { enable: true },
       form: { enable: true },
       accordion: { enable: true},
+      alert: { enable: true },
       algolia: {
         enable: false
         // apiKey: process.env.ALGOLIA_API_KEY,
