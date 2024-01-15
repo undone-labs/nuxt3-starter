@@ -2,6 +2,7 @@
   <!-- parent HTML element needs to be the containing block to component for
        styling to work as expected -->
   <div :class="['alert', { open }]">
+
     <slot :accepted="accepted" :rejected="rejected" />
 
   </div>
@@ -23,6 +24,7 @@ const emit = defineEmits(['completed'])
 const alertStore = useZeroAlertStore()
 const id = `${props.alertId}|${zeroUuid().v4()}`
 alertStore.setAlert({ id, alertId: props.alertId, isOpen: false })
+
 // ======================================================================== Data
 const { alerts } = storeToRefs(alertStore)
 
@@ -42,6 +44,7 @@ const accepted = () => {
   emit('completed', true)
   alertStore.closeAlert({ alertId: props.alertId, completed: true })
 }
+
 /**
  * @method rejected
  */
@@ -49,9 +52,10 @@ const rejected = () => {
   emit('completed', false)
   alertStore.closeAlert({ alertId: props.alertId, completed: false })
 }
-
 </script>
+
 <style lang="scss" scoped>
+// ///////////////////////////////////////////////////////////////////// General
 .alert {
   position: absolute;
   top: 0;

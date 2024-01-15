@@ -5,7 +5,6 @@
       Alert
     </h1>
 
-
     <div class="demo-form">
 
       <div class="form-title">
@@ -64,7 +63,6 @@ const form = content.value[0].demo_form
 const scaffold = form.scaffold
 const alertId = unslugify(form.title, 'pascal-case', ' ')
 const alert = form.alert
-
 const formSubmitted = ref(false)
 
 // ===================================================================== Methods
@@ -81,7 +79,6 @@ const submitForm = (alertId, accepted) => {
     console.log('Form submitted!')
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -134,20 +131,22 @@ const submitForm = (alertId, accepted) => {
     margin-right: toRem(15);
   }
 }
+
 .alert-text {
   flex: 1;
   @include p2;
 }
+
 .reject-alert {
   padding: 0 toRem(10);
   &:hover {
     background-color: $alto;
   }
 }
+
 .accept-alert,
 .reject-alert {
   height: fit-content;
   border-radius: toRem(20);
 }
-
 </style>

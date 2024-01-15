@@ -18,22 +18,21 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
   /**
    * @method setAlert
    */
-  const setAlert = (alert) => {
+  const setAlert = alert => {
     alerts.value[alert.alertId] = alert
   }
 
   /**
    * @method removeAlert
    */
-  const removeAlert = (alertId) => {
+  const removeAlert = alertId => {
     delete alerts.value[alertId]
   }
 
   /**
    * @method updateAlert
    */
-  const updateAlert = (alert) => {
-    console.log('updating alert ', alert)
+  const updateAlert = alert => {
     const alertId = alert.alertId
     if (alerts.value[alertId]) { alerts.value[alertId] = {...alerts.value[alertId], ...alert} }
   }
@@ -41,21 +40,21 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
   /**
    * @method openAlert
    */
-  const openAlert = (alertId) => {
+  const openAlert = alertId => {
     updateAlert({ alertId, isOpen: true })
   }
 
   /**
    * @method closeAlert
   */
- const closeAlert = (alert) => {
+  const closeAlert = alert => {
     updateAlert({ ...alert, isOpen: false })
   }
 
   /**
    * @method getAlertStatus
    */
-  const getAlertStatus = (alertId) => {
+  const getAlertStatus = alertId => {
     return {
       isOpen: alerts.value[alertId].isOpen,
       completed: alerts.value[alertId].completed
