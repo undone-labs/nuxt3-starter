@@ -87,7 +87,7 @@ const registerComponents = source => {
       const compiled = []
       split.forEach(entry => {
         let output = entry.replace('.vue', '').trim().replace(/^(\d+.)/, '').trim()
-        output = StartCase(output).replace(' ', '')
+        output = StartCase(output).replaceAll(' ', '')
         compiled.push(output)
       })
       addComponent({
