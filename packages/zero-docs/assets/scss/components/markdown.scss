@@ -174,6 +174,26 @@
   //   }
   // }
 
+  .tip-block {
+    position: relative;
+    border-radius: toRem(8);
+    border: 1px solid var(--link-color);
+    background-color: var(--background-color__tertiary);
+    padding: 1.25rem 1.5rem 1.25rem 2.5rem;
+    margin: 1.5rem 0;
+    &::before {
+      content: 'ⓘ';
+      position: absolute;
+      top: 1.25rem;
+      left: toRem(15);
+      color: var(--link-color);
+    }
+    .heading {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+  }
+
   // ==================================================================== Tables
   table {
     width: 100%;

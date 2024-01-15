@@ -24,6 +24,19 @@ export default defineNuxtConfig({
     },
     assetsInclude: ['**/*.md']
   },
+  // ==================================================================== Server
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      failOnError: false,
+      routes: [ // adds route to prerender
+        '/prerender-ssg-sitemap',
+        '/generate-algolia-index',
+        '/sitemap.xml',
+        '/ipfs-404'
+      ]
+    }
+  },
   // ================================================================== Compiler
   build: {
     transpile: ['@vuepic/vue-datepicker']
@@ -52,7 +65,11 @@ export default defineNuxtConfig({
     'nuxt-primevue' // https://github.com/primefaces/primevue-nuxt-module
   ],
   // ========================================================== [Module] sitemap
-  sitemap: {},
+  sitemap: {
+    sources: [
+      '/api/generate-sitemap'
+    ]
+  },
   // ========================================================= [Module] Primevue
   primevue: {
     disable: true,

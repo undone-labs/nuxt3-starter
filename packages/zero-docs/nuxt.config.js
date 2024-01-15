@@ -38,6 +38,11 @@ export default defineNuxtConfig({
       path: '@/../zero-docs/content/',
       prefix: 'Preview',
       global: true
+    },
+    {
+      path: '@/../docs/content/',
+      prefix: 'Preview',
+      global: true
     }
   ],
   // ============================================================ [Module] Pinia

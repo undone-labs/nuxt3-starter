@@ -144,7 +144,7 @@ const hashIsActive = (link) => {
   padding: toRem(3) 0;
   &.active {
     :deep(.button-label) {
-      font-weight: 700;
+      font-weight: 600;
     }
   }
 }

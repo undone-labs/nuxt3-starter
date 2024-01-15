@@ -37,7 +37,7 @@
 const route = useRoute()
 const routeLang = computed(() => route.params.language)
 
-const { data: Sidebar } = await useAsyncData('sidebar', async () => {
+const { data: Sidebar } = await useAsyncData('content-nav-sidebar', async () => {
   const content = await queryContent({
     where: {
       _file: { $contains: `data/${routeLang.value}/sidebar.json` }

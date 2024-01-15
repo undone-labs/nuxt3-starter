@@ -31,12 +31,12 @@ const toggleTheme = () => {
 </script>
 
 <style lang="scss" scoped>
-$toggleHeight: toRem(30);
+$toggleHeight: 1.5rem;
 
 // ///////////////////////////////////////////////////////////////////// General
 #theme-toggle {
   display: flex;
-  width: toRem(50);
+  width: $toggleHeight * 2;
   height: $toggleHeight;
   border: 2px solid var(--theme-toggle__border-color);
   border-radius: toRem(17.5);
@@ -96,7 +96,7 @@ $toggleHeight: toRem(30);
 
 .dark {
   .icon-container {
-    transform: translateX(calc(#{$toggleHeight} - 10px));
+    transform: translateX(calc(#{$toggleHeight}));
   }
 }
 </style>
