@@ -8,7 +8,8 @@
       { "path": "/api-preview", "text": "API Preview" },
       { "path": "/form", "text": "Form" },
       { "path": "/accordion", "text": "Accordion" },
-      { "path": "/alert", "text": "Alert" }
+      { "path": "/alert", "text": "Alert" },
+      { "path": "/toaster", "text": "Toaster" }
     ]
   },
   {

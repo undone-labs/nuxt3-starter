@@ -1,14 +1,20 @@
 .toast {
+  @include shadow1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  width: 30rem;
   border: 2px solid var(--theme-color);
   background-color: var(--theme-color__inverted);
-  padding: 1rem;
-  border-radius: 3rem;
-  .icon {
-    display: none;
+  padding: toRem(12);
+  border-radius: toRem(6);
+  @include customMaxMQ (32rem) {
+    width: 100%;
+  }
+  &:not(:last-child) {
+    margin-bottom: 1rem;
   }
   .message {
     font-weight: 500;
