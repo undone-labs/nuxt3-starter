@@ -87,6 +87,7 @@ export default defineNuxtConfig({
     composables: {
       addTextToClipboard: { enable: true },
       delay: { enable: true },
+      highlightCode: { enable: true },
       ls: {
         enable: true
         // prefix: 'nuxt3starter__'

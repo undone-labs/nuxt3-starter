@@ -1,6 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '../stores/use-zero-auth-store'
+import { useZeroToasterStore } from '../../toaster/stores/use-zero-toaster-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -8,6 +9,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const nuxtApp = useNuxtApp()
   const { public: { auth: authConfig } } = useRuntimeConfig()
   const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
+  const toasterStore = useZeroToasterStore()
   try {
     const headers = useRequestHeaders(['cookie'])
     const meta = to.meta
@@ -38,6 +40,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         }
       })
     }
+    toasterStore.addMessage({
+      type: 'toast',
+      message: 'You are not logged in'
+    })
     return navigateTo(redirectUnauthenticated)
   }
 })
