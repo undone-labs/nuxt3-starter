@@ -8,12 +8,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const nuxtApp = useNuxtApp()
   const { public: { auth: authConfig } } = useRuntimeConfig()
   const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
+  const store = useZeroAuthStore(nuxtApp.$pinia)
   try {
     const headers = useRequestHeaders(['cookie'])
     const meta = to.meta
     const guarded = meta.guarded
     if (meta.hasOwnProperty('authenticate') && !meta.authenticate) { return }
-    const store = useZeroAuthStore(nuxtApp.$pinia)
     const user = store.user
     const authenticated = await useFetchAuth('/authenticate', {
       method: 'post',
@@ -21,14 +21,18 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       query: { guarded }
     })
     if (guarded && !authenticated) {
+      store.setAuthState('unauthenticated')
       throw new Error('Looks like the page you\'re looking for doesn\'t exist')
     } else if (authenticated) {
-      store.setSession(authenticated)
+      await store.setSession(authenticated)
       if (!user) {
-        store.getUser(authenticated.userId)
+        await store.getUser(authenticated.userId)
+        await store.getOrganization(authenticated.primaryOrganizationId)
       }
+      store.setAuthState('authenticated')
     }
   } catch (e) {
+    store.setAuthState('unauthenticated')
     if (!redirectUnauthenticated) {
       return showError({
         statusCode: 404,

@@ -1,21 +1,20 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '../stores/use-zero-auth-store'
-import { useZeroButtonStore } from '../../button/stores/use-zero-button-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useSetSession = async (incoming) => {
+export const useSetSession = async incoming => {
   const config = useRuntimeConfig()
   const session = incoming.session
-  const loader = incoming.loader
+  const loader = incoming.id
   const authConfig = config.public.auth
   let redirect = authConfig.redirectAfterLogin === '' ? {} : authConfig.redirectAfterLogin || {}
   const authStore = useZeroAuthStore()
-  const buttonStore = useZeroButtonStore()
   authStore.setSession(session)
-  buttonStore.setButton({ id: loader, loading: false })
+  authStore.setAuthState('finalizing')
   const user = await authStore.getUser(session.userId)
+  const organization = await authStore.getOrganization(session.primaryOrganizationId)
   if (typeof redirect === 'object' && redirect.hasOwnProperty('path') && redirect.hasOwnProperty('match')) {
     const match = redirect.match
     redirect = redirect.path
@@ -24,7 +23,8 @@ export const useSetSession = async (incoming) => {
     })
   }
   if (redirect) {
-    navigateTo(redirect)
+    await navigateTo(redirect)
   }
+  authStore.setAuthState('authenticated')
   // app.$toaster.add(data.toast)
 }

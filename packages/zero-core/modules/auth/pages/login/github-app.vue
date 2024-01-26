@@ -1,5 +1,5 @@
 <template>
-  <main class="page login-success">
+  <main class="page login-github-app">
 
     <component
       :is="resolveComponent()"
@@ -8,7 +8,7 @@
 
     <template v-else>
       <div class="text">
-        authenticating
+        finalizing
       </div>
       <div class="triple-dot-loader">
         <div class="dot dot-1"></div>
@@ -35,18 +35,19 @@ const config = useRuntimeConfig()
 
 // ======================================================================= Hooks
 onMounted(async () => {
-  if (!window.opener && window.opener !== window && window.name !== 'login-github-popup') {
+  if (!window.opener && window.opener !== window && window.name !== 'authenticate-github-popup') {
     await navigateTo('/')
   }
   animateTitle()
   const session = await useFetchAuth('/login', {
     method: 'post',
-    query: Object.assign(route.query, { strategy: 'github' }),
+    query: Object.assign(route.query, { strategy: 'github', type: 'app' }),
     body: {}
   })
   window.opener.postMessage({
-    session,
-    loader: 'auth-github'
+    id: 'authenticate-github-app',
+    action: 'github-app-authenticated',
+    session
   }, config.public.siteUrl)
   window.close()
 })
@@ -58,7 +59,7 @@ onMounted(async () => {
 
 const resolveComponent = () => {
   const instance = getCurrentInstance()
-  const compToResolve = 'LoginLoading'
+  const compToResolve = 'LoginGithubAppLoading'
   if (typeof instance?.appContext.components === 'object' && compToResolve in instance.appContext.components) {
     return compToResolve
   }
@@ -74,7 +75,7 @@ const animateTitle = () => {
   setInterval(() => {
     dots.length === 3 ? dots = ['.'] : dots.push('.')
     useHead({
-      title: `Authenticating${dots.join('')}`
+      title: `Finalizing${dots.join('')}`
     })
   }, 250)
 }

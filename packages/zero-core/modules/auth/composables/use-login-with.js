@@ -1,8 +1,10 @@
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useLoginWith = (strategy) => {
+export const useLoginWith = loginWith => {
+  const strategy = loginWith.strategy
+  const options = loginWith.options
   switch (strategy) {
-    case 'github': useAuthenticateGithub(); break
-    case 'metamask': useAuthenticateMetamask(); break
+    case 'github': useAuthenticateGithub(options); break
+    case 'metamask': useAuthenticateMetamask(options); break
   }
 }

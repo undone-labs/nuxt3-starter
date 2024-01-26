@@ -1,5 +1,5 @@
-// // ///////////////////////////////////////////////////////////////////// Imports
-// // -----------------------------------------------------------------------------
+// ///////////////////////////////////////////////////////////////////// Imports
+// -----------------------------------------------------------------------------
 import {
   defineNuxtModule
 } from 'nuxt/kit'
@@ -32,11 +32,11 @@ const validateKeys = options => {
  */
 
 const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
-  nuxtOptions.runtimeConfig.public.githubOAuthLink = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&scope=user:email,public_repo`
   nuxtOptions.runtimeConfig.public.auth = {
     redirectUnauthenticated: options.redirectUnauthenticated,
     redirectAfterLogin: options.redirectAfterLogin,
-    redirectAfterLogout: options.redirectAfterLogout
+    redirectAfterLogout: options.redirectAfterLogout,
+    github: options.github
   }
 }
 
@@ -44,7 +44,7 @@ const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
   const nuxtOptions = nuxt.options
-  const options = nuxtOptions.zero.modules.auth || {}
+  const options = nuxtOptions.zero.modules.auth
   if (!options.enable) { return }
   validateKeys(options)
   addOptionsToRuntimeConfig(nuxtOptions, options)
