@@ -1,3 +1,10 @@
+.toaster {
+  display: grid;
+  justify-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .toast {
   @include shadow1;
   display: flex;
@@ -12,9 +19,6 @@
   border-radius: toRem(6);
   @include customMaxMQ (32rem) {
     width: 100%;
-  }
-  &:not(:last-child) {
-    margin-bottom: 1rem;
   }
   .message {
     font-weight: 500;

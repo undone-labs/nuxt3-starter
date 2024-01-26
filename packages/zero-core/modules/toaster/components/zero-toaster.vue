@@ -1,11 +1,15 @@
 <template>
-  <div v-if="hasToasts" class="toaster">
+  <div
+    ref="toasterRef"
+    class="toaster">
 
     <template v-for="toast in toasts">
       <ZeroToast
         v-if="toast"
         :key="toast.id"
-        :toast="toast">
+        :toast="toast"
+        :toaster-height-initial="toasterHeightInitial"
+        :toaster-height-final="toasterHeightFinal">
 
         <template #toast="{ toast }">
           <slot name="toast" :toast="toast" />
@@ -20,29 +24,24 @@
 <script setup>
 // ======================================================================== Data
 const store = useZeroToasterStore()
-const { messages } = storeToRefs(store)
+const { toasts } = storeToRefs(store)
 const route = useRoute()
 
-// ==================================================================== Computed
-const toasts = computed(() => {
-  const toasts = messages.value.filter((message) => {
-    if (message && message.type === 'toast') { return message }
-    return false
-  })
-  if (toasts.length > 0) { return toasts.reverse() }
-  return false
-})
-
-const hasToasts = computed(() => messages.value.length > 0)
+const toasterRef = ref(null)
+const toasterHeightInitial = ref(0)
+const toasterHeightFinal = ref(0)
 
 /**
  * @note the commented-out code below will be wired up when needed in the future
  */
 
 // ======================================================================= Watch
-// watch(route, route => {
-//   displayToastFromQuery(route)
-// })
+watch(toasts.value, async () => {
+  toasterHeightInitial.value = toasterRef.value.clientHeight
+  await nextTick(() => {
+    toasterHeightFinal.value = toasterRef.value.clientHeight
+  })
+})
 
 // ====================================================================== Export
 // const displayToastFromQuery = route => {
@@ -60,20 +59,17 @@ $padding: 1rem;
 
 // ///////////////////////////////////////////////////////////////////// General
 .toaster {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   position: fixed;
-  top: 0;
+  top: $padding;
   left: 50%;
-  padding-top: $padding;
   transform: translateX(-50%);
+  pointer-events: none;
   z-index: 100000;
   @include customMaxMQ (32rem) {
+    top: $padding;
     left: 0;
     width: 100%;
-    padding: $padding;
-    padding-bottom: 0;
+    padding: 0 $padding;
     transform: none;
   }
 }

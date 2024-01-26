@@ -4,9 +4,7 @@
     <!-- =========================================================== Toaster -->
     <ZeroToaster>
       <template #toast="{ toast }">
-        <div class="message">
-          {{ toast.message }}
-        </div>
+        <div class="message" v-html="toast.message" />
       </template>
     </ZeroToaster>
 

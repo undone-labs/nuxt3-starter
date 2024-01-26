@@ -1,5 +1,8 @@
 <template>
-  <div :class="['toast', { unpopping } ]" :style="animationVariables">
+  <div
+    ref="toastRef"
+    :class="['toast', { 'fade-out': fadeOut } ]"
+    :style="animationVariables">
 
     <slot name="toast" :toast="toast" />
 
@@ -13,61 +16,69 @@ const props = defineProps({
     type: Object,
     required: true
   },
-  toasterPadding: {
-    type: String,
-    required: false,
-    default: '1rem'
+  toasterHeightInitial: {
+    type: Number,
+    required: true
+  },
+  toasterHeightFinal: {
+    type: Number,
+    required: true
   }
 })
 
 // ======================================================================== Data
 const store = useZeroToasterStore()
 const config = useRuntimeConfig().public.toaster
-const unpopping = ref(false)
-const toastTimeout = props.toast.timeout || config.timeout || 5000
-const animationVariables = {
-  '--toaster-padding': props.toasterPadding
-}
+const toastTimeout = 1000 // props.toast.timeout || config.timeout || 5000
 
-// ======================================================================= Hooks
-onMounted(() => {
-  initializeToastUnpop()
+const toastRef = ref(null)
+const animationVariables = ref({})
+const fadeOut = ref(false)
+
+// ==================================================================== Computed
+const animateIn = computed(() => props.toast.animate === 'in')
+const animateOut = computed(() => props.toast.animate === 'out')
+
+// ======================================================================= Watch
+watch(() => props.toasterHeightFinal, final => {
+  animationVariables.value['--toast-initial-offset'] = `${Math.floor(-final) + Math.floor(props.toasterHeightInitial)}px`
 })
 
-// ===================================================================== Methods
-const initializeToastUnpop = () => {
-  const unpopTimeout = toastTimeout - 250
-  if (toastTimeout !== Infinity) {
-    const timeout = setTimeout(() => {
-      store.removeMessage(props.toast.id)
-      clearTimeout(timeout)
-    }, toastTimeout)
-    const unpop = setTimeout(() => {
-      unpopping.value = true
-      clearTimeout(unpop)
-    }, unpopTimeout)
-  }
-}
+// ======================================================================= Hooks
+onMounted(async () => {
+  const timeout = setTimeout(() => {
+    console.log('❌', props.toast.id)
+    fadeOut.value = true
+    // store.hideMessage(props.toast.id)
+    clearTimeout(timeout)
+  }, toastTimeout)
+})
 </script>
 
 <style lang="scss" scoped>
-@keyframes poppingToast {
-  from { top: calc( -100% - var(--toaster-padding)); opacity: 0; }
-  to { top: 0; opacity: 1; }
-}
+// @keyframes fadeOut {
+//   to {
+//     opacity: 0;
+//   }
+// }
 
-@keyframes unpoppingToast {
-  from { top: 0; opacity: 1; }
-  to { top: calc( -100% - var(--toaster-padding)); opacity: 0; }
+@keyframes slideIn {
+  from {
+    transform: translateY(var(--toast-initial-offset));
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 // ///////////////////////////////////////////////////////////////////// General
 .toast {
-  --toaster-padding: 0rem;
-  animation: poppingToast 250ms ease-in-out forwards;
-  overflow: hidden;
-  &.unpopping {
-    animation: unpoppingToast 250ms ease-in-out forwards;
+  position: relative;
+  pointer-events: none;
+  animation: slideIn 300ms ease forwards;
+  &.fade-out {
+    transition: opacity 100ms;
+    opacity: 0;
   }
 }
 </style>

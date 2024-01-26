@@ -40,10 +40,10 @@ const toasterStore = useZeroToasterStore()
 
 const createToast = () => {
   const messages = [
-    'This is a toast message',
-    'This is a toast message: Nulla vel ipsum a massa auctor tristique. Donec ornare ex purus, ac rhoncus libero porttitor eget. Quisque ut mi vitae arcu egestas tempor et vitae velit.',
-    'This is a toast message: Aenean ex lectus, rhoncus sed rutrum elementum, interdum quis velit.',
-    'This is a toast message: Quisque gravida vel tortor sit amet eleifend. Fusce sodales vehicula diam, et congue augue pellentesque sit amet. Vestibulum pulvinar, sem a dapibus viverra, mi nibh aliquet mi, sit amet tempor quam ex quis ex. Morbi quis tincidunt arcu. Aenean turpis augue, laoreet nec mattis in, ornare eu nunc.'
+    'You are now logged in',
+    'Application updated successfully',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit\nSed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'
   ]
   const messageIndex = Math.floor(Math.random() * (3 - 0 + 1) + 0 )
   toasterStore.addMessage({
