@@ -195,6 +195,11 @@ props.sliders.forEach(slider => {
 
 .code-wrapper {
   display: none;
+  &[data-language] {
+    &:before {
+      border-radius: toRem(4);
+    }
+  }
   &.active {
     display: block;
   }

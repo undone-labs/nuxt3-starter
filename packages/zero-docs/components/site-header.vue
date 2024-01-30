@@ -53,7 +53,7 @@ const { languageSelectorVisible } = storeToRefs(docsStore)
 const route = useRoute()
 const routeLang = computed(() => route.params.language)
 
-const { data: Settings } = await useAsyncData('settings', () => {
+const { data: Settings } = await useAsyncData('header-settings', () => {
   return queryContent({
     where: {
       _file: { $contains: 'data/settings.json' }
