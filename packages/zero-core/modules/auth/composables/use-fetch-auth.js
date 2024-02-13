@@ -6,10 +6,15 @@
 // -----------------------------------------------------------------------------
 export const useFetchAuth = async (url, body = {}) => {
   body.url = url
+  const headers = Object.assign(
+    {},
+    body.headers || {},
+    useRequestHeaders(['cookie'])
+  )
   try {
     const response = await $fetch.raw('/api/fetch-auth', {
       method: 'post',
-      ...(body.headers && { headers: body.headers }),
+      headers,
       body
     })
     return response._data

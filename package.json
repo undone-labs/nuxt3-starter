@@ -27,6 +27,7 @@
     "dev-site": "npm run dev -w site",
     "build-site": "npm run build -w packages/site",
     "start-site": "node packages/site/.output/server/index.mjs",
+    "generate-site": "npm run generate -w site",
     "upgrade-nuxt-site": "npm run upgrade-nuxt -w site",
     "dev-docs": "npm run dev -w docs",
     "build-docs": "npm run build -w packages/docs",

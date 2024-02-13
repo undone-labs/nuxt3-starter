@@ -58,7 +58,7 @@ watch(panelOpen, (state) => { emit('dropdownPanelToggled', state) })
 
 watch(selected, (val) => { emit('optionSelected', val) })
 
-// ===================================================================== Methdos
+// ===================================================================== Methods
 /**
  * @method togglePanel
  */
@@ -118,9 +118,9 @@ const isSelected = value => {
 
 // /////////////////////////////////////////////////////////////////////// Panel
 /**
- * .panel-container padding-top (offset) and .panel width and/or max-height must
- * be set in the parent component as these are custom properties that will differ
- * panel-to-panel
+ * .panel-container top offset ('padding-top' or 'top') and .panel width and/or
+ * max-height must be set in the parent component as these are custom properties
+ * that will differ panel-to-panel
  */
 
 .panel-container {
@@ -128,9 +128,9 @@ const isSelected = value => {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  transition: 150ms ease-out;
+  transition: 150ms ease-in;
   &:not(.open) {
-    transition: 150ms ease-in;
+    transition: 150ms ease-out;
     transform: translate(-50%, 1rem);
     opacity: 0;
     visibility: hidden;

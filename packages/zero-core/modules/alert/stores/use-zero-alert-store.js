@@ -6,11 +6,6 @@ import { defineStore } from 'pinia'
 // -----------------------------------------------------------------------------
 export const useZeroAlertStore = defineStore('zero-alert', () => {
   // ===================================================================== state
-  const baseAlert = ref({
-    isOpen: false, // boolean
-    completed: null, // boolean if alert has been opened, otherwise null
-    data: false // object
-  })
   const alerts = ref({})
 
   // =================================================================== actions
@@ -18,60 +13,52 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
   /**
    * @method setAlert
    */
-  const setAlert = alert => {
-    alerts.value[alert.alertId] = alert
+
+  const setAlert = payload => {
+    alerts.value[payload.id] = payload.status
+  }
+
+  /**
+   * @method getAlert
+   */
+
+  const getAlert = alertId => {
+    return alerts.value[alertId]
   }
 
   /**
    * @method removeAlert
    */
+
   const removeAlert = alertId => {
     delete alerts.value[alertId]
   }
 
   /**
-   * @method updateAlert
-   */
-  const updateAlert = alert => {
-    const alertId = alert.alertId
-    if (alerts.value[alertId]) { alerts.value[alertId] = {...alerts.value[alertId], ...alert} }
-  }
-
-  /**
    * @method openAlert
    */
+
   const openAlert = alertId => {
-    updateAlert({ alertId, isOpen: true })
+    alerts.value[alertId] = 'open'
   }
 
   /**
    * @method closeAlert
-  */
-  const closeAlert = alert => {
-    updateAlert({ ...alert, isOpen: false })
-  }
-
-  /**
-   * @method getAlertStatus
    */
-  const getAlertStatus = alertId => {
-    return {
-      isOpen: alerts.value[alertId].isOpen,
-      completed: alerts.value[alertId].completed
-    }
+
+  const closeAlert = alertId => {
+    alerts.value[alertId] = 'closed'
   }
 
   // ==================================================================== return
   return {
     // ----- state
-    baseAlert,
     alerts,
     // ----- actions
     setAlert,
+    getAlert,
     removeAlert,
-    updateAlert,
     openAlert,
-    closeAlert,
-    getAlertStatus
+    closeAlert
   }
 })

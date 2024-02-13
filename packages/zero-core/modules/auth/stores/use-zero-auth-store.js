@@ -22,8 +22,8 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
    * @method setAuthState
    */
 
-  const setAuthState = payload => {
-    authState.value = payload
+  const setAuthState = state => {
+    authState.value = state
   }
 
   /**

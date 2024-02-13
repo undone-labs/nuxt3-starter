@@ -6,16 +6,16 @@
       v-if="resolveComponent()"
       class="custom-login-page" />
 
-    <template v-else>
+    <div v-else class="specific">
       <div class="text">
-        finalizing
+        Finalizing
       </div>
       <div class="triple-dot-loader">
         <div class="dot dot-1"></div>
         <div class="dot dot-2"></div>
         <div class="dot dot-3"></div>
       </div>
-    </template>
+    </div>
 
   </main>
 </template>
@@ -27,7 +27,7 @@ definePageMeta({
   authenticate: false
 })
 
-useHead({ title: 'Authenticating' })
+useHead({ title: 'Finalizing' })
 
 // ======================================================================== Data
 const route = useRoute()
@@ -89,13 +89,8 @@ const animateTitle = () => {
 
 // ///////////////////////////////////////////////////////////////////// General
 .page {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #F5F5F5;
 }
 
 .custom-login-page {
@@ -103,32 +98,35 @@ const animateTitle = () => {
   height: 100%;
 }
 
-.triple-dot-loader {
+.specific {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.dot {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 100%;
-  display: inline-block;
-  background-color: #303030;
-  animation: dot 1.4s infinite ease-in-out both;
-  transition: 250ms ease-in-out;
-  &.dot-1 {
-    animation-delay: -0.32s;
+  .triple-dot-loader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
-  &.dot-2 {
-    animation-delay: -0.16s;
-    margin: 0 0.25rem;
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 100%;
+    display: inline-block;
+    animation: dot 1.4s infinite ease-in-out both;
+    transition: 250ms ease-in-out;
+    &.dot-1 {
+      animation-delay: -0.32s;
+    }
+    &.dot-2 {
+      animation-delay: -0.16s;
+      margin: 0 0.25rem;
+    }
   }
-}
-
-.text {
-  font-family: monospace;
-  margin-right: 1rem;
+  .text {
+    font-family: monospace;
+    margin-right: 1rem;
+  }
 }
 </style>
