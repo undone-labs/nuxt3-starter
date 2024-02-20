@@ -44,8 +44,8 @@ const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
   const nuxtOptions = nuxt.options
-  const options = nuxtOptions.zero.modules.auth
-  if (!options.enable) { return }
+  const options = nuxtOptions.zero.modules?.auth
+  if (!options?.enable) { return }
   validateKeys(options)
   addOptionsToRuntimeConfig(nuxtOptions, options)
 }

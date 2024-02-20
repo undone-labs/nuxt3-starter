@@ -110,7 +110,6 @@ const props = defineProps({
     align-items: center;
   }
   :deep(.text) {
-    @include navigation;
     color: var(--primary-text-color);
   }
   &:hover {

@@ -48,8 +48,8 @@ const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = async (_, nuxt) => {
-  const options = nuxt.options.zero.modules.algolia || {}
-  if (!options.enable) { return }
+  const options = nuxt.options.zero.modules?.algolia
+  if (!options?.enable) { return }
   validateEnvs()
   addOptionsToRuntimeConfig(nuxt.options, options)
 }

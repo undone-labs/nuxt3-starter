@@ -104,33 +104,28 @@ export default defineNuxtConfig({
     modules: {
       button: { enable: true },
       form: { enable: true },
-      algolia: {
-        enable: false
-        // apiKey: process.env.ALGOLIA_API_KEY,
-        // applicationId: process.env.ALGOLIA_APPLICATION_ID,
-        // indexName: `${process.env.ALGOLIA_INDEX_ID}__${env}`,
-        // sources: [
-        //   { path: Path.resolve(__dirname, 'content'), contentDirectoryName: 'content' }
-        // ]
-      },
       auth: {
-        enable: false
-        // redirectUnauthenticated: '',
-        // /**
-        //  * string or object
-        //  *
-        //  * if object, replace part of path with key's value from user (user) db
-        //  * object, for example example:
-        //  *
-        //  * {
-        //  *   path: '/zero-kitchen-sink/:user/redirect-after-login',
-        //  *   match: {
-        //  *     ':user': 'username'
-        //  *   }
-        //  * }
-        //  */
-        // redirectAfterLogin: '',
-        // redirectAfterLogout: ''
+        enable: false,
+        github: {
+          oauth: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH__CLIENT_ID}&scope=user:email`,
+          app: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_APP__CLIENT_ID}`
+        },
+        redirectUnauthenticated: '/',
+        /**
+         * string or object
+         *
+         * if object, replace part of path with key's value from user (user) db
+         * object, for example example:
+         *
+         * {
+         *   path: '/zero-kitchen-sink/:user/redirect-after-login',
+         *   match: {
+         *     ':user': 'username'
+         *   }
+         * }
+         */
+        redirectAfterLogin: '/account',
+        redirectAfterLogout: '/'
       }
     }
   },

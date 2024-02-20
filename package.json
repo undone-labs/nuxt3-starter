@@ -42,7 +42,7 @@
     "packages/site",
     "packages/docs"
   ],
-  "devDependencies": {
+  "dependencies": {
     "chalk": "^5.3.0"
   }
 }
