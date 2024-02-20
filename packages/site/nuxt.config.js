@@ -82,6 +82,7 @@ export default defineNuxtConfig({
     components: {
       ApiPreview: { enable: true },
       ApiOverview: { enable: true },
+      BlockBuilder: { enable: true },
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: true },
