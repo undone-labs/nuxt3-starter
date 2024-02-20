@@ -28,6 +28,9 @@ const backendPort = (function () {
 export default defineNuxtConfig({
   // =================================================================== General
   devtools: { enabled: false },
+  site: {
+    url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
+  },
   extends: [
     '../zero-core'
   ],
