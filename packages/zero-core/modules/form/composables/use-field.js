@@ -16,6 +16,11 @@ class Field {
     return this.store.fields[id]
   }
 
+  // ======================================================================= get
+  set (payload) {
+    return this.store.setField(payload)
+  }
+
   // ==================================================================== remove
   remove (id) {
     return this.store.removeField(id)
@@ -32,6 +37,18 @@ class Field {
         field.validate
       ))
     }
+  }
+
+  // ======================================================================= set
+  resetOriginalValue (id, newOriginalValue) {
+    const field = this.get(id)
+    this.store.setField({
+      id,
+      originalValue: newOriginalValue,
+      scaffold: Object.assign({}, field.scaffold, {
+        defaultValue: newOriginalValue
+      })
+    })
   }
 }
 
