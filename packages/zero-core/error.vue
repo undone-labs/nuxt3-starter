@@ -8,7 +8,7 @@
 
 <script setup>
 // ======================================================================== Data
-const props = defineProps({
+defineProps({
   error: {
     type: Object,
     required: true

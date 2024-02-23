@@ -1,122 +1,50 @@
 <template>
   <ZeroButton
     v-slot="{ loading }"
-    v-bind="props"
-    :class="['button-x', `theme__${props.theme}`]">
-    <div class="inner-content">
+    class="clear">
 
-      <div :class="['button-content', { hide: loading }]">
-        <slot />
-      </div>
+    <LoaderMaterialCircle v-if="loading && !disableLoader" />
 
+    <div class="slot">
+      <slot :loading="loading" />
     </div>
+
   </ZeroButton>
 </template>
 
 <script setup>
-// ======================================================================= Props
-const props = defineProps({
-  tag: { // button, 'a' or nuxt-link
-    type: String,
-    required: false,
-    default: 'button'
-  },
-  to: {
-    type: [String, Object],
-    required: false,
-    default: undefined
-  },
-  target: {
-    type: [String, Object],
-    required: false,
-    default: undefined
-  },
-  loader: {
-    type: [String, Object],
-    required: false,
-    default: undefined
-  },
-  disabled: {
+// ======================================================================= Setup
+defineProps({
+  disableLoader: {
     type: Boolean,
     required: false,
     default: false
-  },
-  selected: {
-    type: Boolean,
-    required: false,
-    default: false
-  },
-  theme: { // 'clear', 'pink' or 'green'
-    type: String,
-    required: false,
-    default: 'clear'
   }
 })
 </script>
 
 <style lang="scss" scoped>
 // ///////////////////////////////////////////////////////////////////// General
-.button {
-  white-space: nowrap;
-  cursor: pointer;
-  &:not([disabled="true"]) {
-    &:hover {
-      .button-content {
-        transition: 150ms ease-in;
-        text-decoration: none;
-      }
-    }
-    &:focus-visible {
-      @include focusBoxShadow;
-    }
-  }
-  &[disabled="true"] {
-    box-shadow: none;
-    opacity: 0.5;
-    cursor: no-drop;
-  }
-}
-
-.triple-dot-loader,
-.button-content {
-  width: 100%;
-  height: 100%;
-}
-
-.triple-dot-loader {
+.loader {
   position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  &.show {
-    opacity: 1;
-  }
-  :deep(.dot) {
-    background-color: var(--secondary-text-color);
-  }
-}
-
-.button-content {
-  transition: 150ms ease-out;
-  &.hide {
+  top: calc(50% - #{toRem(6)}); // minus half dimension of loader
+  left: calc(50% - #{toRem(6)}); // minus half dimension of loader
+  transform: translate(-50%, -50%);
+  + .slot {
     opacity: 0;
   }
 }
 
+.slot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 // ////////////////////////////////////////////////////////////////////// Themes
-.theme__clear {
-  .button-content {
-    display: flex;
-    align-items: center;
-  }
-  :deep(.text) {
-    color: var(--primary-text-color);
-  }
-  &:hover {
-    :deep(.text) {
-      color: var(--link-color);
-      transition: color .25s ease;
-    }
+[class*=center] {
+  .slot {
+    justify-content: center;
   }
 }
 </style>

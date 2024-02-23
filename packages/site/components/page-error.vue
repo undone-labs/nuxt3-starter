@@ -5,14 +5,14 @@
 
     <div class="grid">
       <div class="col-6" data-push-left="off-2">
-        <div class="page-content">
+        <div class="content">
 
           <h1 class="heading">
             {{ statusCode }}
           </h1>
 
           <div class="message">
-            {{ message }}
+            {{ displayMessage }}
           </div>
 
           <pre v-if="stack && stack !== ''"><code>{{ stack }}</code></pre>
@@ -35,7 +35,7 @@
 
 <script setup>
 // ======================================================================== Data
-defineProps({
+const props = defineProps({
   statusCode: {
     type: Number,
     required: false,
@@ -44,7 +44,7 @@ defineProps({
   message: {
     type: String,
     required: false,
-    default: 'Looks like the page you\'re looking for doesn\'t exist'
+    default: 'This page doesn\'t exist.'
   },
   stack: {
     type: String,
@@ -52,10 +52,17 @@ defineProps({
     default: ''
   },
   data: {
-    type: Object,
+    type: [Object, String],
     required: false,
     default: () => {}
   }
+})
+
+// ==================================================================== Computed
+const displayMessage = computed(() => {
+  return props.statusCode === 404 ?
+    'This page doesn\'t exist.' :
+    props.message
 })
 </script>
 
@@ -66,7 +73,7 @@ defineProps({
   font-size: toRem(100);
   line-height: 1;
   color: var(--link-color);
-  margin-bottom: 2rem;;
+  margin-bottom: 2rem;
 }
 
 .message {

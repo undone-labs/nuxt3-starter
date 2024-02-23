@@ -28,62 +28,25 @@ $font_Mono: monospace;
  * Mixins corresponding to most commonly used html text elements
  */
 
-@mixin h1 {
-  font-size: toRem(36);
-  line-height: leading(50, 36);
-  font-weight: 700;
-  letter-spacing: 0em;
-}
+ @mixin h1 {}
 
-@mixin h2 {
-  font-size: toRem(30);
-  line-height: leading(42, 30);
-  font-weight: 700;
-  letter-spacing: 0em;
-}
+ @mixin h2 {}
 
-@mixin h3 {
-  font-size: toRem(24);
-  line-height: leading(34, 24);
-  font-weight: 500;
-  letter-spacing: 0em;
-  margin-bottom: 1.25rem;
-}
+ @mixin h3 {}
 
-@mixin h4 {
-  font-size: toRem(18);
-  line-height: leading(25, 18);
-  font-weight: 500;
-}
+ @mixin h4 {}
 
-@mixin h5 {
-font-size: toRem(16);
-line-height: leading(24, 16);
-font-weight: 500;
-}
+ @mixin h5 {}
 
-@mixin h6 {
-  font-size: toRem(16);
-  line-height: leading(24, 16);
-  font-weight: 500;
-}
+ @mixin h6 {}
 
-@mixin p1 {
-  font-size: toRem(16);
-  line-height: leading(27, 16);
-  font-weight: 400;
-}
+ @mixin p1 {}
 
-@mixin p2 {
-  font-size: toRem(14);
-  line-height: leading(21, 14);
-  font-weight: 400;
-  letter-spacing: 0.2px;
-}
+ @mixin p2 {}
 
-@mixin inlineLink {
-  color: blue;
-}
+ @mixin inlineLink {
+   color: blue;
+ }
 
 /**
  * Mixin for text in <code> elements, see utitlies.scss to edit these vars
@@ -131,9 +94,6 @@ h4, .h4,
 h5, .h5,
 h6, .h6 {
   display: block;
-  line-height: 1.4;
-  font-weight: 500;
-  letter-spacing: 1px;
   text-transform: none;
 }
 

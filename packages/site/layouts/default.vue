@@ -27,16 +27,18 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 // ======================================================================== Data
 const zeroStore = useZeroStore()
 
-const { data: Seo } = await useAsyncData('seo', async () => {
-  const content = await queryContent({
+await useAsyncData('seo', async () => {
+  let content = await queryContent({
     where: {
       _file: { $contains: 'data/seo.json' }
     }
   }).find()
-  return content[0]
+  content = content[0] || {}
+  zeroStore.setSeo(content)
 })
 
-zeroStore.setSeo(Seo)
+const { $seo } = useNuxtApp()
+$seo()
 </script>
 
 <style lang="scss" scoped>

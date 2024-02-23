@@ -8,7 +8,7 @@
 
 body {
   @include selection-light;
-  color: var(--primary-text-color);
+  color: var(--text-color);
   font-family: $font_Primary;
   background-color: var(--background-color);
   transition: background-color 250ms;
