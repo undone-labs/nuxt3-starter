@@ -64,6 +64,11 @@ export default defineNuxtConfig({
   sitemap: {
     sources: [
       '/api/generate-sitemap'
+    ],
+    exclude: [
+      '/generate-algolia-index',
+      '/ipfs-404',
+      '/prerender-ssg-sitemap'
     ]
   },
   // ========================================================= [Module] Primevue
