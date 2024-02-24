@@ -57,7 +57,8 @@ export default defineNuxtConfig({
     '@nuxtjs/algolia',
     'nuxt-simple-robots', // https://github.com/harlan-zw/nuxt-simple-robots
     'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
-    'nuxt-primevue' // https://github.com/primefaces/primevue-nuxt-module
+    'nuxt-primevue', // https://github.com/primefaces/primevue-nuxt-module
+    '@vueuse/nuxt' // https://vueuse.org/
   ],
   // ========================================================== [Module] sitemap
   sitemap: {
