@@ -29,12 +29,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       failOnError: false,
-      routes: [ // adds route to prerender
-        '/prerender-ssg-sitemap',
-        '/generate-algolia-index',
-        '/sitemap.xml',
-        '/ipfs-404'
-      ]
+      autoSubfolderIndex: false
     }
   },
   // ================================================================== Compiler
