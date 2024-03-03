@@ -14,9 +14,6 @@
 </template>
 
 <script setup>
-// ===================================================================== Imports
-import zeroUuid from '../../../composables/uuid'
-
 // ======================================================================= Props
 const props = defineProps({
   tag: {

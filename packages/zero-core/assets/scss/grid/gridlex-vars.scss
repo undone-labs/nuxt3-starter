@@ -14,7 +14,8 @@ $gl-mq-list: (
   xlg: 90rem, // 1440px
   lg: 75rem, // 1200px
   md: 64rem, // 1024px
+  gd: $gridWidth + 2rem, // always add 2rem because gridMaxMQ contains it as well
   sm: 53.125rem, // 850px
   mi: 40rem, // 640px
-  ti: 25.9375rem // 415px
+  ti: 26.875rem // 430px
 ) !default;

@@ -7,7 +7,7 @@
     "dev": "nuxi dev --no-clear",
     "preview": "nuxi preview",
     "generate": "nuxi generate",
-    "upgrade-nuxt": "nuxi upgrade"
+    "upgrade-nuxt": "nuxi upgrade --force"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
