@@ -22,9 +22,13 @@
     "nuxt-primevue": "^0.3.1",
     "nuxt-simple-robots": "^4.0.0-rc.14",
     "nuxt-simple-sitemap": "^4.1.6",
+    "rehype-rewrite": "^4.0.2",
+    "rehype-stringify": "^10.0.0",
     "remark-mdc": "^3.0.0",
+    "remark-rehype": "^11.1.0",
     "socket.io-client": "^4.7.4",
     "undici": "^6.3.0",
+    "unified": "^11.0.4",
     "uuid": "^9.0.1",
     "web3": "^4.1.2"
   }

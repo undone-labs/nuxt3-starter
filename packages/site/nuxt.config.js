@@ -87,6 +87,7 @@ export default defineNuxtConfig({
       Dropdown: { enable: true },
       MarkdownParser: { enable: true },
       Paginator: { enable: true },
+      RemarkdownParser: { enable: true },
       TabbedSlider: { enable: true }
     },
     composables: {
