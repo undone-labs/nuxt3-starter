@@ -13,8 +13,8 @@ import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeRewrite from 'rehype-rewrite'
 import rehypeHighlight from 'rehype-highlight'
-// import remarkMath from 'remark-math'
-// import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
 // import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 
 // ======================================================================== Data
@@ -50,7 +50,9 @@ let copyButtons = []
 // ============================================================= Setup Processor
 processor.value = unified()
   .use(remarkParse)
+  .use(remarkMath)
   .use(remarkRehype)
+  .use(rehypeKatex)
   .use(rehypeHighlight)
   .use(rehypeRewrite, {
     rewrite: (node, index, parent) => {
