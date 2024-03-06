@@ -9,12 +9,13 @@
 // ===================================================================== Imports
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
-import rehypeStringify from 'rehype-stringify'
-import rehypeRewrite from 'rehype-rewrite'
-import rehypeHighlight from 'rehype-highlight'
 import remarkMath from 'remark-math'
+import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeWrap from 'rehype-wrap'
+import rehypeRewrite from 'rehype-rewrite'
+import rehypeStringify from 'rehype-stringify'
 // import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 
 // ======================================================================== Data
