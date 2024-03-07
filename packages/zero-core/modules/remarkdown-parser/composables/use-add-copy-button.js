@@ -1,6 +1,6 @@
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useAddCopyButton = (node, id = null) => {
+export const useAddCopyButton = (node, id = false) => {
   const headingProperties = {
     className: ['copy-button'],
     'data-type': 'heading',
@@ -15,7 +15,7 @@ export const useAddCopyButton = (node, id = null) => {
     type: 'element',
     tagName: 'button',
     properties: id ? headingProperties : codeProperties,
-    children: [{ type: 'text', value: '#' }]
+    children: [{ type: 'text', value: id ? '#' : 'Copy' }]
   }
   node.children.splice( 0, 0, button)
   return node

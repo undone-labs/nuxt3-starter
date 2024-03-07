@@ -59,44 +59,25 @@ processor.value = unified()
   .use(rehypeHighlight)
   .use(rehypeRewrite, {
     rewrite: (node, index, parent) => {
-      // if (index === 0 && parent.type === 'root') {
-        // console.log('parent ', parent)
-      // }
       if (node.type === 'element') {
         if (node.tagName.startsWith('h') ) {
           const id = unref(useChangeCase([...node.children].find(child => child.type === 'text').value, 'paramCase'))
-          node = useAddHeadingClasses(node, id)
+          node = useAddCssSelectors(node, id, ['heading-anchor'])
           if (!props.disableHeadingLinks) {
             node = useAddCopyButton(node, id)
           }
         }
-        // if (node.tagName === 'pre') {
-        //   Array.isArray(node.properties.className)
-        //   ? node.properties.className.push('code-wrapper')
-        //   : node.properties.className = ['code-wrapper' ]
-        //   node.children.splice( 0, 0,
-        //     {
-        //       type: 'element',
-        //       tagName: 'button',
-        //       properties: {
-        //         className: ['copy-button'],
-        //         'data-type': 'code'
-        //       },
-        //       children: [{ type: 'text', value: 'Copy' }]
-        //     }
-        //   )
-        // }
-        // if (node.tagName === 'code') {
-        //   if (parent.tagName === 'pre') {
-        //     Array.isArray(node.properties.className)
-        //     ? node.properties.className.push('code-block')
-        //     : node.properties.className = ['code-block' ]
-        //     const language = [...node.properties.className].find(str => str.startsWith('language-'))
-        //     if (language) {
-        //       parent.properties['data-language'] = language.replace('language-', '')
-        //     }
-        //   }
-        // }
+        if (node.tagName === 'pre') {
+          node = useAddCssSelectors(node, false, ['code-wrapper'])
+          node = useAddCopyButton(node)
+        }
+        if (node.tagName === 'code' && parent.tagName === 'pre') {
+          node = useAddCssSelectors(node, false, ['code-block'])
+          const language = [...node.properties.className].find(str => str.startsWith('language-'))
+          if (language) {
+            parent = useAddDataAttributes(parent, { 'data-language': language.replace('language-', '') })
+          }
+        }
       }
     }
   })
