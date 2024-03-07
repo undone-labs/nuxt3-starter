@@ -109,7 +109,7 @@ export default defineNuxtConfig({
     modules: {
       button: { enable: true },
       form: { enable: true },
-      'remarkdown-parser': { enable: true },
+      'markdown-parser': { enable: true },
       auth: {
         enable: false,
         github: {

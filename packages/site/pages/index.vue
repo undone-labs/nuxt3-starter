@@ -5,8 +5,6 @@
 
         Index Page
 
-        <ZeroRemarkdownParser :markdown="markdown.raw" />
-
       </div>
     </div>
   </div>
