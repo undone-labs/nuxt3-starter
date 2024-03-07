@@ -5,7 +5,7 @@
 
         Index Page
 
-        <ZeroRemarkdownParser :markdown="data" />
+        <ZeroRemarkdownParser :markdown="markdown.raw" />
 
       </div>
     </div>
@@ -13,12 +13,13 @@
 </template>
 
 <script setup>
-const { data } = await useAsyncData('remarkdown-parser', async () => {
-  const content = await queryContent({
+const { data: markdown } = await useAsyncData('remarkdown-parser', async () => {
+  const result = await queryContent({
     where: {
       _path: { $contains: 'markdown-sample' }
     }
   }).find()
-  return content[0].raw
+  return result[0]
 })
+
 </script>

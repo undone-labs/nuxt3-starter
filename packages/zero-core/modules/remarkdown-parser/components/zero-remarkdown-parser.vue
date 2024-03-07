@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="markdown" >
-    welp
-  </div> -->
   <div class="markdown" v-html="parsed" />
 </template>
 
@@ -10,12 +7,12 @@
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkMath from 'remark-math'
+import remarkSectionize from 'remark-sectionize'
 import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeRewrite from 'rehype-rewrite'
 import rehypeStringify from 'rehype-stringify'
-// import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
 import { unref } from 'vue'
@@ -30,11 +27,6 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
-  },
-  sectionDividers: {
-    type: Boolean,
-    required: false,
-    default: true
   }
 })
 
@@ -47,13 +39,14 @@ const textCopied = 'Copied!'
 const textNotCopiedUrl = 'Click to copy link'
 const textNotCopiedCode = 'Copy'
 const zeroStore = useZeroStore()
-let copyButtons = []
+let copyButtons = ref([])
 
 
 // ============================================================= Setup Processor
 processor.value = unified()
   .use(remarkParse)
   .use(remarkMath)
+  .use(remarkSectionize)
   .use(remarkRehype)
   .use(rehypeKatex)
   .use(rehypeHighlight)
@@ -89,50 +82,17 @@ processor.value.process(props.markdown, (err, file) => {
   if (file.value) { parsed.value = file.value }
 })
 
-
-
-/**
- * @method splitOutputIntoSections
- */
-
-//  const splitOutputIntoSections = (parsed) => {
-//   const content = parsed.split(/(<h\d{1})/g)
-//   const sectionIndexes = []
-//   content.forEach((element, index) => {
-//     if (element.startsWith('<h')) {
-//       sectionIndexes.splice(0, 0, index)
-//     }
-//   })
-//   const sectionedOutput = [...content]
-//   sectionIndexes.forEach((element, index) => {
-//     if (index === 0) {
-//       sectionedOutput.push('</section>')
-//     }
-//     if (props.sectionDividers && index !== (sectionIndexes.length -1)) {
-//       sectionedOutput.splice(element, 0, '<section><hr>')
-//     } else {
-//       sectionedOutput.splice(element, 0, '<section>')
-//     }
-//     if (index !== (sectionIndexes.length -1)) {
-//       sectionedOutput.splice(element, 0, '</section>')
-//     }
-//   })
-//   return sectionedOutput.join('')
-// }
-
-
-
 // ===================================================================== Methods
 /**
  * @method initializeCopyButtons
  */
 
  const initializeCopyButtons = () => {
-  copyButtons = document.querySelectorAll('.markdown .copy-button')
+  copyButtons.value = document.querySelectorAll('.markdown .copy-button')
 
-  const len = copyButtons.length
+  const len = copyButtons.value.length
   for (let i = 0; i < len; i++) {
-    const button = copyButtons[i]
+    const button = copyButtons.value[i]
     const hash = button.getAttribute('data-hash')
     const type = button.getAttribute('data-type')
     button.addEventListener('click', () => {
@@ -140,9 +100,9 @@ processor.value.process(props.markdown, (err, file) => {
       zeroAddTextToClipboard(text)
       zeroStore.setClipboard(text)
       clearCopiedStates()
-      type === 'heading' ?
-        button.setAttribute('data-tooltip', textCopied) :
-        button.innerText = textCopied
+      type === 'heading'
+        ? button.setAttribute('data-tooltip', textCopied)
+        : button.innerText = textCopied
     })
   }
 }
@@ -152,15 +112,12 @@ processor.value.process(props.markdown, (err, file) => {
  */
 
  const clearCopiedStates = () => {
-  const len = copyButtons.length
+  const len = copyButtons.value.length
   for (let i = 0; i < len; i++) {
-    const button = copyButtons[i]
-    const type = button.getAttribute('data-type')
-    if (type === 'heading') {
-      button.setAttribute('data-tooltip', textNotCopiedUrl)
-    } else if (type === 'code') {
-      button.innerText = textNotCopiedCode
-    }
+    const button = copyButtons.value[i]
+    button.getAttribute('data-type') === 'heading'
+      ? button.setAttribute('data-tooltip', textNotCopiedUrl)
+      : button.innerText = textNotCopiedCode
   }
 }
 
