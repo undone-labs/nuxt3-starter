@@ -32,6 +32,7 @@ const props = defineProps({
 
 const parsed = ref(null)
 const processor = ref(null)
+const headingTagNames = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const baseURL = `${runtimeConfig.public.siteUrl}${route.path}`
@@ -53,7 +54,7 @@ processor.value = unified()
   .use(rehypeRewrite, {
     rewrite: (node, index, parent) => {
       if (node.type === 'element') {
-        if (node.tagName.startsWith('h') ) {
+        if (headingTagNames.includes(node.tagName)) {
           const id = unref(useChangeCase([...node.children].find(child => child.type === 'text').value, 'paramCase'))
           node = useAddCssSelectors(node, id, ['heading-anchor'])
           if (!props.disableHeadingLinks) {
