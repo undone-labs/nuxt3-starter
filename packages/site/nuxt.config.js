@@ -138,6 +138,12 @@ export default defineNuxtConfig({
   // ==================================================== [Module] @nuxt/content
   content: {
     watch: false,
+    markdown: {
+      toc: {
+        depth: 2,
+        searcthDepth: 2
+      }
+    },
     sources: {
       data: {
         driver: 'fs',

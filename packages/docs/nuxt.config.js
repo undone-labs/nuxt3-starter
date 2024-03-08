@@ -118,6 +118,12 @@ export default defineNuxtConfig({
   },
   // ==================================================== [Module] @nuxt/content
   content: {
-    watch: false
+    watch: false,
+    markdown: {
+      toc: {
+        depth: 2,
+        searcthDepth: 2
+      }
+    }
   }
 })
