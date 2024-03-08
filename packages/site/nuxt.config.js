@@ -85,7 +85,6 @@ export default defineNuxtConfig({
       BlockBuilder: { enable: true },
       BlockBuilderColumns: { enable: true },
       Dropdown: { enable: true },
-      MarkdownParser: { enable: true },
       Paginator: { enable: true },
       TabbedSlider: { enable: true }
     },

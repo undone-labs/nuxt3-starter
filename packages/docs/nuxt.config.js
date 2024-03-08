@@ -84,8 +84,7 @@ export default defineNuxtConfig({
     components: {
       ApiPreview: { enable: true },
       ApiOverview: { enable: true },
-      Dropdown: { enable: true },
-      MarkdownParser: { enable: true }
+      Dropdown: { enable: true }
     },
     composables: {
       addTextToClipboard: { enable: true },
