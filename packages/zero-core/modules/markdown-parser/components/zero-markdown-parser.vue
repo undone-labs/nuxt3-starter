@@ -57,6 +57,7 @@ processor.value = unified()
         if (headingTagNames.includes(node.tagName)) {
           const id = unref(useChangeCase([...node.children].find(child => child.type === 'text').value, 'paramCase'))
           node = useAddCssSelectors(node, id, ['heading-anchor'])
+          node = useAddDataAttributes(node, { 'data-id': useId() })
           if (!props.disableHeadingLinks) {
             node = useAddCopyButton(node, id)
           }
