@@ -50,7 +50,7 @@ processor.value = unified()
   .use(remarkSectionize)
   .use(remarkRehype)
   .use(rehypeKatex, { output: 'mathml' })
-  .use(rehypeHighlight)
+  .use(rehypeHighlight, { detect: true })
   .use(rehypeRewrite, {
     rewrite: (node, index, parent) => {
       if (node.type === 'element') {
