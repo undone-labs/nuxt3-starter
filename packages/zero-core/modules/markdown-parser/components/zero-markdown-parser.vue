@@ -49,7 +49,7 @@ processor.value = unified()
   .use(remarkMath)
   .use(remarkSectionize)
   .use(remarkRehype)
-  .use(rehypeKatex)
+  .use(rehypeKatex, { output: 'mathml' })
   .use(rehypeHighlight)
   .use(rehypeRewrite, {
     rewrite: (node, index, parent) => {
