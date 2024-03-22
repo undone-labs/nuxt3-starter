@@ -44,12 +44,14 @@ const selected = ref(props.slides[0]?.slug)
 emit('slideChanged', selected.value)
 
 // ======================================================================= Hooks
-onMounted(() => {
-  $bus.$on('ZeroTabbedSlider__changeTab', payload => {
-    if (props.sliderId === payload.id) {
-      changeTab(payload.slug)
-    }
-  })
+$bus.$on('ZeroTabbedSlider__changeTab', payload => {
+  if (props.sliderId === payload.id) {
+    changeTab(payload.slug)
+  }
+})
+
+onBeforeUnmount(() => {
+  $bus.$off('ZeroTabbedSlider__changeTab')
 })
 
 // ===================================================================== Methods

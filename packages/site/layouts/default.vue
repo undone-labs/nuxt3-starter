@@ -11,6 +11,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import Seo from '@/data/seo.json'
+
 // ======================================================================= Setup
 if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   useHead({
@@ -26,16 +29,7 @@ if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches)
 
 // ======================================================================== Data
 const zeroStore = useZeroStore()
-
-await useAsyncData('seo', async () => {
-  let content = await queryContent({
-    where: {
-      _file: { $contains: 'data/seo.json' }
-    }
-  }).find()
-  content = content[0] || {}
-  zeroStore.setSeo(content)
-})
+zeroStore.setSeo(Seo || {})
 
 const { $seo } = useNuxtApp()
 $seo()
