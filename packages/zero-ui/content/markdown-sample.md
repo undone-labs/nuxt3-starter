@@ -1,9 +1,5 @@
 ### Ante te Perditionis
 
-:::tip Tip Block
-Pellentesque ut tristique neque. Ut at posuere massa. Nullam mollis lectus quis nisl efficitur, nec pretium eros varius. Ut at ultricies lacus, nec fringilla urna. Morbi vitae purus tortor. Curabitur sed nisl id ante hendrerit condimentum. Nam suscipit sapien nulla, condimentum semper quam accumsan eu. Praesent et odio eget tellus facilisis ultricies at vestibulum orci.
-:::
-
 Victualibus secuti ad non-te-cum auxilium gubernia te notitiam est securus mi subsecutum director te Consilia disordo possujnus. Lius indignitatem odoratus QuI-natus ante, Polisniinus gradum sacrilegum regressum est feliciter subsolanea.
 
 Fuga saepe Labefactari segete et tui adipiscing. Amet carbone dissimillimas iste sodales erat perniciosam nam sunt-bannis ullam eum nascetur.

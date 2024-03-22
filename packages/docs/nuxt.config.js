@@ -84,8 +84,7 @@ export default defineNuxtConfig({
     components: {
       ApiPreview: { enable: true },
       ApiOverview: { enable: true },
-      Dropdown: { enable: true },
-      MarkdownParser: { enable: true }
+      Dropdown: { enable: true }
     },
     composables: {
       addTextToClipboard: { enable: true },
@@ -104,6 +103,7 @@ export default defineNuxtConfig({
     },
     modules: {
       button: { enable: true },
+      'markdown-parser': { enable: true },
       algolia: {
         enable: false,
         apiKey: process.env.ALGOLIA_API_KEY,
@@ -117,6 +117,12 @@ export default defineNuxtConfig({
   },
   // ==================================================== [Module] @nuxt/content
   content: {
-    watch: false
+    watch: false,
+    markdown: {
+      toc: {
+        depth: 2,
+        searcthDepth: 2
+      }
+    }
   }
 })

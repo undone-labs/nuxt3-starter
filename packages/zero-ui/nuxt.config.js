@@ -80,7 +80,6 @@ export default defineNuxtConfig({
       ApiPreview: { enable: true },
       ApiOverview: { enable: true },
       Dropdown: { enable: true },
-      MarkdownParser: { enable: true },
       Paginator: { enable: true },
       TabbedSlider: { enable: true }
     },
@@ -106,6 +105,7 @@ export default defineNuxtConfig({
       form: { enable: true },
       accordion: { enable: true},
       alert: { enable: true },
+      'markdown-parser': { enable: true},
       algolia: {
         enable: false
         // apiKey: process.env.ALGOLIA_API_KEY,

@@ -84,11 +84,10 @@ export const useZeroDocsStore = defineStore('docs', () => {
     }
     magellanLinks.value = magellanLinks.value.concat(headings.reduce((acc, item) => {
       acc.push({
-        level: `level-${item.localName}`,
+        level: `level-h${item.depth}`,
         hash: `#${item.id}`,
         id: item.id,
-        sectionId: item.getAttribute('section'),
-        text: item.textContent.replace('#', '')
+        text: item.text
       })
       return acc
     }, []))
@@ -100,7 +99,7 @@ export const useZeroDocsStore = defineStore('docs', () => {
    */
 
   const setActiveLinkMarkerHeight = () => {
-    const firstLinkElement = document.querySelector(`[link-hash]`)
+    const firstLinkElement = document.querySelector(`[link-id]`)
     if (firstLinkElement) {
       activeLinkMarkerHeight.value = firstLinkElement.offsetHeight
     }

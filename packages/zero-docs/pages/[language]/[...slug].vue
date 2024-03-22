@@ -33,8 +33,7 @@
               id="markdown"
               :markdown="section.raw"
               :section="content.length > 1 ? section._path.split('/').pop() : ''"
-              class="markdown"
-              @found-heading-nodes="docsStore.compileMagellanLinks" />
+              class="markdown" />
 
             <ZeroApiOverview
               v-if="section.apiOverview"
@@ -162,7 +161,7 @@ const generatePageContent = () => {
   }
   const array = content.value.filter(item => item._extension === 'md' && !item._file.includes('src.md'))
   array.forEach(mdContent => {
-
+    docsStore.compileMagellanLinks([...mdContent.body.toc.links])
     const jsonData = jsonContent.value.find(item => item._path === mdContent._path)
     if (jsonData) {
       if (Object.hasOwn(jsonData, 'swagger')) {

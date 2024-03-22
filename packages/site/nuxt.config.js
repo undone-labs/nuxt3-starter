@@ -85,7 +85,6 @@ export default defineNuxtConfig({
       BlockBuilder: { enable: true },
       BlockBuilderColumns: { enable: true },
       Dropdown: { enable: true },
-      MarkdownParser: { enable: true },
       Paginator: { enable: true },
       TabbedSlider: { enable: true }
     },
@@ -109,6 +108,7 @@ export default defineNuxtConfig({
     modules: {
       button: { enable: true },
       form: { enable: true },
+      'markdown-parser': { enable: true },
       auth: {
         enable: false,
         github: {
@@ -137,6 +137,12 @@ export default defineNuxtConfig({
   // ==================================================== [Module] @nuxt/content
   content: {
     watch: false,
+    markdown: {
+      toc: {
+        depth: 2,
+        searcthDepth: 2
+      }
+    },
     sources: {
       data: {
         driver: 'fs',
