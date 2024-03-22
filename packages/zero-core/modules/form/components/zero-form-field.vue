@@ -136,6 +136,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  $bus.$off('fieldValueUpdated')
   if (deregisterOnDestroy) {
     store.removeField(id)
   } else {

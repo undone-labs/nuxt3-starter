@@ -30,6 +30,11 @@
 <script setup>
 // ======================================================================= Props
 const props = defineProps({
+  id: {
+    type: String,
+    required: false,
+    default: ''
+  },
   toggleOn: {
     type: String,
     required: false,
@@ -49,14 +54,16 @@ const props = defineProps({
 
 const emit = defineEmits(['dropdownPanelToggled', 'optionSelected'])
 
+const { $bus } = useNuxtApp()
+
 // ======================================================================== Data
 const panelOpen = ref(false)
 const selected = ref(props.defaultOption)
 
 // ==================================================================== Watchers
-watch(panelOpen, (state) => { emit('dropdownPanelToggled', state) })
+watch(panelOpen, state => { emit('dropdownPanelToggled', state) })
 
-watch(selected, (val) => { emit('optionSelected', val) })
+watch(selected, val => { emit('optionSelected', val) })
 
 // ===================================================================== Methods
 /**
@@ -97,6 +104,17 @@ const setSelected = value => {
 const isSelected = value => {
   return value === selected.value
 }
+
+// ======================================================================= Hooks
+$bus.$on('zero-dropdown__close', id => {
+  if (id === props.id) {
+    panelOpen.value = false
+  }
+})
+
+onBeforeUnmount(() => {
+  $bus.$off('zero-dropdown__close')
+})
 </script>
 
 <style lang="scss" scoped>

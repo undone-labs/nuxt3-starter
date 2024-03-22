@@ -3,10 +3,11 @@
   "description": "Frontend for a marketing site",
   "version": "1.0.0",
   "scripts": {
-    "build": "nuxi build",
     "dev": "nuxi dev --no-clear",
-    "preview": "nuxi preview",
+    "build": "nuxi build",
     "generate": "nuxi generate",
+    "start": "bash ./dev-start.sh",
+    "serve": "npx serve .output/public --ssl-cert=../../localhost_cert.pem --ssl-key=../../localhost_key.pem",
     "upgrade-nuxt": "nuxi upgrade --force"
   },
   "dependencies": {

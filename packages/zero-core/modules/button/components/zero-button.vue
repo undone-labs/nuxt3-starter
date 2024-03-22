@@ -70,11 +70,11 @@ const component = computed(() => {
 })
 
 // ===================================================================== Methods
-const clickHandler = (e) => {
+const clickHandler = async e => {
   e.stopPropagation()
   if (!disabled.value) {
     if (typeof props.id === 'string') {
-      buttonStore.setButton({ id: props.id, loading: true })
+      await buttonStore.setButton({ id: props.id, loading: true })
     }
     emit('clicked', e)
   }
