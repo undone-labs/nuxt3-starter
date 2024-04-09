@@ -15,7 +15,7 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
    */
 
   const setAlert = payload => {
-    alerts.value[payload.id] = payload.status
+    alerts.value[payload.id] = payload
   }
 
   /**
@@ -38,8 +38,11 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
    * @method openAlert
    */
 
-  const openAlert = alertId => {
-    alerts.value[alertId] = 'open'
+  const openAlert = (alertId, data) => {
+    Object.assign(alerts.value[alertId], {
+      status: 'open',
+      data
+    })
   }
 
   /**
@@ -47,7 +50,10 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
    */
 
   const closeAlert = alertId => {
-    alerts.value[alertId] = 'closed'
+    Object.assign(alerts.value[alertId], {
+      status: 'closed',
+      data: null
+    })
   }
 
   // ==================================================================== return

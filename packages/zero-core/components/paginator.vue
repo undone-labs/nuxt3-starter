@@ -80,9 +80,17 @@ const incrementPage = (action, page) => {
   }
   if (currentPage.value !== page) {
     emit('pageIncremented', {
-      page,
+      page: page + 1,
       offset: page * props.limit
     })
   }
 }
 </script>
+
+<style lang="scss" scoped>
+// ///////////////////////////////////////////////////////////////////// General
+.paginator {
+  display: flex;
+  flex-direction: row;
+}
+</style>

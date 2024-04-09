@@ -1,7 +1,9 @@
 <template>
   <div :class="['alert', { open }]">
 
-    <slot :close-alert="closeAlert" />
+    <slot
+      :close-alert="closeAlert"
+      :data="data" />
 
   </div>
 </template>
@@ -28,7 +30,9 @@ alertStore.setAlert({
 const { alerts } = storeToRefs(alertStore)
 
 // ==================================================================== Computed
-const open = computed(() => alertStore.getAlert(props.alertId) === 'open')
+const alert = computed(() => alertStore.getAlert(props.alertId))
+const open = computed(() => alert.value.status === 'open')
+const data = computed(() => alert.value.data)
 
 // ======================================================================= Hooks
 onBeforeUnmount(() => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown" v-html="parsed" />
+  <article ref="markdownRef" class="markdown" v-html="parsed" />
 </template>
 
 <script setup>
@@ -15,7 +15,6 @@ import rehypeRewrite from 'rehype-rewrite'
 import rehypeStringify from 'rehype-stringify'
 
 import { useChangeCase } from '@vueuse/integrations/useChangeCase'
-import { unref } from 'vue'
 
 // ======================================================================== Data
 const props = defineProps({
@@ -40,8 +39,10 @@ const textCopied = 'Copied!'
 const textNotCopiedUrl = 'Click to copy link'
 const textNotCopiedCode = 'Copy'
 const zeroStore = useZeroStore()
+const markdownRef = ref(null)
 let copyButtons = ref([])
 
+const emit = defineEmits(['foundHeadingNodes'])
 
 // ============================================================= Setup Processor
 processor.value = unified()
@@ -55,11 +56,14 @@ processor.value = unified()
     rewrite: (node, index, parent) => {
       if (node.type === 'element') {
         if (headingTagNames.includes(node.tagName)) {
-          const id = unref(useChangeCase([...node.children].find(child => child.type === 'text').value, 'paramCase'))
-          node = useAddCssSelectors(node, id, ['heading-anchor'])
-          node = useAddDataAttributes(node, { 'data-id': useId() })
-          if (!props.disableHeadingLinks) {
-            node = useAddCopyButton(node, id)
+          const text = node.children.find(child => child.type === 'text')?.value
+          if (text) {
+            const id = unref(useChangeCase(text, 'paramCase').value)
+            node = useAddCssSelectors(node, id, ['heading-anchor'])
+            node = useAddDataAttributes(node, { 'data-id': useId() })
+            if (!props.disableHeadingLinks) {
+              node = useAddCopyButton(node, id)
+            }
           }
         }
         if (node.tagName === 'pre') {
@@ -123,11 +127,20 @@ processor.value.process(props.markdown, (err, file) => {
   }
 }
 
+/**
+ * @method collectAndEmitHeadingNodes
+ */
+
+const collectAndEmitHeadingNodes = () => {
+  const nodes = Array.from(markdownRef.value.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+  emit('foundHeadingNodes', nodes)
+}
+
 // ======================================================================= Hooks
 onMounted(async () => {
   await nextTick(() => {
     initializeCopyButtons()
+    collectAndEmitHeadingNodes()
   })
 })
-
 </script>

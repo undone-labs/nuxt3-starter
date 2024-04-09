@@ -19,6 +19,8 @@ export default defineNuxtModule({
         '$fetch',
         'useCloneDeep',
         'defineStore',
+        'storeToRefs',
+        'acceptHMRUpdate',
         'defineNuxtConfig',
         'definePageMeta',
         'defineI18nConfig',
