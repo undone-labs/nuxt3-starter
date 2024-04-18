@@ -16,6 +16,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   const loggedIn = computed(() => session.value !== null && authState.value === 'authenticated')
   const ethereum = computed(() => process.client ? window.ethereum : undefined)
   const metamaskInstalled = computed(() => ethereum.value && ethereum.value.isMetaMask)
+  const userSettings = computed(() => user.value?.settings || {})
 
   // =================================================================== actions
   /**
@@ -86,6 +87,23 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     user.value = payload
   }
 
+  /**
+   * @method postUpdateUserSetting
+   */
+
+  const postUpdateUserSetting = async payload => {
+    try {
+      const response = await useFetchAuth('/post-update-user', {
+        method: 'post',
+        body: Object.assign(payload, { _id: user.value._id })
+      })
+      user.value.settings = response.settings
+      return response
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   // ==================================================================== return
   return {
     // ----- state
@@ -97,12 +115,14 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     loggedIn,
     ethereum,
     metamaskInstalled,
+    userSettings,
     // ----- actions
     setAuthState,
     setSession,
     getOrganization,
     setOrganization,
     getUser,
-    setUser
+    setUser,
+    postUpdateUserSetting
   }
 })
