@@ -9,7 +9,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   // ===================================================================== state
   const authState = ref('unauthenticated') // 'unauthenticated' → 'authenticating' → 'finalizing' → 'authenticated'
   const session = ref(null)
-  const organization = ref(null)
   const user = ref(null)
 
   // ================================================================== computed
@@ -21,6 +20,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   // =================================================================== actions
   /**
    * @method setAuthState
+   * ---------------------------------------------------------------------------
    */
 
   const setAuthState = state => {
@@ -29,6 +29,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setSession
+   * ---------------------------------------------------------------------------
    */
 
   const setSession = payload => {
@@ -36,40 +37,14 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
-   * @method getOrganization
-   */
-
-  const getOrganization = async organizationId => {
-    try {
-      const response = await useFetchAuth('/get-organization', {
-        method: 'get',
-        query: { organizationId }
-      })
-      setOrganization(response)
-      return response
-    } catch (e) {
-      setOrganization(null)
-      return null
-    }
-  }
-
-  /**
-   * @method setOrganization
-   */
-
-  const setOrganization = payload => {
-    organization.value = payload
-  }
-
-  /**
    * @method getUser
+   * ---------------------------------------------------------------------------
    */
 
-  const getUser = async userId => {
+  const getUser = async () => {
     try {
       const response = await useFetchAuth('/get-user', {
-        method: 'get',
-        query: { userId }
+        method: 'get'
       })
       setUser(response)
       return response
@@ -81,6 +56,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setUser
+   * ---------------------------------------------------------------------------
    */
 
   const setUser = payload => {
@@ -89,6 +65,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method postUpdateUserSetting
+   * ---------------------------------------------------------------------------
    */
 
   const postUpdateUserSetting = async payload => {
@@ -107,7 +84,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     // ----- state
     authState,
     session,
-    organization,
     user,
     // ----- computed
     loggedIn,
@@ -117,8 +93,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     // ----- actions
     setAuthState,
     setSession,
-    getOrganization,
-    setOrganization,
     getUser,
     setUser,
     postUpdateUserSetting

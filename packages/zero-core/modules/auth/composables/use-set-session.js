@@ -11,10 +11,12 @@ export const useSetSession = async incoming => {
   const authConfig = config.public.auth
   let redirect = authConfig.redirectAfterLogin === '' ? {} : authConfig.redirectAfterLogin || {}
   const authStore = useZeroAuthStore()
+  const orgStore = useZeroOrgStore()
   authStore.setSession(session)
   authStore.setAuthState('finalizing')
-  const user = await authStore.getUser(session.userId)
-  const organization = await authStore.getOrganization(session.primaryOrganizationId)
+  const user = await authStore.getUser()
+  await orgStore.getOrganization(user.primaryOrganizationId)
+  await orgStore.getOrganizationList()
   if (typeof redirect === 'object' && redirect.hasOwnProperty('path') && redirect.hasOwnProperty('match')) {
     const match = redirect.match
     redirect = redirect.path
