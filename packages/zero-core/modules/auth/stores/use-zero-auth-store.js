@@ -43,14 +43,17 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
-   * @method getCurrentlyLoggedInUser
+   * @method getUser
    * ---------------------------------------------------------------------------
    */
 
-  const getCurrentlyLoggedInUser = async () => {
+  const getUser = async id => {
     try {
       const response = await useFetchAuth('/get-user', {
-        method: 'get'
+        method: 'get',
+        ...(id && {
+          query: { id }
+        })
       })
       setUser(response)
       return response
@@ -163,6 +166,22 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     }
   }
 
+  /**
+   * @method makeWorkspacePrimary
+   * ---------------------------------------------------------------------------
+   */
+
+  const makeWorkspacePrimary = async id => {
+    try {
+      user.value = await useFetchAuth('/post-make-workspace-primary', {
+        method: 'post',
+        body: { id }
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   // ==================================================================== return
   return {
     // ----- state
@@ -179,14 +198,15 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     // ----- actions
     setAuthState,
     setSession,
-    getCurrentlyLoggedInUser,
+    getUser,
     setUser,
     postUpdateUserSetting,
     getUserWorkspaceInviteList,
     updateUserWorkspaceInvite,
     acceptWorkspaceInvite,
     rejectWorkspaceInvite,
-    leaveWorkspace
+    leaveWorkspace,
+    makeWorkspacePrimary
   }
 })
 

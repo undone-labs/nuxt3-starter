@@ -10,12 +10,10 @@ export const useLogout = async () => {
   const redirectAfterLogout = authConfig.redirectAfterLogout === '' ? null : authConfig.redirectAfterLogout
   const authStore = useZeroAuthStore()
   const buttonStore = useZeroButtonStore()
+  await authStore.setAuthState('unauthenticated')
   await useFetchAuth('/logout', { method: 'post' })
   if (redirectAfterLogout) {
     await navigateTo(redirectAfterLogout)
   }
-  authStore.setAuthState('unauthenticated')
-  authStore.setSession(null)
-  authStore.setUser(null)
   buttonStore.setButton({ id: 'auth-logout', loading: false })
 }

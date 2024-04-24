@@ -11,6 +11,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
   const authStore = useZeroAuthStore(nuxtApp.$pinia)
   const workspaceStore = useZeroWorkspaceStore(nuxtApp.$pinia)
+  const { workspaceList } = storeToRefs(workspaceStore)
   try {
     const meta = to.meta
     const guarded = meta.guarded
@@ -26,9 +27,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     } else if (authenticated) {
       await authStore.setSession(authenticated)
       if (!user) {
-        user = await authStore.getCurrentlyLoggedInUser()
-        await workspaceStore.getWorkspace(user.primaryWorkspaceId)
+        user = await authStore.getUser(authenticated.userId)
         await workspaceStore.getWorkspaceList()
+        const currentWorkspace = workspaceList.value.find(obj => obj.slug === to.params.workspace)
+        await workspaceStore.getWorkspace(currentWorkspace ? currentWorkspace._id : user.primaryWorkspace._id)
       }
       authStore.setAuthState('authenticated')
     }

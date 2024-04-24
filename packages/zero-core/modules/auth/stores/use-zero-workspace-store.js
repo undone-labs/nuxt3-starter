@@ -92,10 +92,8 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       })
       workspaceList.value.push(response.workspace)
       authStore.setUser(response.user) // update user
-      return response
     } catch (e) {
       console.log(e)
-      return null
     }
   }
 
