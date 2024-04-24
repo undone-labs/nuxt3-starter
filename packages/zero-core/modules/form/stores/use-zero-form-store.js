@@ -14,6 +14,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
 
   /**
    * @method registerModel
+   * ---------------------------------------------------------------------------
    */
 
   const registerModel = model => {
@@ -22,6 +23,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
 
   /**
    * @method setField
+   * ---------------------------------------------------------------------------
    */
 
   const setField = incoming => {
@@ -36,6 +38,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
 
   /**
    * @method removeField
+   * ---------------------------------------------------------------------------
    */
 
   const removeField = id => {
@@ -44,6 +47,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
 
   /**
    * @method setFormSaveState
+   * ---------------------------------------------------------------------------
    */
 
   const setFormSaveState = payload => {
@@ -52,6 +56,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
 
   /**
    * @method removeFormSaveState
+   * ---------------------------------------------------------------------------
    */
 
   const removeFormSaveState = id => {

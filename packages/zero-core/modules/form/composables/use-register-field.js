@@ -22,6 +22,20 @@ const getNullStateValue = scaffold => {
   return value
 }
 
+// ====================================================== convertLabelsToIndexes
+const convertLabelsToIndexes = (labels, options) => {
+  const compiled = []
+  labels.forEach(entry => { // convert labels to indexes so final output ex: [2, 3, 7]
+    const found = options.findIndex(option => option.label === entry)
+    if (found !== -1 && !compiled.includes(found)) {
+      compiled.push(found)
+    } else if (typeof entry === 'number' && options[entry] && !compiled.includes(entry)) {
+      compiled.push(entry)
+    }
+  })
+  return compiled
+}
+
 // ============================================================= getDefaultValue
 const getDefaultValue = (scaffold, model) => {
   const dualValueFields = ['select', 'radio', 'checkbox'] // fields that can contain both a String and a Number (index) as the value/defaultValue
@@ -37,22 +51,18 @@ const getDefaultValue = (scaffold, model) => {
   // If default value is set in the model, get that
   if (model && model.data && model.data.hasOwnProperty(modelKey) && model.data[modelKey] !== null) {
     value = model.data[modelKey]
+    if (dualValueFields.includes(type) && typeof value === 'string') {
+      const compiled = []
+      value = value.split(', ')
+      value = convertLabelsToIndexes(value, options)
+    }
   }
   // defaultValue can be an array of indexes, a single index Number, an array of labels or a single label String
   if (dualValueFields.includes(type)) {
     if (!Array.isArray(value)) { // if defaultValue is not an array, turn it into one
       value = [value]
     }
-    const compiled = []
-    value.forEach((entry) => { // convert labels to indexes so final output ex: [2, 3, 7]
-      const found = options.findIndex(option => option.label === entry)
-      if (found !== -1 && !compiled.includes(found)) {
-        compiled.push(found)
-      } else if (typeof entry === 'number' && options[entry] && !compiled.includes(entry)) {
-        compiled.push(entry)
-      }
-    })
-    value = compiled
+    value = convertLabelsToIndexes(value, options)
   }
   return value
 }

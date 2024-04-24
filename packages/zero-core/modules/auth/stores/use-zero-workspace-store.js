@@ -29,7 +29,25 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         query: { id }
       })
       setWorkspace(response)
-      workspace.value = response
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  /**
+   * @method updateWorkspace
+   * ---------------------------------------------------------------------------
+   */
+
+   const updateWorkspace = async payload => {
+    try {
+      const response = await useFetchAuth('/post-update-workspace', {
+        method: 'post',
+        body: Object.assign({}, {
+          _id: workspace.value._id
+        }, payload)
+      })
+      setWorkspace(response)
     } catch (e) {
       console.log(e)
     }
@@ -192,6 +210,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
     workspaceInviteList,
     // ----- actions
     getWorkspace,
+    updateWorkspace,
     setWorkspace,
     getWorkspaceList,
     checkWorkspaceExists,

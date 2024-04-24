@@ -2,7 +2,7 @@
   <component
     :is="rootHtmlTag"
     v-if="field && displayField"
-    :class="['field-container', state, { disabled }]">
+    :class="[state, { disabled }]">
 
     <slot
       :field="field"

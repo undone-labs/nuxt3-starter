@@ -79,10 +79,11 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   const postUpdateUserSetting = async payload => {
     try {
-      await useFetchAuth('/post-update-user', {
+      const response = await useFetchAuth('/post-update-user', {
         method: 'post',
-        body: Object.assign(payload, { _id: user.value._id })
+        body: Object.assign({}, payload, { _id: user.value._id })
       })
+      setUser(response)
     } catch (e) {
       console.log(e)
     }
