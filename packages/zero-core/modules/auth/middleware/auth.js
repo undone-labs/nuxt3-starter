@@ -1,7 +1,7 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '../stores/use-zero-auth-store'
-import { useZeroOrgStore } from '../stores/use-zero-org-store'
+import { useZeroWorkspaceStore } from '../stores/use-zero-workspace-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -10,16 +10,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const { public: { auth: authConfig } } = useRuntimeConfig()
   const redirectUnauthenticated = authConfig.redirectUnauthenticated === '' ? null : authConfig.redirectUnauthenticated
   const authStore = useZeroAuthStore(nuxtApp.$pinia)
-  const orgStore = useZeroOrgStore(nuxtApp.$pinia)
+  const workspaceStore = useZeroWorkspaceStore(nuxtApp.$pinia)
   try {
-    const headers = useRequestHeaders(['cookie'])
     const meta = to.meta
     const guarded = meta.guarded
     if (meta.hasOwnProperty('authenticate') && !meta.authenticate) { return }
     let user = authStore.user
     const authenticated = await useFetchAuth('/authenticate', {
       method: 'post',
-      headers,
       query: { guarded }
     })
     if (guarded && !authenticated) {
@@ -28,9 +26,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     } else if (authenticated) {
       await authStore.setSession(authenticated)
       if (!user) {
-        user = await authStore.getUser()
-        await orgStore.getOrganization(user.primaryOrganizationId)
-        await orgStore.getOrganizationList()
+        user = await authStore.getCurrentlyLoggedInUser()
+        await workspaceStore.getWorkspace(user.primaryWorkspaceId)
+        await workspaceStore.getWorkspaceList()
       }
       authStore.setAuthState('authenticated')
     }

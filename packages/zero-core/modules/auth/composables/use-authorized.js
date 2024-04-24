@@ -3,10 +3,10 @@
 export const useAuthorized = (perm, method) => {
   const authStore = useZeroAuthStore()
   const { user } = storeToRefs(authStore)
-  const orgStore = useZeroOrgStore()
-  const { organization } = storeToRefs(orgStore)
+  const workspaceStore = useZeroWorkspaceStore()
+  const { workspace } = storeToRefs(workspaceStore)
 
-  const role = organization.value.roles.find(role => role.users.includes(user.value._id))
+  const role = workspace.value.roles.find(role => role.users.includes(user.value._id))
   if (!role) { return false }
 
   const userAccessLevel = role.permissions[perm]

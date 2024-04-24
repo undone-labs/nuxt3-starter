@@ -5,7 +5,7 @@
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useFetchAuth = async (url, body = {}) => {
-  body.url = url
+  body.url = url.charAt(0) !== '/' ? url = `/${url}` : url
   const headers = Object.assign(
     {},
     body.headers || {},
@@ -19,6 +19,6 @@ export const useFetchAuth = async (url, body = {}) => {
     })
     return response._data
   } catch (e) {
-    return undefined
+    throw e
   }
 }
