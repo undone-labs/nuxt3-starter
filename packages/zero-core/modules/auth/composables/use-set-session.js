@@ -2,6 +2,7 @@
 // -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '../stores/use-zero-auth-store'
 import { useZeroButtonStore } from '../../button/stores/use-zero-button-store'
+import { useZeroToasterStore } from '../../toaster/stores/use-zero-toaster-store'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -13,6 +14,7 @@ export const useSetSession = async (incoming) => {
   let redirect = authConfig.redirectAfterLogin === '' ? {} : authConfig.redirectAfterLogin || {}
   const authStore = useZeroAuthStore()
   const buttonStore = useZeroButtonStore()
+  const toasterStore = useZeroToasterStore()
   authStore.setSession(session)
   buttonStore.setButton({ id: loader, loading: false })
   const user = await authStore.getUser(session.userId)
@@ -23,8 +25,11 @@ export const useSetSession = async (incoming) => {
       redirect = redirect.replace(key, user.github[match[key]])
     })
   }
+  toasterStore.addMessage({
+    type: 'toast',
+    message: 'You are now logged in'
+  })
   if (redirect) {
     navigateTo(redirect)
   }
-  // app.$toaster.add(data.toast)
 }

@@ -87,6 +87,7 @@ export default defineNuxtConfig({
     composables: {
       addTextToClipboard: { enable: true },
       delay: { enable: true },
+      highlightCode: { enable: true },
       ls: {
         enable: true
         // prefix: 'nuxt3starter__'
@@ -106,6 +107,11 @@ export default defineNuxtConfig({
       form: { enable: true },
       accordion: { enable: true},
       alert: { enable: true },
+      toaster: {
+        enable: true,
+        display: 3,
+        timeout: 5000
+      },
       algolia: {
         enable: false
         // apiKey: process.env.ALGOLIA_API_KEY,

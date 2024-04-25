@@ -22,8 +22,10 @@ const props = defineProps({
 // ======================================================================= Setup
 const emit = defineEmits(['completed'])
 const alertStore = useZeroAlertStore()
-const id = `${props.alertId}|${zeroUuid().v4()}`
-alertStore.setAlert({ id, alertId: props.alertId, isOpen: false })
+alertStore.setAlert({
+  alertId: props.alertId,
+  isOpen: false
+})
 
 // ======================================================================== Data
 const { alerts } = storeToRefs(alertStore)

@@ -335,6 +335,9 @@ onBeforeUnmount(() => {
     position: sticky;
     top: calc(#{$siteHeaderHeight} + 1.75rem);
     scroll-margin-top: calc(#{$siteHeaderHeight} + 1.75rem);
+    padding: 0 toRem(6);
+    margin-left: toRem(-6);
+    border-radius: toRem(4);
   }
   @include customMaxMQ(toRem(1366)) {
     padding-left: 2rem;
