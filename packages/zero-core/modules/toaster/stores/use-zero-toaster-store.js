@@ -1,11 +1,13 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
-import zeroUuid from '../../../composables/uuid'
 import { defineStore } from 'pinia'
+import zeroUuid from '../../../composables/uuid'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useZeroToasterStore = defineStore('zero-toaster', () => {
+  const config = useRuntimeConfig().public.toaster
+
   // ===================================================================== state
   const toasts = ref([])
 
@@ -16,48 +18,25 @@ export const useZeroToasterStore = defineStore('zero-toaster', () => {
    */
 
   const addMessage = payload => {
-    // const config = useRuntimeConfig().public.toaster
-    // const len = toasts.value.length
-    // const display = config.display
-    // payload.
-    // console.log('✅', payload.id)
-    toasts.value.unshift(Object.assign(payload, {
-      id: zeroUuid().v4(),
-      animate: 'in'
-    }))
-    // toasts.value.push(payload)
-    // if (len >= display) {
-    //   hideMessage(toasts.value[len - display].id)
-    // }
-    // console.log(toasts.value)
-    // return payload.id
+    const from = payload.from || config.from || 'top'
+    const entry = Object.assign(payload, {
+      id: zeroUuid().v4()
+    })
+    if (from === 'top') {
+      toasts.value.unshift(entry)
+    } else if (from === 'bottom') {
+      toasts.value.push(entry)
+    }
   }
 
   /**
-   * @method hideMessage
+   * @method removeMessage
    */
 
-  const hideMessage = id => {
+  const removeMessage = id => {
     const index = toasts.value.findIndex(obj => obj && obj.id === id)
-    const toast = Object.assign({}, toasts.value[index], { animate: 'out' })
-    toasts.value.splice(index, 1, toast)
+    toasts.value.splice(index, 1)
   }
-
-  /**
-   * @method replaceMessage
-   *
-   * @note the below action will be wired up when needed in the future
-   */
-
-  // const replaceMessage = payload => {
-  //   const id = payload.id
-  //   const toast = payload.toast
-  //   const index = toasts.value.findIndex(obj => obj && obj.id === id)
-  //   if (index !== -1) {
-  //     toasts.value.splice(payload.index, 1, payload.toast)
-  //   }
-  //   return id
-  // }
 
   // ==================================================================== return
   return {
@@ -65,7 +44,6 @@ export const useZeroToasterStore = defineStore('zero-toaster', () => {
     toasts,
     // ----- actions
     addMessage,
-    hideMessage
-    // replaceMessage
+    removeMessage
   }
 })

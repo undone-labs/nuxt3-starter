@@ -1,57 +1,37 @@
 <template>
-  <div
-    ref="toasterRef"
-    class="toaster">
+  <div :class="['toaster', `from-${from}`]">
 
-    <template v-for="toast in toasts">
+    <transition-group :name="`toast-slide-in__${from}`">
       <ZeroToast
-        v-if="toast"
+        v-for="toast in toasts"
         :key="toast.id"
-        :toast="toast"
-        :toaster-height-initial="toasterHeightInitial"
-        :toaster-height-final="toasterHeightFinal">
+        :toast="toast">
 
         <template #toast="{ toast }">
           <slot name="toast" :toast="toast" />
         </template>
 
       </ZeroToast>
-    </template>
+    </transition-group>
 
   </div>
 </template>
 
 <script setup>
+// ======================================================================= Setup
+const props = defineProps({
+  from: {
+    type: [String, Object],
+    required: false,
+    default: null
+  }
+})
+
 // ======================================================================== Data
 const store = useZeroToasterStore()
 const { toasts } = storeToRefs(store)
-const route = useRoute()
-
-const toasterRef = ref(null)
-const toasterHeightInitial = ref(0)
-const toasterHeightFinal = ref(0)
-
-/**
- * @note the commented-out code below will be wired up when needed in the future
- */
-
-// ======================================================================= Watch
-watch(toasts.value, async () => {
-  toasterHeightInitial.value = toasterRef.value.clientHeight
-  await nextTick(() => {
-    toasterHeightFinal.value = toasterRef.value.clientHeight
-  })
-})
-
-// ====================================================================== Export
-// const displayToastFromQuery = route => {
-//   const query = route.query
-//   const toast = query.toast
-//   if (toast) {
-//     this.addMessage(JSON.parse(toast))
-//     this.$router.replace({ query: Object.assign({ ...query }, { toast: undefined }) })
-//   }
-// }
+const config = useRuntimeConfig().public.toaster
+const from = props.from || config.from || 'top'
 </script>
 
 <style lang="scss" scoped>
@@ -59,18 +39,55 @@ $padding: 1rem;
 
 // ///////////////////////////////////////////////////////////////////// General
 .toaster {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   position: fixed;
-  top: $padding;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
   z-index: 100000;
-  @include customMaxMQ (32rem) {
+  &.from-top {
     top: $padding;
-    left: 0;
-    width: 100%;
-    padding: 0 $padding;
-    transform: none;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &.from-bottom {
+    bottom: $padding;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/**
+ * 💡 these animations should be edited in an external stylesheet and will
+ * require the use of `!important`
+ */
+
+.toast-slide-in__top {
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  &-leave-to {
+    opacity: 0;
+  }
+}
+
+.toast-slide-in__bottom {
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>
