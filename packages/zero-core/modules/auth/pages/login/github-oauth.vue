@@ -46,7 +46,6 @@ onMounted(async () => {
   })
   window.opener.postMessage({
     id: 'authenticate-github-oauth',
-    action: 'github-oauth-authenticated',
     session
   }, config.public.siteUrl)
   window.close()

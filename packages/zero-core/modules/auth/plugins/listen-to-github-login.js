@@ -10,8 +10,8 @@ const listenToGithubLogin = siteUrl => {
     const buttonStore = useZeroButtonStore()
     window.addEventListener('message', async (e) => {
       const data = e.data
-      if ((e.origin !== siteUrl) || !data || data.action !== 'github-oauth-authenticated' && data.action !== 'close-popup') { return }
-      if (data.id === 'authenticate-github-oauth' && data.hasOwnProperty('session')) {
+      if (e.origin !== siteUrl || !data) { return }
+      if ((data.id === 'authenticate-github-oauth' || data.id === 'authenticate-github-app') && data.hasOwnProperty('session')) {
         useSetSession(data)
       }
       buttonStore.setButton({ id: 'authenticate-github-oauth', loading: false })
