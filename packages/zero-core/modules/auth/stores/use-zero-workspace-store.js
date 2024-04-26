@@ -10,6 +10,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
   // ==================================================================== import
   const authStore = useZeroAuthStore() // eslint-disable-line
   const { user } = storeToRefs(authStore)
+  const toasterStore = useZeroToasterStore() // eslint-disable-line
 
   // ===================================================================== state
   const workspace = ref(null)
@@ -30,7 +31,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       })
       setWorkspace(response)
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 
@@ -48,8 +49,12 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         }, payload)
       })
       setWorkspace(response)
+      toasterStore.addMessage({
+        type: 'success',
+        text: 'Workspace updated'
+      })
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 
@@ -75,8 +80,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       workspaceList.value = response
       return response
     } catch (e) {
-      workspaceList.value = []
-      return null
+      useHandleFetchError(e)
     }
   }
 
@@ -92,7 +96,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         query: { slug }
       })
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
       return false
     }
   }
@@ -111,7 +115,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       workspaceList.value.push(response.workspace)
       authStore.setUser(response.user) // update user
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 
@@ -130,7 +134,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       })
       workspaceInviteList.value = response
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 
@@ -150,10 +154,12 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
           data: incoming
         }
       })
+      toasterStore.addMessage({
+        type: 'success',
+        text: `Workspace invite sent to <strong>${identifier}</strong>`
+      })
     } catch (e) {
-      if (e.status === 422) {
-        console.log(e.message) // display a toast
-      }
+      useHandleFetchError(e)
     }
   }
 
@@ -162,7 +168,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-  const updateWorkspaceInvite = async invite => {
+  const updateWorkspaceInvite = invite => {
     const index = workspaceInviteList.value.findIndex(obj => obj._id === invite._id)
     workspaceInviteList.value.splice(index, 1, invite)
   }
@@ -172,14 +178,18 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-  const revokeWorkspaceInvite = async (strategy, id) => {
+  const revokeWorkspaceInvite = async (strategy, identifier, id) => {
     try {
       await useFetchAuth('/post-revoke-workspace-invite', {
         method: 'post',
         body: { id, strategy }
       })
+      toasterStore.addMessage({
+        type: 'success',
+        text: `Workspace invite for <strong>${identifier}</strong> has been revoked`
+      })
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 
@@ -188,7 +198,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-  const removeMemberFromWorkspace = async id => {
+  const removeMemberFromWorkspace = async (id, identifier) => {
     try {
       await useFetchAuth('/post-remove-member-from-workspace', {
         method: 'post',
@@ -197,8 +207,12 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
           workspaceId: workspace.value._id
         }
       })
+      toasterStore.addMessage({
+        type: 'success',
+        text: `<strong>${identifier}</strong> has been removed from <strong>${workspace.value.name}</strong> workspace`
+      })
     } catch (e) {
-      console.log(e)
+      useHandleFetchError(e)
     }
   }
 

@@ -15,36 +15,33 @@ export default defineEventHandler(async event => {
   const params = body.query
   const method = body.method
   const data = body.body
-
-  const response = await $fetch.raw(url, {
-    method,
-    baseURL: backendUrl,
-    credentials: 'include',
-    headers: { cookie: headers.cookie },
-    ...(config.public.serverFlag === 'development' && {
-      dispatcher: new Agent({
-        connect: {
-          rejectUnauthorized: false
-        }
-      })
-    }),
-    params,
-    body: data
-  })
-
-  for (const header of ['set-cookie', 'cache-control']) {
-    if (response.headers.has(header)) {
-      appendHeader(event, header, response.headers.get(header))
+  try {
+    const response = await $fetch.raw(url, {
+      method,
+      baseURL: backendUrl,
+      credentials: 'include',
+      headers: { cookie: headers.cookie },
+      ...(config.public.serverEnv === 'development' && {
+        dispatcher: new Agent({
+          connect: {
+            rejectUnauthorized: false
+          }
+        })
+      }),
+      params,
+      body: data
+    })
+    for (const header of ['set-cookie', 'cache-control']) {
+      if (response.headers.has(header)) {
+        appendHeader(event, header, response.headers.get(header))
+      }
     }
-  }
-
-  if (!response._data && response.status) {
+    return response._data.payload
+  } catch (e) {
     throw createError({
-      statusCode: e.response.status,
-      statusMessage: e.message,
-      data: e.data,
+      statusCode: e.status,
+      statusMessage: e.data.message,
+      data: e.data
     })
   }
-
-  return response._data.payload
 })

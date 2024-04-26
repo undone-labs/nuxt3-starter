@@ -58,6 +58,8 @@ if (props.id) {
 // ======================================================================== Data
 const { buttons } = storeToRefs(buttonStore)
 
+const { $bus } = useNuxtApp()
+
 // ==================================================================== Computed
 const button = computed(() => buttons.value[props.id])
 const loading = computed(() => button.value?.loading)
@@ -70,6 +72,10 @@ const component = computed(() => {
 })
 
 // ===================================================================== Methods
+/**
+ * @method clickHandler
+ */
+
 const clickHandler = async e => {
   e.stopPropagation()
   if (!disabled.value) {
@@ -79,4 +85,21 @@ const clickHandler = async e => {
     emit('clicked', e)
   }
 }
+
+/**
+ * @method handleSessionExpired
+ */
+
+const handleSessionExpired = () => {
+  if (loading.value) {
+    buttonStore.setButton({ id: props.id, loading: false })
+  }
+}
+
+// ======================================================================= Hooks
+$bus.$on('session-expired', handleSessionExpired)
+
+onBeforeUnmount(() => {
+  $bus.$off('session-expired', handleSessionExpired)
+})
 </script>

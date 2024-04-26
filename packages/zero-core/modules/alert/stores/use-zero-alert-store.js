@@ -50,10 +50,13 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
    */
 
   const closeAlert = alertId => {
-    Object.assign(alerts.value[alertId], {
-      status: 'closed',
-      data: null
-    })
+    const alert = alerts.value[alertId]
+    if (alert) {
+      Object.assign(alert, {
+        status: 'closed',
+        data: null
+      })
+    }
   }
 
   // ==================================================================== return
