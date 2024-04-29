@@ -1,3 +1,14 @@
+/**
+ * This composable can be used inside <template> and inside methods in <script setup>.
+ * In order to handle page-level redirection for failed authorization, please
+ * use the the following in page meta:
+ *
+ * authorize: {
+ *   permission: 'project',
+ *   method: 'read-write'
+ * }
+ */
+
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export const useAuthorized = (perm, method) => {

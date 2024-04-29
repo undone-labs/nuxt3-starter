@@ -8,6 +8,8 @@ import { useFetchAuth } from '../composables/use-fetch-auth'
 export const useZeroAuthStore = defineStore('zero-auth', () => {
   // ==================================================================== import
   const toasterStore = useZeroToasterStore() // eslint-disable-line
+  const workspaceStore = useZeroWorkspaceStore() // eslint-disable-line
+  const { workspace } = storeToRefs(workspaceStore)
 
   // ===================================================================== state
   const authState = ref('unauthenticated') // 'unauthenticated' → 'authenticating' → 'finalizing' → 'authenticated'
@@ -99,7 +101,10 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       const response = await useFetchAuth('/post-update-user', {
         method: 'post',
-        body: Object.assign({}, payload, { _id: user.value._id })
+        body: Object.assign({}, payload, {
+          _id: user.value._id,
+          workspaceId: workspace.value._id
+        })
       })
       setUser(response)
       toasterStore.addMessage({
@@ -120,7 +125,10 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       const response = await useFetchAuth('/get-user-workspace-invite-list', {
         method: 'get',
-        query: { strategy: 'github' }
+        query: {
+          strategy: 'github',
+          workspaceId: workspace.value._id
+        }
       })
       workspaceInviteList.value = response
     } catch (e) {
@@ -147,14 +155,17 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       await useFetchAuth('/post-accept-workspace-invite', {
         method: 'post',
-        body: { id }
+        body: {
+          id,
+          workspaceId: workspace.value._id
+        }
       })
       toasterStore.addMessage({
         type: 'success',
         text: `<strong>${identifier}</strong> workspace joined`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422])
     }
   }
 
@@ -167,14 +178,18 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       await useFetchAuth('/post-reject-workspace-invite', {
         method: 'post',
-        body: { id, strategy }
+        body: {
+          id,
+          strategy,
+          workspaceId: workspace.value._id
+        }
       })
       toasterStore.addMessage({
         type: 'success',
         text: `Rejected invite to <strong>${identifier}</strong> workspace`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422])
     }
   }
 
@@ -187,14 +202,17 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       await useFetchAuth('/post-leave-workspace', {
         method: 'post',
-        body: { id }
+        body: {
+          id,
+          workspaceId: workspace.value._id
+        }
       })
       toasterStore.addMessage({
         type: 'success',
         text: `Left <strong>${identifier}</strong> workspace`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422])
     }
   }
 
@@ -207,14 +225,17 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     try {
       user.value = await useFetchAuth('/post-make-workspace-primary', {
         method: 'post',
-        body: { id }
+        body: {
+          id,
+          workspaceId: workspace.value._id
+        }
       })
       toasterStore.addMessage({
         type: 'success',
         text: `<strong>${identifier}</strong> is now your primary workspace`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422])
     }
   }
 

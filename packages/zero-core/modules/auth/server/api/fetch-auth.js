@@ -39,9 +39,9 @@ export default defineEventHandler(async event => {
     return response._data.payload
   } catch (e) {
     throw createError({
-      statusCode: e.status,
-      statusMessage: e.data.message,
-      data: e.data
+      statusCode: e?.status,
+      statusMessage: e?.data?.message,
+      data: e?.data
     })
   }
 })

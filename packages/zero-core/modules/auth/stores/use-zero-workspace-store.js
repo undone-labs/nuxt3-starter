@@ -2,7 +2,6 @@
 // -----------------------------------------------------------------------------
 import { defineStore } from 'pinia'
 import { useFetchAuth } from '../composables/use-fetch-auth'
-import CloneDeep from 'lodash.cloneDeep'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -45,7 +44,8 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       const response = await useFetchAuth('/post-update-workspace', {
         method: 'post',
         body: Object.assign({}, {
-          _id: workspace.value._id
+          _id: workspace.value._id,
+          workspaceId: workspace.value._id
         }, payload)
       })
       setWorkspace(response)
@@ -54,7 +54,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         text: 'Workspace updated'
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
     }
   }
 
@@ -93,10 +93,13 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
     try {
       return await useFetchAuth('/get-check-workspace-exists', {
         method: 'get',
-        query: { slug }
+        query: {
+          slug,
+          workspaceId: workspace.value._id
+        }
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
       return false
     }
   }
@@ -110,12 +113,14 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
     try {
       const response = await useFetchAuth('/post-create-workspace', {
         method: 'post',
-        body: payload
+        body: Object.assign(payload, {
+          workspaceId: workspace.value._id
+        })
       })
       workspaceList.value.push(response.workspace)
       authStore.setUser(response.user) // update user
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
     }
   }
 
@@ -159,7 +164,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         text: `Workspace invite sent to <strong>${identifier}</strong>`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
     }
   }
 
@@ -182,14 +187,18 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
     try {
       await useFetchAuth('/post-revoke-workspace-invite', {
         method: 'post',
-        body: { id, strategy }
+        body: {
+          id,
+          strategy,
+          workspaceId: workspace.value._id
+        }
       })
       toasterStore.addMessage({
         type: 'success',
         text: `Workspace invite for <strong>${identifier}</strong> has been revoked`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
     }
   }
 
@@ -212,7 +221,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         text: `<strong>${identifier}</strong> has been removed from <strong>${workspace.value.name}</strong> workspace`
       })
     } catch (e) {
-      useHandleFetchError(e)
+      useHandleFetchError(e, [422, 403])
     }
   }
 

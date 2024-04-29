@@ -2,6 +2,7 @@
 // -----------------------------------------------------------------------------
 import { useZeroAuthStore } from '../stores/use-zero-auth-store'
 import { useZeroWorkspaceStore } from '../stores/use-zero-workspace-store'
+import { useAuthorized } from '../composables/use-authorized'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
@@ -45,14 +46,25 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       }
       authStore.setAuthState('authenticated')
     }
+    /**
+     * Check authorization status and redirect to /404 if authorization fails
+     */
+    if (meta.hasOwnProperty('authorize')) {
+      if (!meta.authorize.hasOwnProperty('permission') || !meta.authorize.hasOwnProperty('method')) { return }
+      if (!useAuthorized(meta.authorize.permission, meta.authorize.method)) {
+        return navigateTo('/404')
+      }
+    }
   } catch (e) {
     authStore.setAuthState('unauthenticated')
     const navigationType = navPaths.value.navigationType
     /**
      * If landing on a page via SSR, redirect to 404
      */
-    if (navigationType === 'server') {
+    if (e.status && navigationType === 'server') {
       return navigateTo('/404')
+    } else {
+      console.log(e)
     }
     /**
      * If navigating to a page client-side send a global emit, usually used to
