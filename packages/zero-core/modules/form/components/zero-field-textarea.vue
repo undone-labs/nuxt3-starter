@@ -41,7 +41,6 @@ const scaffold = props.field.scaffold
 const modelKey = props.field.modelKey
 const placeholder = scaffold.placeholder || 'Enter a value...'
 const autocomplete = scaffold.autocomplete
-const pre = scaffold.pre
 
 // ==================================================================== Computed
 const value = computed(() => props.field.value)
@@ -49,16 +48,6 @@ const state = computed(() => props.field.state)
 const empty = computed(() => !value.value || value.value === '')
 const validate = computed(() => props.field.validate)
 
-// ======================================================================= Watch
-watch(props.field, (field) => {
-  const value = field.value
-  if (typeof pre !== 'string') { return }
-  const regex = new RegExp(pre)
-  if (regex.test(value)) { // value contains restricted characters
-    const stripped = value.replace(regex, '')
-    emit('updateValue', stripped)
-  }
-})
 </script>
 
 <style lang="scss" scoped>
