@@ -18,7 +18,12 @@ const props = defineProps({
     required: false,
     default: false
   },
-  toggleOnLoad: {
+  toggleFirstOnLoad: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  toggleAllOnLoad: {
     type: Boolean,
     required: false,
     default: false // can't be true if multiple is false
@@ -28,8 +33,13 @@ const props = defineProps({
 // ======================================================================= Setup
 const accordionStore = useZeroAccordionStore()
 
+const { accordions } = storeToRefs(accordionStore)
+
 // ======================================================================== Data
 const keydown = ref(false)
+
+// ==================================================================== Computed
+const sections = computed(() => accordions.value ? accordions.value[props.accordionId].children : false)
 
 // ======================================================================= Hooks
 onBeforeMount(() => {
@@ -44,8 +54,11 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  if (props.multiple && props.toggleOnLoad) {
+  if (props.multiple && props.toggleAllOnLoad) {
     accordionStore.toggleAllSections(props.accordionId)
+  }
+  if (props.toggleFirstOnLoad) {
+    accordionStore.toggleAccordionSection(props.accordionId, sections.value[0])
   }
   keydown.value = handleKeyboardNavigation
   window.addEventListener('keydown', keydown.value)

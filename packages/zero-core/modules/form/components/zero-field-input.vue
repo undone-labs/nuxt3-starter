@@ -71,7 +71,6 @@ const placeholder = scaffold.placeholder || 'Enter a value...'
 const autocomplete = scaffold.autocomplete
 const step = scaffold.step
 const showControls = scaffold.showControls
-const pre = scaffold.pre
 const min = scaffold.min
 const max = scaffold.max
 
@@ -80,17 +79,6 @@ const value = computed(() => props.field.value)
 const state = computed(() => props.field.state)
 const empty = computed(() => !value.value || value.value === '')
 const validate = computed(() => props.field.validate)
-
-// ======================================================================= Watch
-watch(props.field, (field) => {
-  const value = field.value
-  if (typeof pre !== 'string') { return }
-  const regex = new RegExp(pre)
-  if (regex.test(value)) { // value contains restricted characters
-    const stripped = value.replace(regex, '')
-    emit('updateValue', stripped)
-  }
-})
 
 // ===================================================================== Methods
 const toggleFocused = (state) => {
