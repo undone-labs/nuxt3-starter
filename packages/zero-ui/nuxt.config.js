@@ -81,6 +81,7 @@ export default defineNuxtConfig({
       ApiOverview: { enable: true },
       Dropdown: { enable: true },
       Paginator: { enable: true },
+      Slider: { enable: true },
       TabbedSlider: { enable: true }
     },
     composables: {
