@@ -60,7 +60,7 @@ const emit = defineEmits(['toggleFocused', 'updateValue'])
 const thumb = ref(null)
 const input = ref(null)
 
-const position = ref(props.field.min)
+const position = ref(parseFloat(props.field.min))
 const thumbDimensions = ref({ x: 0,y: 0 })
 const format = ref(false)
 const steps = ref(props.field.max)
