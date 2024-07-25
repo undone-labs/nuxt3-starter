@@ -32,7 +32,7 @@
         type="range"
         @focus="toggleFocused(true)"
         @blur="toggleFocused(false)"
-        @input="updateValue($event.target.value)" />
+        @input="updateValue($event.target.valueAsNumber)" />
     </div>
 
     <slot name="below-track"/>
@@ -60,7 +60,7 @@ const emit = defineEmits(['toggleFocused', 'updateValue'])
 const thumb = ref(null)
 const input = ref(null)
 
-const position = ref(parseFloat(props.field.min))
+const position = ref(props.field.min)
 const thumbDimensions = ref({ x: 0,y: 0 })
 const format = ref(false)
 const steps = ref(props.field.max)
