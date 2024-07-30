@@ -31,8 +31,8 @@ const { alerts } = storeToRefs(alertStore)
 
 // ==================================================================== Computed
 const alert = computed(() => alertStore.getAlert(props.alertId))
-const open = computed(() => alert.value.status === 'open')
-const data = computed(() => alert.value.data)
+const open = computed(() => alert.value?.status === 'open')
+const data = computed(() => alert.value?.data)
 
 // ======================================================================= Hooks
 onBeforeUnmount(() => {

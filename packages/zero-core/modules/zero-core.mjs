@@ -190,7 +190,7 @@ const registerStores = (path, displayZeroLogs) => {
  * @method registerServerRoute
  */
 
-const registerServerRoute = path => {
+const registerServerRoute = (path, displayZeroLogs) => {
   path = resolve(path, 'server', 'api')
   if (!Fs.existsSync(path)) { return }
   if (displayZeroLogs) { console.log(Chalk.bold('     → Server API')) }
@@ -209,7 +209,7 @@ const registerServerRoute = path => {
  * @method registerPages
  */
 
-const registerPages = path => {
+const registerPages = (path, displayZeroLogs) => {
   path = resolve(path, 'pages')
   if (!Fs.existsSync(path)) { return }
   if (displayZeroLogs) { console.log(Chalk.bold('     → Routes')) }

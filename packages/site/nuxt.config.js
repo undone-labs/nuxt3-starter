@@ -82,10 +82,8 @@ export default defineNuxtConfig({
   zero: {
     displayZeroLogs: false,
     components: {
-      ApiPreview: { enable: true },
-      ApiOverview: { enable: true },
-      BlockBuilder: { enable: true },
-      BlockBuilderColumns: { enable: true },
+      ApiExplorer: { enable: true },
+      ApiInformation: { enable: true },
       Dropdown: { enable: true },
       Paginator: { enable: true },
       TabbedSlider: { enable: true }
@@ -95,8 +93,9 @@ export default defineNuxtConfig({
       delay: { enable: true },
       ls: {
         enable: true
-        // prefix: 'nuxt3starter__'
+        // prefix: 'cmslayer__'
       },
+      openPopup: { enable: true },
       scrollTo: { enable: true },
       slugify: { enable: true },
       throttle: { enable: true },
@@ -108,30 +107,24 @@ export default defineNuxtConfig({
       seo: { enable: true }
     },
     modules: {
+      'markdown-parser': { enable: true },
       button: { enable: true },
       form: { enable: true },
-      'markdown-parser': { enable: true },
+      alert: { enable: true },
+      websocket: { enable: true },
+      toaster: {
+        enable: true,
+        display: 3,
+        timeout: 5000,
+        from: 'bottom'
+      },
       auth: {
         enable: false,
         github: {
           oauth: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH__CLIENT_ID}&scope=user:email`,
           app: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_APP__CLIENT_ID}`
         },
-        redirectUnauthenticated: '/',
-        /**
-         * string or object
-         *
-         * if object, replace part of path with key's value from user (user) db
-         * object, for example example:
-         *
-         * {
-         *   path: '/zero-kitchen-sink/:user/redirect-after-login',
-         *   match: {
-         *     ':user': 'username'
-         *   }
-         * }
-         */
-        redirectAfterLogin: '/account',
+        configurationUrl: '/',
         redirectAfterLogout: '/'
       }
     }

@@ -41,6 +41,11 @@ const props = defineProps({
     required: false,
     default: false
   },
+  forceLoading: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   selected: {
     type: Boolean,
     required: false,
@@ -62,7 +67,7 @@ const { $bus } = useNuxtApp()
 
 // ==================================================================== Computed
 const button = computed(() => buttons.value[props.id])
-const loading = computed(() => button.value?.loading)
+const loading = computed(() => props.forceLoading || button.value?.loading)
 const disabled = computed(() => props.forceDisabled || loading.value)
 const component = computed(() => {
   const tag = props.tag

@@ -1,5 +1,5 @@
 <template>
-  <PageError />
+  <Error404 />
 </template>
 
 <script setup>

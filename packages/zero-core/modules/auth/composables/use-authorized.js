@@ -17,6 +17,8 @@ export const useAuthorized = (perm, method) => {
   const workspaceStore = useZeroWorkspaceStore()
   const { workspace } = storeToRefs(workspaceStore)
 
+  if (!workspace.value) { return false }
+
   const role = workspace.value.roles.find(role => role.users.includes(user.value?._id))
   if (!role) { return false }
 
