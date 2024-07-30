@@ -35,6 +35,14 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
   }
 
   /**
+   * @method updateAlertData
+   */
+
+  const updateAlertData = (alertId, payload) => {
+    alerts.value[alertId].data = payload
+  }
+
+  /**
    * @method openAlert
    */
 
@@ -67,6 +75,7 @@ export const useZeroAlertStore = defineStore('zero-alert', () => {
     setAlert,
     getAlert,
     removeAlert,
+    updateAlertData,
     openAlert,
     closeAlert
   }

@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "Supercharge your Nuxt3 setup 💪",
   "dependencies": {
-    "@nuxtjs/algolia": "^1.9.0",
-    "@vuepic/vue-datepicker": "^8.2.0",
+    "@vuepic/vue-datepicker": "^9.0.1",
     "@vueuse/core": "^10.9.0",
     "@vueuse/integrations": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
     "ace-builds": "^1.32.7",
-    "change-case": "^4.1.2",
+    "change-case": "^5.4.4",
     "date-fns": "^3.3.1",
     "fs-extra": "^11.2.0",
     "highlight.js": "^11.8.0",
@@ -22,7 +21,7 @@
     "lodash.startcase": "^4.4.0",
     "mitt": "^3.0.1",
     "node-html-parser": "^6.1.11",
-    "nuxt-primevue": "^0.3.1",
+    "nuxt-primevue": "^3.0.0",
     "nuxt-simple-sitemap": "^4.1.6",
     "rehype-highlight": "^7.0.0",
     "rehype-katex": "^7.0.0",
@@ -35,7 +34,7 @@
     "socket.io-client": "^4.7.4",
     "undici": "^6.3.0",
     "unified": "^11.0.4",
-    "uuid": "^9.0.1",
+    "uuid": "^10.0.0",
     "web3": "^4.1.2"
   }
 }

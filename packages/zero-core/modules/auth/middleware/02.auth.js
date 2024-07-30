@@ -37,11 +37,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         await workspaceStore.getWorkspaceList()
         const targetWorkspace = workspaceList.value.find(obj => obj.slug === to.params.workspace)
         if (to.params.workspace && !targetWorkspace) {
-          return showError({
-            statusCode: 404,
-            message: 'Page Not Found'
-          })
+          return navigateTo('/404')
         }
+        await workspaceStore.getWorkspace(targetWorkspace ? targetWorkspace._id : user.value.primaryWorkspace._id)
+      } else if (user.value && workspaceList.value) {
+        const targetWorkspace = workspaceList.value.find(obj => obj.slug === to.params.workspace)
         await workspaceStore.getWorkspace(targetWorkspace ? targetWorkspace._id : user.value.primaryWorkspace._id)
       }
       authStore.setAuthState('authenticated')

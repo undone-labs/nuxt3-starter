@@ -17,8 +17,17 @@ export const useZeroFormStore = defineStore('zero-form', () => {
    * ---------------------------------------------------------------------------
    */
 
-  const registerModel = model => {
-    models.value[model.id] = model
+  const registerModel = payload => {
+    models.value[payload.id] = payload
+  }
+
+  /**
+   * @method updateModel
+   * ---------------------------------------------------------------------------
+   */
+
+  const updateModel = payload => {
+    Object.assign(models.value[payload.id], payload)
   }
 
   /**
@@ -71,6 +80,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
     savedStates,
     // ----- actions
     registerModel,
+    updateModel,
     setField,
     removeField,
     setFormSaveState,

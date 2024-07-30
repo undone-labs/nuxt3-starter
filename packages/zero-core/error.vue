@@ -1,9 +1,5 @@
 <template>
-  <PageError
-    :status-code="error.statusCode"
-    :message="error.message"
-    :stack="error.stack"
-    :data="error.data" />
+  <ErrorGeneral :error="error" />
 </template>
 
 <script setup>

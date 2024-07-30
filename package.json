@@ -20,30 +20,18 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "ui:dev": "npm run dev -w zero-ui",
-    "ui:build": "npm run build -w packages/zero-ui",
-    "ui:start": "node packages/zero-ui/.output/server/index.mjs",
-    "ui:upgrade-nuxt": "npm run upgrade-nuxt -w zero-ui",
     "site:dev": "npm run dev -w site",
     "site:build": "npm run build -w site",
     "site:start": "npm run start -w site",
     "site:generate": "npm run generate -w site",
     "site:serve": "npm run serve -w site",
-    "site:upgrade-nuxt": "npm run upgrade-nuxt -w site",
-    "docs:dev": "npm run dev -w docs",
-    "docs:build": "npm run build -w packages/docs",
-    "docs:start": "node packages/docs/.output/server/index.mjs",
-    "docs:generate": "npm run generate -w docs",
-    "docs:upgrade-nuxt": "npm run upgrade-nuxt -w docs"
+    "site:upgrade-nuxt": "npm run upgrade-nuxt -w site"
   },
   "workspaces": [
     "packages/zero-core",
-    "packages/zero-docs",
-    "packages/zero-ui",
-    "packages/site",
-    "packages/docs"
+    "packages/site"
   ],
-  "dependencies": {
+  "devDependencies": {
     "chalk": "^5.3.0"
   }
 }

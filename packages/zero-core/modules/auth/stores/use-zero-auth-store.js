@@ -98,7 +98,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
    * ---------------------------------------------------------------------------
    */
 
-  const updateUser = async payload => {
+  const updateUser = async (payload, doSetUser = true) => {
     try {
       const response = await useFetchAuth('/post-update-user', {
         method: 'post',
@@ -107,7 +107,9 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
           workspaceId: workspace.value._id
         })
       })
-      setUser(response)
+      if (doSetUser) {
+        setUser(response)
+      }
     } catch (e) {
       useHandleFetchError(e)
     }
@@ -208,6 +210,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
         type: 'success',
         text: `Left <strong>${identifier}</strong> workspace`
       })
+      navigateTo(`/${user.value.primaryWorkspace.slug}/projects`)
     } catch (e) {
       useHandleFetchError(e, [422])
     }
@@ -237,17 +240,36 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
-   * @method toggleShortcut
+   * @method toggleShortcuts
    * ---------------------------------------------------------------------------
    */
 
-  const toggleShortcut = async (payload, buttonId = '') => {
+  const toggleShortcuts = async shortcuts => {
     try {
-      user.value.shortcuts = await useFetchAuth('/post-toggle-shortcut', {
+      user.value.shortcuts = await useFetchAuth('/post-toggle-shortcuts', {
         method: 'post',
         body: {
           workspaceId: workspace.value._id,
-          ...payload
+          shortcuts
+        }
+      })
+    } catch (e) {
+      useHandleFetchError(e)
+    }
+  }
+
+  /**
+   * @method updateShortcuts
+   * ---------------------------------------------------------------------------
+   */
+
+  const updateShortcuts = async shortcuts => {
+    try {
+      user.value.shortcuts = await useFetchAuth('/post-update-shortcuts', {
+        method: 'post',
+        body: {
+          workspaceId: workspace.value._id,
+          shortcuts
         }
       })
     } catch (e) {
@@ -283,7 +305,8 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     rejectWorkspaceInvite,
     leaveWorkspace,
     makeWorkspacePrimary,
-    toggleShortcut
+    toggleShortcuts,
+    updateShortcuts
   }
 })
 

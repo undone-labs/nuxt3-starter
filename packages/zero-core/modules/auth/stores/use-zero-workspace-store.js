@@ -22,7 +22,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-   const getWorkspace = async id => {
+  const getWorkspace = async id => {
     try {
       const response = await useFetchAuth('/get-workspace', {
         method: 'get',
@@ -39,7 +39,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-   const updateWorkspace = async (payload, displayToast = true) => {
+  const updateWorkspace = async (payload, displayToast = true) => {
     try {
       const response = await useFetchAuth('/post-update-workspace', {
         method: 'post',
@@ -55,6 +55,29 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
           text: 'Workspace updated'
         })
       }
+    } catch (e) {
+      useHandleFetchError(e, [422, 403])
+    }
+  }
+
+  /**
+   * @method uploadWorkspaceAvatar
+   * ---------------------------------------------------------------------------
+   */
+
+  const uploadWorkspaceAvatar = async payload => {
+    try {
+      await useFetchAuth('/post-upload-avatar', {
+        method: 'post',
+        body: Object.assign({}, {
+          _id: workspace.value._id,
+          workspaceId: workspace.value._id
+        }, payload)
+      })
+      toasterStore.addMessage({
+        type: 'success',
+        text: 'Your avatar has been updated'
+      })
     } catch (e) {
       useHandleFetchError(e, [422, 403])
     }
@@ -121,6 +144,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
       })
       workspaceList.value.push(response.workspace)
       authStore.setUser(response.user) // update user
+      navigateTo(`/${response.workspace.slug}/projects`)
     } catch (e) {
       useHandleFetchError(e, [422, 403])
     }
@@ -236,6 +260,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
     // ----- actions
     getWorkspace,
     updateWorkspace,
+    uploadWorkspaceAvatar,
     setWorkspace,
     getWorkspaceList,
     checkWorkspaceExists,

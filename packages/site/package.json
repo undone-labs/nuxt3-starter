@@ -2,7 +2,6 @@
   "name": "site",
   "description": "Frontend for a marketing site",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "nuxi dev --no-clear",
     "build": "nuxi build",
@@ -12,13 +11,13 @@
     "upgrade-nuxt": "nuxi upgrade --force"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.5.1",
-    "pinia": "^2.0.35",
     "@nuxt/content": "^2.8.5",
-    "@nuxt/eslint-config": "^0.2.0",
+    "@nuxt/eslint-config": "^0.4.0",
     "@nuxtjs/eslint-module": "^4.1.0",
-    "eslint": "^8.50.0",
+    "@pinia/nuxt": "^0.5.1",
+    "eslint": "^9.8.0",
     "nuxt": "^3.7.4",
+    "pinia": "^2.0.35",
     "sass": "^1.68.0",
     "typescript": "^5.2.2"
   }

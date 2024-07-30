@@ -38,7 +38,9 @@ onMounted(async () => {
   if (!window.opener && window.opener !== window && window.name !== 'authenticate-github-popup') {
     await navigateTo('/')
   }
-  animateTitle()
+  if (!resolveComponent()) {
+    animateTitle()
+  }
   const session = await useFetchAuth('/login', {
     method: 'post',
     query: Object.assign(route.query, { strategy: 'github', type: 'oauth' }),

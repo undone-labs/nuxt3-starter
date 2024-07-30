@@ -14,6 +14,14 @@ const listenToGithubLogin = siteUrl => {
       if ((data.id === 'authenticate-github-oauth' || data.id === 'authenticate-github-app') && data.hasOwnProperty('session')) {
         useSetSession(data)
       }
+      if (data.id === 'connect-github-repo') {
+        let state
+        if (data.action === 'close-popup') { state = 'idle' }
+        if (data.action === 'finalizing') { state = 'finalizing' }
+        if (state) {
+          useProjectStore().setConnectRepoLoadingState(state)
+        }
+      }
       buttonStore.setButton({ id: 'authenticate-github-oauth', loading: false })
     }, false)
   }
