@@ -27,6 +27,7 @@ const backendPort = (function () {
 // -----------------------------------------------------------------------------
 export default defineNuxtConfig({
   // =================================================================== General
+  compatibilityDate: '2024-07-30',
   devtools: { enabled: false },
   site: {
     url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
