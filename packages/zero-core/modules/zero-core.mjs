@@ -82,10 +82,10 @@ const walk = (dir, next) => {
  * @method registerComponents
  */
 
-const registerComponents = (path, components) => {
+const registerComponents = (path, displayZeroLogs, components) => {
   path = resolve(path, 'components')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Components'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Components')) }
   if (components) {
     Object.keys(components).forEach(name => {
       const component = components[name]
@@ -95,7 +95,7 @@ const registerComponents = (path, components) => {
           name: prefixed,
           filePath: resolve(path, `${convertCase(name, 'kebab')}.vue`)
         })
-        console.log(Chalk.black(`       <${prefixed} />`))
+        if (displayZeroLogs) { console.log(Chalk.black(`       <${prefixed} />`)) }
       }
     })
   } else {
@@ -105,7 +105,7 @@ const registerComponents = (path, components) => {
     })
     Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(component => {
       const name = StartCase(component.replace('.vue', '')).replaceAll(' ', '')
-      console.log(Chalk.black(`       <${name} />`))
+      if (displayZeroLogs) { console.log(Chalk.black(`       <${name} />`)) }
     })
   }
 }
@@ -114,10 +114,10 @@ const registerComponents = (path, components) => {
  * @method registerComposables
  */
 
-const registerComposables = (path, composables) => {
+const registerComposables = (path, displayZeroLogs, composables) => {
   path = resolve(path, 'composables')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Composables'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Composables')) }
   if (composables) {
     Object.keys(composables).forEach(name => {
       const composable = composables[name]
@@ -131,14 +131,14 @@ const registerComposables = (path, composables) => {
           as: name,
           from: resolve(path, slug)
         })
-        console.log(Chalk.black(`       ${name}()`))
+        if (displayZeroLogs) { console.log(Chalk.black(`       ${name}()`)) }
       }
     })
   } else {
     addImportsDir(path)
     Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(composable => {
       const name = CamelCase(composable.replace('.js', ''))
-      console.log(Chalk.black(`       ${name}()`))
+      if (displayZeroLogs) { console.log(Chalk.black(`       ${name}()`)) }
     })
   }
 }
@@ -147,22 +147,22 @@ const registerComposables = (path, composables) => {
  * @method registerPlugins
  */
 
-const registerPlugins = (path, plugins) => {
+const registerPlugins = (path, displayZeroLogs, plugins) => {
   path = resolve(path, 'plugins')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Plugins'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Plugins')) }
   if (plugins) {
     Object.keys(plugins).forEach(slug => {
       const plugin = plugins[slug]
       if (plugin.enable) {
         addPlugin(resolve(path, slug))
       }
-      console.log(Chalk.black(`       ${slug}.js`))
+      if (displayZeroLogs) { console.log(Chalk.black(`       ${slug}.js`)) }
     })
   } else {
     Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(plugin => {
       addPlugin(resolve(path, plugin))
-      console.log(Chalk.black(`       ${plugin}`))
+      if (displayZeroLogs) { console.log(Chalk.black(`       ${plugin}`)) }
     })
   }
 }
@@ -171,10 +171,10 @@ const registerPlugins = (path, plugins) => {
  * @method registerStores
  */
 
-const registerStores = path => {
+const registerStores = (path, displayZeroLogs) => {
   path = resolve(path, 'stores')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Stores'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Stores')) }
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(store => {
     const slug = store.split('.js')[0]
     const name = convertCase(slug, 'camel')
@@ -182,7 +182,7 @@ const registerStores = path => {
       name,
       from: resolve(path, store)
     })
-    console.log(Chalk.black(`       ${name}()`))
+    if (displayZeroLogs) { console.log(Chalk.black(`       ${name}()`)) }
   })
 }
 
@@ -193,7 +193,7 @@ const registerStores = path => {
 const registerServerRoute = path => {
   path = resolve(path, 'server', 'api')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Server API'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Server API')) }
   const divider = 'server'
   walk(path, file => {
     const route = file.path.split(divider).pop().replace(file.ext, '')
@@ -201,7 +201,7 @@ const registerServerRoute = path => {
       route,
       handler: resolve(file.path)
     })
-    console.log(Chalk.blue(`       ${route}`))
+    if (displayZeroLogs) { console.log(Chalk.blue(`       ${route}`)) }
   })
 }
 
@@ -212,7 +212,7 @@ const registerServerRoute = path => {
 const registerPages = path => {
   path = resolve(path, 'pages')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Routes'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Routes')) }
   const divider = 'pages'
   walk(path, file => {
     if (file.ext === '.vue') {
@@ -224,7 +224,7 @@ const registerPages = path => {
           path: route
         })
       })
-      console.log(Chalk.blue(`       ${route}`))
+      if (displayZeroLogs) { console.log(Chalk.blue(`       ${route}`)) }
     }
   })
 }
@@ -233,10 +233,10 @@ const registerPages = path => {
  * @method registerLayouts
  */
 
-const registerLayouts = path => {
+const registerLayouts = (path, displayZeroLogs) => {
   path = resolve(path, 'layouts')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Layouts'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Layouts')) }
   Fs.readdirSync(path).filter(file => file.includes('.vue')).forEach(layout => {
     const slug = layout.split('.vue')[0]
     addLayout({
@@ -244,7 +244,7 @@ const registerLayouts = path => {
       write: true,
       src: resolve(path, layout),
     }, slug)
-    console.log(Chalk.black(`       ${slug}`))
+    if (displayZeroLogs) { console.log(Chalk.black(`       ${slug}`)) }
   })
 }
 
@@ -252,10 +252,10 @@ const registerLayouts = path => {
  * @method registerMiddleware
  */
 
-const registerMiddleware = path => {
+const registerMiddleware = (path, displayZeroLogs) => {
   path = resolve(path, 'middleware')
   if (!Fs.existsSync(path)) { return }
-  console.log(Chalk.bold('     → Middleware'))
+  if (displayZeroLogs) { console.log(Chalk.bold('     → Middleware')) }
   Fs.readdirSync(path).filter(file => file.includes('.js')).forEach(middleware => {
     const slug = middleware.split('.js')[0]
     addRouteMiddleware({
@@ -263,27 +263,30 @@ const registerMiddleware = path => {
       path: resolve(path, middleware),
       global: true
     })
-    console.log(Chalk.black(`       ${slug}`))
+    if (displayZeroLogs) { console.log(Chalk.black(`       ${slug}`)) }
   })
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  const hex1 = '#C36B00'
-  const hex2 = '#DB7800'
-  const hex3 = '#FFFFFF'
-  console.log('  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex(hex3).bold(' zero-core ')}`)
   const options = nuxt.options
   if (!options.hasOwnProperty('zero')) { return }
   const zeroOptions = options.zero
+  const displayZeroLogs = zeroOptions?.displayZeroLogs
+  const hex1 = '#C36B00'
+  const hex2 = '#DB7800'
+  const hex3 = '#FFFFFF'
+  if (displayZeroLogs) {
+    console.log('  ⚡️', `${Chalk.underline.green.bold('load:layer ')}${Chalk.bgGreen.hex(hex3).bold(' zero-core ')}`)
+  }
   const basePath = resolve('..')
   validateKeyMustBeObject(zeroOptions, 'zero')
-  registerComponents(basePath, zeroOptions.components)
-  registerComposables(basePath, zeroOptions.composables)
-  registerPlugins(basePath, zeroOptions.plugins)
-  registerStores(basePath)
-  // registerServerRoute(basePath)
+  registerComponents(basePath, displayZeroLogs, zeroOptions.components)
+  registerComposables(basePath, displayZeroLogs, zeroOptions.composables)
+  registerPlugins(basePath, displayZeroLogs, zeroOptions.plugins)
+  registerStores(basePath, displayZeroLogs)
+  // registerServerRoute(basePath, displayZeroLogs)
   const modulesPath = resolve(basePath, 'modules')
   const modules = Fs.readdirSync(modulesPath)
   const len = modules.length
@@ -294,15 +297,17 @@ const setup = (_, nuxt) => {
     const moduleOptions = zeroOptions.modules[module] || {}
     if (moduleOptions.enable) {
       if (Fs.statSync(modulePath).isDirectory()) {
-        console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)
-        registerComponents(modulePath)
-        registerComposables(modulePath)
-        registerPlugins(modulePath)
-        registerStores(modulePath)
-        registerServerRoute(modulePath)
-        registerPages(modulePath)
-        registerLayouts(modulePath)
-        registerMiddleware(modulePath)
+        if (displayZeroLogs) {
+          console.log('\n  🧰', `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(` ${module} `)}`)
+        }
+        registerComponents(modulePath, displayZeroLogs)
+        registerComposables(modulePath, displayZeroLogs)
+        registerPlugins(modulePath, displayZeroLogs)
+        registerStores(modulePath, displayZeroLogs)
+        registerServerRoute(modulePath, displayZeroLogs)
+        registerPages(modulePath, displayZeroLogs)
+        registerLayouts(modulePath, displayZeroLogs)
+        registerMiddleware(modulePath, displayZeroLogs)
       }
     }
   }

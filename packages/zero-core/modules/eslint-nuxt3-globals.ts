@@ -28,6 +28,7 @@ export default defineNuxtModule({
         'defineEventHandler'
       ]
     }
+    const displayZeroLogs = nuxt.options.zero?.displayZeroLogs
 
     // =================================================================== hooks
     nuxt.hook('imports:context', async (context: Unimport) => {
@@ -76,15 +77,17 @@ export default defineNuxtModule({
         write: true
       })
 
-      const hex1 = '#C36B00'
-      const hex2 = '#DB7800'
-      const hex3 = '#FFFFFF'
-      console.log(
-        '\n  🧰',
-        `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(' eslint-nuxt3-globals ')}`,
-        Chalk.bold('\n     Globals file is generated at:'),
-        `\n     ${fullPath}`
-      )
+      if (displayZeroLogs) {
+        const hex1 = '#C36B00'
+        const hex2 = '#DB7800'
+        const hex3 = '#FFFFFF'
+        console.log(
+          '\n  🧰',
+          `${Chalk.underline.hex(hex1).bold('load:module ')}${Chalk.bgHex(hex2).hex(hex3).bold(' eslint-nuxt3-globals ')}`,
+          Chalk.bold('\n     Globals file is generated at:'),
+          `\n     ${fullPath}`
+        )
+      }
     })
   }
 })

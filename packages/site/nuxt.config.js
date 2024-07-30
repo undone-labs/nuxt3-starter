@@ -79,6 +79,7 @@ export default defineNuxtConfig({
   ],
   // ========================================================= [Layer] zero-core
   zero: {
+    displayZeroLogs: false,
     components: {
       ApiPreview: { enable: true },
       ApiOverview: { enable: true },

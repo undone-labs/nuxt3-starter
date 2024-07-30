@@ -2,6 +2,7 @@
   "name": "site",
   "description": "Frontend for a marketing site",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "nuxi dev --no-clear",
     "build": "nuxi build",
