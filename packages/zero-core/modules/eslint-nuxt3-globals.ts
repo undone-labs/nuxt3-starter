@@ -76,6 +76,7 @@ export default defineNuxtModule({
         getContents,
         write: true
       })
+
       if (displayZeroLogs) {
         const hex1 = '#C36B00'
         const hex2 = '#DB7800'
