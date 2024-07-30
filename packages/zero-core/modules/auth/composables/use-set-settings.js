@@ -11,12 +11,17 @@ import { useZeroAuthStore } from '../stores/use-zero-auth-store'
  *   - 'universal': on both the client and the backend
  */
 
-export const useSetSettings = (settings, location = 'backend') => {
-  const store = useZeroAuthStore()
-  const { userSettings } = storeToRefs(store)
+export const useSetSettings = async (settings, location = 'backend') => {
+  const authStore = useZeroAuthStore()
+  const { userSettings } = storeToRefs(authStore)
+  const toasterStore = useZeroToasterStore() // eslint-disable-line
   if (location === 'backend' || location === 'universal') {
-    store.postUpdateUserSetting({
+    await authStore.updateUser({
       settings: Object.assign({}, userSettings.value, settings)
+    })
+    toasterStore.addMessage({
+      type: 'success',
+      text: 'Setting updated'
     })
   }
   if (location === 'client' || location === 'universal') {

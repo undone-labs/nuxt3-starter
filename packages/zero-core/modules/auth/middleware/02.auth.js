@@ -45,6 +45,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         await workspaceStore.getWorkspace(targetWorkspace ? targetWorkspace._id : user.value.primaryWorkspace._id)
       }
       authStore.setAuthState('authenticated')
+      if (to.path !== authConfig.configurationUrl && !user.value.configured && authConfig.configurationUrl) {
+        return navigateTo(authConfig.configurationUrl)
+      }
     }
     /**
      * Check authorization status and redirect to /404 if authorization fails
