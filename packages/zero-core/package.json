@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Supercharge your Nuxt3 setup 💪",
   "dependencies": {
-    "@nuxtjs/algolia": "^1.9.0",
     "@vuepic/vue-datepicker": "^9.0.1",
     "@vueuse/core": "^10.9.0",
     "@vueuse/integrations": "^10.9.0",

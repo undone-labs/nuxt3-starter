@@ -1,6 +1,6 @@
 <template>
   <div
-    v-click-outside="closePanel"
+    ref="dropdown"
     :class="['dropdown-panel', `toggle-on-${toggleOn}`]">
 
     <slot
@@ -28,6 +28,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import { onClickOutside } from '@vueuse/core'
+
 // ======================================================================= Props
 const props = defineProps({
   toggleOn: {
@@ -52,6 +55,9 @@ const emit = defineEmits(['dropdownPanelToggled', 'optionSelected'])
 // ======================================================================== Data
 const panelOpen = ref(false)
 const selected = ref(props.defaultOption)
+const dropdown = ref(null)
+
+onClickOutside(dropdown, () => { closePanel() })
 
 // ==================================================================== Watchers
 watch(panelOpen, (state) => { emit('dropdownPanelToggled', state) })

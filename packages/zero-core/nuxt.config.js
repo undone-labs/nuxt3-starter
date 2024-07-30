@@ -54,7 +54,6 @@ export default defineNuxtConfig({
   },
   // =================================================================== Modules
   modules: [
-    '@nuxtjs/algolia',
     'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
     'nuxt-primevue', // https://github.com/primefaces/primevue-nuxt-module
     '@vueuse/nuxt' // https://vueuse.org/
@@ -65,7 +64,6 @@ export default defineNuxtConfig({
       '/api/generate-sitemap'
     ],
     exclude: [
-      '/generate-algolia-index',
       '/ipfs-404',
       '/prerender-ssg-sitemap'
     ]
