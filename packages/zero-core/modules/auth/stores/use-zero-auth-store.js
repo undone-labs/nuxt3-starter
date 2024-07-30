@@ -7,9 +7,9 @@ import { useFetchAuth } from '../composables/use-fetch-auth'
 // -----------------------------------------------------------------------------
 export const useZeroAuthStore = defineStore('zero-auth', () => {
   // ==================================================================== import
-  const toasterStore = useZeroToasterStore() // eslint-disable-line
   const workspaceStore = useZeroWorkspaceStore() // eslint-disable-line
   const { workspace } = storeToRefs(workspaceStore)
+  const toasterStore = useZeroToasterStore() // eslint-disable-line
 
   // ===================================================================== state
   const authState = ref('unauthenticated') // 'unauthenticated' → 'authenticating' → 'finalizing' → 'authenticated'
@@ -23,6 +23,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   const ethereum = computed(() => process.client ? window.ethereum : undefined)
   const metamaskInstalled = computed(() => ethereum.value && ethereum.value.isMetaMask)
   const userSettings = computed(() => user.value?.settings || {})
+  const userShortcuts = computed(() => user.value?.shortcuts || [])
   const workspaceInvitesPending = computed(() => {
     const list = workspaceInviteList.value
     if (list.length === 0) { return false }
@@ -93,11 +94,11 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
-   * @method postUpdateUserSetting
+   * @method updateUser
    * ---------------------------------------------------------------------------
    */
 
-  const postUpdateUserSetting = async payload => {
+  const updateUser = async payload => {
     try {
       const response = await useFetchAuth('/post-update-user', {
         method: 'post',
@@ -107,10 +108,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
         })
       })
       setUser(response)
-      toasterStore.addMessage({
-        type: 'success',
-        text: 'Setting updated'
-      })
     } catch (e) {
       useHandleFetchError(e)
     }
@@ -239,6 +236,25 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     }
   }
 
+  /**
+   * @method toggleShortcut
+   * ---------------------------------------------------------------------------
+   */
+
+  const toggleShortcut = async (payload, buttonId = '') => {
+    try {
+      user.value.shortcuts = await useFetchAuth('/post-toggle-shortcut', {
+        method: 'post',
+        body: {
+          workspaceId: workspace.value._id,
+          ...payload
+        }
+      })
+    } catch (e) {
+      useHandleFetchError(e)
+    }
+  }
+
   // ==================================================================== return
   return {
     // ----- state
@@ -252,6 +268,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     ethereum,
     metamaskInstalled,
     userSettings,
+    userShortcuts,
     workspaceInvitesPending,
     // ----- actions
     setAuthState,
@@ -259,13 +276,14 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     setNavPaths,
     getUser,
     setUser,
-    postUpdateUserSetting,
+    updateUser,
     getUserWorkspaceInviteList,
     updateUserWorkspaceInvite,
     acceptWorkspaceInvite,
     rejectWorkspaceInvite,
     leaveWorkspace,
-    makeWorkspacePrimary
+    makeWorkspacePrimary,
+    toggleShortcut
   }
 })
 

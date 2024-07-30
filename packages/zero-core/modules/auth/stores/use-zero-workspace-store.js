@@ -39,7 +39,7 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
    * ---------------------------------------------------------------------------
    */
 
-   const updateWorkspace = async payload => {
+   const updateWorkspace = async (payload, displayToast = true) => {
     try {
       const response = await useFetchAuth('/post-update-workspace', {
         method: 'post',
@@ -49,10 +49,12 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
         }, payload)
       })
       setWorkspace(response)
-      toasterStore.addMessage({
-        type: 'success',
-        text: 'Workspace updated'
-      })
+      if (displayToast) {
+        toasterStore.addMessage({
+          type: 'success',
+          text: 'Workspace updated'
+        })
+      }
     } catch (e) {
       useHandleFetchError(e, [422, 403])
     }
