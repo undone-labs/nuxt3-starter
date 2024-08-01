@@ -1,5 +1,5 @@
 <template>
-  <article ref="markdownRef" class="markdown" v-html="parsed" />
+  <div ref="markdownRef" class="markdown" v-html="parsed" />
 </template>
 
 <script setup>
