@@ -8,19 +8,14 @@ import Path from 'path'
 const env = process.env.SERVER_ENV
 
 const baseUrls = {
-  development: 'https://localhost',
-  stable: '',
-  production: ''
+  backend: process.env.DOMAIN__BACKEND,
+  client: process.env.DOMAIN__CLIENT,
+  websocket: process.env.DOMAIN__WEBSOCKET
 }
 
-const frontendPort = (function () {
+const sitePort = (function () {
   if (env === 'development') { return 17010 }
   return env === 'stable' ? 17020 : 17030
-}())
-
-const backendPort = (function () {
-  if (env === 'development') { return 17040 }
-  return env === 'stable' ? 17050 : 17060
 }())
 
 // ////////////////////////////////////////////////////////////////////// Export
@@ -30,7 +25,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-30',
   devtools: { enabled: false },
   site: {
-    url: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env]
+    url: baseUrls.client
   },
   extends: [
     '../zero-core'
@@ -38,21 +33,20 @@ export default defineNuxtConfig({
   // ===================================================== Runtime Configuration
   runtimeConfig: {
     public: {
-      siteUrl: env === 'development' ? `${baseUrls[env]}:${frontendPort}` : baseUrls[env],
-      backendUrl: env === 'development' ? `${baseUrls[env]}:${backendPort}` : `${baseUrls[env]}/api`,
-      serverFlag: env
+      serverEnv: env,
+      siteUrl: baseUrls.client,
+      backendUrl: baseUrls.backend,
+      websocketUrl: baseUrls.websocket
     }
   },
   // ======================================================== Development Server
   devServer: {
-    port: frontendPort,
-    host: process.env.NODE_ENV !== 'development' ? '0.0.0.0' : 'localhost',
-    ...(process.env.NODE_ENV === 'development' && {
-      https: {
-        key: '../../localhost_key.pem',
-        cert: '../../localhost_cert.pem'
-      }
-    })
+    port: sitePort,
+    host: 'localhost',
+    https: {
+      key: '../../localhost_key.pem',
+      cert: '../../localhost_cert.pem'
+    }
   },
   // ======================================================================= App
   app: {
