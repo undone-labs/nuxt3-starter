@@ -4,22 +4,13 @@ layout: home
 
 hero:
   name: "Zero Docs"
-  text: "Docs for the Undone Labs zero-core module."
-  tagline: My great project tagline
+  text: "Docs for the Undone Labs Nuxt3 Starter."
+  tagline: "Start with a package below:"
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Zero Core Module
+      link: /zero-core/what-is-zero-core
     - theme: alt
-      text: API Examples
-      link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
----
+      text: Site Package
+      link: /site/get-started
 
