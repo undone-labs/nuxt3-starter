@@ -7,7 +7,6 @@
 
     <div v-else class="textarea-container">
       <textarea
-        :id="modelKey"
         :value="value"
         :placeholder="placeholder"
         :autocomplete="autocomplete"
@@ -38,7 +37,6 @@ const emit = defineEmits(['updateValue', 'toggleFocused'])
 
 // ======================================================================== Data
 const scaffold = props.field.scaffold
-const modelKey = props.field.modelKey
 const placeholder = scaffold.placeholder || 'Enter a value...'
 const autocomplete = scaffold.autocomplete
 const pre = scaffold.pre
