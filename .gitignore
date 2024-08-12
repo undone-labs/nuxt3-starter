@@ -82,7 +82,11 @@ typings/
 dist
 
 # vuepress build output
-.vuepress/dist
+packages/docs/.vuepress/dist
+
+# vitepress build output
+packages/docs/.vitepress/cache
+packages/docs/.vitepress/dist
 
 # Serverless directories
 .serverless
