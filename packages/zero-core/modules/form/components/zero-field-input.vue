@@ -17,7 +17,6 @@
 
     <div v-else class="input-container">
       <input
-        ref="input"
         :id="modelKey"
         :type="inputType"
         :name="modelKey"
@@ -72,9 +71,9 @@ const placeholder = scaffold.placeholder || 'Enter a value...'
 const autocomplete = scaffold.autocomplete
 const step = scaffold.step
 const showControls = scaffold.showControls
+const pre = scaffold.pre
 const min = scaffold.min
 const max = scaffold.max
-const input = ref(null)
 
 // ==================================================================== Computed
 const value = computed(() => props.field.value)
@@ -82,22 +81,23 @@ const state = computed(() => props.field.state)
 const empty = computed(() => !value.value || value.value === '')
 const validate = computed(() => props.field.validate)
 
+// ======================================================================= Watch
+watch(props.field, (field) => {
+  const value = field.value
+  if (typeof pre !== 'string') { return }
+  const regex = new RegExp(pre)
+  if (regex.test(value)) { // value contains restricted characters
+    const stripped = value.replace(regex, '')
+    emit('updateValue', stripped)
+  }
+})
+
 // ===================================================================== Methods
 const toggleFocused = (state) => {
-  if (!state && inputType === 'text') { // blur
-    let val = value.value
-    val = val.trim().replaceAll(/ {2,}/g, ' ')
-    emit('updateValue', val)
-  }
-  if (!state && inputType === 'url') { // blur
-    let val = value.value
-    val = val.trim().toLowerCase()
-    emit('updateValue', val)
-  }
   if (!state && inputType === 'number') { // blur
     let val = value.value
     if (val !== '') {
-      val = step % 1 !== 0 ? parseFloat(val).toFixed(2) : parseInt(val)
+      val = step % 1 !== 0 ? `${parseFloat(val).toFixed(2)}` : `${parseInt(val)}`
       emit('updateValue', val)
     }
   }
