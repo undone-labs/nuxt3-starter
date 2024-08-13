@@ -1,9 +1,10 @@
 import { defineConfig } from 'vitepress'
+import Fs from 'fs'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Zero Docs",
-  description: "Docs for the Undone Labs Nuxt3 Starter.",
+  description: "Docs for the Undone Labs zero-core module",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -107,4 +108,5 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/undone-labs/nuxt3-starter' }
     ]
   }
+
 })
