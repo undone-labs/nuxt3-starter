@@ -3,8 +3,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Zero Docs",
-  description: "Docs for the Undone Labs zero-core module",
+  title: 'Zero Docs',
+  description: 'Docs for the Undone Labs zero-core module',
   vite: {
     css: {
       preprocessorOptions: {
@@ -18,8 +18,11 @@ export default defineConfig({
       }
     }
   },
+  srcDir: './content',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: { src: '/logo.svg', width: 102, height: 48 },
+    siteTitle: '',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Zero Core', link: '/zero-core/what-is-zero-core' },

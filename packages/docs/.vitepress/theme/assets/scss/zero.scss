@@ -174,6 +174,25 @@
 }
 
 /**
+ * Component: Nav
+ * -------------------------------------------------------------------------- */
+
+ :root {
+  --vp-nav-height: 78px;
+  --vp-nav-bg-color: var(--vp-c-bg);
+  --vp-nav-screen-bg-color: var(--vp-c-bg);
+  --vp-nav-logo-height: 48px;
+}
+
+.hide-nav {
+  --vp-nav-height: 0px;
+}
+
+.hide-nav .VPSidebar {
+  --vp-nav-height: 22px;
+}
+
+/**
  * Component: Code
  * -------------------------------------------------------------------------- */
 
@@ -226,16 +245,40 @@
  * Component: Button
  * -------------------------------------------------------------------------- */
 
-:root {
+ :root {
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: var(--vp-c-white);
-  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-bg: #{$blueRibbon};
   --vp-button-brand-hover-border: transparent;
   --vp-button-brand-hover-text: var(--vp-c-white);
-  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-hover-bg: #{$dodgerBlue};
   --vp-button-brand-active-border: transparent;
   --vp-button-brand-active-text: var(--vp-c-white);
   --vp-button-brand-active-bg: var(--vp-c-brand-1);
+
+  --vp-button-alt-border: transparent;
+  --vp-button-alt-text: #{$wildSand};
+  --vp-button-alt-bg: #{$codGray};
+  --vp-button-alt-hover-border: transparent;
+  --vp-button-alt-hover-text: #{$wildSand};
+  --vp-button-alt-hover-bg: #{$dodgerBlue};
+  --vp-button-alt-active-border: transparent;
+  --vp-button-alt-active-text: var(--vp-c-text-1);
+  --vp-button-alt-active-bg: var(--vp-c-default-1);
+
+  --vp-button-sponsor-border: var(--vp-c-text-2);
+  --vp-button-sponsor-text: var(--vp-c-text-2);
+  --vp-button-sponsor-bg: transparent;
+  --vp-button-sponsor-hover-border: var(--vp-c-sponsor);
+  --vp-button-sponsor-hover-text: var(--vp-c-sponsor);
+  --vp-button-sponsor-hover-bg: transparent;
+  --vp-button-sponsor-active-border: var(--vp-c-sponsor);
+  --vp-button-sponsor-active-text: var(--vp-c-sponsor);
+  --vp-button-sponsor-active-bg: transparent;
+}
+
+.dark {
+  --vp-button-alt-bg: #{$blueViolet};
 }
 
 /**
@@ -246,14 +289,14 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
     120deg,
-    #bd34fe 30%,
-    #41d1ff
+    #0046F9 30%,
+    #5196FF
   );
 
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
-    #bd34fe 50%,
-    #47caff 50%
+    #0046F9 50%,
+    #5196FF 50%
   );
   --vp-home-hero-image-filter: blur(44px);
 }
