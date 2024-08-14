@@ -5,6 +5,19 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Zero Docs",
   description: "Docs for the Undone Labs zero-core module",
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: { // make SCSS variables, functions and mixins globally accessible
+          additionalData: `
+            @use "sass:math";
+            @import ".vitepress/theme/assets/scss/utilities.scss";
+            @import ".vitepress/theme/assets/scss/typography.scss";
+          `
+        }
+      }
+    }
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
