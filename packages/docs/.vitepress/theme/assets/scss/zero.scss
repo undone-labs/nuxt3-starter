@@ -214,7 +214,7 @@
   --vp-code-bg: #{$gray300};
 
   --vp-code-block-color: var(--vp-c-text-2);
-  --vp-code-block-bg: var(--vp-c-bg-alt);
+  --vp-code-block-bg: #{$mineShaft};
   --vp-code-block-divider-color: var(--vp-c-gutter);
 
   --vp-code-lang-color: var(--vp-c-text-3);
