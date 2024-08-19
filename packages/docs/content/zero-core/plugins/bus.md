@@ -1,6 +1,6 @@
----
-title: bus
----
+<a name="Bus"></a>
 
-# bus
+## Bus()
+Test
 
+**Kind**: global function  

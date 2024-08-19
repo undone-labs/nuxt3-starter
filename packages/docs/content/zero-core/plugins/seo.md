@@ -1,9 +1,3 @@
----
-title: seo
----
-
-# seo
-
 <a name="seo"></a>
 
 ## seo(key, override)
