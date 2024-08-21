@@ -40,24 +40,29 @@ To use either workspace, you'll need to create a self-signed certificate (see be
 
 In order to browse with TLS locally, you'll need a certificate. A self-signed certificate is satisfactory for this purpose. Here's how to set one up.
 
-Used for development in a local environment (such as on your personal computer). You only need to do this once. If you've already done this for a different project, just copy your existing `localhost_cert.pem` and `localhost_key.pem` files from `~/.ssh` into the root directory of this repo and skip the rest of this step.
+If you've already done this for a different project, just copy your existing `localhost_cert.pem` and `localhost_key.pem` files from `~/.ssh` into the root directory of this repo and skip the rest of this step.
 
 - [Install mkcert and generate certificate](https://github.com/FiloSottile/mkcert) by running the commands below, in this order:
   ```zsh
-  cd ~/.ssh
-  brew install mkcert # replace with another package manager for linux distro
-  brew install nss # need to install certutil before running `mkcert -install` so the CA can be automatically installed in Firefox
+  brew install mkcert nss # replace with another package manager for linux distro, which should also have mkcert available
 
   # at this point, open any https website in Firefox before running the below commands
-
+  cd ~/.ssh
   mkcert -install
   mkcert -key-file localhost_key.pem -cert-file localhost_cert.pem localhost 127.0.0.1
-  cat localhost_cert.pem > localhost_fullchain.pem
-  cat "$(mkcert -CAROOT)/rootCA.pem" >> localhost_fullchain.pem
+  cat localhost_cert.pem > localhost_fullchain.pem && cat "$(mkcert -CAROOT)/rootCA.pem" >> localhost_fullchain.pem
   ```
+
 - Copy the new `localhost_cert.pem` and `localhost_key.pem` files to the root directory of this repo
+  ```zsh
+    cd ~/path/to/this/project # navigate to this project on your local machine
+    cp -v ~/.ssh/localhost_cert.pem ~/.ssh/localhost_key.pem .
+  ```
+
+You'll only need to do this _once_ for a valid certificate that lasts 825 days (2.25 years). This certificate can be used across multiple projects. However, after 2 years, `mkcert` will need to be run again, and the new certificate files will need to be copied to any active project repos once again.
 
 The above tutorial is specifically for MacOS machines with `brew` installed. For other \*nix OS's replace the installation step with your preferred package manager (e.g. `apt install mkcert`).
+
 
 
 ### Environment variables
