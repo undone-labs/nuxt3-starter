@@ -81,15 +81,6 @@ ALGOLIA_INDEX_ID=unset
 Even if Algolia is not currently in use, these keys still need to be specified.
 For production deployment, both the `NODE_ENV` and `SERVER_ENV` should be set to `production`.
 
-
-## Linting and Git Hooks
-
-Files and commit messages should be linted  before committing. `husky` has been installed to validate this and needs to be set up before working on the repo.
-
-  ```zsh
-    npx husky
-  ```
-
 ### App frontend
 To build the frontend:
 - Clone this repo
@@ -136,6 +127,15 @@ It's important to maintain abstraction of content, so anything that's content re
 Please use `npm ci` in place of `npm i` when not explicitly upgrading dependencies. `npm ci` will only install versions of packages provided in the lockfile, leading to more stability.
 
 Always regression test the site if upgrading packages, as they may contain breaking changes.
+
+## Linting
+
+Files and commit messages should be linted  before committing. `husky` has been installed to validate this and needs to be set up before working on the repo. It will prompt you to install husky but this should already be installed if `npm ci` has already been run. You'll only need to do this once unless you delete a workspace's generated ´.nuxt´ folder.
+
+  ```zsh
+    npm run prepare
+    npm run {workspace-name}:prepare // run for each workspace you'll be working in
+  ```
 
 ## Commit Messages
 
