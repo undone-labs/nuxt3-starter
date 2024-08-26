@@ -8,7 +8,8 @@
     "generate": "nuxi generate",
     "start": "bash ./dev-start.sh",
     "serve": "npx serve .output/public --ssl-cert=../../localhost_cert.pem --ssl-key=../../localhost_key.pem",
-    "upgrade-nuxt": "nuxi upgrade --force"
+    "upgrade-nuxt": "nuxi upgrade --force",
+    "lint": "npx eslint . --ext .js,.vue"
   },
   "dependencies": {
     "@nuxt/content": "^2.8.5",
