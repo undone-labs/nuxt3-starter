@@ -82,6 +82,14 @@ Even if Algolia is not currently in use, these keys still need to be specified.
 For production deployment, both the `NODE_ENV` and `SERVER_ENV` should be set to `production`.
 
 
+## Linting and Git Hooks
+
+Files and commit messages should be linted  before committing. `husky` has been installed to validate this and needs to be set up before working on the repo.
+
+  ```zsh
+    npx husky
+  ```
+
 ### App frontend
 To build the frontend:
 - Clone this repo
@@ -129,7 +137,6 @@ Please use `npm ci` in place of `npm i` when not explicitly upgrading dependenci
 
 Always regression test the site if upgrading packages, as they may contain breaking changes.
 
-
 ## Commit Messages
 
 Commit messages should use the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) format. `commitlint` has been installed to validate this usage. This means that all commits should be prefixed appropriately with a tag denoting the kind of code being committed.
@@ -156,7 +163,7 @@ Commit messages should use the [Conventional Commit](https://www.conventionalcom
 
 ## [Release Please](https://github.com/googleapis/release-please)
 
-- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects. 
+- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects.
 - It is currently setup as a github action in this repo
 - See [documentation](https://github.com/googleapis/release-please) on how to use
 
