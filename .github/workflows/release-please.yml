@@ -13,5 +13,5 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         with:
           release-type: node
-          config-file: release-please.json
+          config-file: release-please-config.json
         - uses: actions/checkout@v4
