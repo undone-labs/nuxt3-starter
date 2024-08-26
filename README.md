@@ -154,11 +154,11 @@ Commit messages should use the [Conventional Commit](https://www.conventionalcom
 4. Color name variables in `SCSS` are obtained from [this resource](https://chir.ag/projects/name-that-color/)
 
 
-## [Release Please](https://github.com/googleapis/release-please)
+## [Release Please](https://github.com/marketplace/actions/release-please-action)
 
-- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects. 
+- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects.
 - It is currently setup as a github action in this repo
-- See [documentation](https://github.com/googleapis/release-please) on how to use
+- See [documentation](https://github.com/marketplace/actions/release-please-action) on how to use
 
 
 ## Initializing Docker container

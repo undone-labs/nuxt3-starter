@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": { ".": {} },
+  "bootstrap-sha": "TBD: For the initial release of a library, only consider as far back as this commit SHA. This is an uncommon use case and should generally be avoided.",
+  "release-type": "node",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "changelog-type": "default",
+  "pull-request-title-pattern": "chore: release ${version} from ${branch}",
+  "pull-request-header": "🤖 I have created a release beep boop",
+  "initial-version": "1.0.0"
+}
