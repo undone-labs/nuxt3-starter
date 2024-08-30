@@ -72,6 +72,12 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     '@nuxt/content'
   ],
+  // ============================================================ [Module] Pinia
+  pinia: {
+    storesDirs: [
+      './stores/**'
+    ]
+  },
   // ========================================================= [Layer] zero-core
   zero: {
     displayZeroLogs: false,

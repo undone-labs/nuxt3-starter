@@ -11,5 +11,6 @@ export const useLoginWith = loginWith => {
   switch (strategy) {
     case 'github': useAuthenticateGithub(options); break
     case 'metamask': useAuthenticateMetamask(options); break
+    case 'google': useAuthenticateGoogle(options); break
   }
 }
