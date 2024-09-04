@@ -3,6 +3,12 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 export default withNuxt(
   {
     files: ['**/*.js', '**/*.vue'],
+    ignores: [
+      'node_modules/',
+      '.nuxt/',
+      '.output/',
+      'dest/'
+    ],
     rules: {
       'no-console': process.env.NODE_ENV !== 'development' ? 'error' : 'off',
       'vue/html-closing-bracket-newline': ['error', {
