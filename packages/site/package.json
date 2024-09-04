@@ -6,7 +6,6 @@
     "dev": "nuxi dev --no-clear",
     "build": "nuxi build",
     "generate": "nuxi generate",
-    "start": "bash ./dev-start.sh",
     "serve": "npx serve .output/public --ssl-cert=../../localhost_cert.pem --ssl-key=../../localhost_key.pem",
     "upgrade-nuxt": "nuxi upgrade --force"
   },
