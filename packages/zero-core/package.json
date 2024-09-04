@@ -5,9 +5,9 @@
   "dependencies": {
     "@floating-ui/vue": "^1.1.4",
     "@vuepic/vue-datepicker": "^9.0.1",
-    "@vueuse/core": "^10.9.0",
-    "@vueuse/integrations": "^10.9.0",
-    "@vueuse/nuxt": "^10.9.0",
+    "@vueuse/core": "^11.0.3",
+    "@vueuse/integrations": "^11.0.3",
+    "@vueuse/nuxt": "^11.0.3",
     "ace-builds": "^1.32.7",
     "change-case": "^5.4.4",
     "date-fns": "^3.3.1",
