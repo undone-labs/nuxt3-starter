@@ -24,7 +24,12 @@ const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
   nuxtOptions.runtimeConfig.public.auth = {
     redirectAfterLogout: options.redirectAfterLogout,
     configurationUrl: options.configurationUrl,
-    github: options.github
+    ...(options.github && {
+      github: options.github
+    }),
+    ...(options.google && {
+      google: options.google
+    })
   }
 }
 

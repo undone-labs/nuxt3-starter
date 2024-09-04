@@ -36,6 +36,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: toRem(20);
 }
 
 .status-message {
