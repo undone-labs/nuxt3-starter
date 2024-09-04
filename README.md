@@ -72,14 +72,9 @@ Add the following `.env` file to the repo root
 ```ini
 NODE_ENV=development
 SERVER_ENV=development
-
-ALGOLIA_APPLICATION_ID=unset
-ALGOLIA_API_KEY=unset
-ALGOLIA_INDEX_ID=unset
 ```
 
-Even if Algolia is not currently in use, these keys still need to be specified.
-For production deployment, both the `NODE_ENV` and `SERVER_ENV` should be set to `production`.
+For production deployment, both `NODE_ENV` and `SERVER_ENV` should be set to `production`.
 
 
 ### App frontend
