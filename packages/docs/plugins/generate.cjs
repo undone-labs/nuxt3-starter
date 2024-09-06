@@ -3,7 +3,7 @@
 const fs = require('fs')
 const Jsdoc2Md = require('jsdoc-to-markdown')
 const Json2Md = require('json2md')
-const VueDocs = require('vue-docgen-api')
+const VueDocs = require('./vue-docgen-api-main-rewrite.cjs')
 
 const SRC_PATH = '../../zero-core/test'
 const DEST_PATH = '../content/zero-core/components'
@@ -34,10 +34,7 @@ const parseVueFile = async (path) => {
 }
 
 const populateMarkdownTemplate = async (data) => {
-  console.log(data.slots)
-  data.slots.forEach((slot) => {
-    console.log(slot.bindings)
-  })
+  // console.log(data)
   const props = data.props.length ?
     [
       {
@@ -75,10 +72,17 @@ const populateMarkdownTemplate = async (data) => {
         table: {
           headers: ['name', 'scoped', 'bindings'],
           rows: data.slots.map(slot => ({
-            name: slot.name
-            // bindings: `\`${slot.bindings.map(binding => binding.name)}\``
+            name: slot.name,
+            scoped: `\`${!!slot.scoped}\``,
+            bindings: Array.isArray(slot.bindings) ? slot.bindings.map(binding => `\`${binding.name}\``).join(' ') : ''
           }))
         }
+      }
+    ] : []
+  const methods = data._methods?.length ?
+    [
+      {
+        h3: 'Methods'
       }
     ] : []
 
@@ -90,8 +94,9 @@ const populateMarkdownTemplate = async (data) => {
       p: data.description
     },
     ...props,
+    ...slots,
     ...emits,
-    ...slots
+    ...methods
   ])
 }
 

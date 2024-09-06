@@ -13,11 +13,17 @@ A Slider component that is navigable through tabs corresponding to each slide.
 | `animateHeight`<span>(optional)</span> | boolean | Choose to disable height animation |  |
 | `fixedHeight`<span>(optional)</span> | boolean | A fixed-height slider's slides are set to `height: 100%`. Usually to allow for scrolling within a slide. |  |
 
+### Slots
+
+| name | scoped | bindings |
+| ---- | ------ | -------- |
+| before-track | `true` | `change-slide` `current-slide` |
+| key | `true` | `name` `data` `change-slide` `active` |
+| after-track | `true` | `change-slide` `current-slide` |
+
 ### Emitters
 
 
  - slideChanged - undefined
 
-### Slots
-
-
+### Methods

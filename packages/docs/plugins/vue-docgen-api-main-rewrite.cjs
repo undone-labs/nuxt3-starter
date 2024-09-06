@@ -4231,9 +4231,18 @@ function setupMethodHandler(documentation, componentDefinition, astPath) {
             // console.log(comment)
             return comment.value.includes('@method')
           })
-          .map((method) => ({ name: parseDocblock(method.value).replace('@method', '').replace(/@displayName.*/, '').trim() }))
+          .map((method) => {
+            const lines = method.value.split('*').map(line => line.trim()).filter(line => line)
+            const name = lines.find(item => item.includes('@method'))
+            const description = lines.find(item => item.includes('@desc'))
+            return {
+              name: parseDocblock(name).replace('@method', '').replace(/@displayName.*/, '').trim(),
+              ...(description && { description: parseDocblock(description).replace('@desc', '').replace(/@displayName.*/, '').trim() })
+            }
+          })
         return acc.concat(comments)
 			}, [])
+      console.log(methods)
 			if (!methods.length) return false;
 			documentation.set('_methods', methods);
 			return false;
