@@ -15,7 +15,7 @@
 import Seo from '@/data/seo.json'
 
 // ======================================================================= Setup
-if (process.client && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+if (import.meta.client && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   useHead({
     meta: [
       { name: 'msapplication-config', content: '/favicon/dark/browserconfig.xml' }

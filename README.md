@@ -76,7 +76,6 @@ SERVER_ENV=development
 
 For production deployment, both `NODE_ENV` and `SERVER_ENV` should be set to `production`.
 
-
 ### App frontend
 To build the frontend:
 - Clone this repo
@@ -124,6 +123,14 @@ Please use `npm ci` in place of `npm i` when not explicitly upgrading dependenci
 
 Always regression test the site if upgrading packages, as they may contain breaking changes.
 
+## Linting
+
+Files and commit messages should be linted  before committing. `husky` has been installed to validate this and needs to be set up before working on the repo. It will prompt you to install husky but this should already be installed if `npm ci` has already been run. You'll only need to do this once unless you delete a workspace's generated ´.nuxt´ folder.
+
+  ```zsh
+    npm run prepare
+    npm run {workspace-name}:prepare // run for each workspace you'll be working in
+  ```
 
 ## Commit Messages
 
@@ -151,7 +158,7 @@ Commit messages should use the [Conventional Commit](https://www.conventionalcom
 
 ## [Release Please](https://github.com/googleapis/release-please)
 
-- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects. 
+- Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects.
 - It is currently setup as a github action in this repo
 - See [documentation](https://github.com/googleapis/release-please) on how to use
 
