@@ -40,8 +40,8 @@ const props = defineProps({
   },
   /**
    * On occasions where the final root element in field-conditional.vue render
-   * must be something specific. Such as when wrapping a <tbody> in a field-standalone,
-   * it cannot be a div as the wrapper. It must be <tbody> at the root to prevent
+   * must be something specific. Such as when wrapping a `<tbody>` in a field-standalone,
+   * it cannot be a div as the wrapper. It must be `<tbody>` at the root to prevent
    * SSR hydration errors.
    */
   rootHtmlTag: {

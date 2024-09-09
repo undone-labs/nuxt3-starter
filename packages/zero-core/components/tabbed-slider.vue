@@ -138,9 +138,10 @@ const setPanelHeight = () => {
 }
 
 /**
- * @method changeSlide
- * @desc Changes the current slide.
+ * @method changeSlide - Changes the current slide.
+ * @desc - Changes the current slide.
  * @param {string} slug - The slug of the slide to switch to.
+ * @returns {string} The newly chosen slide
  */
 
 const changeSlide = slug => {

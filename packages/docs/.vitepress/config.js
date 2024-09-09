@@ -44,8 +44,22 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Introduction', link: '/zero-core/modules/introduction' },
-            { text: 'Accordion', link: '/zero-core/modules/accordion' },
-            { text: 'Alert', link: '/zero-core/modules/alert' },
+            {
+              text: 'Accordion',
+              collapsed: true,
+              items: [
+                { text: 'Components', link: '/zero-core/modules/accordion/components' },
+                { text: 'Store', link: '/zero-core/modules/accordion/store' }
+              ]
+            },
+            {
+              text: 'Alert',
+              collapsed: true,
+              items: [
+                { text: 'Components', link: '/zero-core/modules/alert/components' },
+                { text: 'Store', link: '/zero-core/modules/alert/store' }
+              ]
+            },
             {
               text: 'Auth',
               collapsed: true,
@@ -53,11 +67,22 @@ export default defineConfig({
                 { text: 'Overview', link: '/zero-core/modules/auth/overview' },
                 { text: 'Middleware', link: '/zero-core/modules/auth/middleware' },
                 { text: 'Composables', link: '/zero-core/modules/auth/composables' },
-                { text: 'Store', link: '/zero-core/modules/auth/stores' },
-                { text: 'Pages', link: '/zero-core/modules/auth/pages' }
+                { text: 'Auth Store', link: '/zero-core/modules/auth/stores/use-zero-auth-store.md' },
+                { text: 'Role Store', link: '/zero-core/modules/auth/stores/use-zero-role-store.md' },
+                { text: 'Workspace Store', link: '/zero-core/modules/auth/stores/use-zero-workspace-store.md' },
+                { text: 'Github App', link: '/zero-core/modules/auth/pages/login/github-app.md' },
+                { text: 'Github Oauth', link: '/zero-core/modules/auth/pages/login/github-oauth.md' },
+                { text: '404 Page', link: '/zero-core/modules/auth/pages/404.md' }
               ]
             },
-            { text: 'Button', link: '/zero-core/modules/button' },
+            {
+              text: 'Button',
+              collapsed: true,
+              items: [
+                { text: 'Components', link: '/zero-core/modules/button/components' },
+                { text: 'Store', link: '/zero-core/modules/button/store' }
+              ]
+            },
             {
               text: 'Form',
               collapsed: true,
@@ -68,9 +93,23 @@ export default defineConfig({
                 { text: 'Store', link: '/zero-core/modules/form/store' }
               ]
             },
-            { text: 'Markdown Parser', link: '/zero-core/modules/markdown-parser' },
-            { text: 'Toaster', link: '/zero-core/modules/toaster' },
-            { text: 'Websocket', link: '/zero-core/modules/websocket' }
+            { text: 'Markdown Parser', link: '/zero-core/modules/markdown-parser/components/zero-markdown-parser' },
+            {
+              text: 'Toaster',
+              collapsed: true,
+              items: [
+                { text: 'Components', link: '/zero-core/modules/toaster/components' },
+                { text: 'Store', link: '/zero-core/modules/toaster/store' }
+              ]
+            },
+            {
+              text: 'Websocket',
+              collapsed: true,
+              items: [
+                { text: 'Plugins', link: '/zero-core/modules/websocket/plugins' },
+                { text: 'Store', link: '/zero-core/modules/websocket/store' }
+              ]
+            }
           ]
         },
         {
@@ -95,22 +134,7 @@ export default defineConfig({
             { text: 'Uuid', link: '/zero-core/composables/uuid' }
           ]
         },
-        {
-          text: 'Plugins',
-          collapsed: false,
-          items: [
-            { text: 'Bus', link: '/zero-core/plugins/bus' },
-            { text: 'SEO', link: '/zero-core/plugins/seo' }
-          ]
-        },
-        {
-          text: 'Assets',
-          collapsed: false,
-          items: [
-            { text: 'Overview', link: '/zero-core/assets/overview' },
-            { text: 'Utility Mixins', link: '/zero-core/assets/utility-mixins' }
-          ]
-        }
+        { text: 'Plugins', link: '/zero-core/plugins' }
       ],
       '/site/': [
         {

@@ -14,6 +14,7 @@ var compilerSfc = require('@vue/compiler-sfc');
 var pug = require('pug');
 var compilerDom = require('@vue/compiler-dom');
 var vueInbrowserCompilerIndependentUtils = require('vue-inbrowser-compiler-independent-utils');
+const { parse: commentParser } = require('comment-parser')
 
 function _interopNamespaceDefault(e) {
     var n = Object.create(null);
@@ -4227,22 +4228,21 @@ function setupMethodHandler(documentation, componentDefinition, astPath) {
 			const methods = body.reduce((acc, node) => {
 				if (!node.comments) return acc;
 				const comments = node.comments
-					.filter((comment) => {
-            // console.log(comment)
-            return comment.value.includes('@method')
-          })
+					.filter((comment) => comment.value.includes('@method'))
           .map((method) => {
-            const lines = method.value.split('*').map(line => line.trim()).filter(line => line)
-            const name = lines.find(item => item.includes('@method'))
-            const description = lines.find(item => item.includes('@desc'))
-            return {
-              name: parseDocblock(name).replace('@method', '').replace(/@displayName.*/, '').trim(),
-              ...(description && { description: parseDocblock(description).replace('@desc', '').replace(/@displayName.*/, '').trim() })
-            }
+            const tags = commentParser(`/*${method.value}*/`)[0]?.tags
+            const tagNames = [...new Set(tags.map(tag => tag.tag))]
+            const output = {}
+            tagNames.forEach((tag) => {
+              output[tag] = tags.filter(item => item.tag === tag)
+              if (tag === 'method' || tag === 'desc') {
+                output[tag] = output[tag][0]
+              }
+            })
+            return output
           })
         return acc.concat(comments)
 			}, [])
-      console.log(methods)
 			if (!methods.length) return false;
 			documentation.set('_methods', methods);
 			return false;

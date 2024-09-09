@@ -1,9 +1,9 @@
-## tabbed-slider
+# Tabbed Slider
 
 
 A Slider component that is navigable through tabs corresponding to each slide.
 
-### Props
+## Props
 
 | Prop | type | description | values |
 | ---- | ---- | ----------- | ------ |
@@ -13,7 +13,7 @@ A Slider component that is navigable through tabs corresponding to each slide.
 | `animateHeight`<span>(optional)</span> | boolean | Choose to disable height animation |  |
 | `fixedHeight`<span>(optional)</span> | boolean | A fixed-height slider's slides are set to `height: 100%`. Usually to allow for scrolling within a slide. |  |
 
-### Slots
+## Slots
 
 | name | scoped | bindings |
 | ---- | ------ | -------- |
@@ -26,4 +26,22 @@ A Slider component that is navigable through tabs corresponding to each slide.
 
  - slideChanged - undefined
 
-### Methods
+## Methods
+
+##### setPanelHeight()
+
+##### changeSlide()
+
+
+Changes the current slide.
+
+| param | type | description |
+| ----- | ---- | ----------- |
+| `slug` | string | The slug of the slide to switch to. |
+
+
+ - **returns:** The newly chosen slide
+
+##### handleChangeSlideBusEvent()
+
+##### handleResetHeightBusEvent()

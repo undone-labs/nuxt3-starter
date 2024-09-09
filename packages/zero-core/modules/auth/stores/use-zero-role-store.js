@@ -16,7 +16,6 @@ export const useZeroRoleStore = defineStore('zero-role', () => {
 
   /**
    * @method updateMemberRole
-   * ---------------------------------------------------------------------------
    */
 
   const updateMemberRole = async payload => {
@@ -38,7 +37,6 @@ export const useZeroRoleStore = defineStore('zero-role', () => {
 
   /**
    * @method updateRolePermission
-   * ---------------------------------------------------------------------------
    */
 
   const updateRolePermission = async payload => {
@@ -60,7 +58,6 @@ export const useZeroRoleStore = defineStore('zero-role', () => {
 
   /**
    * @method updateRole
-   * ---------------------------------------------------------------------------
    */
 
   const updateRole = async payload => {
@@ -84,7 +81,6 @@ export const useZeroRoleStore = defineStore('zero-role', () => {
 
   /**
    * @method createRole
-   * ---------------------------------------------------------------------------
    */
 
   const createRole = async payload => {
@@ -111,7 +107,6 @@ export const useZeroRoleStore = defineStore('zero-role', () => {
 
   /**
    * @method deleteRole
-   * ---------------------------------------------------------------------------
    */
 
   const deleteRole = async roleId => {

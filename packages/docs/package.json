@@ -19,6 +19,8 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "comment-parser": "^1.4.1",
+    "jsdoc-parse": "^6.2.4",
     "vue-router": "^4.4.3"
   }
 }

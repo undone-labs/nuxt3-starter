@@ -1,3 +1,12 @@
+
+<a name="Bus"></a>
+
+## Bus()
+Test
+
+**Kind**: global function  
+
+
 <a name="seo"></a>
 
 ## seo(key, override)
