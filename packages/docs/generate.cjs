@@ -3,19 +3,19 @@
 const fs = require('fs')
 const Jsdoc2Md = require('jsdoc-to-markdown')
 const Json2Md = require('json2md')
-const VueDocs = require('./vue-docgen-api-main-rewrite.cjs')
+const VueDocs = require('./plugins/vue-docgen-api-rewrite.cjs')
 const changeCase = require('change-case')
 
-const SRC_PATH = '../../zero-core'
-const DEST_PATH = '../content/zero-core'
+const SRC_PATH = '../zero-core'
+const DEST_PATH = 'content/zero-core'
 
 const excludeList = [
-  '../../zero-core/node_modules',
-  '../../zero-core/assets',
-  '../../zero-core/deprecated',
-  '../../zero-core/pages',
-  '../../zero-core/nuxt.config.js',
-  '../../zero-core/error.vue'
+  '../zero-core/node_modules',
+  '../zero-core/assets',
+  '../zero-core/deprecated',
+  '../zero-core/pages',
+  '../zero-core/nuxt.config.js',
+  '../zero-core/error.vue'
 ]
 const concatenateList = [
   { 
@@ -34,7 +34,6 @@ const concatenateList = [
     dir: 'modules/alert/stores',
     filename: 'store'
   },
-
   { 
     dir: 'modules/auth/composables',
     filename: 'composables'

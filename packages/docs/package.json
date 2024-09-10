@@ -14,13 +14,12 @@
     "vue-docgen-api": "^4.79.2"
   },
   "scripts": {
-    "docs:dev": "vitepress dev",
+    "docs:dev": "node generate.cjs && vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
     "comment-parser": "^1.4.1",
-    "jsdoc-parse": "^6.2.4",
     "vue-router": "^4.4.3"
   }
 }
