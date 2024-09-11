@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": { ".": {} },
-  "bootstrap-sha": "TBD: For the initial release of a library, only consider as far back as this commit SHA. This is an uncommon use case and should generally be avoided.",
+  "bootstrap-sha": "fbdf447d768b9875e1146d9661109ea2522c92c4",
   "release-type": "node",
   "include-component-in-tag": false,
   "include-v-in-tag": true,
