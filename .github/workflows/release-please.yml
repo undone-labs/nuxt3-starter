@@ -19,4 +19,3 @@ jobs:
           release-type: node
           config-file: release-please-config.json
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-        - uses: actions/checkout@v4
