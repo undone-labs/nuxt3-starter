@@ -4,6 +4,10 @@ on:
     branches:
       - feat-release-please
 
+permissions:
+  contents: write
+  pull-requests: write
+
 name: release-please
 
 jobs:
