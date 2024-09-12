@@ -11,7 +11,7 @@ export const useZeroButtonStore = defineStore('zero-button', () => {
   // =================================================================== actions
 
   /**
-   * @method setButton
+   * @method setButton Sets a button in the global buttons object to the incoming payload.
    */
 
   const setButton = (payload) => {
