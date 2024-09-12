@@ -80,7 +80,7 @@ const component = computed(() => {
 /**
  * @method clickHandler
  * @desc Emits a 'clicked' event. If the button has an ID, the id will be used
- * to set the loading state in the button store using [setButton]{@link /zero-core/modules/button/store}
+ * to set the loading state in the button store using [setButton](/zero-core/modules/button/store.html#setbutton)
  */
 const clickHandler = async e => {
   e.stopPropagation()

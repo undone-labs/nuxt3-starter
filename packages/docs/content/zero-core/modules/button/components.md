@@ -31,4 +31,7 @@
 
 ##### clickHandler()
 
+
+a 'clicked' event. If the button has an ID, the id will be used to set the loading state in the button store using [setButton](/zero-core/modules/button/store.html#setbutton)
+
 ##### handleSessionExpired()

@@ -1,43 +1,40 @@
 {
-  "hash": "643cbe2c",
+  "hash": "8dc12c60",
   "configHash": "ea787b48",
-  "lockfileHash": "1c1fd683",
-  "browserHash": "2356a734",
+  "lockfileHash": "22fa19e1",
+  "browserHash": "4e0fefe6",
   "optimized": {
     "vue": {
       "src": "../../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "e99f0344",
+      "fileHash": "b388b16b",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "cdd47e57",
+      "fileHash": "57a13bf1",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "e9393078",
+      "fileHash": "d2acd18a",
       "needsInterop": false
     },
     "@vueuse/integrations/useChangeCase": {
       "src": "../../../../../node_modules/@vueuse/integrations/useChangeCase.mjs",
       "file": "@vueuse_integrations_useChangeCase.js",
-      "fileHash": "e651570d",
+      "fileHash": "1c3bd0aa",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-4P6WFWEC": {
-      "file": "chunk-4P6WFWEC.js"
+    "chunk-U43GPVYO": {
+      "file": "chunk-U43GPVYO.js"
     },
-    "chunk-GIMJQKQR": {
-      "file": "chunk-GIMJQKQR.js"
-    },
-    "chunk-PZ5AY32C": {
-      "file": "chunk-PZ5AY32C.js"
+    "chunk-M7MU5NAY": {
+      "file": "chunk-M7MU5NAY.js"
     }
   }
 }
