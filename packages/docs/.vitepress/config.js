@@ -18,9 +18,10 @@ export default defineConfig({
     }
   },
   srcDir: './content',
+  cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: { src: '/logo.svg', width: 102, height: 48 },
+    logo: { light: '/logo-light.svg', dark: '/logo-dark.svg', width: 102, height: 48 },
     siteTitle: '',
     nav: [
       { text: 'Home', link: '/' },
@@ -115,6 +116,7 @@ export default defineConfig({
           text: 'Components',
           collapsed: false,
           items: [
+            { text: 'Introduction', link: '/zero-core/components/introduction' },
             { text: 'Api Overview', link: '/zero-core/components/api-overview' },
             { text: 'Api Preview', link: '/zero-core/components/api-preview' },
             { text: 'Block Builder', link: '/zero-core/components/block-builder' },
@@ -128,6 +130,7 @@ export default defineConfig({
           text: 'Composables',
           collapsed: false,
           items: [
+            { text: 'Introduction', link: '/zero-core/composables/introduction' },
             { text: 'Highlight Code', link: '/zero-core/composables/highlight-code' },
             { text: 'Open Popup', link: '/zero-core/composables/open-popup' },
             { text: 'Uuid', link: '/zero-core/composables/uuid' }

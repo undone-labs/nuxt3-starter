@@ -341,3 +341,11 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+/**
+ * Component: Sidebar
+ * -------------------------------------------------------------------------- */
+:deep(.VPSidebarItem) {
+  .items {
+    display: block !important;
+  }
+}
