@@ -177,7 +177,7 @@
  * Component: Nav
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   --vp-nav-height: 78px;
   --vp-nav-bg-color: var(--vp-c-bg);
   --vp-nav-screen-bg-color: var(--vp-c-bg);
@@ -342,10 +342,9 @@
 }
 
 /**
- * Component: Sidebar
+ * Component: Doc Footer Nav
  * -------------------------------------------------------------------------- */
-:deep(.VPSidebarItem) {
-  .items {
-    display: block !important;
-  }
+.doc-footer-section-text,
+.doc-footer-divider {
+  color: var(--vp-c-text-1);
 }
