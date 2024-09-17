@@ -14,7 +14,7 @@ export default {
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
       'doc-before': () => h(Breadcrumbs),
-      'layout-bottom': () => h(SiteFooter)
+      'doc-after': () => h(SiteFooter)
     })
   },
   enhanceApp({ app, router, siteData }) {
