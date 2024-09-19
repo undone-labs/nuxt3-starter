@@ -11,11 +11,11 @@
 | `field` | object |  |  |
 | `disabled`<span>(optional)</span> | boolean |  |  |
 
-### Emitters
+## Emitters
 
 
- - toggleFocused - undefined
- - updateValue - undefined
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 # Zero Field Checkbox
 
@@ -31,16 +31,26 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| checkbox-extra | `false` |  |
-| label | `true` | `id` `label` |
-
-### Emitters
+##### Checkbox Extra
 
 
- - toggleFocused - undefined
- - updateValue - undefined
+**name:** `checkbox-extra`  **scoped:** `false`
+
+##### Label
+
+
+**name:** `label`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `id` |  |  |
+| `label` |  |  |
+
+## Emitters
+
+
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 # Zero Field Datepicker
 
@@ -54,11 +64,11 @@
 | `field` | object |  |  |
 | `disabled`<span>(optional)</span> | boolean |  |  |
 
-### Emitters
+## Emitters
 
 
- - toggleFocused - undefined
- - updateValue - undefined
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 ## Methods
 
@@ -78,17 +88,22 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| step-control-up | `false` |  |
-| step-control-down | `false` |  |
-
-### Emitters
+##### Step Control Up
 
 
- - updateValue - undefined
- - toggleFocused - undefined
- - toggleState - undefined
+**name:** `step-control-up`  **scoped:** `false`
+
+##### Step Control Down
+
+
+**name:** `step-control-down`  **scoped:** `false`
+
+## Emitters
+
+
+ - **updateValue** - undefined
+ - **toggleFocused** - undefined
+ - **toggleState** - undefined
 
 # Zero Field Json
 
@@ -102,11 +117,11 @@
 | `field` | object |  |  |
 | `disabled`<span>(optional)</span> | boolean |  |  |
 
-### Emitters
+## Emitters
 
 
- - updateValue - undefined
- - toggleFocused - undefined
+ - **updateValue** - undefined
+ - **toggleFocused** - undefined
 
 # Zero Field Radio
 
@@ -122,16 +137,26 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| radio-extra | `false` |  |
-| label | `true` | `id` `label` |
-
-### Emitters
+##### Radio Extra
 
 
- - toggleFocused - undefined
- - updateValue - undefined
+**name:** `radio-extra`  **scoped:** `false`
+
+##### Label
+
+
+**name:** `label`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `id` |  |  |
+| `label` |  |  |
+
+## Emitters
+
+
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 # Zero Field Select
 
@@ -155,22 +180,67 @@ the typeahead field handles this instead. |  |
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| disabled-window | `true` | `placeholder` `label` |
-| option-native-default-text | `true` | `placeholder` `label` |
-| option-native-text | `true` | `option` |
-| selection-window | `true` | `selected` `placeholder` `label` `empty` |
-| option-custom | `true` | `option` `index` `highlighted` `selected` |
-
-### Emitters
+##### Disabled Window
 
 
- - dropdownToggled - undefined
- - optionHighlighted - undefined
- - toggleEmpty - undefined
- - toggleFocused - undefined
- - updateValue - undefined
+**name:** `disabled-window`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `placeholder` |  |  |
+| `label` |  |  |
+
+##### Option Native Default Text
+
+
+**name:** `option-native-default-text`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `placeholder` |  |  |
+| `label` |  |  |
+
+##### Option Native Text
+
+
+**name:** `option-native-text`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `option` |  |  |
+
+##### Selection Window
+
+
+**name:** `selection-window`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `selected` |  |  |
+| `placeholder` |  |  |
+| `label` |  |  |
+| `empty` |  |  |
+
+##### Option Custom
+
+
+**name:** `option-custom`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `option` |  |  |
+| `index` |  |  |
+| `highlighted` |  |  |
+| `selected` |  |  |
+
+## Emitters
+
+
+ - **dropdownToggled** - undefined
+ - **optionHighlighted** - undefined
+ - **toggleEmpty** - undefined
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 # Zero Field Textarea
 
@@ -184,11 +254,11 @@ the typeahead field handles this instead. |  |
 | `field` | object |  |  |
 | `disabled`<span>(optional)</span> | boolean |  |  |
 
-### Emitters
+## Emitters
 
 
- - updateValue - undefined
- - toggleFocused - undefined
+ - **updateValue** - undefined
+ - **toggleFocused** - undefined
 
 # Zero Field Upload
 
@@ -204,16 +274,27 @@ the typeahead field handles this instead. |  |
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| header | `true` | `choose-callback` `clear-callback` `files` |
-| empty | `false` |  |
-
-### Emitters
+##### Header
 
 
- - toggleFocused - undefined
- - updateValue - undefined
+**name:** `header`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `choose-callback` |  |  |
+| `clear-callback` |  |  |
+| `files` |  |  |
+
+##### Empty
+
+
+**name:** `empty`  **scoped:** `false`
+
+## Emitters
+
+
+ - **toggleFocused** - undefined
+ - **updateValue** - undefined
 
 ## Methods
 
@@ -242,14 +323,27 @@ SSR hydration errors. |  |
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `true` | `field` `field-id` `field-type` `state` `required` `disabled` `validation-message` `update-value` `toggle-state` |
-
-### Emitters
+##### Default
 
 
- - updateValue - undefined
+**name:** `default`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `field` |  |  |
+| `field-id` |  |  |
+| `field-type` |  |  |
+| `state` |  |  |
+| `required` |  |  |
+| `disabled` |  |  |
+| `validation-message` |  |  |
+| `update-value` |  |  |
+| `toggle-state` |  |  |
+
+## Emitters
+
+
+ - **updateValue** - undefined
 
 ## Methods
 

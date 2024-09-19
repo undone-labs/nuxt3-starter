@@ -12,10 +12,19 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `true` | `entry` |
-| marker | `false` |  |
+##### Default
+
+
+**name:** `default`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `entry` |  |  |
+
+##### Marker
+
+
+**name:** `marker`  **scoped:** `false`
 
 ## Methods
 

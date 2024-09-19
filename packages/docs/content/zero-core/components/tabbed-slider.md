@@ -1,7 +1,7 @@
 # Tabbed Slider
 
 
-A Slider component that is navigable through tabs corresponding to each slide.
+A slider component that is navigable through tabs corresponding to each slide.
 
 ## Props
 
@@ -15,16 +15,42 @@ A Slider component that is navigable through tabs corresponding to each slide.
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| before-track | `true` | `change-slide` `current-slide` |
-| key | `true` | `name` `data` `change-slide` `active` |
-| after-track | `true` | `change-slide` `current-slide` |
-
-### Emitters
+##### Before Track
 
 
- - slideChanged - undefined
+**name:** `before-track`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `change-slide` |  |  |
+| `current-slide` |  |  |
+
+##### Key
+
+
+**name:** `key`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `name` |  |  |
+| `data` |  |  |
+| `change-slide` |  |  |
+| `active` |  |  |
+
+##### After Track
+
+
+**name:** `after-track`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `change-slide` |  |  |
+| `current-slide` |  |  |
+
+## Emitters
+
+
+ - **slideChanged** - undefined
 
 ## Methods
 
@@ -38,9 +64,6 @@ Changes the current slide.
 | param | type | description |
 | ----- | ---- | ----------- |
 | `slug` | string | The slug of the slide to switch to. |
-
-
- - **returns:** The newly chosen slide
 
 ##### handleChangeSlideBusEvent()
 

@@ -14,19 +14,73 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| before | `false` |  |
-| first | `true` | `increment-page` |
-| prev | `true` | `increment-page` |
-| breaker-left | `false` |  |
-| page | `true` | `page` `increment-page` |
-| breaker-right | `false` |  |
-| next | `true` | `increment-page` |
-| last | `true` | `increment-page` |
-| after | `false` |  |
-
-### Emitters
+##### Before
 
 
- - pageIncremented - undefined
+**name:** `before`  **scoped:** `false`
+
+##### First
+
+
+**name:** `first`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `increment-page` |  |  |
+
+##### Prev
+
+
+**name:** `prev`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `increment-page` |  |  |
+
+##### Breaker Left
+
+
+**name:** `breaker-left`  **scoped:** `false`
+
+##### Page
+
+
+**name:** `page`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `page` |  |  |
+| `increment-page` |  |  |
+
+##### Breaker Right
+
+
+**name:** `breaker-right`  **scoped:** `false`
+
+##### Next
+
+
+**name:** `next`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `increment-page` |  |  |
+
+##### Last
+
+
+**name:** `last`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `increment-page` |  |  |
+
+##### After
+
+
+**name:** `after`  **scoped:** `false`
+
+## Emitters
+
+
+ - **pageIncremented** - undefined

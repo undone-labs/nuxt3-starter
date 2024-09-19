@@ -122,6 +122,21 @@ const parseVueFile = async (path) => {
   })
 }
 
+// ---------------------------------------------------------------- getEventTags
+const getEventTags = evt => {
+  if (!Array.isArray(evt.tags)) {
+    return ''
+  }
+  const returnTags = evt.tags.filter(tag => tag.title === 'return' || tag.title === 'returns')
+  if (returnTags.length) {
+    const type = returnTags[0].type?.name
+    const elements = returnTags[0].type?.elements
+    const values = Array.isArray(elements) ? elements.map(el => el.name).join('|') : ''
+    return `- returns: \`${values || type}\` `
+  }
+  return ''
+}
+
 // ---------------------------------------------------- populateMarkdownTemplate
 const populateMarkdownTemplate = async (data) => {
   const props = data.props?.length ?
@@ -142,30 +157,41 @@ const populateMarkdownTemplate = async (data) => {
       }
     ] : []
 
-  const slots = data.slots?.length ?
-    [
-      {
-        h2: 'Slots'
-      },
-      {
-        table: {
-          headers: ['name', 'scoped', 'bindings'],
-          rows: data.slots.map(slot => ({
-            name: slot.name,
-            scoped: `\`${!!slot.scoped}\``,
-            bindings: Array.isArray(slot.bindings) ? slot.bindings.map(binding => `\`${binding.name}\``).join(' ') : ''
-          }))
-        }
+  let slots = []
+  if (data.slots?.length) {
+    slots = [{ h2: 'Slots'}]
+    data.slots.forEach((slot) => {
+      const slotData = []
+      if (slot.name) {
+        slotData.push({ h5: capitalCase(slot.name) }, { p: `**name:** \`${slot.name}\`  **scoped:** \`${!!slot.scoped}\`` })
       }
-    ] : []
+      if (slot.description) {
+        slotData.push({ p: slot.description })
+      }
+      if (slot.bindings?.length) {
+        const bindings = slot.bindings.map(binding => ({
+          binding: `\`${binding.name}\``,
+          type: binding.type ? `\`${binding.type.name}\`` : '',
+          description: binding.description || ''
+        }))
+        slotData.push({
+          table: {
+            headers: ['binding', 'type', 'description'],
+            rows: bindings
+          }
+        })
+      }
+      slots = slots.concat(slotData)
+    })
+  }
 
   const emits = data.events?.length ?
     [
       {
-        h3: 'Emitters'
+        h2: 'Emitters'
       },
       {
-        ul: data.events.map(evt => `${evt.name} - ${evt.description}`)
+        ul: data.events.map(evt => `**${evt.name}** ${getEventTags(evt)}- ${evt.description}`)
       }
     ] : []
 

@@ -12,9 +12,14 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| toast | `true` | `toast` |
+##### Toast
+
+
+**name:** `toast`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `toast` |  |  |
 
 ## Methods
 
@@ -33,6 +38,11 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| toast | `true` | `toast` |
+##### Toast
+
+
+**name:** `toast`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `toast` |  |  |

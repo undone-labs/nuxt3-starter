@@ -18,14 +18,19 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `true` | `loading` |
-
-### Emitters
+##### Default
 
 
- - clicked - undefined
+**name:** `default`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `loading` |  |  |
+
+## Emitters
+
+
+ - **clicked** - undefined
 
 ## Methods
 
