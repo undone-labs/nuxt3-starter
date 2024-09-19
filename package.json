@@ -36,7 +36,6 @@
     "packages/docs"
   ],
   "devDependencies": {
-    "chalk": "^5.3.0",
-    "vitepress-jsdoc": "^1.0.4"
+    "chalk": "^5.3.0"
   }
 }
