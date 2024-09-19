@@ -42,7 +42,8 @@
 
 <script setup>
 /**
- * @description A dropdown menu component that exposes two slots. [See below](/zero-core/components/dropdown#slots) for a description of each. When the dropdown menu is open clicking anywhere outside the dropdown causes it to close. This functionality is provided by VueUse's [onClickOutside](https://vueuse.org/core/onClickOutside/).
+ * @description A dropdown menu component that exposes two slots; a dropdown button and a panel of options. [See below](/zero-core/components/dropdown#slots) for a description of each. When the dropdown menu is open, clicking anywhere outside the dropdown causes it to close. This functionality is provided by VueUse's [onClickOutside](https://vueuse.org/core/onClickOutside/).
+ * The options panel (dropdown menu) is wrapped in a `.panel-container` container element. The top offset of this element ('padding-top' or 'top') and panel width and/or max-height must be set in the parent component as these are custom properties that will differ panel-to-panel.
  */
 // ===================================================================== Imports
 import { onClickOutside } from '@vueuse/core'
@@ -104,6 +105,7 @@ watch(selected, (val) => { emit('optionSelected', val) })
 // ===================================================================== Methods
 /**
  * @method togglePanel
+ * @desc - Toggles the dropdown panel open state if the `toggleOn` prop is set to 'click'
  */
 
 const togglePanel = () => {
@@ -114,6 +116,7 @@ const togglePanel = () => {
 
 /**
  * @method closePanel
+ * @desc - Sets the dropdown panel state to closed if the `toggleOn` prop is set to click and the panel is already open.
  */
 
 const closePanel = () => {
@@ -124,6 +127,8 @@ const closePanel = () => {
 
 /**
  * @method setSelected
+ * @desc - Sets the selected value of the dropdown menu, only if the `displaySelected` prop is set to `true`. Also closes the open dropdown panel.
+ * @param {string|Object} value - The option value to set as selected.
  */
 
 const setSelected = value => {
@@ -135,6 +140,9 @@ const setSelected = value => {
 
 /**
  * @method isSelected
+ * @desc - Tests if the argument value is currently the selected value. Returns the test result.
+ * @param {string|Object} value - The option value to test.
+ * @returns {boolean}
  */
 
 const isSelected = value => {
@@ -143,6 +151,7 @@ const isSelected = value => {
   } else if (typeof value === 'object') {
     return JSON.stringify(value) === JSON.stringify(selected.value)
   }
+  return false
 }
 </script>
 
