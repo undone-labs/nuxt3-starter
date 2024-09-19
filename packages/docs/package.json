@@ -14,7 +14,7 @@
     "vue-docgen-api": "^4.79.2"
   },
   "scripts": {
-    "docs:dev": "node generate.cjs && vitepress dev",
+    "docs:dev": "node generate.js && vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },

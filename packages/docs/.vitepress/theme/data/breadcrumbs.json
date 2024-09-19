@@ -1,0 +1,15 @@
+{
+  "mapping": {
+    "zero-core": "/zero-core/what-is-zero-core",
+    "zero-core/modules": "/zero-core/modules/introduction",
+    "zero-core/modules/accordion": "/zero-core/modules/accordion/components",
+    "zero-core/modules/alert": "/zero-core/modules/alert/components",
+    "zero-core/modules/auth": "/zero-core/modules/auth/overview",
+    "zero-core/modules/button": "/zero-core/modules/button/components",
+    "zero-core/modules/form": "/zero-core/modules/form/overview",
+    "zero-core/modules/toaster": "/zero-core/modules/toaster/components",
+    "zero-core/modules/websocket": "/zero-core/modules/websocket/plugins",
+    "zero-core/components": "/zero-core/components/introduction",
+    "zero-core/composables": "/zero-core/composables/introduction"
+  }
+}
