@@ -1,10 +1,10 @@
 // ////////////////////////////////////////////////////////////////////// Import
 // -----------------------------------------------------------------------------
-const fs = require('fs')
-const Jsdoc2Md = require('jsdoc-to-markdown')
-const Json2Md = require('json2md')
-const VueDocs = require('./plugins/vue-docgen-api-rewrite.cjs')
-const changeCase = require('change-case')
+import fs from 'fs'
+import Jsdoc2Md from 'jsdoc-to-markdown'
+import Json2Md from 'json2md'
+import VueDocs from './plugins/vue-docgen-api-rewrite.cjs'
+import { capitalCase } from 'change-case'
 
 const SRC_PATH = '../zero-core'
 const DEST_PATH = 'content/zero-core'
@@ -18,75 +18,75 @@ const excludeList = [
   '../zero-core/error.vue'
 ]
 const concatenateList = [
-  { 
+  {
     dir: 'modules/accordion/components',
     filename: 'components'
   },
-  { 
+  {
     dir: 'modules/accordion/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'modules/alert/components',
     filename: 'components'
   },
-  { 
+  {
     dir: 'modules/alert/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'modules/auth/composables',
     filename: 'composables'
   },
-  { 
+  {
     dir: 'modules/auth/layouts',
     filename: 'layouts'
   },
-  { 
+  {
     dir: 'modules/auth/middleware',
     filename: 'middleware'
   },
-  { 
+  {
     dir: 'modules/auth/plugins',
     filename: 'plugins'
   },
-  { 
+  {
     dir: 'modules/button/components',
     filename: 'components'
   },
-  { 
+  {
     dir: 'modules/button/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'modules/form/components',
     filename: 'components'
   },
-  { 
+  {
     dir: 'modules/form/composables',
     filename: 'composables'
   },
-  { 
+  {
     dir: 'modules/form/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'modules/toaster/components',
     filename: 'components'
   },
-  { 
+  {
     dir: 'modules/toaster/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'modules/websocket/plugins',
     filename: 'plugins'
   },
-  { 
+  {
     dir: 'modules/websocket/stores',
     filename: 'store'
   },
-  { 
+  {
     dir: 'plugins',
     filename: 'plugins'
   }
@@ -207,7 +207,7 @@ const populateMarkdownTemplate = async (data) => {
 
   const toConvert = [
     {
-      h1: changeCase.capitalCase(data.displayName)
+      h1: capitalCase(data.displayName)
     },
     {
       p: data.description
