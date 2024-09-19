@@ -12,7 +12,7 @@
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `true`
@@ -29,4 +29,4 @@
 
 ## Methods
 
-##### closeAlert()
+#### closeAlert()

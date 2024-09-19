@@ -12,7 +12,7 @@
 
 ## Slots
 
-##### Toast
+#### Toast
 
 
 **name:** `toast`  **scoped:** `true`
@@ -23,7 +23,7 @@
 
 ## Methods
 
-##### unToast()
+#### unToast()
 
 # Zero Toaster
 
@@ -38,7 +38,7 @@
 
 ## Slots
 
-##### Toast
+#### Toast
 
 
 **name:** `toast`  **scoped:** `true`

@@ -31,12 +31,12 @@
 
 ## Slots
 
-##### Checkbox Extra
+#### Checkbox Extra
 
 
 **name:** `checkbox-extra`  **scoped:** `false`
 
-##### Label
+#### Label
 
 
 **name:** `label`  **scoped:** `true`
@@ -72,7 +72,7 @@
 
 ## Methods
 
-##### handleUpdate()
+#### handleUpdate()
 
 # Zero Field Input
 
@@ -88,12 +88,12 @@
 
 ## Slots
 
-##### Step Control Up
+#### Step Control Up
 
 
 **name:** `step-control-up`  **scoped:** `false`
 
-##### Step Control Down
+#### Step Control Down
 
 
 **name:** `step-control-down`  **scoped:** `false`
@@ -137,12 +137,12 @@
 
 ## Slots
 
-##### Radio Extra
+#### Radio Extra
 
 
 **name:** `radio-extra`  **scoped:** `false`
 
-##### Label
+#### Label
 
 
 **name:** `label`  **scoped:** `true`
@@ -180,7 +180,7 @@ the typeahead field handles this instead. |  |
 
 ## Slots
 
-##### Disabled Window
+#### Disabled Window
 
 
 **name:** `disabled-window`  **scoped:** `true`
@@ -190,7 +190,7 @@ the typeahead field handles this instead. |  |
 | `placeholder` |  |  |
 | `label` |  |  |
 
-##### Option Native Default Text
+#### Option Native Default Text
 
 
 **name:** `option-native-default-text`  **scoped:** `true`
@@ -200,7 +200,7 @@ the typeahead field handles this instead. |  |
 | `placeholder` |  |  |
 | `label` |  |  |
 
-##### Option Native Text
+#### Option Native Text
 
 
 **name:** `option-native-text`  **scoped:** `true`
@@ -209,7 +209,7 @@ the typeahead field handles this instead. |  |
 | ------- | ---- | ----------- |
 | `option` |  |  |
 
-##### Selection Window
+#### Selection Window
 
 
 **name:** `selection-window`  **scoped:** `true`
@@ -221,7 +221,7 @@ the typeahead field handles this instead. |  |
 | `label` |  |  |
 | `empty` |  |  |
 
-##### Option Custom
+#### Option Custom
 
 
 **name:** `option-custom`  **scoped:** `true`
@@ -274,7 +274,7 @@ the typeahead field handles this instead. |  |
 
 ## Slots
 
-##### Header
+#### Header
 
 
 **name:** `header`  **scoped:** `true`
@@ -285,7 +285,7 @@ the typeahead field handles this instead. |  |
 | `clear-callback` |  |  |
 | `files` |  |  |
 
-##### Empty
+#### Empty
 
 
 **name:** `empty`  **scoped:** `false`
@@ -298,11 +298,11 @@ the typeahead field handles this instead. |  |
 
 ## Methods
 
-##### handleFilesSelected()
+#### handleFilesSelected()
 
-##### handleClear()
+#### handleClear()
 
-##### handleRemove()
+#### handleRemove()
 
 # Zero Form Field
 
@@ -323,7 +323,7 @@ SSR hydration errors. |  |
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `true`
@@ -347,12 +347,12 @@ SSR hydration errors. |  |
 
 ## Methods
 
-##### toggleState()
+#### toggleState()
 
-##### updateValue()
+#### updateValue()
 
-##### getLocalStorageValue()
+#### getLocalStorageValue()
 
-##### initializeReactions()
+#### initializeReactions()
 
-##### detectConditions()
+#### detectConditions()

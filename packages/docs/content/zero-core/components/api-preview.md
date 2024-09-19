@@ -11,6 +11,6 @@
 
 ## Methods
 
-##### setActiveSlide()
+#### setActiveSlide()
 
-##### copyText()
+#### copyText()

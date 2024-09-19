@@ -11,10 +11,10 @@
 
 ## Methods
 
-##### notHidden()
+#### notHidden()
 
-##### getGridClasses()
+#### getGridClasses()
 
-##### getBlocks()
+#### getBlocks()
 
-##### stripIs()
+#### stripIs()

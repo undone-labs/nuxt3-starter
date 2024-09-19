@@ -15,4 +15,4 @@
 
 ## Methods
 
-##### getHeading()
+#### getHeading()

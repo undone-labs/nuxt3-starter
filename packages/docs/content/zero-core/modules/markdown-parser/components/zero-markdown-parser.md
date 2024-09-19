@@ -17,8 +17,8 @@
 
 ## Methods
 
-##### initializeCopyButtons()
+#### initializeCopyButtons()
 
-##### clearCopiedStates()
+#### clearCopiedStates()
 
-##### collectAndEmitHeadingNodes()
+#### collectAndEmitHeadingNodes()

@@ -12,21 +12,21 @@
 
 ## Slots
 
-##### Header
+#### Header
 
 
 **name:** `header`  **scoped:** `false`
 
-##### Content
+#### Content
 
 
 **name:** `content`  **scoped:** `false`
 
 ## Methods
 
-##### toggle()
+#### toggle()
 
-##### setHeight()
+#### setHeight()
 
 # Zero Accordion Toggle Button
 
@@ -41,7 +41,7 @@
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `true`
@@ -52,7 +52,7 @@
 
 ## Methods
 
-##### toggleAllAccordionSections()
+#### toggleAllAccordionSections()
 
 # Zero Accordion
 
@@ -69,11 +69,11 @@
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `false`
 
 ## Methods
 
-##### handleKeyboardNavigation()
+#### handleKeyboardNavigation()

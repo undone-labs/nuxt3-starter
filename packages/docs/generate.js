@@ -163,7 +163,7 @@ const populateMarkdownTemplate = async (data) => {
     data.slots.forEach((slot) => {
       const slotData = []
       if (slot.name) {
-        slotData.push({ h5: capitalCase(slot.name) }, { p: `**name:** \`${slot.name}\`  **scoped:** \`${!!slot.scoped}\`` })
+        slotData.push({ h4: capitalCase(slot.name) }, { p: `**name:** \`${slot.name}\`  **scoped:** \`${!!slot.scoped}\`` })
       }
       if (slot.description) {
         slotData.push({ p: slot.description })
@@ -201,7 +201,7 @@ const populateMarkdownTemplate = async (data) => {
         h2: 'Methods'
       },
       ...data._methods.map(item => {
-        const output = [{ h5: item.method.name + '()' }]
+        const output = [{ h4: item.method.name + '()' }]
         const description = item.method.description || item.desc?.description
         const params = item.param
         if (description) {
@@ -224,7 +224,10 @@ const populateMarkdownTemplate = async (data) => {
             return
           }
           output.push({
-            ul: item[key].map(tag => `**${tag.tag}:** ${tag.name} ${tag.description}`)
+            ul: item[key].map(tag => {
+              const type = tag.type ? `\`${tag.type}\` ` : ''
+              return `**${tag.tag}:** ${type}${tag.name} ${tag.description}`
+            })
           })
         })
         return output

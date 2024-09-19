@@ -6,7 +6,7 @@
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `false`

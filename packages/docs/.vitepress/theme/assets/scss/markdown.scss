@@ -1,3 +1,6 @@
 table {
   margin-bottom: toRem(48) !important;
+  code {
+    white-space: nowrap;
+  }
 }

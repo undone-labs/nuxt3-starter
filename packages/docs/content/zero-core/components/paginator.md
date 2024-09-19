@@ -14,12 +14,12 @@
 
 ## Slots
 
-##### Before
+#### Before
 
 
 **name:** `before`  **scoped:** `false`
 
-##### First
+#### First
 
 
 **name:** `first`  **scoped:** `true`
@@ -28,7 +28,7 @@
 | ------- | ---- | ----------- |
 | `increment-page` |  |  |
 
-##### Prev
+#### Prev
 
 
 **name:** `prev`  **scoped:** `true`
@@ -37,12 +37,12 @@
 | ------- | ---- | ----------- |
 | `increment-page` |  |  |
 
-##### Breaker Left
+#### Breaker Left
 
 
 **name:** `breaker-left`  **scoped:** `false`
 
-##### Page
+#### Page
 
 
 **name:** `page`  **scoped:** `true`
@@ -52,12 +52,12 @@
 | `page` |  |  |
 | `increment-page` |  |  |
 
-##### Breaker Right
+#### Breaker Right
 
 
 **name:** `breaker-right`  **scoped:** `false`
 
-##### Next
+#### Next
 
 
 **name:** `next`  **scoped:** `true`
@@ -66,7 +66,7 @@
 | ------- | ---- | ----------- |
 | `increment-page` |  |  |
 
-##### Last
+#### Last
 
 
 **name:** `last`  **scoped:** `true`
@@ -75,7 +75,7 @@
 | ------- | ---- | ----------- |
 | `increment-page` |  |  |
 
-##### After
+#### After
 
 
 **name:** `after`  **scoped:** `false`

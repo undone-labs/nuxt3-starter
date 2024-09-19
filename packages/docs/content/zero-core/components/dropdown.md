@@ -1,7 +1,9 @@
 # Dropdown
 
 
-A dropdown menu component that exposes two slots. [See below](/zero-core/components/dropdown#slots) for a description of each. When the dropdown menu is open clicking anywhere outside the dropdown causes it to close. This functionality is provided by VueUse's [onClickOutside](https://vueuse.org/core/onClickOutside/).
+A dropdown menu component that exposes two slots; a dropdown button and a panel of options. [See below](/zero-core/components/dropdown#slots) for a description of each. When the dropdown menu is open, clicking anywhere outside the dropdown causes it to close. This functionality is provided by VueUse's [onClickOutside](https://vueuse.org/core/onClickOutside/).
+
+The options panel (dropdown menu) is wrapped in a `.panel-container` container element. The top offset of this element ('padding-top' or 'top') and panel width and/or max-height must be set in the parent component as these are custom properties that will differ panel-to-panel.
 
 ## Props
 
@@ -13,7 +15,7 @@ A dropdown menu component that exposes two slots. [See below](/zero-core/compone
 
 ## Slots
 
-##### Toggle Button
+#### Toggle Button
 
 
 **name:** `toggle-button`  **scoped:** `true`
@@ -28,7 +30,7 @@ Accepts an element that will toggle the menu visibility and display the selected
 | `close-panel` | `func` | Passes the [closePanel](/zero-core/components/dropdown#closepanel) method to the slot. |
 | `selected` | `union` | Passes the current selected option to the slot. |
 
-##### Dropdown Panel
+#### Dropdown Panel
 
 
 **name:** `dropdown-panel`  **scoped:** `true`
@@ -50,10 +52,33 @@ Accepts a list of elements generated from the dropdown options.
 
 ## Methods
 
-##### togglePanel()
+#### togglePanel()
 
-##### closePanel()
 
-##### setSelected()
+Toggles the dropdown panel open state if the `toggleOn` prop is set to 'click'
 
-##### isSelected()
+#### closePanel()
+
+
+Sets the dropdown panel state to closed if the `toggleOn` prop is set to click and the panel is already open.
+
+#### setSelected()
+
+
+Sets the selected value of the dropdown menu, only if the `displaySelected` prop is set to `true`. Also closes the open dropdown panel.
+
+| param | type | description |
+| ----- | ---- | ----------- |
+| `value` | string\|Object | The option value to set as selected. |
+
+#### isSelected()
+
+
+Tests if the argument value is currently the selected value. Returns the test result.
+
+| param | type | description |
+| ----- | ---- | ----------- |
+| `value` | string\|Object | The option value to test. |
+
+
+ - **returns:** `boolean`  

@@ -12,7 +12,7 @@
 
 ## Slots
 
-##### Default
+#### Default
 
 
 **name:** `default`  **scoped:** `true`
@@ -21,13 +21,13 @@
 | ------- | ---- | ----------- |
 | `entry` |  |  |
 
-##### Marker
+#### Marker
 
 
 **name:** `marker`  **scoped:** `false`
 
 ## Methods
 
-##### mouseenter()
+#### mouseenter()
 
-##### mouseleave()
+#### mouseleave()

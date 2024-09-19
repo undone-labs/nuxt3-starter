@@ -15,7 +15,7 @@ A slider component that is navigable through tabs corresponding to each slide.
 
 ## Slots
 
-##### Before Track
+#### Before Track
 
 
 **name:** `before-track`  **scoped:** `true`
@@ -25,7 +25,7 @@ A slider component that is navigable through tabs corresponding to each slide.
 | `change-slide` |  |  |
 | `current-slide` |  |  |
 
-##### Key
+#### Key
 
 
 **name:** `key`  **scoped:** `true`
@@ -37,7 +37,7 @@ A slider component that is navigable through tabs corresponding to each slide.
 | `change-slide` |  |  |
 | `active` |  |  |
 
-##### After Track
+#### After Track
 
 
 **name:** `after-track`  **scoped:** `true`
@@ -54,9 +54,9 @@ A slider component that is navigable through tabs corresponding to each slide.
 
 ## Methods
 
-##### setPanelHeight()
+#### setPanelHeight()
 
-##### changeSlide()
+#### changeSlide()
 
 
 Changes the current slide.
@@ -65,6 +65,6 @@ Changes the current slide.
 | ----- | ---- | ----------- |
 | `slug` | string | The slug of the slide to switch to. |
 
-##### handleChangeSlideBusEvent()
+#### handleChangeSlideBusEvent()
 
-##### handleResetHeightBusEvent()
+#### handleResetHeightBusEvent()

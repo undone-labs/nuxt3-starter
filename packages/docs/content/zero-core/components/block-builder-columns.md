@@ -11,12 +11,12 @@
 
 ## Methods
 
-##### parseColumns()
+#### parseColumns()
 
-##### getColumnPushAttributes()
+#### getColumnPushAttributes()
 
-##### getColumnClasses()
+#### getColumnClasses()
 
-##### getBlocks()
+#### getBlocks()
 
-##### stripIs()
+#### stripIs()
