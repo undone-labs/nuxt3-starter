@@ -9,9 +9,9 @@ The options panel (dropdown menu) is wrapped in a `.panel-container` container e
 
 | Prop | type | description | values |
 | ---- | ---- | ----------- | ------ |
-| `toggleOn`<span>(optional)</span> | string | The type of event that should initiate dropdown toggle. | `click,hover` |
-| `displaySelected`<span>(optional)</span> | boolean | Determines if the current value of the dropdown should be displayed in the toggle button slot. |  |
-| `defaultOption`<span>(optional)</span> | string\|object | The initial option to load as 'selected'. This should match one of the options passed to the setSelected and isSelected bindings on the dropdown-panel slot from the parent component's option list. |  |
+| `toggleOn`<span>(optional)</span> | string | The type of event that should initiate dropdown toggle.<ul></ul> | `click,hover` |
+| `displaySelected`<span>(optional)</span> | boolean | Determines if the current value of the dropdown should be displayed in the toggle button slot.<ul></ul> |  |
+| `defaultOption`<span>(optional)</span> | string\|object | The initial option to load as 'selected'. This should match one of the options passed to the setSelected and isSelected bindings on the dropdown-panel slot from the parent component's option list.<ul></ul> |  |
 
 ## Slots
 

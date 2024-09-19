@@ -1,6 +1,17 @@
+h4 {
+  margin-top: toRem(48) !important;
+}
+
 table {
-  margin-bottom: toRem(48) !important;
   code {
     white-space: nowrap;
+  }
+  td {
+    a {
+      font-size: toRem(14);
+    }
+    li {
+      margin-bottom: 1rem;
+    }
   }
 }

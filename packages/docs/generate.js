@@ -122,6 +122,21 @@ const parseVueFile = async (path) => {
   })
 }
 
+const formatPropDescription = prop => {
+  let desc = prop.description
+  if (!desc) {
+    return ''
+  }
+  let li =''
+  if (prop.tags && Array.isArray(prop.tags.params)) {
+    const params = prop.tags.params
+    params.forEach((param) => {
+      li = li + `<li>\`${param.name}\` - **type:** \`${param.type.name}\` - ${param.description}</li>`
+    })
+  }
+  return `${desc}<ul>${li}</ul>`
+}
+
 // ---------------------------------------------------------------- getEventTags
 const getEventTags = evt => {
   if (!Array.isArray(evt.tags)) {
@@ -150,7 +165,7 @@ const populateMarkdownTemplate = async (data) => {
           rows: data.props.map(prop => ({
             Prop: `\`${prop.name}\`${prop.required ? '' : '<span>(optional)</span>'}`,
             type: prop.type.name || '',
-            description: prop.description || '',
+            description: formatPropDescription(prop),
             values: prop.values ? `\`${prop.values}\`` : ''
           }))
         }

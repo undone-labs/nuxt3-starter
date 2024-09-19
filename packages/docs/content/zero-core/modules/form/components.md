@@ -170,13 +170,13 @@
 | `field` | object |  |  |
 | `disabled`<span>(optional)</span> | boolean |  |  |
 | `options` | array | Options need to be passed in explicitly since the options coming in from
-the Typeahead are pre-processed |  |
+the Typeahead are pre-processed<ul></ul> |  |
 | `maintainIndexState`<span>(optional)</span> | boolean | Define whether or not to maintain selection based on index. In the case of
 the typeahead field for example, there is no need to maintain a record of
 which index is selected since the value is recorded by the typeahead. This
-Select simply acts as a fresh value selector in that case. |  |
+Select simply acts as a fresh value selector in that case.<ul></ul> |  |
 | `handleClickOutside`<span>(optional)</span> | boolean | Define whether or not to handle v-click-outside in this component. Example:
-the typeahead field handles this instead. |  |
+the typeahead field handles this instead.<ul></ul> |  |
 
 ## Slots
 
@@ -319,7 +319,7 @@ the typeahead field handles this instead. |  |
 | `rootHtmlTag`<span>(optional)</span> | string | On occasions where the final root element in field-conditional.vue render
 must be something specific. Such as when wrapping a `<tbody>` in a field-standalone,
 it cannot be a div as the wrapper. It must be `<tbody>` at the root to prevent
-SSR hydration errors. |  |
+SSR hydration errors.<ul></ul> |  |
 
 ## Slots
 
