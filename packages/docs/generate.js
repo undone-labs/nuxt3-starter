@@ -152,6 +152,49 @@ const getEventTags = evt => {
   return ''
 }
 
+const getMarkdownElements = (methods, isComputed = false) => {
+  if (!Array.isArray(methods)) {
+    return []
+  }
+  const array = isComputed ? methods.filter(item => item.hasOwnProperty('computed')) : methods.filter(item => !item.hasOwnProperty('computed'))
+  if (array.length) {
+    const markdownElements = array.map(item => {
+      const output = [{ h4: item.method.name + '()' }]
+      const description = item.method.description || item.desc?.description
+      const params = item.param
+      if (description) {
+        output[1] = { p: trimDescription(description) }
+      }
+      if (params) {
+        output[2] = {
+          table: {
+            headers: ['param', 'type', 'description'],
+            rows: params.map(param => ({
+              param: `\`${param.name}\`${param.optional ? '<span>(optional)</span>' : '' }`,
+              type: param.type,
+              description: trimDescription(param.description)
+            }))
+          }
+        }
+      }
+      Object.keys(item).forEach((key) => {
+        if (key === 'computed' || key === 'method' || key === 'desc' || key === 'param') {
+          return
+        }
+        output.push({
+          ul: item[key].map(tag => {
+            const type = tag.type ? `\`${tag.type}\` ` : ''
+            return `**${tag.tag}:** ${type}${tag.name} ${tag.description}`
+          })
+        })
+      })
+      return output
+    })
+    return markdownElements
+  }
+  return []
+}
+
 // ---------------------------------------------------- populateMarkdownTemplate
 const populateMarkdownTemplate = async (data) => {
   const props = data.props?.length ?
@@ -210,43 +253,22 @@ const populateMarkdownTemplate = async (data) => {
       }
     ] : []
 
-  const methods = data._methods?.length ?
+  const methodElements = getMarkdownElements(data._methods)
+  const methods = methodElements.length ?
     [
       {
         h2: 'Methods'
       },
-      ...data._methods.map(item => {
-        const output = [{ h4: item.method.name + '()' }]
-        const description = item.method.description || item.desc?.description
-        const params = item.param
-        if (description) {
-          output[1] = { p: trimDescription(description) }
-        }
-        if (params) {
-          output[2] = {
-            table: {
-              headers: ['param', 'type', 'description'],
-              rows: params.map(param => ({
-                param: `\`${param.name}\`${param.optional ? '<span>(optional)</span>' : '' }`,
-                type: param.type,
-                description: trimDescription(param.description)
-              }))
-            }
-          }
-        }
-        Object.keys(item).forEach((key) => {
-          if (key === 'method' || key === 'desc' || key === 'param') {
-            return
-          }
-          output.push({
-            ul: item[key].map(tag => {
-              const type = tag.type ? `\`${tag.type}\` ` : ''
-              return `**${tag.tag}:** ${type}${tag.name} ${tag.description}`
-            })
-          })
-        })
-        return output
-      })
+      ...methodElements
+    ] : []
+
+  const computedElements = getMarkdownElements(data._methods, true)
+  const computed = computedElements.length ?
+    [
+      {
+        h2: 'Computed properties'
+      },
+      ...computedElements
     ] : []
 
   const toConvert = [
@@ -257,6 +279,7 @@ const populateMarkdownTemplate = async (data) => {
       p: data.description
     },
     ...props,
+    ...computed,
     ...slots,
     ...emits,
     ...methods
