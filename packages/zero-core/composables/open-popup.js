@@ -4,6 +4,10 @@ import { useRuntimeConfig } from '#imports'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
+/**
+ * @method zeroOpenPopup
+ */
+
 export default ({ id, action, url, title, w, h }) => {
   const config = useRuntimeConfig()
   const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX

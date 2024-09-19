@@ -166,3 +166,7 @@ _(optional)_
 - Run the build command `docker build -t site .`
 - Finally, initialize the container `docker run -v "$PWD":/workspace site`
 - The `Dockerfile` itself contains some options (commented out) for serving the repo on a local port, after generation
+
+## Documentation
+
+See the `docs` package `README.md` file for the documentation schema that is used for documenting the zero-core package and soon, the site package.

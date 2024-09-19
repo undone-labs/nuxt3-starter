@@ -33,7 +33,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   // =================================================================== actions
   /**
    * @method setAuthState
-   * ---------------------------------------------------------------------------
    */
 
   const setAuthState = state => {
@@ -42,7 +41,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setSession
-   * ---------------------------------------------------------------------------
    */
 
   const setSession = payload => {
@@ -51,8 +49,8 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setNavPaths
-   * ---------------------------------------------------------------------------
-   * Record the `to` and `from` navigation objects.
+   * 
+   * @desc Record the `to` and `from` navigation objects.
    * This is recorded in the nav-paths.js middleware and is used to keep track
    * of the last visited path before navigating to a new one. If redirected to
    * login page, logging in again will bring user back to this path.
@@ -64,7 +62,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method getUser
-   * ---------------------------------------------------------------------------
    */
 
   const getUser = async id => {
@@ -86,7 +83,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setUser
-   * ---------------------------------------------------------------------------
    */
 
   const setUser = payload => {
@@ -95,7 +91,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateUser
-   * ---------------------------------------------------------------------------
    */
 
   const updateUser = async (payload, doSetUser = true) => {
@@ -117,7 +112,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method getUserWorkspaceInviteList
-   * ---------------------------------------------------------------------------
    */
 
   const getUserWorkspaceInviteList = async () => {
@@ -137,7 +131,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateUserWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const updateUserWorkspaceInvite = invite => {
@@ -147,7 +140,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method acceptWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const acceptWorkspaceInvite = async (id, identifier) => {
@@ -170,7 +162,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method rejectWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const rejectWorkspaceInvite = async (strategy, id, identifier) => {
@@ -194,7 +185,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method leaveWorkspace
-   * ---------------------------------------------------------------------------
    */
 
    const leaveWorkspace = async (id, identifier) => {
@@ -218,7 +208,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method makeWorkspacePrimary
-   * ---------------------------------------------------------------------------
    */
 
   const makeWorkspacePrimary = async (id, identifier) => {
@@ -241,7 +230,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method toggleShortcuts
-   * ---------------------------------------------------------------------------
    */
 
   const toggleShortcuts = async shortcuts => {
@@ -260,7 +248,6 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateShortcuts
-   * ---------------------------------------------------------------------------
    */
 
   const updateShortcuts = async shortcuts => {

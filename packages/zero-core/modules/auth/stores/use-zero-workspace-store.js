@@ -19,7 +19,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
   // =================================================================== actions
   /**
    * @method getWorkspace
-   * ---------------------------------------------------------------------------
    */
 
   const getWorkspace = async id => {
@@ -36,7 +35,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method updateWorkspace
-   * ---------------------------------------------------------------------------
    */
 
   const updateWorkspace = async (payload, displayToast = true) => {
@@ -62,7 +60,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method uploadWorkspaceAvatar
-   * ---------------------------------------------------------------------------
    */
 
   const uploadWorkspaceAvatar = async payload => {
@@ -85,7 +82,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method setWorkspace
-   * ---------------------------------------------------------------------------
    */
 
   const setWorkspace = payload => {
@@ -94,7 +90,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method getWorkspaceList
-   * ---------------------------------------------------------------------------
    */
 
    const getWorkspaceList = async () => {
@@ -111,7 +106,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method checkWorkspaceExists
-   * ---------------------------------------------------------------------------
    */
 
    const checkWorkspaceExists = async slug => {
@@ -131,7 +125,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method createWorkspace
-   * ---------------------------------------------------------------------------
    */
 
   const createWorkspace = async payload => {
@@ -152,7 +145,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method getWorkspaceInviteList
-   * ---------------------------------------------------------------------------
    */
 
   const getWorkspaceInviteList = async () => {
@@ -171,7 +163,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method createWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const createWorkspaceInvite = async (strategy, identifier, incoming) => {
@@ -196,7 +187,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method updateWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const updateWorkspaceInvite = invite => {
@@ -206,7 +196,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method revokeWorkspaceInvite
-   * ---------------------------------------------------------------------------
    */
 
   const revokeWorkspaceInvite = async (strategy, identifier, id) => {
@@ -230,7 +219,6 @@ export const useZeroWorkspaceStore = defineStore('zero-workspace', () => {
 
   /**
    * @method removeMemberFromWorkspace
-   * ---------------------------------------------------------------------------
    */
 
   const removeMemberFromWorkspace = async (id, identifier) => {
