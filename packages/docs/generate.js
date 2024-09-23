@@ -89,6 +89,10 @@ const concatenateList = [
   {
     dir: 'plugins',
     filename: 'plugins'
+  },
+  {
+    dir: 'stores',
+    filename: 'use-zero-store'
   }
 ]
 

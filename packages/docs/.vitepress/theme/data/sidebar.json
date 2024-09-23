@@ -106,7 +106,8 @@
         { "text": "Uuid", "link": "/zero-core/composables/uuid" }
       ]
     },
-    { "text": "Plugins", "link": "/zero-core/plugins" }
+    { "text": "Plugins", "link": "/zero-core/plugins" },
+    { "text": "Store", "link": "/zero-core/use-zero-store" }
   ],
   "/site/": [
     {

@@ -50,8 +50,18 @@
 </template>
 
 <script setup>
+/**
+ * @description A slider component that displays API example requests and responses with highlighted code syntax using [zeroHighlightCode](/zero-core/composables/highlight-code). The component will render a list of individual sliders from the sliders prop array. Before the component is mounted, a unique sliderId is generated for each slider and inserted into each slide to associate it with the correct slider.
+ */
 // ======================================================================= Props
 const props = defineProps({
+  /**
+   * An array of slider objects. Each object should have a nested `metadata` object and a nested `slides` array. Each value in the `metadata` object will be displayed above its slider in a heading section. The slides array should consist of objects with the following structure:
+   * @param {string} id A unique ID for the slide in the scope of its own slider.
+   * @param {string} tab A label for the slide tab selector button.
+   * @param {string} content The code example string.
+   * @param {string} language The language the code is written in.
+   */
   sliders: {
     type: Array,
     required: true,
@@ -67,6 +77,8 @@ const copiedCodeBlock = ref(null)
 // ===================================================================== Methods
 /**
  * @method setActiveSlide
+ * @desc - Sets the active slide of the slider in question. This method is called when a slider tab is clicked. It uses the internally generated sliderId in each slide object to know which slider to alter.
+ * @param {object} slide The slide object of the slide to make active.
  */
 const setActiveSlide = slide => {
   activeSlides.value[slide.sliderId] = slide.id
@@ -74,6 +86,9 @@ const setActiveSlide = slide => {
 
 /**
  * @method copyText
+ * @desc - Copies the slide content to the clipboard state in the [Zero Store](/zero-core/use-zero-store#setclipboard).
+ * @param {string} id The ID of the slide being copied.
+ * @param {string} text The text to copy to the clipboard.
  */
 const copyText = (id, text) => {
   useAddTextToClipboard(text)
