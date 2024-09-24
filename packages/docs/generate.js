@@ -4,6 +4,7 @@ import fs from 'fs'
 import Jsdoc2Md from 'jsdoc-to-markdown'
 import Json2Md from 'json2md'
 import VueDocs from './plugins/vue-docgen-api-rewrite.cjs'
+import dmd from 'dmd'
 import { capitalCase } from 'change-case'
 
 const SRC_PATH = '../zero-core'
@@ -104,8 +105,8 @@ const trimDescription = (desc) => {
 
 // ----------------------------------------------------------------- parseJsFile
 const parseJsFile = async (path) => {
-  return new Promise((resolve, reject) => {
-    Jsdoc2Md.render({ files: path })
+  return await new Promise((resolve, reject) => {    
+    Jsdoc2Md.getTemplateData({ files: path })
       .then((data) => { resolve(data) })
       .catch((err) => {
         console.log(err)
@@ -126,6 +127,7 @@ const parseVueFile = async (path) => {
   })
 }
 
+// ------------------------------------------------------- formatPropDescription
 const formatPropDescription = prop => {
   let desc = prop.description
   if (!desc) {
@@ -156,6 +158,7 @@ const getEventTags = evt => {
   return ''
 }
 
+// --------------------------------------------------------- getMarkdownElements
 const getMarkdownElements = (methods, isComputed = false) => {
   if (!Array.isArray(methods)) {
     return []
@@ -199,8 +202,70 @@ const getMarkdownElements = (methods, isComputed = false) => {
   return []
 }
 
-// ---------------------------------------------------- populateMarkdownTemplate
-const populateMarkdownTemplate = async (data) => {
+// ---------------------------------------------------- populateJsFileMdTemplate
+const populateJsFileMdTemplate = async data => {
+  const toConvert = []
+  if (Array.isArray(data) && data.length) {
+    const moduleData = data.find(item => item.kind === 'module')
+    if (moduleData) {
+      // console.log(data)
+      const moduleName = moduleData.name
+      const title = moduleName.startsWith('use') ? moduleName + '()' : moduleName
+      toConvert.push({ h1: title }, { p: trimDescription(moduleData.description || '') })
+      const membersData = data.filter(item => item.kind !== 'module' && item.kind !== 'function')
+      const methodsData = data.filter(item => item.kind === 'function')
+
+      if (membersData.length) {
+        toConvert.push({ h2: 'Data' }, { ul: membersData.map(item => `[${item.name}](#${item.name.toLowerCase()})`)})
+      }
+
+      if (methodsData.length) {
+        toConvert.push({ h2: 'Methods' }, { ul: methodsData.map(item => `[${item.name}()](#${item.name.toLowerCase()})`)})
+      }
+
+      if (membersData.length || methodsData.length) {
+        toConvert.push({ h2: 'All Members '})
+      }
+
+      const members = membersData.map(item => ([
+        { h4: item.name },
+        { p: item.type?.names?.length ? `**type:** \`${item.type.names.join('|')}\`` : '' },
+        { p: trimDescription(item.description || '') },
+        { p: `**Kind:** ${item.scope} ${item.kind === 'function' ? 'method' : item.kind} of [${moduleName}](#${moduleName.toLowerCase()})` }
+      ]))
+      toConvert.push(...members)
+      
+      const methods = methodsData.map(item => {
+        const elements = [
+          { h4: item.name + '()' },
+          { p: trimDescription(item.description || '') },
+          { p: `**Kind:** ${item.scope} ${item.kind === 'function' ? 'method' : item.kind} of [${moduleName}](#${moduleName.toLowerCase()})` }
+        ]
+        if (item.params?.length) {
+          elements.push({
+            table: {
+              headers: ['param', 'type', 'description'],
+              rows: item.params.map(param => ({
+                param: `\`${param.name}\`${param.optional ? '<span>(optional)</span>' : '' }`,
+                type: param.type.names.join('|'),
+                description: trimDescription(param.description || '')
+              }))
+            }
+          })
+        }
+        if (item.returns?.length) {
+          elements.push({ ul: item.returns.map(rtn => `**Returns:** \`${rtn.type.names.join('|')}\``)})
+        }
+        return elements
+      })
+      toConvert.push(...methods)
+    }
+  }
+  return Json2Md(toConvert)
+}
+
+// ---------------------------------------------- populateVueComponentMdTemplate
+const populateVueComponentMdTemplate = async (data) => {
   const props = data.props?.length ?
     [
       {
@@ -322,10 +387,11 @@ const concatenateContentsToMarkdown = async (dir, filename) => {
       let data = ''
       const ext = entry.split('.')[1]
       if (ext === 'js') {
-        data = await parseJsFile(path)
+        const parsed = await parseJsFile(path)
+        data = await populateJsFileMdTemplate(parsed)
       } else if (ext === 'vue') {
         const parsed = await parseVueFile(path)
-        data = await populateMarkdownTemplate(parsed)
+        data = await populateVueComponentMdTemplate(parsed)
       }
       concatenated = concatenated + '\n' + data
     }
@@ -350,12 +416,15 @@ const parseDirectoryContents = async dir => {
       if (ext === 'js') {
         const parsed = await parseJsFile(path)
         if (parsed) {
-          await writeMdFile(dest, parsed)
+          const md = await populateJsFileMdTemplate(parsed)
+          if (md) {
+            await writeMdFile(dest, md)
+          }
         }
       } else if (ext === 'vue') {
         const parsed = await parseVueFile(path)
         if (parsed) {
-          const md = await populateMarkdownTemplate(parsed)
+          const md = await populateVueComponentMdTemplate(parsed)
           if (md) {
             await writeMdFile(dest, md)
           }

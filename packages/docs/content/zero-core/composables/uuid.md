@@ -1,4 +1,4 @@
-<a name="zeroUuid"></a>
+#### zeroUuid()
 
-## zeroUuid()
-**Kind**: global function  
+
+
