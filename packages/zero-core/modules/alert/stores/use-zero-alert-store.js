@@ -1,11 +1,10 @@
-// ///////////////////////////////////////////////////////////////////// Imports
-// -----------------------------------------------------------------------------
-import { defineStore } from 'pinia'
-
 /**
  * @module useZeroAlertStore
  * @desc A store that registers [Alert component](/zero-core/modules/alert/components) instances, records their open/closed states and contains methods to update them.
  */
+// ///////////////////////////////////////////////////////////////////// Imports
+// -----------------------------------------------------------------------------
+import { defineStore } from 'pinia'
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------

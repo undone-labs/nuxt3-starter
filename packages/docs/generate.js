@@ -99,8 +99,16 @@ const concatenateList = [
 
 // /////////////////////////////////////////////////////////////////// Functions
 // ------------------------------------------------------------- trimDescription
-const trimDescription = (desc) => {
-  return desc.charAt(0) === '-' ? desc.substring(1, desc.length).trim() : desc.trim()
+const trimDescription = desc => {
+  const trimmed = desc.charAt(0) === '-' ? desc.substring(1, desc.length).trim() : desc.trim()
+  return trimmed.replaceAll('<<', '{').replaceAll('>>', '}')
+}
+
+const getDescriptionItems = desc => {
+  const description = trimDescription(desc)
+  // console.log(description)
+  // const split = description.split('```')
+  return { p: description }
 }
 
 // ----------------------------------------------------------------- parseJsFile
@@ -211,7 +219,7 @@ const populateJsFileMdTemplate = async data => {
       // console.log(data)
       const moduleName = moduleData.name
       const title = moduleName.startsWith('use') ? moduleName + '()' : moduleName
-      toConvert.push({ h1: title }, { p: trimDescription(moduleData.description || '') })
+      toConvert.push({ h1: title }, getDescriptionItems(moduleData.description || ''))
       const membersData = data.filter(item => item.kind !== 'module' && item.kind !== 'function')
       const methodsData = data.filter(item => item.kind === 'function')
 

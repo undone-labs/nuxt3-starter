@@ -1,3 +1,11 @@
+/**
+ * @module Seo
+ * @desc Uses [defineNuxtPlugin](https://nuxt.com/docs/guide/directory-structure/plugins#creating-plugins) to provide the [seo()](/zero-core/plugins#seo-1) method described below. To use, import it from useNuxtApp like so;
+ * ```js
+ * const << $seo >> = useNuxtApp()
+ * ```
+ */
+
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { defineNuxtPlugin, useHead } from '#imports'
@@ -7,10 +15,9 @@ import CloneDeep from 'lodash/cloneDeep'
 // -----------------------------------------------------------------------------
 /**
  * @method seo
- * @desc Looks up Seo data using the supplied identifier and adds data to the
- * document head tag via Nuxt's useHead composable
- * @param {string|undefined} key - The key to search in the Seo Content Object.
- * @param {Object} override - An object of meta tag key/value overrides 
+ * @desc Looks up Seo data from the [Zero Store](/zero-core/use-zero-store) using the supplied identifier and adds data to the document head tag via Nuxt's useHead composable. Alternatively, seo data can be provided directly through the `override` argument. In the event that no overrides are present and no data is found using the supplied key argument, the function will fall back to default SEO data that should always be present in the Zero Store seo object at an `_` key.
+ * @param {string|undefined} key The key to search in the [Zero Store seo object](/zero-core/use-zero-store#seo).
+ * @param {Object} override An object of meta tag key/value overrides.
  */
 const seo = (key, override) => {
   const config = useRuntimeConfig()
