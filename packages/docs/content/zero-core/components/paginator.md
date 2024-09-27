@@ -7,10 +7,10 @@ A pagination component that automatically divides up an array of elements into p
 
 | Prop | type | description | values |
 | ---- | ---- | ----------- | ------ |
-| `buffer`<span>(optional)</span> | number | The number of pages on either side of the current page to display as options to navigate to in the controls.<ul></ul> |  |
-| `limit` | number | The number of elements shown per page.<ul></ul> |  |
-| `offset` | number | The index of the first pagination element that appears on the current page. The [current page](/zero-core/components/paginator#currentpage) will be computed automatically based on this index.<ul></ul> |  |
-| `total` | number | The total number of elements to paginate.<ul></ul> |  |
+| `buffer`<span>(optional)</span> | number | The number of pages on either side of the current page to display as options to navigate to in the controls. |  |
+| `limit` | number | The number of elements shown per page. |  |
+| `offset` | number | The index of the first pagination element that appears on the current page. The [current page](/zero-core/components/paginator#currentpage) will be computed automatically based on this index. |  |
+| `total` | number | The total number of elements to paginate. |  |
 
 ## Computed properties
 
@@ -33,7 +33,13 @@ The total number of pages in the paginated list.
 #### pages()
 
 
-An array of objects containing data about every single page in the paginated list. Each object has three properties: <ul><li>`display`; A boolean indicating if the control for this page should be displayed</li><li>`value`; The page number</li><li>`current`; A boolean indicating if this page is currently selected</li></ul>.
+An array of objects containing data about every single page in the paginated list. Each object has three properties:
+
+- `display`; A boolean indicating if the control for this page should be displayed
+
+- `value`; The page number
+
+- `current`; A boolean indicating if this page is currently selected.
 
 
  - **returns:** `[Object]`  

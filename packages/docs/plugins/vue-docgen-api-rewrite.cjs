@@ -4235,7 +4235,14 @@ function setupMethodHandler(documentation, componentDefinition, astPath) {
             const output = {}
             tagNames.forEach((tag) => {
               output[tag] = tags.filter(item => item.tag === tag)
-              if (tag === 'method' || tag === 'desc') {
+              if (tag === 'method') {
+                output[tag] = output[tag][0]
+              }
+              if (tag === 'desc' || tag === 'description') {
+                const description = output[tag][0].source.filter(item => item.tokens.delimiter === '*')
+                output[tag][0].description = description
+                  .map(item => item.source.replace(' * ', '').replace('@desc ', '').replace('@description ', ''))
+                  .join('\n')
                 output[tag] = output[tag][0]
               }
             })

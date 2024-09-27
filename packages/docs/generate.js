@@ -148,7 +148,7 @@ const formatPropDescription = prop => {
       li = li + `<li>\`${param.name}\` - **type:** \`${param.type.name}\` - ${param.description}</li>`
     })
   }
-  return `${desc}<ul>${li}</ul>`
+  return li ? `${desc}<ul>${li}</ul>` : desc
 }
 
 // ---------------------------------------------------------------- getEventTags
@@ -175,13 +175,13 @@ const getMarkdownElements = (methods, isComputed = false) => {
   if (array.length) {
     const markdownElements = array.map(item => {
       const output = [{ h4: item.method.name + '()' }]
-      const description = item.method.description || item.desc?.description
+      const description = item.method.description || item.desc?.description || item.description?.description
       const params = item.param
       if (description) {
-        output[1] = { p: trimDescription(description) }
+        output.push({ p: trimDescription(description) })
       }
       if (params) {
-        output[2] = {
+        output.push({
           table: {
             headers: ['param', 'type', 'description'],
             rows: params.map(param => ({
@@ -190,7 +190,7 @@ const getMarkdownElements = (methods, isComputed = false) => {
               description: trimDescription(param.description)
             }))
           }
-        }
+        })
       }
       Object.keys(item).forEach((key) => {
         if (key === 'computed' || key === 'method' || key === 'desc' || key === 'param') {
