@@ -103,7 +103,7 @@ const emit = defineEmits([
 /**
  * @method currentPage
  * @computed
- * @desc - The current page number. Computed using the offset prop divided by the results per page (limit prop).
+ * @desc The current page number. Computed using the offset prop divided by the results per page (limit prop).
  * @returns {number}
  */
 const currentPage = computed(() => props.offset / props.limit)
@@ -111,7 +111,7 @@ const currentPage = computed(() => props.offset / props.limit)
 /**
  * @method totalPages
  * @computed
- * @desc - The total number of pages in the paginated list.
+ * @desc The total number of pages in the paginated list.
  * @returns {number}
  */
 const totalPages = computed(() => Math.ceil(props.total / props.limit))
@@ -119,7 +119,10 @@ const totalPages = computed(() => Math.ceil(props.total / props.limit))
 /**
  * @method pages
  * @computed
- * @desc - An array of objects containing data about every single page in the paginated list. Each object has three properties: <ul><li>`display`; A boolean indicating if the control for this page should be displayed</li><li>`value`; The page number</li><li>`current`; A boolean indicating if this page is currently selected</li></ul>.
+ * @desc An array of objects containing data about every single page in the paginated list. Each object has three properties:
+ * - `display`; A boolean indicating if the control for this page should be displayed
+ * - `value`; The page number
+ * - `current`; A boolean indicating if this page is currently selected.
  * @returns {[Object]}
  */
 const pages = computed(() => {
@@ -139,7 +142,7 @@ const pages = computed(() => {
 
 /**
  * @method incrementPage
- * @desc - Initiates a change in page and emits the new page value with the [pageIncremented](/zero-core/components/paginator#emitters) emitter.
+ * @desc Initiates a change in page and emits the new page value with the [pageIncremented](/zero-core/components/paginator#emitters) emitter.
  * @param {string|null} action If provided, must be one of `first`, `prev`, `next` or `last`, otherwise, the second argument, `page` will take precedent.
  * @param {number|undefined} page If provided and a valid action is not, the current page will be updated to this value.
  */
