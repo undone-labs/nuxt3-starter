@@ -49,7 +49,7 @@
 
 <script setup>
 /**
- * @description A Slider component that is navigable through tabs corresponding to each slide.
+ * @description A slider component that is navigable through tabs corresponding to each slide.
  */
 // ======================================================================= Setup
 const props = defineProps({
@@ -141,7 +141,6 @@ const setPanelHeight = () => {
  * @method changeSlide - Changes the current slide.
  * @desc - Changes the current slide.
  * @param {string} slug - The slug of the slide to switch to.
- * @returns {string} The newly chosen slide
  */
 
 const changeSlide = slug => {

@@ -12,13 +12,18 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| toast | `true` | `toast` |
+#### Toast
+
+
+**name:** `toast`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `toast` |  |  |
 
 ## Methods
 
-##### unToast()
+#### unToast()
 
 # Zero Toaster
 
@@ -33,6 +38,11 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| toast | `true` | `toast` |
+#### Toast
+
+
+**name:** `toast`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `toast` |  |  |

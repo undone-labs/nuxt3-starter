@@ -12,15 +12,21 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `true` | `close-alert` `data` |
-
-### Emitters
+#### Default
 
 
- - completed - undefined
+**name:** `default`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `close-alert` |  |  |
+| `data` |  |  |
+
+## Emitters
+
+
+ - **completed** - undefined
 
 ## Methods
 
-##### closeAlert()
+#### closeAlert()

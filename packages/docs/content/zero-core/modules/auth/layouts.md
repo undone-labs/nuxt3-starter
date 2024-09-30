@@ -6,6 +6,7 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `false` |  |
+#### Default
+
+
+**name:** `default`  **scoped:** `false`

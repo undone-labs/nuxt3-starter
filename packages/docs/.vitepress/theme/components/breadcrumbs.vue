@@ -53,7 +53,7 @@ const links = computed(() => {
 <style lang="scss" scoped>
 .breadcrumbs {
   display: flex;
-  margin-bottom: 0.75rem;
+  margin-bottom: 3.75rem;
 }
 
 .breadcrumb,

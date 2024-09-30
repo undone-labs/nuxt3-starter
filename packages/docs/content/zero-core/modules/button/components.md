@@ -18,20 +18,25 @@
 
 ## Slots
 
-| name | scoped | bindings |
-| ---- | ------ | -------- |
-| default | `true` | `loading` |
-
-### Emitters
+#### Default
 
 
- - clicked - undefined
+**name:** `default`  **scoped:** `true`
+
+| binding | type | description |
+| ------- | ---- | ----------- |
+| `loading` |  |  |
+
+## Emitters
+
+
+ - **clicked** - undefined
 
 ## Methods
 
-##### clickHandler()
+#### clickHandler()
 
 
 a 'clicked' event. If the button has an ID, the id will be used to set the loading state in the button store using [setButton](/zero-core/modules/button/store.html#setbutton)
 
-##### handleSessionExpired()
+#### handleSessionExpired()

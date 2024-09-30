@@ -10,15 +10,15 @@
 | `markdown` | string |  |  |
 | `disableHeadingLinks`<span>(optional)</span> | boolean |  |  |
 
-### Emitters
+## Emitters
 
 
- - foundHeadingNodes - undefined
+ - **foundHeadingNodes** - undefined
 
 ## Methods
 
-##### initializeCopyButtons()
+#### initializeCopyButtons()
 
-##### clearCopiedStates()
+#### clearCopiedStates()
 
-##### collectAndEmitHeadingNodes()
+#### collectAndEmitHeadingNodes()

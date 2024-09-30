@@ -5,6 +5,6 @@
 
 ## Methods
 
-##### resolveComponent()
+#### resolveComponent()
 
-##### animateTitle()
+#### animateTitle()

@@ -89,6 +89,10 @@ const concatenateList = [
   {
     dir: 'plugins',
     filename: 'plugins'
+  },
+  {
+    dir: 'stores',
+    filename: 'use-zero-store'
   }
 ]
 
@@ -122,6 +126,79 @@ const parseVueFile = async (path) => {
   })
 }
 
+const formatPropDescription = prop => {
+  let desc = prop.description
+  if (!desc) {
+    return ''
+  }
+  let li =''
+  if (prop.tags && Array.isArray(prop.tags.params)) {
+    const params = prop.tags.params
+    params.forEach((param) => {
+      li = li + `<li>\`${param.name}\` - **type:** \`${param.type.name}\` - ${param.description}</li>`
+    })
+  }
+  return `${desc}<ul>${li}</ul>`
+}
+
+// ---------------------------------------------------------------- getEventTags
+const getEventTags = evt => {
+  if (!Array.isArray(evt.tags)) {
+    return ''
+  }
+  const returnTags = evt.tags.filter(tag => tag.title === 'return' || tag.title === 'returns')
+  if (returnTags.length) {
+    const type = returnTags[0].type?.name
+    const elements = returnTags[0].type?.elements
+    const values = Array.isArray(elements) ? elements.map(el => el.name).join('|') : ''
+    return `- returns: \`${values || type}\` `
+  }
+  return ''
+}
+
+const getMarkdownElements = (methods, isComputed = false) => {
+  if (!Array.isArray(methods)) {
+    return []
+  }
+  const array = isComputed ? methods.filter(item => item.hasOwnProperty('computed')) : methods.filter(item => !item.hasOwnProperty('computed'))
+  if (array.length) {
+    const markdownElements = array.map(item => {
+      const output = [{ h4: item.method.name + '()' }]
+      const description = item.method.description || item.desc?.description
+      const params = item.param
+      if (description) {
+        output[1] = { p: trimDescription(description) }
+      }
+      if (params) {
+        output[2] = {
+          table: {
+            headers: ['param', 'type', 'description'],
+            rows: params.map(param => ({
+              param: `\`${param.name}\`${param.optional ? '<span>(optional)</span>' : '' }`,
+              type: param.type,
+              description: trimDescription(param.description)
+            }))
+          }
+        }
+      }
+      Object.keys(item).forEach((key) => {
+        if (key === 'computed' || key === 'method' || key === 'desc' || key === 'param') {
+          return
+        }
+        output.push({
+          ul: item[key].map(tag => {
+            const type = tag.type ? `\`${tag.type}\` ` : ''
+            return `**${tag.tag}:** ${type}${tag.name} ${tag.description}`
+          })
+        })
+      })
+      return output
+    })
+    return markdownElements
+  }
+  return []
+}
+
 // ---------------------------------------------------- populateMarkdownTemplate
 const populateMarkdownTemplate = async (data) => {
   const props = data.props?.length ?
@@ -135,74 +212,67 @@ const populateMarkdownTemplate = async (data) => {
           rows: data.props.map(prop => ({
             Prop: `\`${prop.name}\`${prop.required ? '' : '<span>(optional)</span>'}`,
             type: prop.type.name || '',
-            description: prop.description || '',
+            description: formatPropDescription(prop),
             values: prop.values ? `\`${prop.values}\`` : ''
           }))
         }
       }
     ] : []
 
-  const slots = data.slots?.length ?
-    [
-      {
-        h2: 'Slots'
-      },
-      {
-        table: {
-          headers: ['name', 'scoped', 'bindings'],
-          rows: data.slots.map(slot => ({
-            name: slot.name,
-            scoped: `\`${!!slot.scoped}\``,
-            bindings: Array.isArray(slot.bindings) ? slot.bindings.map(binding => `\`${binding.name}\``).join(' ') : ''
-          }))
-        }
+  let slots = []
+  if (data.slots?.length) {
+    slots = [{ h2: 'Slots'}]
+    data.slots.forEach((slot) => {
+      const slotData = []
+      if (slot.name) {
+        slotData.push({ h4: capitalCase(slot.name) }, { p: `**name:** \`${slot.name}\`  **scoped:** \`${!!slot.scoped}\`` })
       }
-    ] : []
+      if (slot.description) {
+        slotData.push({ p: slot.description })
+      }
+      if (slot.bindings?.length) {
+        const bindings = slot.bindings.map(binding => ({
+          binding: `\`${binding.name}\``,
+          type: binding.type ? `\`${binding.type.name}\`` : '',
+          description: binding.description || ''
+        }))
+        slotData.push({
+          table: {
+            headers: ['binding', 'type', 'description'],
+            rows: bindings
+          }
+        })
+      }
+      slots = slots.concat(slotData)
+    })
+  }
 
   const emits = data.events?.length ?
     [
       {
-        h3: 'Emitters'
+        h2: 'Emitters'
       },
       {
-        ul: data.events.map(evt => `${evt.name} - ${evt.description}`)
+        ul: data.events.map(evt => `**${evt.name}** ${getEventTags(evt)}- ${evt.description}`)
       }
     ] : []
 
-  const methods = data._methods?.length ?
+  const methodElements = getMarkdownElements(data._methods)
+  const methods = methodElements.length ?
     [
       {
         h2: 'Methods'
       },
-      ...data._methods.map(item => {
-        const output = [{ h5: item.method.name + '()' }]
-        const description = item.method.description || item.desc?.description
-        const params = item.param
-        if (description) {
-          output[1] = { p: trimDescription(description) }
-        }
-        if (params) {
-          output[2] = {
-            table: {
-              headers: ['param', 'type', 'description'],
-              rows: params.map(param => ({
-                param: `\`${param.name}\`${param.optional ? '<span>(optional)</span>' : '' }`,
-                type: param.type,
-                description: trimDescription(param.description)
-              }))
-            }
-          }
-        }
-        Object.keys(item).forEach((key) => {
-          if (key === 'method' || key === 'desc' || key === 'param') {
-            return
-          }
-          output.push({
-            ul: item[key].map(tag => `**${tag.tag}:** ${tag.name} ${tag.description}`)
-          })
-        })
-        return output
-      })
+      ...methodElements
+    ] : []
+
+  const computedElements = getMarkdownElements(data._methods, true)
+  const computed = computedElements.length ?
+    [
+      {
+        h2: 'Computed properties'
+      },
+      ...computedElements
     ] : []
 
   const toConvert = [
@@ -213,6 +283,7 @@ const populateMarkdownTemplate = async (data) => {
       p: data.description
     },
     ...props,
+    ...computed,
     ...slots,
     ...emits,
     ...methods
