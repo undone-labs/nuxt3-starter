@@ -107,7 +107,8 @@
       ]
     },
     { "text": "Plugins", "link": "/zero-core/plugins" },
-    { "text": "Store", "link": "/zero-core/use-zero-store" }
+    { "text": "Store", "link": "/zero-core/use-zero-store" },
+    { "text": "Assets", "link": "/zero-core/assets" }
   ],
   "/site/": [
     {
