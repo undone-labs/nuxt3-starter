@@ -22,13 +22,13 @@ jobs:
         node-version: [20.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Installing dependencies
-      run: npm ci
-    - name: Running zero-core tests
-      run: npm run zero-core:test
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Installing dependencies
+        run: npm ci
+      - name: Running zero-core tests
+        run: npm run zero-core:test
