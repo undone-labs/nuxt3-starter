@@ -7,8 +7,8 @@ A wrapper element around an array of entries that highlights the entry currently
 
 | Prop | type | description | values |
 | ---- | ---- | ----------- | ------ |
-| `tag`<span>(optional)</span> | string | The tagname of the component root element. Must be a valid HTML element tag. Default is `div`.<ul></ul> | `div,nav,span,etc.` |
-| `entries` | array | The array of entries used to generate slot children in the default slot.<ul></ul> |  |
+| `tag`<span>(optional)</span> | string | The tagname of the component root element. Must be a valid HTML element tag. Default is `div`. | `div,nav,span,etc.` |
+| `entries` | array | The array of entries used to generate slot children in the default slot. |  |
 
 ## Slots
 

@@ -1,3 +1,8 @@
+/**
+ * @module zeroOpenPopup
+ * @desc A composable to create a new open window that navigates to a provided URL.
+ */
+
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import { useRuntimeConfig } from '#imports'
@@ -6,6 +11,13 @@ import { useRuntimeConfig } from '#imports'
 // -----------------------------------------------------------------------------
 /**
  * @method zeroOpenPopup
+ * @desc Opens a popup window.
+ * @param {string} id An ID for the call to the window `postMessage` method. Adds an interval to check if the popup is closed every 100ms. If the window is closed a message is posted to the original window with the popup ID and action.
+ * @param {action} string
+ * @param {string} url The URL the new window should navigate to.
+ * @param {string} title A title for the new window.
+ * @param {number} w The width of the popup window.
+ * @param {number} h The height of the popup window.
  */
 
 export default ({ id, action, url, title, w, h }) => {
