@@ -25,6 +25,7 @@
   "dependencies": {
     "comment-parser": "^1.4.1",
     "esm-resolve": "^1.0.11",
+    "jsdoc-parse": "^6.2.4",
     "jsdoc-to-markdown": "^9.0.2",
     "json2md": "^2.0.1",
     "lru-cache": "^8.0.0",

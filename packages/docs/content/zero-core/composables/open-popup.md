@@ -1,4 +1,4 @@
-<a name="zeroOpenPopup"></a>
+#### zeroOpenPopup()
 
-## zeroOpenPopup()
-**Kind**: global function  
+
+

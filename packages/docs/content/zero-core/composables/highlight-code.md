@@ -1,4 +1,4 @@
-<a name="zeroHighlightCode"></a>
+#### zeroHighlightCode()
 
-## zeroHighlightCode()
-**Kind**: global function  
+
+
