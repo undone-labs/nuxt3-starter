@@ -52,11 +52,16 @@ export default defineNuxtConfig({
       '../zero-core/stores/**'
     ]
   },
+  // ========================================================= [Layer] zero-core
+  zero: {
+    modules: {}
+  },
   // =================================================================== Modules
   modules: [
     'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
     'nuxt-primevue', // https://github.com/primefaces/primevue-nuxt-module
-    '@vueuse/nuxt' // https://vueuse.org/
+    '@vueuse/nuxt', // https://vueuse.org/
+    '@nuxt/test-utils/module' //https://nuxt.com/docs/getting-started/testing
   ],
   // ========================================================== [Module] sitemap
   sitemap: {
