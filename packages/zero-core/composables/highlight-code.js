@@ -3,7 +3,6 @@
  * well as custom language imports/registration, both from outside of this
  * composable's defaults
  */
-
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
 import hljs from 'highlight.js/lib/core'
@@ -20,6 +19,10 @@ hljs.registerLanguage('curl', hljsCurl)
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
+/**
+ * @method zeroHighlightCode
+ */
+
 export default (code, language) => {
   const languageInstalled = hljs.getLanguage(language)
   const highlighted = language && languageInstalled ?

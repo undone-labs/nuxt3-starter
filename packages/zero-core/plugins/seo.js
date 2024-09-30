@@ -5,6 +5,13 @@ import CloneDeep from 'lodash/cloneDeep'
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
+/**
+ * @method seo
+ * @desc Looks up Seo data using the supplied identifier and adds data to the
+ * document head tag via Nuxt's useHead composable
+ * @param {string|undefined} key - The key to search in the Seo Content Object.
+ * @param {Object} override - An object of meta tag key/value overrides 
+ */
 const seo = (key, override) => {
   const config = useRuntimeConfig()
   const route = useRoute()
@@ -14,9 +21,7 @@ const seo = (key, override) => {
   const defaults = CloneDeep(SeoContent.value._) // global SEO values
   if (!defaults) { throw new Error('Missing default "_" SEO entry') }
   let entry = CloneDeep(SeoContent.value[key])
-  /**
-   * Gather data and merge with defaults
-   */
+  // Gather data and merge with defaults
   if (entry && override) {
     for (const key in entry) {
       if (override.hasOwnProperty(key)) {
@@ -31,9 +36,7 @@ const seo = (key, override) => {
     }
   }
   entry = Object.assign({ schemaOrgData: {} }, defaults, entry)
-  /**
-   * Compile data
-   */
+  // Compile data
   const siteUrl = config.public.siteUrl
   const url = siteUrl + route.path
   const ogImage = entry.ogImage ? siteUrl + entry.ogImage : undefined

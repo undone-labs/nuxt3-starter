@@ -177,7 +177,7 @@
  * Component: Nav
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   --vp-nav-height: 78px;
   --vp-nav-bg-color: var(--vp-c-bg);
   --vp-nav-screen-bg-color: var(--vp-c-bg);
@@ -214,7 +214,7 @@
   --vp-code-bg: #{$gray300};
 
   --vp-code-block-color: var(--vp-c-text-2);
-  --vp-code-block-bg: #{$mineShaft};
+  --vp-code-block-bg: #{$gray300};
   --vp-code-block-divider-color: var(--vp-c-gutter);
 
   --vp-code-lang-color: var(--vp-c-text-3);
@@ -248,6 +248,7 @@
 
 .dark {
   --vp-code-bg: #{$mineShaft};
+  --vp-code-block-bg: #{$mineShaft};
 }
 
 /**
@@ -341,3 +342,10 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+/**
+ * Component: Doc Footer Nav
+ * -------------------------------------------------------------------------- */
+.doc-footer-section-text,
+.doc-footer-divider {
+  color: var(--vp-c-text-1);
+}

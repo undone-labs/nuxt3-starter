@@ -17,12 +17,20 @@
     "vue": "^3.4.37"
   },
   "scripts": {
-    "docs:dev": "vitepress dev",
+    "docs:dev": "node generate.js && vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "docs:test": "vitest"
   },
   "dependencies": {
+    "comment-parser": "^1.4.1",
+    "esm-resolve": "^1.0.11",
+    "jsdoc-to-markdown": "^9.0.2",
+    "json2md": "^2.0.1",
+    "lru-cache": "^8.0.0",
+    "pug": "^3.0.3",
+    "recast": "^0.23.9",
+    "vue-inbrowser-compiler-independent-utils": "^4.71.1",
     "vue-router": "^4.4.3"
   }
 }

@@ -48,10 +48,14 @@
 </template>
 
 <script setup>
+/**
+ * @description A Slider component that is navigable through tabs corresponding to each slide.
+ */
 // ======================================================================= Setup
 const props = defineProps({
   /**
    * Specific slider ID that can be targetted with global $bus events
+   * @values small, medium, large
    */
   id: {
     type: String,
@@ -82,8 +86,7 @@ const props = defineProps({
     default: true
   },
   /**
-   * A fixed-height slider's slides are set to `height: 100%`. Usually to allow
-   * for scrolling within a slide.
+   * A fixed-height slider's slides are set to `height: 100%`. Usually to allow for scrolling within a slide.
    */
   fixedHeight: {
     type: Boolean,
@@ -102,6 +105,9 @@ const emit = defineEmits(['slideChanged'])
 const { $bus } = useNuxtApp()
 
 // ==================================================================== Computed
+/**
+ * A list of slugs corresponding to each slide
+ */
 const slugs = computed(() => Object.keys(props.slides))
 const count = computed(() => slugs.value.length)
 const currentSlideIndex = computed(() => slugs.value.indexOf(activeSlide.value))
@@ -132,7 +138,10 @@ const setPanelHeight = () => {
 }
 
 /**
- * @method changeSlide
+ * @method changeSlide - Changes the current slide.
+ * @desc - Changes the current slide.
+ * @param {string} slug - The slug of the slide to switch to.
+ * @returns {string} The newly chosen slide
  */
 
 const changeSlide = slug => {
