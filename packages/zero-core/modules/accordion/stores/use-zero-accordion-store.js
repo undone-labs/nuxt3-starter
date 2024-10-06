@@ -54,7 +54,7 @@ export const useZeroAccordionStore = defineStore('zero-accordion', () => {
       if(index === -1) {
         accordions.value[accordionId].active.push(sectionId)
       } else {
-        accordions.value[accordionId].active = accordions.value[accordionId].active.toSpliced(index, 1)
+        accordions.value[accordionId].active = accordions.value[accordionId].active.filter((_, i) => i !== index)
       }
     }
     if (active.length === accordions.value[accordionId].children.length) {
