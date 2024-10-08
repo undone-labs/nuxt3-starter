@@ -72,6 +72,14 @@ const concatenateList = [
     filename: 'store'
   },
   {
+    dir: 'modules/markdown-parser/components',
+    filename: 'components'
+  },
+  {
+    dir: 'modules/markdown-parser/composables',
+    filename: 'composables'
+  },
+  {
     dir: 'modules/toaster/components',
     filename: 'components'
   },

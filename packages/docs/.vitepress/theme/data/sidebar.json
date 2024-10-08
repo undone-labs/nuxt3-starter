@@ -62,7 +62,14 @@
             { "text": "Store", "link": "/zero-core/modules/form/store" }
           ]
         },
-        { "text": "Markdown Parser", "link": "/zero-core/modules/markdown-parser/components/zero-markdown-parser" },
+        {
+          "text": "Markdown Parser",
+          "collapsed": true,
+          "items": [
+            { "text": "Components", "link": "/zero-core/modules/markdown-parser/components" },
+            { "text": "Composables", "link": "/zero-core/modules/markdown-parser/composables" }
+          ]
+        },
         {
           "text": "Toaster",
           "collapsed": true,
