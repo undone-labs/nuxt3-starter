@@ -8,7 +8,12 @@
         :toast="toast">
 
         <template #toast="{ toast }">
+          <!-- 
+            @slot The content of the toast window.
+              @binding toast Binds the toast object that is bound to the child toast component slot. This will be the same object passed as the 'toast' prop to the [toast component](/zero-core/modules/toaster/components#zero-toast).
+          -->
           <slot name="toast" :toast="toast" />
+
         </template>
 
       </ZeroToast>
@@ -18,10 +23,18 @@
 </template>
 
 <script setup>
+/**
+ * @description The Zero Toaster is a component that displays important info/messages to the user in small alert windows called 'toasts'. The name is a reference the way that alert messages pop up like toast out of a toaster. This component, the 'toaster', renders the individual [toast](/zero-core/modules/toaster/components#zero-toast) components that display a message to the user and allows for multiple messages to be displayed at once.
+ * Uses a Vue [transition-group](https://vuejs.org/guide/built-ins/transition-group) to animate toast component entry and exit.
+ */
 // ======================================================================= Setup
 const props = defineProps({
+  /**
+   * Defines the direction which 'toast' windows should enter from relative to the viewport. Overrides the module setting set in the `nuxt.config.js` under `zero.modules.toaster`.
+   * @values top, bottom
+   */
   from: {
-    type: [String, Object],
+    type: String,
     required: false,
     default: null
   }
