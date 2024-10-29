@@ -25,12 +25,36 @@ export const useZeroWebsocketStore = defineStore('zero-websocket', () => {
     socket.value = payload
   }
 
+  /**
+   * @method joinRoom
+   * @desc Used to join a specific room in a websocket connection
+   * @param {String} roomId A room ID
+   */
+
+  const joinRoom = roomId => {
+    socket.value.emit('join-room', roomId)
+  }
+
+  /**
+   * @method leaveRoom
+   * @desc Used to leave a specific room in a websocket connection, as well as to remove a list of listeners. Listeners should be removed before unmounting components in order to prevent the listener from being added more than once.
+   * @param {String} roomId A room ID
+   * @param {Array} listenersToRemove A list of listeners names as strings
+   */
+
+  const leaveRoom = (roomId, listenersToRemove = []) => {
+    socket.value.emit('leave-room', roomId)
+    listenersToRemove.forEach(listener => socket.value.removeAllListeners(listener))
+  }
+
   // ==================================================================== return
   return {
     // ----- state
     socket,
     // ----- actions
-    setWebsocketConnection
+    setWebsocketConnection,
+    joinRoom,
+    leaveRoom
   }
 })
 
