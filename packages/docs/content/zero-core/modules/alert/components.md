@@ -8,7 +8,7 @@ This module uses the 'Alert' nomenclature in reference to the pop-up or modal-li
 
 | Prop | type | description | values |
 | ---- | ---- | ----------- | ------ |
-| `alertId` | string | An identifier for this Alert. Should be unique across all instances.<ul></ul> |  |
+| `alertId` | string | An identifier for this Alert. Should be unique across all instances. |  |
 
 ## Computed properties
 
