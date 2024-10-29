@@ -45,10 +45,11 @@
  * @description A dropdown menu component that exposes two slots; a dropdown button and a panel of options. [See below](/zero-core/components/dropdown#slots) for a description of each. When the dropdown menu is open, clicking anywhere outside the dropdown causes it to close. This functionality is provided by VueUse's [onClickOutside](https://vueuse.org/core/onClickOutside/).
  * The options panel (dropdown menu) is wrapped in a `.panel-container` container element. The top offset of this element ('padding-top' or 'top') and panel width and/or max-height must be set in the parent component as these are custom properties that will differ panel-to-panel.
  */
-// ===================================================================== Imports
-import { onClickOutside } from '@vueuse/core'
 
-// ======================================================================= Props
+// ===================================================================== imports
+import { onClickOutside, onKeyStroke } from '@vueuse/core'
+
+// ======================================================================= setup
 const props = defineProps({
   /**
    * The type of event that should initiate dropdown toggle.
@@ -90,19 +91,21 @@ const emit = defineEmits([
   'optionSelected'
 ])
 
-// ======================================================================== Data
+// ======================================================================== data
 const panelOpen = ref(false)
 const selected = ref(props.defaultOption)
 const dropdown = ref(null)
 
+// ==================================================================== watchers
+watch(panelOpen, state => emit('dropdownPanelToggled', state))
+
+watch(selected, val => emit('optionSelected', val))
+
+// ===================================================================== methods
 onClickOutside(dropdown, () => { closePanel() })
 
-// ==================================================================== Watchers
-watch(panelOpen, (state) => { emit('dropdownPanelToggled', state) })
+onKeyStroke('Escape', () => closePanel())
 
-watch(selected, (val) => { emit('optionSelected', val) })
-
-// ===================================================================== Methods
 /**
  * @method togglePanel
  * @desc - Toggles the dropdown panel open state if the `toggleOn` prop is set to 'click'
