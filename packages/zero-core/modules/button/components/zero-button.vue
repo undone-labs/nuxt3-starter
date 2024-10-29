@@ -1,13 +1,14 @@
 <template>
   <component
     :is="component"
+    :id="id"
     :to="tag === 'nuxt-link' ? to : undefined"
     :href="tag === 'a' ? to : undefined"
     :disabled="disabled || loading"
     :target="target"
     :class="['button', { selected }, { disabled }]"
     @click="clickHandler($event)">
-    <!-- 
+    <!--
       @slot The button content.
         @binding loading Binds the loading state returned by the [loading](/zero-core/modules/button/components#loading) computed prop.
     -->
@@ -21,7 +22,7 @@
  * @description A feature-rich button component. It can be used as an internal or external link, as a regular button or as a button with loading states.
  * If an ID is provided via the `id` prop, the button will be registered in the [zeroButtonStore](/zero-core/modules/button/store) with a tracking object that makes loading states available.
  */
-// ======================================================================= Props
+// ======================================================================= setup
 const props = defineProps({
   /**
    * Defines the type of component this button will use. Use `nuxt-link` to create an internal link, `a` for an external link and `button` for a regular button element. Alternatively, any valid html element tag can be provided.
@@ -82,24 +83,25 @@ const props = defineProps({
   }
 })
 
-// ======================================================================= Setup
 const emit = defineEmits([
   /**
    * Emits the click event received by the [clickHandler](/zero-core/modules/button/components#clickhandler) on click.
    */
   'clicked'
 ])
+
 const buttonStore = useZeroButtonStore()
+
 if (props.id) {
   buttonStore.setButton({ id: props.id, loading: false })
 }
 
-// ======================================================================== Data
+// ======================================================================== data
 const { buttons } = storeToRefs(buttonStore)
 
 const { $bus } = useNuxtApp()
 
-// ==================================================================== Computed
+// ==================================================================== computed
 /**
  * @method button
  * @computed
@@ -137,7 +139,7 @@ const component = computed(() => {
   return resolveComponent('NuxtLink')
 })
 
-// ===================================================================== Methods
+// ===================================================================== methods
 /**
  * @method clickHandler
  * @desc Emits a 'clicked' event. If the button has an ID, the id will be used to set the loading state in the button store using [setButton](/zero-core/modules/button/store#setbutton).
@@ -145,7 +147,7 @@ const component = computed(() => {
  */
 const clickHandler = async e => {
   e.stopPropagation()
-  if (!disabled.value) {
+  if (!disabled.value && !props.selected) {
     if (typeof props.id === 'string') {
       await buttonStore.setButton({ id: props.id, loading: true })
     }
@@ -163,7 +165,7 @@ const handleSessionExpired = () => {
   }
 }
 
-// ======================================================================= Hooks
+// ======================================================================= hooks
 $bus.$on('session-expired', handleSessionExpired)
 
 onBeforeUnmount(() => {
