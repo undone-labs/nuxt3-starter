@@ -3,7 +3,7 @@
 class Ls {
   // =============================================================== constructor
   constructor (options) {
-    this.prefix = options.prefix || 'zero'
+    this.prefix = options.prefix || 'zero__'
   }
 
   // ======================================================================= get
