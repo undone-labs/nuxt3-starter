@@ -92,8 +92,10 @@ export default defineNuxtConfig({
       addTextToClipboard: { enable: true },
       delay: { enable: true },
       ls: {
-        enable: true
-        // prefix: 'cmslayer__'
+        enable: true,
+        options: {
+          prefix: 'nuxt3starter__'
+        }
       },
       openPopup: { enable: true },
       scrollTo: { enable: true },
@@ -120,6 +122,14 @@ export default defineNuxtConfig({
       },
       auth: {
         enable: false,
+        google: {
+          clientId: process.env.GOOGLE_OAUTH__CLIENT_ID
+        },
+        microsoft: {
+          clientId: process.env.MICROSOFT_OAUTH__CLIENT_ID,
+          tenantId: process.env.MICROSOFT_OAUTH__TENANT_ID,
+          redirectUri: process.env.MICROSOFT_OAUTH__REDIRECT_URI
+        },
         github: {
           oauth: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH__CLIENT_ID}&scope=user:email`,
           app: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_APP__CLIENT_ID}`
