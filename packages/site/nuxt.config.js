@@ -73,6 +73,10 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/test-utils/module'
   ],
+  // =========================================================== [Module] Eslint
+  eslint: {
+    checker: true
+  },
   // ============================================================ [Module] Pinia
   pinia: {
     storesDirs: [
