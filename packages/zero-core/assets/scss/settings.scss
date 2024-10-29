@@ -11,13 +11,12 @@
  * project-to-project.
  */
 
-$gridWidth: 60rem;
-$standardGutter: 0.75rem;
-$baseFontSize: 16;
-$baseLeading: 1.2;
-$baseLetterSpacing: 0px;
-$fontAssetPath: '@/../zero-core/assets/fonts';
+@forward '@/assets/scss/settings';
+@use '@/assets/scss/settings' as client-settings;
 
-//////////////////////////////////////////////////////////////////////// Imports
-// -----------------------------------------------------------------------------
-@import 'utilities';
+$gridWidth: client-settings.$gridWidth !default;
+$standardGutter: client-settings.$standardGutter !default;
+$baseFontSize: client-settings.$baseFontSize !default;
+$baseLeading: client-settings.$baseLeading !default;
+$baseLetterSpacing: client-settings.$baseLetterSpacing !default;
+$fontAssetPath: client-settings.$fontAssetPath !default;

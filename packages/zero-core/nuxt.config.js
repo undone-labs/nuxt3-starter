@@ -13,12 +13,17 @@ export default defineNuxtConfig({
   vite: {
     css: {
       preprocessorOptions: {
-        scss: { // make SCSS variables, functions and mixins globally accessible
+        scss: {
+          api: 'modern',
           additionalData: `
-            @use "sass:math";
-            @import "@/../zero-core/assets/scss/settings.scss";
-            @import "@/assets/scss/settings.scss";
-          `
+            @use 'sass:math';
+            @use '@/../zero-core/assets/scss/settings.scss' as *;
+            @use '@/../zero-core/assets/scss/responsive.scss' as *;
+            @use '@/../zero-core/assets/scss/utilities.scss' as *;
+            @use '@/assets/scss/settings.scss' as *;
+            @use '@/assets/scss/utilities.scss' as *;
+            @use '@/assets/scss/typography.scss' as *;
+          ` // make SCSS variables, functions and mixins globally accessible
         }
       }
     },
@@ -52,17 +57,18 @@ export default defineNuxtConfig({
       '../zero-core/stores/**'
     ]
   },
-  // ========================================================= [Layer] zero-core
-  zero: {
-    modules: {}
-  },
   // =================================================================== Modules
   modules: [
-    'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
+    '@nuxt/eslint',
+    '@nuxtjs/sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
     'nuxt-primevue', // https://github.com/primefaces/primevue-nuxt-module
     '@vueuse/nuxt', // https://vueuse.org/
     '@nuxt/test-utils/module' //https://nuxt.com/docs/getting-started/testing
   ],
+  // =========================================================== [Module] Eslint
+  eslint: {
+    checker: true
+  },
   // ========================================================== [Module] sitemap
   sitemap: {
     sources: [
@@ -76,6 +82,9 @@ export default defineNuxtConfig({
   // ========================================================= [Module] Primevue
   primevue: {
     disable: true,
+    options: {
+      unstyled: true
+    },
     components: {
       prefix: 'PrimeVue',
       include: ['FileUpload']

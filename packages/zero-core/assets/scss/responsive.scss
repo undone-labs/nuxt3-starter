@@ -3,6 +3,8 @@
  * variables, functions, mixins, etc.
  */
 
+@use 'settings' as *;
+
 // ----------------------------------------------------------------- Breakpoints
 $breakpoint_Tiny: 26.875rem; // 430px
 $breakpoint_Mini: 40rem; // 640px

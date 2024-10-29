@@ -5,7 +5,7 @@
 
 //////////////////////////////////////////////////////////////////////// Imports
 //------------------------------------------------------------------------------
-@import 'normalize';
-@import 'grid/gridlex-2.7.1';
-@import 'reset';
-@import 'layout-grid';
+@use 'normalize';
+@use 'grid';
+@use 'reset';
+@use 'layout-grid';

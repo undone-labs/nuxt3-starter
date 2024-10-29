@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.4",
+    "@nuxtjs/sitemap": "^6.1.2",
     "@vuepic/vue-datepicker": "^9.0.1",
+    "@vueuse/components": "^11.1.0",
     "@vueuse/core": "^11.0.3",
     "@vueuse/integrations": "^11.0.3",
     "@vueuse/nuxt": "^11.0.3",
@@ -26,7 +28,6 @@
     "mitt": "^3.0.1",
     "node-html-parser": "^6.1.11",
     "nuxt-primevue": "^3.0.0",
-    "nuxt-simple-sitemap": "^4.1.6",
     "rehype-highlight": "^7.0.0",
     "rehype-katex": "^7.0.0",
     "rehype-rewrite": "^4.0.2",

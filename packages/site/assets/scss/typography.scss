@@ -1,3 +1,6 @@
+@use '@/../zero-core/assets/scss/utilities.scss' as *;
+@use 'settings' as *;
+
 // ////////////////////////////////////////////////////////////////// Typography
 // -----------------------------------------------------------------------------
 // =================================================================== Variables
@@ -6,21 +9,22 @@
  * location of the source font files ($fontAssetPath)
  */
 
-$font_Primary: '';
+$font_Primary: 'Ysabeau';
 $font_Mono: monospace;
 
+$fontAssetPath_Primary: '#{$fontAssetPath}/ysabeau';
+
 // ==================================================================== Families
+
 /**
  * Include @font-face declarations and font file imports using $fontAssetPath
  */
 
-// @font-face {
-//   font-family: '';
-//   font-style: normal;
-//   font-weight: 400;
-//   font-display: swap;
-//   src: url('#{$fontAssetPath}/') format('opentype');
-// }
+@font-face {
+  font-family: 'Ysabeau';
+  src: url('#{$fontAssetPath_Primary}/variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+}
 
 // ///////////////////////////////////////////////////////// Basic Styles Mixins
 // -----------------------------------------------------------------------------
@@ -28,33 +32,47 @@ $font_Mono: monospace;
  * Mixins corresponding to most commonly used html text elements
  */
 
- @mixin h1 {}
+@mixin h1 {
+  font-size: toRem(32);
+  line-height: leading(39, 32);
+  font-weight: 400;
+}
 
- @mixin h2 {}
+@mixin h2 {
+  font-size: toRem(24);
+  line-height: leading(30, 24);
+  font-weight: 400;
+}
 
- @mixin h3 {}
+@mixin h3 {
+  font-size: toRem(18);
+  line-height: leading(24, 18);
+  font-weight: 400;
+}
 
- @mixin h4 {}
+@mixin h4 {}
 
- @mixin h5 {}
+@mixin h5 {}
 
- @mixin h6 {}
+@mixin h6 {}
 
- @mixin p1 {}
+@mixin p1 {}
 
- @mixin p2 {}
+@mixin p2 {}
 
- @mixin inlineLink {
-   color: blue;
- }
+@mixin navLink {}
+
+@mixin inlineLink {
+  color: blue;
+}
 
 /**
  * Mixin for text in <code> elements, see utitlies.scss to edit these vars
  */
 
 @mixin inlineCode {
-  color: var(--code__inline__color);
-  background-color: var(--code__inline__background-color);
+  color: white;
+  background-color: black;
   padding: toRem(4) toRem(8);
   border-radius: toRem(4);
   font-family: monospace;
@@ -64,7 +82,7 @@ $font_Mono: monospace;
 }
 
 @mixin blockCode {
-  background-color: var(--code__block__background-color);
+  background-color: black;
   padding: toRem(10) toRem(16);
   margin-bottom: 1.25rem;
   border-radius: 0.625rem;
@@ -83,6 +101,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
+  font-family: $font_Primary;
   margin-top: 0;
   margin-bottom: 0;
 }

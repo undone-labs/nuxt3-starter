@@ -4,6 +4,9 @@
  * portable across projects.
  */
 
+@use 'settings' as *;
+@use 'responsive' as *;
+
 #__nuxt {
   position: relative;
   z-index: 2;

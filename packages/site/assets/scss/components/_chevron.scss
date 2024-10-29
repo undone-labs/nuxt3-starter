@@ -1,3 +1,5 @@
+@use '@/../zero-core/assets/scss/utilities.scss' as *;
+
 .chevron {
   position: relative;
   width: toRem(9);

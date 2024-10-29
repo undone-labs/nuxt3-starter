@@ -4,11 +4,11 @@
 
 ///////////////////////////////////////////////////////////// Variables & Mixins
 // -----------------------------------------------------------------------------
-$normalize_fontSansSerif: sans-serif;
-$normalize_fontMonospace: monospace;
+$fontSansSerif: sans-serif;
+$fontMonospace: monospace;
 
 //@extend-elements / original selectors / sub, sup
-%normalize_extend_subAndSup {
+%extend_subAndSup {
 	font-size: 75%;
 	line-height: 0;
 	position: relative;
@@ -16,7 +16,7 @@ $normalize_fontMonospace: monospace;
 }
 
 // Original selectors / button, input, optgroup, select, textarea
-%normalize_extend_Selectors {
+%extend_Selectors {
 	color: inherit;
 	font: inherit;
 	margin: 0;
@@ -25,7 +25,7 @@ $normalize_fontMonospace: monospace;
 ////////////////////////////////////////////////////////////////////// Normalize
 // -----------------------------------------------------------------------------
 html {
-	font-family: $normalize_fontSansSerif;
+	font-family: $fontSansSerif;
 	input[type="button"] {
 		cursor: pointer;
 	}
@@ -113,12 +113,12 @@ small {
 }
 
 sub {
-	@extend %normalize_extend_subAndSup;
+	@extend %extend_subAndSup;
 	bottom: -0.25em;
 }
 
 sup {
-	@extend %normalize_extend_subAndSup;
+	@extend %extend_subAndSup;
 	top: -0.5em;
 }
 
@@ -134,7 +134,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: $normalize_fontMonospace, $normalize_fontMonospace;
+  font-family: $fontMonospace, $fontMonospace;
   font-size: 1em;
 }
 
@@ -143,29 +143,29 @@ pre {
 }
 
 button {
-	@extend %normalize_extend_Selectors;
+	@extend %extend_Selectors;
 	overflow: visible;
 	text-transform: none;
 	cursor: pointer;
 }
 
 input {
-	@extend %normalize_extend_Selectors;
+	@extend %extend_Selectors;
 	line-height: normal;
 }
 
 optgroup {
-	@extend %normalize_extend_Selectors;
+	@extend %extend_Selectors;
 	font-weight: bold;
 }
 
 select {
-	@extend %normalize_extend_Selectors;
+	@extend %extend_Selectors;
 	text-transform: none;
 }
 
 textarea {
-	@extend %normalize_extend_Selectors;
+	@extend %extend_Selectors;
 	overflow: auto;
 }
 

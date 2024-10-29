@@ -15,13 +15,8 @@
  */
 
 $gridWidth: 60rem;
-$standardGutter: 0.75rem;
+$standardGutter: 1.5rem;
 $baseFontSize: 16;
 $baseLeading: 1.2;
 $baseLetterSpacing: 0px;
 $fontAssetPath: 'assets/fonts';
-
-//////////////////////////////////////////////////////////////////////// Imports
-// -----------------------------------------------------------------------------
-@import 'utilities';
-@import 'typography';

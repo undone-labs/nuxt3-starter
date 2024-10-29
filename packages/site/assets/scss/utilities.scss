@@ -7,29 +7,28 @@
  * values between layers, this file is imported in the zero-core repo package
  */
 
+@use '@/../zero-core/assets/scss/utilities.scss' as *;
+
 // /////////////////////////////////////////////////////////////////// Variables
 // -----------------------------------------------------------------------------
 // ===================================================================== General
-
+$windowSpacing: toRem(16);
+$siteHeaderHeight: toRem(50);
 
 // ===================================================================== Colours
-
+$cararra: #F2F2ED; // 100
+$holly: #021509; // 950 | rgba(2, 21, 9, 1)
 
 // ====================================================================== Themes
-// :root {
-//   --background-color: #{};
-//   --text-color: #{};
-// }
-
-// .dark {}
+:root {}
 
 // ===================================================================== Styling
 @mixin shadow1 {
-  box-shadow: 0.125rem 0px 1rem 0.3125rem rgb(black, 0.7);
+  box-shadow: 1px 0px 1rem 1px rgba(154, 148, 117, 0.7);
 }
 
 @mixin shadow2 {
-  box-shadow: 0.125rem 0px 0.3125rem 0.25rem rgb(black, 0.4);
+  box-shadow: 1px 0px 8px 1px rgba(154, 148, 117, 0.12);
 }
 
 @mixin focusBoxShadow {

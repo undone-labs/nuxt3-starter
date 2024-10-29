@@ -6,11 +6,19 @@
  * See utilities.scss to edit these vars.
  */
 
+@use 'components/chevron';
+@use 'components/code';
+@use 'components/markdown';
+@use 'components/tooltip';
+@use 'components/video-wrapper';
+
 body {
   @include selection-light;
-  color: var(--text-color);
+  color: $holly;
+  font-size: 16px;
   font-family: $font_Primary;
-  background-color: var(--background-color);
+  font-weight: 400;
+  background-color: $cararra;
   transition: background-color 250ms;
   &.no-scroll {
     overflow-y: hidden;
@@ -34,10 +42,3 @@ body {
     transform: scale(1.05);
   }
 }
-
-@import 'components/chevron';
-@import 'components/code';
-@import 'components/markdown';
-@import 'components/toast';
-@import 'components/tooltip';
-@import 'components/video-wrapper';

@@ -63,7 +63,6 @@ defineProps({
   @include h1;
   font-size: toRem(100);
   line-height: 1;
-  color: var(--link-color);
   margin-bottom: 2rem;;
 }
 

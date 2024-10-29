@@ -1,3 +1,6 @@
+@use 'settings' as *;
+@use 'utilities' as *;
+
 /**
  * This file should be very rarely updated. It is an augmentation of normalize.scss.
  * The SCSS here attempts to set and reset a variety of browser defaults in order

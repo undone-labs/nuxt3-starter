@@ -1,3 +1,6 @@
+@use '@/../zero-core/assets/scss/utilities.scss' as *;
+@use '../typography' as *;
+
 @keyframes shrink-bounce {
   0% { transform: scale(1); }
   33% { transform: scale(0.85); }
@@ -54,7 +57,7 @@
   p {
     @include p1;
     &:not(:last-child) {
-      margin-bottom: 1.5rem;
+      margin-bottom: toRem(16);
     }
   }
 
@@ -72,7 +75,7 @@
   // ===================================================================== Lists
   ul, ol {
     &:not(:last-child) {
-      margin-bottom: 1.5rem;
+      margin-bottom: toRem(16);
     }
   }
 

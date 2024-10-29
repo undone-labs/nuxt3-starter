@@ -1,8 +1,14 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:list';
+@use 'variables' as *;
+@use 'preprocessing' as *;
+
 // Make the breakpoints
 @mixin bp($breakpoint) {
-  $query: map-get($gl-mq-list, $breakpoint);
+  $query: map.get($gl-mq-list, $breakpoint);
   @if $query != null {
-    @media ($gl-mq-width: #{nth($query, 1)}) {
+    @media ($gl-mq-width: #{list.nth($query, 1)}) {
       @content;
     }
   }
@@ -17,8 +23,8 @@
       [#{$gl-attributeName}*="#{$grid}-#{$i}"] > [#{$gl-attributeName}*="#{$gl-colName}_"] {
         $fraction: math.div(1, $i);
 
-        flex-basis: map-get($gl-colFractions, $fraction);
-        max-width: map-get($gl-colFractions, $fraction);
+        flex-basis: map.get($gl-colFractions, $fraction);
+        max-width: map.get($gl-colFractions, $fraction);
       }
   }
 }
@@ -31,7 +37,7 @@
   [#{$gl-attributeName}*="#{$gl-gridName}_"] {
 
     @for $i from 1 through $gl-colCount {
-      > [#{$gl-attributeName}*="#{$col}-#{$i}"]{ flex-basis: map-get($gl-colPortions, $i); max-width: map-get($gl-colPortions, $i); }
+      > [#{$gl-attributeName}*="#{$col}-#{$i}"]{ flex-basis: map.get($gl-colPortions, $i); max-width: map.get($gl-colPortions, $i); }
     }
   }
 }
@@ -58,7 +64,7 @@
   [#{$gl-attributeName}*="#{$gl-gridName}-"],
   [#{$gl-attributeName}*="#{$gl-gridName}_"] {
     @for $i from 0 through $gl-colCount - 1 {
-      > [data-push-left*="#{$off}-#{$i}"]{ margin-left: map-get($gl-colPortions, $i); }
+      > [data-push-left*="#{$off}-#{$i}"]{ margin-left: map.get($gl-colPortions, $i); }
     }
   }
 
@@ -66,7 +72,7 @@
   [#{$gl-attributeName}*="#{$gl-gridName}-"],
   [#{$gl-attributeName}*="#{$gl-gridName}_"] {
     @for $i from 0 through $gl-colCount - 1 {
-      > [data-push-right*="#{$off}-#{$i}"]{ margin-right: map-get($gl-colPortions, $i); }
+      > [data-push-right*="#{$off}-#{$i}"]{ margin-right: map.get($gl-colPortions, $i); }
     }
   }
 }
