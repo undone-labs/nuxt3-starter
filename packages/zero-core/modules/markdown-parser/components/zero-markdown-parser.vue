@@ -1,5 +1,5 @@
 <template>
-  <article ref="markdownRef" class="markdown" v-html="parsed" />
+  <div ref="markdownRef" class="markdown" v-html="parsed" />
 </template>
 
 <script setup>
@@ -74,7 +74,7 @@ processor.value = unified()
         if (headingTagNames.includes(node.tagName)) {
           const text = node.children.find(child => child.type === 'text')?.value
           if (text) {
-            const id = unref(useChangeCase(text, 'paramCase').value)
+            const id = unref(useChangeCase(text, 'kebabCase').value)
             node = useAddCssSelectors(node, id, ['heading-anchor'])
             node = useAddDataAttributes(node, { 'data-id': useId() })
             if (!props.disableHeadingLinks) {
