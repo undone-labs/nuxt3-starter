@@ -114,7 +114,7 @@ const registerComponents = (path, displayZeroLogs, components) => {
  * @method registerComposables
  */
 
-const registerComposables = (path, displayZeroLogs, composables) => {
+const registerComposables = (path, displayZeroLogs, composables, nuxtOptions) => {
   path = resolve(path, 'composables')
   if (!Fs.existsSync(path)) { return }
   if (displayZeroLogs) { console.log(Chalk.bold('     → Composables')) }
@@ -131,6 +131,9 @@ const registerComposables = (path, displayZeroLogs, composables) => {
           as: name,
           from: resolve(path, slug)
         })
+        if (composable.hasOwnProperty('options')) {
+          nuxtOptions.runtimeConfig.public[slug] = composable.options
+        }
         if (displayZeroLogs) { console.log(Chalk.black(`       ${name}()`)) }
       }
     })
@@ -270,9 +273,9 @@ const registerMiddleware = (path, displayZeroLogs) => {
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
 const setup = (_, nuxt) => {
-  const options = nuxt.options
-  if (!options.hasOwnProperty('zero')) { return }
-  const zeroOptions = options.zero
+  const nuxtOptions = nuxt.options
+  if (!nuxtOptions.hasOwnProperty('zero')) { return }
+  const zeroOptions = nuxtOptions.zero
   const displayZeroLogs = zeroOptions?.displayZeroLogs
   const hex1 = '#C36B00'
   const hex2 = '#DB7800'
@@ -283,7 +286,7 @@ const setup = (_, nuxt) => {
   const basePath = resolve('..')
   validateKeyMustBeObject(zeroOptions, 'zero')
   registerComponents(basePath, displayZeroLogs, zeroOptions.components)
-  registerComposables(basePath, displayZeroLogs, zeroOptions.composables)
+  registerComposables(basePath, displayZeroLogs, zeroOptions.composables, nuxtOptions)
   registerPlugins(basePath, displayZeroLogs, zeroOptions.plugins)
   registerStores(basePath, displayZeroLogs)
   // registerServerRoute(basePath, displayZeroLogs)
