@@ -50,6 +50,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       }
     }
     /**
+     * Clear store values
+     */
+    else {
+      authStore.setSession(null)
+      authStore.setUser(null)
+    }
+    /**
      * Check authorization status and redirect to /404 if authorization fails
      */
     if (meta.hasOwnProperty('authorize')) {

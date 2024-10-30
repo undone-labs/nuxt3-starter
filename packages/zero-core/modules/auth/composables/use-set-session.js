@@ -16,6 +16,8 @@ export const useSetSession = async session => {
   await workspaceStore.getWorkspace(user.primaryWorkspace._id)
   await workspaceStore.getWorkspaceList()
   authStore.setAuthState('authenticated')
+  zeroLs().remove('state')
+  zeroLs().remove('code_verifier')
   /**
    * The following emit should be caught by the client in order to redirect to
    * the correct page after login

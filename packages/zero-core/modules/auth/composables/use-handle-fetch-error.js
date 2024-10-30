@@ -7,12 +7,17 @@ import { useZeroToasterStore } from '@/../zero-core/modules/toaster/stores/use-z
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
-export const useHandleFetchError = (e, allowToast = [], disallowToast = []) => {
+export const useHandleFetchError = async (e, allowToast = [], disallowToast = []) => {
   const { $bus } = useNuxtApp()
   const serverEnv = useRuntimeConfig().public.serverEnv
   const toasterStore = useZeroToasterStore()
   const authStore = useZeroAuthStore()
+  const isFetchApiError = Object.getPrototypeOf(e).hasOwnProperty('status')
   let message = e.statusMessage
+  if (isFetchApiError) {
+    const text = JSON.parse(await e.text())
+    message = text.message
+  }
   /**
    * Log errors in non-production systems
    */

@@ -35,30 +35,44 @@ const config = useRuntimeConfig()
 
 // ======================================================================= Hooks
 onMounted(async () => {
-  if (!window.opener && window.opener !== window && window.name !== 'authenticate-github-popup') {
+  if (!window.opener && window.opener !== window && window.name !== 'authenticate-microsoft-popup') {
     await navigateTo('/')
   }
   if (!resolveComponent()) {
     animateTitle()
   }
   const state = zeroLs().get('state')
-  if (state !== route.query.state) {
+  if (state !== route.query.state || route.query.hasOwnProperty('access_denied')) {
     zeroLs().remove('state')
+    zeroLs().remove('code_verifier')
     window.opener.postMessage({
       id: 'authentication-failed',
       message: 'Something went wrong, please try again'
     }, config.public.siteUrl)
     window.close()
   }
-  const session = await useFetchAuth('/login', {
-    method: 'post',
-    query: Object.assign(route.query, { strategy: 'github', type: 'app' }),
-    body: {}
-  })
-  window.opener.postMessage({
-    id: 'authenticate-github-app',
-    session
-  }, config.public.siteUrl)
+  try {
+    const session = await useFetchAuth('/login', {
+      method: 'post',
+      query: {
+        strategy: 'microsoft',
+        code: route.query.code,
+        codeVerifier: zeroLs().get('code_verifier')
+      },
+      body: {}
+    })
+    window.opener.postMessage({
+      id: 'authenticate-microsoft',
+      session
+    }, config.public.siteUrl)
+  } catch (e) {
+    zeroLs().remove('state')
+    zeroLs().remove('code_verifier')
+    window.opener.postMessage({
+      id: 'authentication-failed',
+      message: 'Something went wrong, please try again'
+    }, config.public.siteUrl)
+  }
   window.close()
 })
 
@@ -69,7 +83,7 @@ onMounted(async () => {
 
 const resolveComponent = () => {
   const instance = getCurrentInstance()
-  const compToResolve = 'LoginGithubAppLoading'
+  const compToResolve = 'LoginMicrosoftLoading'
   if (typeof instance?.appContext.components === 'object' && compToResolve in instance.appContext.components) {
     return compToResolve
   }

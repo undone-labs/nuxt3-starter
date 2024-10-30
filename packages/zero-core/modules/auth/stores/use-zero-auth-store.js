@@ -13,6 +13,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   // ===================================================================== state
   const authState = ref('unauthenticated') // 'unauthenticated' → 'authenticating' → 'finalizing' → 'authenticated'
+  const authStrategy = ref(null) // 'github', 'google', 'microsoft', etc.
   const session = ref(null)
   const user = ref(null)
   const workspaceInviteList = ref([])
@@ -31,8 +32,10 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   })
 
   // =================================================================== actions
+
   /**
    * @method setAuthState
+   * ---------------------------------------------------------------------------
    */
 
   const setAuthState = state => {
@@ -40,7 +43,17 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
+   * @method setAuthStrategy
+   * ---------------------------------------------------------------------------
+   */
+
+  const setAuthStrategy = state => {
+    authStrategy.value = state
+  }
+
+  /**
    * @method setSession
+   * ---------------------------------------------------------------------------
    */
 
   const setSession = payload => {
@@ -49,8 +62,8 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setNavPaths
-   * 
-   * @desc Record the `to` and `from` navigation objects.
+   * ---------------------------------------------------------------------------
+   * Record the `to` and `from` navigation objects.
    * This is recorded in the nav-paths.js middleware and is used to keep track
    * of the last visited path before navigating to a new one. If redirected to
    * login page, logging in again will bring user back to this path.
@@ -62,6 +75,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method getUser
+   * ---------------------------------------------------------------------------
    */
 
   const getUser = async id => {
@@ -83,6 +97,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method setUser
+   * ---------------------------------------------------------------------------
    */
 
   const setUser = payload => {
@@ -91,6 +106,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateUser
+   * ---------------------------------------------------------------------------
    */
 
   const updateUser = async (payload, doSetUser = true) => {
@@ -111,7 +127,29 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   }
 
   /**
+   * @method uploadUserAvatar
+   * ---------------------------------------------------------------------------
+   */
+
+  const uploadUserAvatar = async payload => {
+    try {
+      await useFetchAuth('/user/post-upload-avatar', {
+        method: 'post',
+        body: Object.assign({}, {
+          _id: workspace.value._id,
+          workspaceId: workspace.value._id
+        }, payload)
+      })
+      return true
+    } catch (e) {
+      useHandleFetchError(e, [422, 403])
+      return false
+    }
+  }
+
+  /**
    * @method getUserWorkspaceInviteList
+   * ---------------------------------------------------------------------------
    */
 
   const getUserWorkspaceInviteList = async () => {
@@ -131,6 +169,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateUserWorkspaceInvite
+   * ---------------------------------------------------------------------------
    */
 
   const updateUserWorkspaceInvite = invite => {
@@ -140,6 +179,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method acceptWorkspaceInvite
+   * ---------------------------------------------------------------------------
    */
 
   const acceptWorkspaceInvite = async (id, identifier) => {
@@ -162,6 +202,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method rejectWorkspaceInvite
+   * ---------------------------------------------------------------------------
    */
 
   const rejectWorkspaceInvite = async (strategy, id, identifier) => {
@@ -185,6 +226,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method leaveWorkspace
+   * ---------------------------------------------------------------------------
    */
 
    const leaveWorkspace = async (id, identifier) => {
@@ -208,6 +250,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method makeWorkspacePrimary
+   * ---------------------------------------------------------------------------
    */
 
   const makeWorkspacePrimary = async (id, identifier) => {
@@ -230,6 +273,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method toggleShortcuts
+   * ---------------------------------------------------------------------------
    */
 
   const toggleShortcuts = async shortcuts => {
@@ -248,6 +292,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
 
   /**
    * @method updateShortcuts
+   * ---------------------------------------------------------------------------
    */
 
   const updateShortcuts = async shortcuts => {
@@ -268,6 +313,7 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
   return {
     // ----- state
     authState,
+    authStrategy,
     session,
     navPaths,
     user,
@@ -281,11 +327,13 @@ export const useZeroAuthStore = defineStore('zero-auth', () => {
     workspaceInvitesPending,
     // ----- actions
     setAuthState,
+    setAuthStrategy,
     setSession,
     setNavPaths,
     getUser,
     setUser,
     updateUser,
+    uploadUserAvatar,
     getUserWorkspaceInviteList,
     updateUserWorkspaceInvite,
     acceptWorkspaceInvite,

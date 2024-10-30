@@ -1,18 +1,10 @@
 // ///////////////////////////////////////////////////////////////////// Imports
 // -----------------------------------------------------------------------------
+import Chalk from 'chalk'
+
 import {
   defineNuxtModule
 } from 'nuxt/kit'
-
-// ////////////////////////////////////////////////////////////////////// Config
-// -----------------------------------------------------------------------------
-const meta = {
-  name: '@undone-labs/nuxt-module-zero-core/auth',
-  configKey: 'nuxtModuleZeroCoreAuth',
-  compatibility: {
-    nuxt: '^3.0.0'
-  }
-}
 
 // /////////////////////////////////////////////////////////////////// Functions
 // -----------------------------------------------------------------------------
@@ -21,27 +13,19 @@ const meta = {
  */
 
 const addOptionsToRuntimeConfig = (nuxtOptions, options) => {
-  nuxtOptions.runtimeConfig.public.auth = {
-    redirectAfterLogout: options.redirectAfterLogout,
-    configurationUrl: options.configurationUrl,
-    ...(options.github && { github: options.github }),
-    ...(options.google && { google: options.google }),
-    ...(options.microsoft && { microsoft: options.microsoft })
-  }
+  nuxtOptions.runtimeConfig.public.notification = options
 }
 
 // /////////////////////////////////////////////////////////////////////// Setup
 // -----------------------------------------------------------------------------
-const setup = (_, nuxt) => {
-  const nuxtOptions = nuxt.options
-  const options = nuxtOptions.zero.modules?.auth
-  if (!options?.enable) { return }
-  addOptionsToRuntimeConfig(nuxtOptions, options)
+const setup = async (_, nuxt) => {
+  const options = nuxt.options.zero.modules.notification || {}
+  if (!options.enable) { return }
+  addOptionsToRuntimeConfig(nuxt.options, options)
 }
 
 // ////////////////////////////////////////////////////////////////////// Export
 // -----------------------------------------------------------------------------
 export default defineNuxtModule({
-  meta,
   setup
 })

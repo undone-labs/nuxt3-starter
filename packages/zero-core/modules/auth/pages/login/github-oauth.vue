@@ -41,6 +41,15 @@ onMounted(async () => {
   if (!resolveComponent()) {
     animateTitle()
   }
+  const state = zeroLs().get('state')
+  if (state !== route.query.state) {
+    zeroLs().remove('state')
+    window.opener.postMessage({
+      id: 'authentication-failed',
+      message: 'Something went wrong, please try again'
+    }, config.public.siteUrl)
+    window.close()
+  }
   const session = await useFetchAuth('/login', {
     method: 'post',
     query: Object.assign(route.query, { strategy: 'github', type: 'oauth' }),
