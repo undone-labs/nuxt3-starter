@@ -118,7 +118,7 @@ export default defineNuxtConfig({
         enable: true,
         display: 3,
         timeout: 5000,
-        from: 'bottom'
+        slideInFrom: 'bottom'
       },
       auth: {
         enable: false,
