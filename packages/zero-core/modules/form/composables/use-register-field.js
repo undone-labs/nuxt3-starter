@@ -45,7 +45,7 @@ const getDefaultValue = (scaffold, model) => {
   const options = scaffold.options
   let value = getNullStateValue(scaffold) // get the base value
   // If default value is set in the scaffold, get that
-  if (scaffold.hasOwnProperty('defaultValue') && defaultValue !== '') {
+  if (scaffold.hasOwnProperty('defaultValue') && defaultValue !== undefined && defaultValue !== null && defaultValue !== '') {
     value = defaultValue
   }
   // If default value is set in the model, get that

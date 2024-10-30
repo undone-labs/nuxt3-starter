@@ -2,6 +2,7 @@
 
 <template>
   <div
+    ref="select"
     tabindex="-1"
     :class="['field-select', state, {
       'select-container-focused': selectContainerFocused,
@@ -10,7 +11,6 @@
       disabled
     }]"
     @focus="handleFocusBlur('focus', 'select-container')"
-    @blur="handleFocusBlur('blur', 'select-container')"
     @keydown="handleKeyboardNavigation($event)">
 
     <!-- ================================================= [Select] Disabled -->
@@ -66,6 +66,7 @@
       <div
         ref="dropdownElement"
         class="dropdown">
+        <slot name="header" />
         <div
           v-for="(option, index) in options"
           :key="`custom-${index}`"
@@ -81,6 +82,9 @@
             :highlighted="isCurrentlyHighlighted(option.index || index)"
             :selected="isCurrentlySelected(option.index || index)" />
         </div>
+        <div v-if="$slots?.footer" class="dropdown-footer" @click="$event => console.log('$event ', $event)" >
+          <slot name="footer" :handle-focus-blur="handleFocusBlur" />
+        </div>
       </div>
 
     </div>
@@ -89,6 +93,9 @@
 </template>
 
 <script setup>
+// ===================================================================== Imports
+import { onClickOutside } from '@vueuse/core';
+
 // ======================================================================= Setup
 const props = defineProps({
   field: {
@@ -139,6 +146,7 @@ const emit = defineEmits([
 ])
 
 // ======================================================================== Data
+const select = ref(null)
 const selectContainerFocused = ref(false)
 const selectNativeFocused = ref(false)
 const dropdownElement = ref(null)
@@ -155,6 +163,8 @@ const placeholder = scaffold.placeholder
 const isSingleOption = scaffold.hasOwnProperty('isSingleOption') ? scaffold.isSingleOption : true
 const isSingleSelection = scaffold.hasOwnProperty('isSingleSelection') ? scaffold.isSingleSelection : true
 const ariaLabelledby = modelKey || fieldKey
+
+onClickOutside(select, () => handleFocusBlur('blur', 'select-container'))
 
 // ==================================================================== Computed
 const selectedOptions = computed(() => {

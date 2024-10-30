@@ -31,6 +31,15 @@ export const useZeroFormStore = defineStore('zero-form', () => {
   }
 
   /**
+   * @method removeModel
+   * ---------------------------------------------------------------------------
+   */
+
+  const removeModel = id => {
+    delete models.value[id]
+  }
+
+  /**
    * @method setField
    * ---------------------------------------------------------------------------
    */
@@ -81,6 +90,7 @@ export const useZeroFormStore = defineStore('zero-form', () => {
     // ----- actions
     registerModel,
     updateModel,
+    removeModel,
     setField,
     removeField,
     setFormSaveState,
