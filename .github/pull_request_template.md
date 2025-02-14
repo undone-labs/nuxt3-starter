@@ -9,10 +9,9 @@
 #### Resolutions
 
 <!--
-Closing magic words: close, closes, closed, closing fix, fixes, fixed, fixing, resolve, resolves, resolved, resolving, complete, completes, completed, completing
+Closing magic words: close(s,d), fix(es,ed), resolve(s,d), complete(s,d)
 Non-closing magic words: ref, references, part of, related to, contributes to, towards
 -->
 
-- Ticket link: 
-- [ ] Code documented
-- [ ] Test cases written
+- Ticket link:
+- [ ] Documentation written

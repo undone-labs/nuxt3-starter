@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/undone-labs/nuxt3-starter#readme",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.14.0"
   },
   "scripts": {
     "site:dev": "npm run dev -w site",
@@ -26,12 +26,9 @@
     "site:generate": "npm run generate -w site",
     "site:serve": "npm run serve -w site",
     "site:upgrade-nuxt": "npm run upgrade-nuxt -w site",
-    "site:test": "npm run test -w site",
     "docs:dev": "npm run docs:dev -w docs",
     "docs:build": "npm run docs:build -w docs",
-    "docs:preview": "npm run docs:preview -w docs",
-    "docs:test": "npm run docs:test -w docs",
-    "zero-core:test": "npm run test -w zero-core"
+    "docs:preview": "npm run docs:preview -w docs"
   },
   "workspaces": [
     "packages/zero-core",

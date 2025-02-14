@@ -69,8 +69,7 @@ export default defineNuxtConfig({
   // =================================================================== Modules
   modules: [
     '@pinia/nuxt',
-    '@nuxt/content',
-    '@nuxt/test-utils/module'
+    '@nuxt/content'
   ],
   // ============================================================ [Module] Pinia
   pinia: {
