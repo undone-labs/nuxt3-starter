@@ -72,7 +72,7 @@ $fontAssetPath_Primary: '#{$fontAssetPath}/ysabeau';
 
 @mixin inlineCode {
   color: white;
-  background-color: black;
+  background-color: #CBCBCB;
   padding: toRem(4) toRem(8);
   border-radius: toRem(4);
   font-family: monospace;
@@ -82,7 +82,7 @@ $fontAssetPath_Primary: '#{$fontAssetPath}/ysabeau';
 }
 
 @mixin blockCode {
-  background-color: black;
+  background-color: #CBCBCB;
   padding: toRem(10) toRem(16);
   margin-bottom: 1.25rem;
   border-radius: 0.625rem;

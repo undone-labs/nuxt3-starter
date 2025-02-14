@@ -4,9 +4,11 @@
     <div class="status-message h1">
       {{ error.statusMessage }}
     </div>
+
     <div class="url">
       {{ error.url }}
     </div>
+
     <div class="message">
       {{ error.message }}
     </div>
@@ -52,7 +54,7 @@ defineProps({
 .container {
   position: relative;
   margin-top: 3rem;
-  border: 2px solid tomato;
+  border: 2px solid black;
   border-radius: toRem(12);
 }
 
@@ -61,8 +63,8 @@ defineProps({
   top: 0;
   left: toRem(12);
   padding: toRem(6) toRem(12);
-  background-color: teal;
-  border: 2px solid tomato;
+  background-color: #CBCBCB;
+  border: 2px solid black;
   font-size: toRem(22);
   font-weight: 700;
   transform: translateY(-50%);

@@ -8,7 +8,6 @@
           v-bind="logoLink"
           class="logo-link">
           LOGO
-          <!-- <Logo class="logo" /> -->
         </ButtonClear>
 
         <!-- ========================================================= Links -->
@@ -28,18 +27,12 @@
 </template>
 
 <script setup>
-// ======================================================================== Data
-const { data: navigation } = await useAsyncData('navigation', async () => {
-  const content = await queryContent({
-    where: {
-      _file: { $contains: 'data/navigation.json' }
-    }
-  }).find()
-  return content[0]
-})
+// ====================================================================== import
+import Navigation from '@/data/navigation.json'
 
-const logoLink = navigation.value.logoLink
-const links = navigation.value.links
+// ======================================================================== data
+const logoLink = Navigation.logoLink
+const links = Navigation.links
 </script>
 
 <style lang="scss" scoped>
