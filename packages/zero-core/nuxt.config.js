@@ -61,6 +61,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxtjs/sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
+    // '@nuxt/content', // https://content.nuxt.com/
     'nuxt-primevue', // https://github.com/primefaces/primevue-nuxt-module
     '@vueuse/nuxt' // https://vueuse.org/
   ],
