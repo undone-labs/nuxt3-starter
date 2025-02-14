@@ -1,0 +1,83 @@
+// /////////////////////////////////////////////////////////////////////// Fonts
+// -----------------------------------------------------------------------------
+$fontAssetPath: '../fonts';
+
+//////////////////////////////////////////////////////////////////////////// DIN
+// -----------------------------------------------------------------------------
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Regular.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-RegularItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Medium.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-MediumItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DIN Alternate';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-MediumAlternate.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-MediumAlternate.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-Bold.otf') format('opentype'),
+       url('#{$fontAssetPath}/DIN/DIN-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/DIN/DIN-BoldItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PFD in Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/PFDinMono/PFDinMono-Regular.ttf') format('truetype'),
+       url('#{$fontAssetPath}/PFDinMono/PFDinMono-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PFD in Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('#{$fontAssetPath}/PFDinMono/PFDinMono-Medium.ttf') format('truetype'),
+       url('#{$fontAssetPath}/PFDinMono/PFDinMono-Medium.otf') format('opentype');
+}
